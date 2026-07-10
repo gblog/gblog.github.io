@@ -22,75 +22,75 @@
     <meta name="description" content="Devops架构-Jenkins-01今日内容：  了解什么是Jenkins Jenkins的安装部署方法 Jenkins项目01-执行Shell命令 Jenkins项目02-拉取Gitlab上的代码 Jenkins项目03-基于tag标签拉取代码并部署  一、Jenkins概述1.1 什么是jenkins？ Jenkins 是一个开源持续集成的工具，是由 JAVA 开发而成。 Jenkins 是">
 <meta property="og:type" content="article">
 <meta property="og:title" content="day75-Devops-Jenkins(一)">
-<meta property="og:url" content="http://gblog.github.io/2024/07/10/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day75-Devops-Jenkins-1/index.html">
+<meta property="og:url" content="https://gblog.github.io/2024/07/10/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day75-Devops-Jenkins-1/index.html">
 <meta property="og:site_name" content="Haris的小站">
 <meta property="og:description" content="Devops架构-Jenkins-01今日内容：  了解什么是Jenkins Jenkins的安装部署方法 Jenkins项目01-执行Shell命令 Jenkins项目02-拉取Gitlab上的代码 Jenkins项目03-基于tag标签拉取代码并部署  一、Jenkins概述1.1 什么是jenkins？ Jenkins 是一个开源持续集成的工具，是由 JAVA 开发而成。 Jenkins 是">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240710161846461.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240710170638209.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240710170821653.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240710171001392.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240710171016406.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240710171058647.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711101432320.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711101659999.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711101736521.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711101839876.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711103524016.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711103612754.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711103919767.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711103954785.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711104102760.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711104436711.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711104605946.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711104657353.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711104759585.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711105506122.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711105045248.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711105207611.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711105803093.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711105843911.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711161908008.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711162340899.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711163804902.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711164141296.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711164232384.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711164415115.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711164557175.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711164638257.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711164700596.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711164800148.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711164933353.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711165255458.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711165418871.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240711165439642.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240712152752448.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240712152944584.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240712152849438.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240712153652948.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240712153746480.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240712154851445.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240712155103133.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240712155155500.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240712161314975.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240712163249672.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240712163503837.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240712163726106.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240712163815888.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240712163955122.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240712164059363.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240712165756849.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240712165959106.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240712170041378.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240712170255940.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240712170412733.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240712171555867.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240712171619376.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240710161846461.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240710170638209.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240710170821653.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240710171001392.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240710171016406.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240710171058647.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711101432320.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711101659999.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711101736521.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711101839876.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711103524016.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711103612754.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711103919767.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711103954785.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711104102760.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711104436711.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711104605946.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711104657353.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711104759585.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711105506122.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711105045248.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711105207611.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711105803093.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711105843911.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711161908008.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711162340899.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711163804902.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711164141296.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711164232384.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711164415115.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711164557175.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711164638257.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711164700596.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711164800148.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711164933353.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711165255458.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711165418871.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240711165439642.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240712152752448.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240712152944584.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240712152849438.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240712153652948.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240712153746480.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240712154851445.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240712155103133.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240712155155500.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240712161314975.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240712163249672.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240712163503837.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240712163726106.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240712163815888.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240712163955122.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240712164059363.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240712165756849.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240712165959106.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240712170041378.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240712170255940.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240712170412733.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240712171555867.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240712171619376.png">
 <meta property="article:published_time" content="2024-07-10T03:08:52.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.359Z">
 <meta property="article:author" content="Haris">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://gblog.github.io/img/image-20240710161846461.png">
+<meta name="twitter:image" content="https://gblog.github.io/img/image-20240710161846461.png">
   
   
   
@@ -800,7 +800,7 @@ ssh root@172.16.1.7 &quot;tar xf &#x2F;tmp&#x2F;myproj-$&#123;git_tag&#125;.tar.
   <div class="license-box my-3">
     <div class="license-title">
       <div>day75-Devops-Jenkins(一)</div>
-      <div>http://gblog.github.io/2024/07/10/07_85期运维/03_自动化架构/day75-Devops-Jenkins-1/</div>
+      <div>https://gblog.github.io/2024/07/10/07_85期运维/03_自动化架构/day75-Devops-Jenkins-1/</div>
     </div>
     <div class="license-meta">
       

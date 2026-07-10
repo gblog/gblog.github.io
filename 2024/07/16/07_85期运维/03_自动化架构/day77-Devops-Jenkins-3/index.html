@@ -22,39 +22,39 @@
     <meta name="description" content="Devops架构-Jenkins-03今日内容：  Jenkins构建docker项目 SonarQube漏洞分析工具上手  一、案例06：基于Docker的案例实现静态代码1.1 环境准备1、主机准备    主机 角色 IP    gitlab 代码仓库 10.0.0.71&#x2F;172.16.1.71   jenkins jenkins、生成docker镜像 10.0.0.72&#x2F;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="day77-Devops-Jenkins(三)">
-<meta property="og:url" content="http://gblog.github.io/2024/07/16/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day77-Devops-Jenkins-3/index.html">
+<meta property="og:url" content="https://gblog.github.io/2024/07/16/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day77-Devops-Jenkins-3/index.html">
 <meta property="og:site_name" content="Haris的小站">
 <meta property="og:description" content="Devops架构-Jenkins-03今日内容：  Jenkins构建docker项目 SonarQube漏洞分析工具上手  一、案例06：基于Docker的案例实现静态代码1.1 环境准备1、主机准备    主机 角色 IP    gitlab 代码仓库 10.0.0.71&#x2F;172.16.1.71   jenkins jenkins、生成docker镜像 10.0.0.72&#x2F;">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240716154349441.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240716154631903.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240716161225090.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240716161347975.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240716161455300.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240716161721908.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240716170105062.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240716170129887.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240716170153166.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240716201120469.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240719145429109.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240716204724628.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240716204938417.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240716210058826.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240716210207627.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240716210445677.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240716210508932.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240716210608809.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240716211140310.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240716211257957.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240716212244091.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240716213100173.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240716213434039.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240716213453877.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240716154349441.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240716154631903.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240716161225090.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240716161347975.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240716161455300.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240716161721908.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240716170105062.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240716170129887.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240716170153166.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240716201120469.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240719145429109.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240716204724628.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240716204938417.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240716210058826.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240716210207627.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240716210445677.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240716210508932.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240716210608809.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240716211140310.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240716211257957.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240716212244091.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240716213100173.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240716213434039.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240716213453877.png">
 <meta property="article:published_time" content="2024-07-16T03:08:52.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.361Z">
 <meta property="article:author" content="Haris">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://gblog.github.io/img/image-20240716154349441.png">
+<meta name="twitter:image" content="https://gblog.github.io/img/image-20240716154349441.png">
   
   
   
@@ -775,7 +775,7 @@ Dsonar.login&#x3D;dbc24813677df3a6a5847ef61b86d47d4ae7fcd8</code></pre></div></f
   <div class="license-box my-3">
     <div class="license-title">
       <div>day77-Devops-Jenkins(三)</div>
-      <div>http://gblog.github.io/2024/07/16/07_85期运维/03_自动化架构/day77-Devops-Jenkins-3/</div>
+      <div>https://gblog.github.io/2024/07/16/07_85期运维/03_自动化架构/day77-Devops-Jenkins-3/</div>
     </div>
     <div class="license-meta">
       

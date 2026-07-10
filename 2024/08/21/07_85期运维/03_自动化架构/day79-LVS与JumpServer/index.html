@@ -22,30 +22,30 @@
     <meta name="description" content="今日内容：  LVS负载均衡 OpenVPN加密通信隧道 JumpServer跳板机  一、负载均衡介绍1.1 常见负载均衡对比   常见负载均衡对比 优势 缺点    硬件：如F5负载均衡 性能好、购买有技术支持 价格昂贵，且一次需要购买2台凑成1对。   LVS 工作在4层，效率极其高 需要部署维护(运维成本较高)   Nginx&#x2F;Tengine&#x2F;Openresty(lua">
 <meta property="og:type" content="article">
 <meta property="og:title" content="day79-LVS与JumpServer">
-<meta property="og:url" content="http://gblog.github.io/2024/08/21/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day79-LVS%E4%B8%8EJumpServer/index.html">
+<meta property="og:url" content="https://gblog.github.io/2024/08/21/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day79-LVS%E4%B8%8EJumpServer/index.html">
 <meta property="og:site_name" content="Haris的小站">
 <meta property="og:description" content="今日内容：  LVS负载均衡 OpenVPN加密通信隧道 JumpServer跳板机  一、负载均衡介绍1.1 常见负载均衡对比   常见负载均衡对比 优势 缺点    硬件：如F5负载均衡 性能好、购买有技术支持 价格昂贵，且一次需要购买2台凑成1对。   LVS 工作在4层，效率极其高 需要部署维护(运维成本较高)   Nginx&#x2F;Tengine&#x2F;Openresty(lua">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240816142138132.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240816144825521.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240816145003736.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240816151056982.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240820151554150.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240821133723790.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240821155451333.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240821155504577.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240821155626815.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240821171242085.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240821171312095.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240821171537460.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240906121933414.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240909094020576.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240909103404023.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240816142138132.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240816144825521.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240816145003736.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240816151056982.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240820151554150.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240821133723790.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240821155451333.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240821155504577.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240821155626815.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240821171242085.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240821171312095.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240821171537460.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240906121933414.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240909094020576.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240909103404023.png">
 <meta property="article:published_time" content="2024-08-21T03:08:52.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.364Z">
 <meta property="article:author" content="Haris">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://gblog.github.io/img/image-20240816142138132.png">
+<meta name="twitter:image" content="https://gblog.github.io/img/image-20240816142138132.png">
   
   
   
@@ -1441,7 +1441,7 @@ cd &#x2F;opt&#x2F;jumpserver
   <div class="license-box my-3">
     <div class="license-title">
       <div>day79-LVS与JumpServer</div>
-      <div>http://gblog.github.io/2024/08/21/07_85期运维/03_自动化架构/day79-LVS与JumpServer/</div>
+      <div>https://gblog.github.io/2024/08/21/07_85期运维/03_自动化架构/day79-LVS与JumpServer/</div>
     </div>
     <div class="license-meta">
       

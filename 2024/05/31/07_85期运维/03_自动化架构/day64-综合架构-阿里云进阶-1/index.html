@@ -22,84 +22,84 @@
     <meta name="description" content="综合架构-阿里云进阶-01今日内容：  公有云架构介绍 ECS弹性服务器使用 RDS数据库服务器使用 NAS文件存储使用 OSS对象存储使用  一、公有云目标要求：  能熟练的说出或识别公有云服务名字 能熟练说出和画出公有云网站架构 能熟练使用公有云的产品，比如：ecs、slb、rds、oss…. 熟悉服务购买、续费操作  二、公有云架构用户角度：  运维角度： 一些专业词汇    专业词汇">
 <meta property="og:type" content="article">
 <meta property="og:title" content="day64-综合架构-阿里云进阶（一）">
-<meta property="og:url" content="http://gblog.github.io/2024/05/31/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day64-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84-%E9%98%BF%E9%87%8C%E4%BA%91%E8%BF%9B%E9%98%B6-1/index.html">
+<meta property="og:url" content="https://gblog.github.io/2024/05/31/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day64-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84-%E9%98%BF%E9%87%8C%E4%BA%91%E8%BF%9B%E9%98%B6-1/index.html">
 <meta property="og:site_name" content="Haris的小站">
 <meta property="og:description" content="综合架构-阿里云进阶-01今日内容：  公有云架构介绍 ECS弹性服务器使用 RDS数据库服务器使用 NAS文件存储使用 OSS对象存储使用  一、公有云目标要求：  能熟练的说出或识别公有云服务名字 能熟练说出和画出公有云网站架构 能熟练使用公有云的产品，比如：ecs、slb、rds、oss…. 熟悉服务购买、续费操作  二、公有云架构用户角度：  运维角度： 一些专业词汇    专业词汇">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://gblog.github.io/img/%E5%85%AC%E6%9C%89%E4%BA%91%E6%9E%B6%E6%9E%84-%E7%94%A8%E6%88%B7%E8%A7%92%E5%BA%A6.png">
-<meta property="og:image" content="http://gblog.github.io/img/%E5%85%AC%E6%9C%89%E4%BA%91%E6%9E%B6%E6%9E%84-%E8%BF%90%E7%BB%B4%E8%A7%92%E5%BA%A6.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531134951566.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531135025507.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531135310870.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531135334501.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531135648999.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531140020330.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531140118695.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531140320875.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531144544983.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531144638192.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531144731131.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531144805921.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531144824221.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531144847608.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531145137280.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531145234368.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531145622612.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531145635831.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531145922957.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531150250536.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531150346163.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531150417702.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531150710110.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531150739356.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531150852944.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531151059937.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531151138509.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531151204170.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531151400382.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531151531823.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531151651779.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531151734639.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531152026861.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531152226787.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531152439287.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531153904779.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531152608808.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531152649837.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531152752029.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531152953648.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531153020431.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531153515014.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531153536015.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531154552134.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531154658325.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531155204615.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531155807003.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531155843806.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531155958415.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531160029643.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531160208880.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531160234012.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531160503732.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531160541772.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531160613719.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531160846344.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531160934483.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531161021449.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531161208054.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531161403453.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531161450340.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531161842839.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531161803935.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531161954311.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531162543247.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531162557496.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240531162612157.png">
+<meta property="og:image" content="https://gblog.github.io/img/%E5%85%AC%E6%9C%89%E4%BA%91%E6%9E%B6%E6%9E%84-%E7%94%A8%E6%88%B7%E8%A7%92%E5%BA%A6.png">
+<meta property="og:image" content="https://gblog.github.io/img/%E5%85%AC%E6%9C%89%E4%BA%91%E6%9E%B6%E6%9E%84-%E8%BF%90%E7%BB%B4%E8%A7%92%E5%BA%A6.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531134951566.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531135025507.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531135310870.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531135334501.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531135648999.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531140020330.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531140118695.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531140320875.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531144544983.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531144638192.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531144731131.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531144805921.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531144824221.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531144847608.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531145137280.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531145234368.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531145622612.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531145635831.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531145922957.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531150250536.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531150346163.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531150417702.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531150710110.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531150739356.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531150852944.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531151059937.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531151138509.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531151204170.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531151400382.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531151531823.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531151651779.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531151734639.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531152026861.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531152226787.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531152439287.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531153904779.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531152608808.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531152649837.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531152752029.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531152953648.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531153020431.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531153515014.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531153536015.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531154552134.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531154658325.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531155204615.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531155807003.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531155843806.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531155958415.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531160029643.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531160208880.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531160234012.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531160503732.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531160541772.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531160613719.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531160846344.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531160934483.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531161021449.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531161208054.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531161403453.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531161450340.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531161842839.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531161803935.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531161954311.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531162543247.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531162557496.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240531162612157.png">
 <meta property="article:published_time" content="2024-05-31T05:08:52.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.344Z">
 <meta property="article:author" content="Haris">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://gblog.github.io/img/%E5%85%AC%E6%9C%89%E4%BA%91%E6%9E%B6%E6%9E%84-%E7%94%A8%E6%88%B7%E8%A7%92%E5%BA%A6.png">
+<meta name="twitter:image" content="https://gblog.github.io/img/%E5%85%AC%E6%9C%89%E4%BA%91%E6%9E%B6%E6%9E%84-%E7%94%A8%E6%88%B7%E8%A7%92%E5%BA%A6.png">
   
   
   
@@ -758,7 +758,7 @@ unzip -q kodbox.1.37.zip -d &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html&#x2F;</cod
   <div class="license-box my-3">
     <div class="license-title">
       <div>day64-综合架构-阿里云进阶（一）</div>
-      <div>http://gblog.github.io/2024/05/31/07_85期运维/03_自动化架构/day64-综合架构-阿里云进阶-1/</div>
+      <div>https://gblog.github.io/2024/05/31/07_85期运维/03_自动化架构/day64-综合架构-阿里云进阶-1/</div>
     </div>
     <div class="license-meta">
       
@@ -802,9 +802,9 @@ unzip -q kodbox.1.37.zip -d &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html&#x2F;</cod
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/05/31/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day65-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84-%E9%98%BF%E9%87%8C%E4%BA%91%E8%BF%9B%E9%98%B6-2/" title="day65-综合架构-阿里云进阶（二）">
+                      <a href="/2024/05/31/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day66-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84-%E9%98%BF%E9%87%8C%E4%BA%91%E8%BF%9B%E9%98%B6-3/" title="day66-综合架构-阿里云进阶（三）">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">day65-综合架构-阿里云进阶（二）</span>
+                        <span class="hidden-mobile">day66-综合架构-阿里云进阶（三）</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     

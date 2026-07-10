@@ -22,7 +22,7 @@
     <meta name="description" content="一：cpu和GIL必须都具备才可以执行代码； 拿到cpu权限-》拿到GIL解释器锁-》执行代码  在python3.2之后GIL有了新的实现，目的是为了解决that GIL thrashing问题，这是Antoine Pitrou的功劳 二：GIL解释器锁会在两种情况下释放2.1、主动释放：自己主动交出来遇到IO操作或者分配的cpu时间片到时间了 注意，GIL存在的意义在于维护线程安全，x&amp;#x3">
 <meta property="og:type" content="article">
 <meta property="og:title" content="47-附录二：GIL新解">
-<meta property="og:url" content="http://gblog.github.io/2022/07/18/03_Python/08-%E9%99%84%E5%BD%95%E8%A1%A5%E5%85%85/47_%E9%99%84%E5%BD%95%E4%BA%8C%EF%BC%9AGIL%E6%96%B0%E8%A7%A3/index.html">
+<meta property="og:url" content="https://gblog.github.io/2022/07/18/03_Python/08-%E9%99%84%E5%BD%95%E8%A1%A5%E5%85%85/47_%E9%99%84%E5%BD%95%E4%BA%8C%EF%BC%9AGIL%E6%96%B0%E8%A7%A3/index.html">
 <meta property="og:site_name" content="Haris的小站">
 <meta property="og:description" content="一：cpu和GIL必须都具备才可以执行代码； 拿到cpu权限-》拿到GIL解释器锁-》执行代码  在python3.2之后GIL有了新的实现，目的是为了解决that GIL thrashing问题，这是Antoine Pitrou的功劳 二：GIL解释器锁会在两种情况下释放2.1、主动释放：自己主动交出来遇到IO操作或者分配的cpu时间片到时间了 注意，GIL存在的意义在于维护线程安全，x&amp;#x3">
 <meta property="og:locale" content="zh_CN">
@@ -355,7 +355,7 @@ static volatile int gil_drop_request &#x3D; 0;</code></pre></div></figure>
   <div class="license-box my-3">
     <div class="license-title">
       <div>47-附录二：GIL新解</div>
-      <div>http://gblog.github.io/2022/07/18/03_Python/08-附录补充/47_附录二：GIL新解/</div>
+      <div>https://gblog.github.io/2022/07/18/03_Python/08-附录补充/47_附录二：GIL新解/</div>
     </div>
     <div class="license-meta">
       

@@ -22,32 +22,32 @@
     <meta name="description" content="Web集群-Tomcat（一）今日内容：  JAVA容器介绍 JAVA环境介绍 Tomcat上手  一、JAVA容器什么是java容器？  用于存放java代码的环境，就叫java容器 web中间件，很多就是java容器，见下表     java容器     Tomcat 最常用，较重，功能完善.   Jetty 轻量，功能较少.   Weblogic 用于Oracle数据库环境使用，Weblog">
 <meta property="og:type" content="article">
 <meta property="og:title" content="17-Web集群-Tomcat(一)">
-<meta property="og:url" content="http://gblog.github.io/2024/05/11/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/18-web%E9%9B%86%E7%BE%A4-Tomcat-1/index.html">
+<meta property="og:url" content="https://gblog.github.io/2024/05/11/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/18-web%E9%9B%86%E7%BE%A4-Tomcat-1/index.html">
 <meta property="og:site_name" content="Haris的小站">
 <meta property="og:description" content="Web集群-Tomcat（一）今日内容：  JAVA容器介绍 JAVA环境介绍 Tomcat上手  一、JAVA容器什么是java容器？  用于存放java代码的环境，就叫java容器 web中间件，很多就是java容器，见下表     java容器     Tomcat 最常用，较重，功能完善.   Jetty 轻量，功能较少.   Weblogic 用于Oracle数据库环境使用，Weblog">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240511160105925.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240511163252296.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240511163938313.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240511170000316.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240511171222761.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240513103228645.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240513103255698.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240513114215670.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240513114343742.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240513114715123.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240513134404186.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240513140124888.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240513140438636.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240513140505383.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240513142656034.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240513142716314.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240513142730577.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240511160105925.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240511163252296.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240511163938313.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240511170000316.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240511171222761.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240513103228645.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240513103255698.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240513114215670.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240513114343742.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240513114715123.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240513134404186.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240513140124888.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240513140438636.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240513140505383.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240513142656034.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240513142716314.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240513142730577.png">
 <meta property="article:published_time" content="2024-05-11T07:23:52.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.329Z">
 <meta property="article:author" content="Haris">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://gblog.github.io/img/image-20240511160105925.png">
+<meta name="twitter:image" content="https://gblog.github.io/img/image-20240511160105925.png">
   
   
   
@@ -1227,7 +1227,7 @@ root      13476      1  2 14:19 ?        00:00:05 &#x2F;app&#x2F;tools&#x2F;jdk&
   <div class="license-box my-3">
     <div class="license-title">
       <div>17-Web集群-Tomcat(一)</div>
-      <div>http://gblog.github.io/2024/05/11/07_85期运维/02_综合架构/18-web集群-Tomcat-1/</div>
+      <div>https://gblog.github.io/2024/05/11/07_85期运维/02_综合架构/18-web集群-Tomcat-1/</div>
     </div>
     <div class="license-meta">
       

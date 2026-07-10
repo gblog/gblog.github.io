@@ -22,33 +22,33 @@
     <meta name="description" content="监控架构-Zabbix-01今日内容： -  一、Zabbix概述Zabbix是一个CS(服务端&#x2F;客户端)架构的服务.   它的整体架构：  客户端agent收集集群信息 agent反馈收集的信息给server服务端 通过前端展示数据   二、Zabbix使用指南2.1 主机规划2.1.1 推荐配置   规模 平台 CPU&#x2F;内存 数据库 受监控的主机数 量    小型 Cent">
 <meta property="og:type" content="article">
 <meta property="og:title" content="day67-监控架构-Zabbix(一)">
-<meta property="og:url" content="http://gblog.github.io/2024/06/05/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day67-%E7%9B%91%E6%8E%A7%E6%9E%B6%E6%9E%84-Zabbix-1/index.html">
+<meta property="og:url" content="https://gblog.github.io/2024/06/05/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day67-%E7%9B%91%E6%8E%A7%E6%9E%B6%E6%9E%84-Zabbix-1/index.html">
 <meta property="og:site_name" content="Haris的小站">
 <meta property="og:description" content="监控架构-Zabbix-01今日内容： -  一、Zabbix概述Zabbix是一个CS(服务端&#x2F;客户端)架构的服务.   它的整体架构：  客户端agent收集集群信息 agent反馈收集的信息给server服务端 通过前端展示数据   二、Zabbix使用指南2.1 主机规划2.1.1 推荐配置   规模 平台 CPU&#x2F;内存 数据库 受监控的主机数 量    小型 Cent">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240605110210091.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240605115558801.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240607150229575.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240607150356041.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240607150547321.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240607152206296.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240607152421727.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240607152439459.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240607152856150.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240607153255449.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240607153536838.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240607161916916.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240618104109960.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240618104224235.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240618104310299.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240618105118722.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240618104903880.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240618104939757.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240605110210091.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240605115558801.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240607150229575.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240607150356041.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240607150547321.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240607152206296.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240607152421727.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240607152439459.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240607152856150.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240607153255449.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240607153536838.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240607161916916.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240618104109960.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240618104224235.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240618104310299.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240618105118722.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240618104903880.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240618104939757.png">
 <meta property="article:published_time" content="2024-06-05T03:08:52.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.347Z">
 <meta property="article:author" content="Haris">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://gblog.github.io/img/image-20240605110210091.png">
+<meta name="twitter:image" content="https://gblog.github.io/img/image-20240605110210091.png">
   
   
   
@@ -1007,7 +1007,7 @@ server &#123;
   <div class="license-box my-3">
     <div class="license-title">
       <div>day67-监控架构-Zabbix(一)</div>
-      <div>http://gblog.github.io/2024/06/05/07_85期运维/03_自动化架构/day67-监控架构-Zabbix-1/</div>
+      <div>https://gblog.github.io/2024/06/05/07_85期运维/03_自动化架构/day67-监控架构-Zabbix-1/</div>
     </div>
     <div class="license-meta">
       
@@ -1061,8 +1061,8 @@ server &#123;
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/05/31/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day66-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84-%E9%98%BF%E9%87%8C%E4%BA%91%E8%BF%9B%E9%98%B6-3/" title="day66-综合架构-阿里云进阶（三）">
-                        <span class="hidden-mobile">day66-综合架构-阿里云进阶（三）</span>
+                      <a href="/2024/05/31/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day65-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84-%E9%98%BF%E9%87%8C%E4%BA%91%E8%BF%9B%E9%98%B6-2/" title="day65-综合架构-阿里云进阶（二）">
+                        <span class="hidden-mobile">day65-综合架构-阿里云进阶（二）</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

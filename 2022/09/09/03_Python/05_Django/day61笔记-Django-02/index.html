@@ -22,35 +22,35 @@
     <meta name="description" content="“第61天Django-02学习笔记” 一、Django ORM创建表关系（TODO补完数据库回来看）表与表之间的关系分为： 一对多、多对多、一对一、没有关系 这里用一个案例来讲解： # 案例 图书表 出版社表 作者表 作者详情表  # 相互的关系 图书和出版社是一对多的关系 外键字段建在多的那一方 book 图书和作者是多对多的关系 需要创建第三张表来专门存储 作者与作者详情表是一对一  fro">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Day61-Django-02">
-<meta property="og:url" content="http://gblog.github.io/2022/09/09/03_Python/05_Django/day61%E7%AC%94%E8%AE%B0-Django-02/index.html">
+<meta property="og:url" content="https://gblog.github.io/2022/09/09/03_Python/05_Django/day61%E7%AC%94%E8%AE%B0-Django-02/index.html">
 <meta property="og:site_name" content="Haris的小站">
 <meta property="og:description" content="“第61天Django-02学习笔记” 一、Django ORM创建表关系（TODO补完数据库回来看）表与表之间的关系分为： 一对多、多对多、一对一、没有关系 这里用一个案例来讲解： # 案例 图书表 出版社表 作者表 作者详情表  # 相互的关系 图书和出版社是一对多的关系 外键字段建在多的那一方 book 图书和作者是多对多的关系 需要创建第三张表来专门存储 作者与作者详情表是一对一  fro">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://gblog.github.io/img/Django%E8%AF%B7%E6%B1%82%E5%91%A8%E6%9C%9F%E5%9B%BE.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20220913091608562.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20220913092547460.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20220913092804781.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20220913095628939.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20220913095615244.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20220913100611098.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20220913102009534.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20220913102027954.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20220913173352149.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20220913173442275.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20220913174704450.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20220913175015732.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20220913181151310.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20220913181209249.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20220913181339813.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20220913182018078.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20220913182117945.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20220913182556935.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20220913182934560.png">
+<meta property="og:image" content="https://gblog.github.io/img/Django%E8%AF%B7%E6%B1%82%E5%91%A8%E6%9C%9F%E5%9B%BE.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20220913091608562.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20220913092547460.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20220913092804781.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20220913095628939.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20220913095615244.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20220913100611098.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20220913102009534.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20220913102027954.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20220913173352149.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20220913173442275.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20220913174704450.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20220913175015732.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20220913181151310.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20220913181209249.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20220913181339813.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20220913182018078.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20220913182117945.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20220913182556935.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20220913182934560.png">
 <meta property="article:published_time" content="2022-09-09T06:44:22.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.253Z">
 <meta property="article:author" content="Haris">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://gblog.github.io/img/Django%E8%AF%B7%E6%B1%82%E5%91%A8%E6%9C%9F%E5%9B%BE.png">
+<meta name="twitter:image" content="https://gblog.github.io/img/Django%E8%AF%B7%E6%B1%82%E5%91%A8%E6%9C%9F%E5%9B%BE.png">
   
   
   
@@ -824,7 +824,7 @@ def login(request):
   <div class="license-box my-3">
     <div class="license-title">
       <div>Day61-Django-02</div>
-      <div>http://gblog.github.io/2022/09/09/03_Python/05_Django/day61笔记-Django-02/</div>
+      <div>https://gblog.github.io/2022/09/09/03_Python/05_Django/day61笔记-Django-02/</div>
     </div>
     <div class="license-meta">
       

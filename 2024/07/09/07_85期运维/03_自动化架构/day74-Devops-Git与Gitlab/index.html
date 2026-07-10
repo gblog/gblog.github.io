@@ -22,44 +22,44 @@
     <meta name="description" content="Devops架构-Git与Gitlab今日内容：  运维的发展过程介绍 CI CD基础知识 Git的安装与使用 Gitlab的安装与使用 Gitlab的备份与恢复 Gitlab的迁移与升级 Gitlab的补充说明（配置邮箱、优化方法）  一、运维的发展过程发展过程描述：  手工时代（2000-2005） 物理服务器、虚拟机 手动敲命令   自动化时代（2005-2010） shell批量管理、An">
 <meta property="og:type" content="article">
 <meta property="og:title" content="day74-Devops-Git与Gitlab">
-<meta property="og:url" content="http://gblog.github.io/2024/07/09/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day74-Devops-Git%E4%B8%8EGitlab/index.html">
+<meta property="og:url" content="https://gblog.github.io/2024/07/09/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day74-Devops-Git%E4%B8%8EGitlab/index.html">
 <meta property="og:site_name" content="Haris的小站">
 <meta property="og:description" content="Devops架构-Git与Gitlab今日内容：  运维的发展过程介绍 CI CD基础知识 Git的安装与使用 Gitlab的安装与使用 Gitlab的备份与恢复 Gitlab的迁移与升级 Gitlab的补充说明（配置邮箱、优化方法）  一、运维的发展过程发展过程描述：  手工时代（2000-2005） 物理服务器、虚拟机 手动敲命令   自动化时代（2005-2010） shell批量管理、An">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240709104915342.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240709105740025.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240709105817560.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240709110605439.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240709135758325.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240709135808833.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240709140041675.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240709230535521.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240709230653903.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240709230837858.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240709230913639.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240709230947856.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240709231303006.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240709231903053.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240709232216245.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240709232322635.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240709232510076.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240709232659060.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240709232954655.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240709233103374.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240709233208644.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240709233338545.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240709233607868.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240709234003098.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240709234149143.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240709234317655.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240709234740289.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240710160127666.png">
-<meta property="og:image" content="http://gblog.github.io/img/image-20240710160312010.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240709104915342.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240709105740025.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240709105817560.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240709110605439.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240709135758325.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240709135808833.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240709140041675.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240709230535521.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240709230653903.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240709230837858.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240709230913639.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240709230947856.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240709231303006.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240709231903053.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240709232216245.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240709232322635.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240709232510076.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240709232659060.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240709232954655.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240709233103374.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240709233208644.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240709233338545.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240709233607868.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240709234003098.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240709234149143.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240709234317655.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240709234740289.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240710160127666.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240710160312010.png">
 <meta property="article:published_time" content="2024-07-09T03:08:52.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.358Z">
 <meta property="article:author" content="Haris">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://gblog.github.io/img/image-20240709104915342.png">
+<meta name="twitter:image" content="https://gblog.github.io/img/image-20240709104915342.png">
   
   
   
@@ -1120,7 +1120,7 @@ grafana[&#39;enable&#39;] &#x3D; false</code></pre></div></figure>
   <div class="license-box my-3">
     <div class="license-title">
       <div>day74-Devops-Git与Gitlab</div>
-      <div>http://gblog.github.io/2024/07/09/07_85期运维/03_自动化架构/day74-Devops-Git与Gitlab/</div>
+      <div>https://gblog.github.io/2024/07/09/07_85期运维/03_自动化架构/day74-Devops-Git与Gitlab/</div>
     </div>
     <div class="license-meta">
       
