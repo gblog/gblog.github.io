@@ -227,15 +227,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
-        <a href="/2022/07/06/02_%E6%B5%8B%E8%AF%95/02_GCC%E7%BC%96%E8%AF%91%E6%96%B9%E6%B3%95/" target="_self">
-          GCC编译方法
+        <a href="/2022/07/06/02_%E6%B5%8B%E8%AF%95/03_%E6%B5%8B%E8%AF%95%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/" target="_self">
+          测试问题解决
         </a>
       </h2>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/06/02_%E6%B5%8B%E8%AF%95/02_GCC%E7%BC%96%E8%AF%91%E6%96%B9%E6%B3%95/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/06/02_%E6%B5%8B%E8%AF%95/03_%E6%B5%8B%E8%AF%95%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/" target="_self">
         <div>
-          GCC编译方法一、GCC编译1.1 依赖软件编译建议将依赖库和GCC安装到相同目录，方便设置环境变量，本文安装路径为usr/local/gcc1130 编译安装gmp .&#x2F;configure --prefix&#x3D;&#x2F;usr&#x2F;local&#x2F;gcc1130 make  make install  编译安装mpfr .&#x2F;configure --pre
+          测试问题解决1 找不到so库的解决方法# 方法一： 	设置LD_LIBRARY_PATH # 方法二：  	vim &#x2F;etc&#x2F;ld.so.conf  	----------------------------------------------------  	include ld.so.conf.d&#x2F;*.conf 	&#x2F;opt&#x2F;intel&#x2F
         </div>
       </a>
 
@@ -532,15 +532,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
-        <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/03-NFS%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA/" target="_self">
-          运维之综合架构--03-NFS服务器搭建
+        <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/02-Rsync%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA/" target="_self">
+          运维之综合架构--02--Rsync服务器搭建
         </a>
       </h2>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/03-NFS%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/02-Rsync%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA/" target="_self">
         <div>
-          学习笔记   一、NFS简介 NFS是Network File System的缩写及网络文件系统。NFS主要功能是通过局域网络让不同的主机系统之间可以共享文件或目录。NFS系统和Windows网络共享、网络驱动器类似, 只不过windows用于局域网, NFS用于企业集群架构中如果是大型网站, 会用到更复杂的分布式文件系统FastDFS（音频、小说、视频）,glusterfs（iso镜像）,HD
+          二、Rsync与数据备份2.1  备份概念为什么要做备份？ 数据非常的重要 保证数据不丢失 便于快速的恢复  备份方式 完全备份，每次都进行全部备份 (效率低下, 占用空间) 增量备份，仅备份客户端与服务端差异的部分 (提高备份效率,节省空间, 适合异地备份 )  用什么工具做备份？ scp  	网络之间的拷贝，全量拷贝的方式  （ssh协议） rsync	远程同步（增量）  2.2 rsync的
         </div>
       </a>
 
@@ -593,15 +593,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
-        <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/02-Rsync%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA/" target="_self">
-          运维之综合架构--02--Rsync服务器搭建
+        <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/03-NFS%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA/" target="_self">
+          运维之综合架构--03-NFS服务器搭建
         </a>
       </h2>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/02-Rsync%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/03-NFS%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA/" target="_self">
         <div>
-          二、Rsync与数据备份2.1  备份概念为什么要做备份？ 数据非常的重要 保证数据不丢失 便于快速的恢复  备份方式 完全备份，每次都进行全部备份 (效率低下, 占用空间) 增量备份，仅备份客户端与服务端差异的部分 (提高备份效率,节省空间, 适合异地备份 )  用什么工具做备份？ scp  	网络之间的拷贝，全量拷贝的方式  （ssh协议） rsync	远程同步（增量）  2.2 rsync的
+          学习笔记   一、NFS简介 NFS是Network File System的缩写及网络文件系统。NFS主要功能是通过局域网络让不同的主机系统之间可以共享文件或目录。NFS系统和Windows网络共享、网络驱动器类似, 只不过windows用于局域网, NFS用于企业集群架构中如果是大型网站, 会用到更复杂的分布式文件系统FastDFS（音频、小说、视频）,glusterfs（iso镜像）,HD
         </div>
       </a>
 
@@ -837,15 +837,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
-        <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/08-Nginx(%E4%BA%8C)%E5%B8%B8%E7%94%A8%E5%AE%98%E6%96%B9%E6%A8%A1%E5%9D%97/" target="_self">
-          运维之综合架构--07--Nginx(二)常用官方模块
+        <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/07-Nginx(%E4%B8%80)%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/" target="_self">
+          运维之综合架构--07--Nginx(一)安装与配置
         </a>
       </h2>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/08-Nginx(%E4%BA%8C)%E5%B8%B8%E7%94%A8%E5%AE%98%E6%96%B9%E6%A8%A1%E5%9D%97/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/07-Nginx(%E4%B8%80)%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/" target="_self">
         <div>
-          本篇主要介绍Nginx的常用官方模块     一、目录索引-autoindex1.1 使用方法1按此方法设置后，访问网页http://module.test.com将显示文件目录 实际目录位于: &#x2F;module a.准备配置文件 [root@web01 module]# cat &#x2F;etc&#x2F;nginx&#x2F;conf.d&#x2F;autoindex.con
+          一、Nginx简介参考网站：https://zhuanlan.zhihu.com/p/266153320 二、Nginx安装​	nginx有两种安装方式，yum安装和源码编译安装 2.1 yum安装（epel源）vim &#x2F;etc&#x2F;yum.repos.d&#x2F;nginx.repo [nginx] name&#x3D;nginx repo baseurl&#x3D;http:
         </div>
       </a>
 
@@ -898,15 +898,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
-        <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/07-Nginx(%E4%B8%80)%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/" target="_self">
-          运维之综合架构--07--Nginx(一)安装与配置
+        <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/08-Nginx(%E4%BA%8C)%E5%B8%B8%E7%94%A8%E5%AE%98%E6%96%B9%E6%A8%A1%E5%9D%97/" target="_self">
+          运维之综合架构--07--Nginx(二)常用官方模块
         </a>
       </h2>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/07-Nginx(%E4%B8%80)%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/08-Nginx(%E4%BA%8C)%E5%B8%B8%E7%94%A8%E5%AE%98%E6%96%B9%E6%A8%A1%E5%9D%97/" target="_self">
         <div>
-          一、Nginx简介参考网站：https://zhuanlan.zhihu.com/p/266153320 二、Nginx安装​	nginx有两种安装方式，yum安装和源码编译安装 2.1 yum安装（epel源）vim &#x2F;etc&#x2F;yum.repos.d&#x2F;nginx.repo [nginx] name&#x3D;nginx repo baseurl&#x3D;http:
+          本篇主要介绍Nginx的常用官方模块     一、目录索引-autoindex1.1 使用方法1按此方法设置后，访问网页http://module.test.com将显示文件目录 实际目录位于: &#x2F;module a.准备配置文件 [root@web01 module]# cat &#x2F;etc&#x2F;nginx&#x2F;conf.d&#x2F;autoindex.con
         </div>
       </a>
 
