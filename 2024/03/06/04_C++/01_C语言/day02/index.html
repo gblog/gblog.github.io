@@ -1,0 +1,866 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Haris">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="“C语言部分-Day02” 一、格式化输入和输出1.1 格式化输出格式化输出代码 int num &#x3D; 10; printf(&quot;num &#x3D;  %d\n&quot;, num);  其中%d代表以整型形式解释这篇内存空间，并以十进制方式输出 1.1.1 格式化输出的转换说明格式：%m.pX X：以何种方式解释这片内存空间，如%d, %f m：最大字段宽度，可以省略不写 p">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C语言-Day02">
+<meta property="og:url" content="https://gblog.github.io/2024/03/06/04_C++/01_C%E8%AF%AD%E8%A8%80/day02/index.html">
+<meta property="og:site_name" content="Haris的小站">
+<meta property="og:description" content="“C语言部分-Day02” 一、格式化输入和输出1.1 格式化输出格式化输出代码 int num &#x3D; 10; printf(&quot;num &#x3D;  %d\n&quot;, num);  其中%d代表以整型形式解释这篇内存空间，并以十进制方式输出 1.1.1 格式化输出的转换说明格式：%m.pX X：以何种方式解释这片内存空间，如%d, %f m：最大字段宽度，可以省略不写 p">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-03-06T07:36:22.000Z">
+<meta property="article:modified_time" content="2026-07-10T06:20:16.271Z">
+<meta property="article:author" content="Haris">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>C语言-Day02 - Haris的小站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"gblog.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Haris的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="C语言-Day02"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-03-06 15:36" pubdate>
+          2024年3月6日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          13 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">C语言-Day02</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>“C语言部分-Day02”</p>
+<h1 id="一、格式化输入和输出"><a href="#一、格式化输入和输出" class="headerlink" title="一、格式化输入和输出"></a>一、格式化输入和输出</h1><h2 id="1-1-格式化输出"><a href="#1-1-格式化输出" class="headerlink" title="1.1 格式化输出"></a>1.1 格式化输出</h2><p>格式化输出代码</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">int num &#x3D; 10;
+printf(&quot;num &#x3D;  %d\n&quot;, num);</code></pre></div></figure>
+
+<p>其中<code>%d</code>代表以整型形式解释这篇内存空间，并以十进制方式输出</p>
+<h3 id="1-1-1-格式化输出的转换说明"><a href="#1-1-1-格式化输出的转换说明" class="headerlink" title="1.1.1 格式化输出的转换说明"></a>1.1.1 格式化输出的转换说明</h3><p>格式：<code>%m.pX</code></p>
+<p>X：以何种方式解释这片内存空间，如%d, %f</p>
+<p>m：最大字段宽度，可以省略不写</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">printf(&quot;%4d\n&quot;, 1234);	&#x2F;&#x2F; 输出：1234，正常按字段宽度输出
+printf(&quot;%4d\n&quot;, 123);	&#x2F;&#x2F; 输出： 123，默认右对齐输出，少的字段用空格填充
+printf(&quot;%-4d\n&quot;, 123);	&#x2F;&#x2F; 输出：123，改为左对齐输出
+printf(&quot;%4d\n&quot;, 12345);	&#x2F;&#x2F; 输出：12345，可以自动扩展宽度</code></pre></div></figure>
+
+<p>p：精度，用于控制浮点数的小数位</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">printf(&quot;%f\n&quot;, 3.1415926);	&#x2F;&#x2F; 输出: 3.141592, 默认6位小数
+printf(&quot;%.0f\n&quot;, 3.1415926); &#x2F;&#x2F; 输出：3
+printf(&quot;%.3f\n&quot;, 3.1415926); &#x2F;&#x2F; 输出：3.141</code></pre></div></figure>
+
+
+
+<h2 id="1-2-格式化输入"><a href="#1-2-格式化输入" class="headerlink" title="1.2 格式化输入"></a>1.2 格式化输入</h2><p>使用<code>scanf</code>格式化输入的代码</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">int num &#x3D; 0;
+int success &#x3D; 0;
+printf(&quot;请输入一个整数: &quot;);
+success &#x3D; scanf(&quot;%d&quot;, &amp;num);	&#x2F;&#x2F; 返回值为处理成功的个数</code></pre></div></figure>
+
+<p>对于字符串：</p>
+<ul>
+<li>普通字符：精确匹配</li>
+<li>空白字符：可以匹配任意多个【前置】空白字符，包括0个</li>
+</ul>
+<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">char name[60] &#x3D; &quot;&quot;;
+printf(&quot;请输入一串字符: &quot;);
+scanf(&quot;%s&quot;, &amp;name);
+printf(&quot;name &#x3D; %s\n&quot;, name);</code></pre></div></figure>
+
+<p>测试</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">输入：haris
+输出：name &#x3D; haris
+    
+输入：haris gong
+输出：name &#x3D; haris	&#x2F;&#x2F; 空格后面的内容被忽略了
+
+输入：             haris
+输出：name &#x3D; haris	&#x2F;&#x2F; 前面的空格不影响</code></pre></div></figure>
+
+
+
+<h3 id="1-2-1-格式化输入的练习"><a href="#1-2-1-格式化输入的练习" class="headerlink" title="1.2.1 格式化输入的练习"></a>1.2.1 格式化输入的练习</h3><p>练习一：了解分割</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">scanf(&quot;%d%d%f%f&quot;, &amp;i, &amp;j, &amp;f, &amp;g);
+printf(&quot;i &#x3D; %d, j &#x3D; %d, f &#x3D; %f, g &#x3D; %f\n&quot;, i, j, f, g);
+
+&#x2F;&#x2F; 输入
+1-20.3-4.0e3
+    
+&#x2F;&#x2F; 输出
+i &#x3D; 1, j &#x3D; -20, f &#x3D; 0.300000, g &#x3D; -4000.000000</code></pre></div></figure>
+
+
+
+<p>练习二：空格的影响</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">int i, j;
+scanf(&quot;%d%d&quot;, &amp;i, &amp;j);
+printf(&quot;i &#x3D; %d, j &#x3D; %d&quot;, i, j);
+
+&#x2F;&#x2F; 输入
+ 5 &#x2F; 96
+     
+&#x2F;&#x2F; 输出
+i &#x3D; 5, j &#x3D; -858993460</code></pre></div></figure>
+
+<p>为什么j的值会异常？因为scanf只匹配前面的空白字符，<code>空5空/空96</code>在第二个<code>空</code>时已经没有匹配上了，此时scanf函数已返回，后面的字符也不会匹配</p>
+<h1 id="二、数据类型"><a href="#二、数据类型" class="headerlink" title="二、数据类型"></a>二、数据类型</h1><h2 id="2-1-整数类型"><a href="#2-1-整数类型" class="headerlink" title="2.1 整数类型"></a>2.1 整数类型</h2><p>整数类型分为：</p>
+<p>​	有符号整数：short、int、long、long long 等</p>
+<p>​	无符号整数：unsigned short、unsigned int、等</p>
+<blockquote>
+<p>注意事项：</p>
+<p>​	1、在C语言中不明确规定个类型的字节大小，跟随机器不同有所变化</p>
+<p>​	2、但C语言规定了各种类型的最小大小，如int类型，最小2字节</p>
+<p>​	3、正常整型类型的大小排序符合基本规则：short &lt; int &lt; long &lt; long long</p>
+</blockquote>
+<p>在C语言中定义一个整数的代码:</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">&#x2F;&#x2F; 有符号整数
+int num  &#x3D; -10;
+
+&#x2F;&#x2F; 无符号整数
+unsigned int num &#x3D; 10;</code></pre></div></figure>
+
+
+
+<h3 id="2-1-1-整数编码（重要）"><a href="#2-1-1-整数编码（重要）" class="headerlink" title="2.1.1 整数编码（重要）"></a>2.1.1 整数编码（重要）</h3><p>编码：1001 0011</p>
+<p>对于无符号(unsigned)整数，该编码代表147</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">2^7 + 0 + 0 + 2^4 + 0 + 0 + 2^1 + 2^0 &#x3D; 147</code></pre></div></figure>
+
+<p>对于有符号整数，该编码代表-109</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">1001 0011
+&#x2F;&#x2F; 第一个1代表负号权重
+    
+-2^7 + 0 + 0 + 2^4 + 0 + 0 + 2^1 + 2^0 &#x3D; -109</code></pre></div></figure>
+
+<p>为什么有符号整数会采用补码的方式？有利于CPU计算</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">可以利用加法器做减法运算：a - b &#x3D; a + (-b)</code></pre></div></figure>
+
+
+
+<h3 id="2-1-2-整数的读写"><a href="#2-1-2-整数的读写" class="headerlink" title="2.1.2 整数的读写"></a>2.1.2 整数的读写</h3><p>读写整数：</p>
+<ul>
+<li>%u	无符号十进制整数</li>
+<li>%o	无符号八进制整数</li>
+<li>%x 	无符号十六进制整数</li>
+<li>%d	有符号十进制整数</li>
+</ul>
+<p>读写短整数：</p>
+<ul>
+<li>在u、o、x、d前面加h，如<code>%hd</code></li>
+</ul>
+<p>读写长整数：</p>
+<ul>
+<li>在u、o、x、d前面加l，如<code>%ld</code></li>
+</ul>
+<p>读写长整数：</p>
+<ul>
+<li>在u、o、x、d前面加ll，如<code>%lld</code></li>
+</ul>
+<h2 id="2-2-浮点数类型"><a href="#2-2-浮点数类型" class="headerlink" title="2.2 浮点数类型"></a>2.2 浮点数类型</h2><p>浮点类型分为：</p>
+<ul>
+<li>float	单精度</li>
+<li>double 	双精度</li>
+<li>long double	用于高精度计算，一般用不到</li>
+</ul>
+<h3 id="2-2-1-浮点常量"><a href="#2-2-1-浮点常量" class="headerlink" title="2.2.1 浮点常量"></a>2.2.1 浮点常量</h3><p>浮点数有多种表示方式，要么包含小数点，要么包含字母，如</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">57.0
+57.
+5.70e1
+.57e2
+570e-1</code></pre></div></figure>
+
+<p>浮点常量默认是double类型，如需要表示float，需要在后面加上<code>f</code></p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">float f;
+f &#x3D; 1.0f;	&#x2F;&#x2F; 不加f默认就是double类型</code></pre></div></figure>
+
+
+
+<h3 id="2-2-2-浮点数的读写"><a href="#2-2-2-浮点数的读写" class="headerlink" title="2.2.2 浮点数的读写"></a>2.2.2 浮点数的读写</h3><ul>
+<li>%f	float类型读写</li>
+<li>%lf	double类型读写</li>
+</ul>
+<h2 id="2-3-字符类型"><a href="#2-3-字符类型" class="headerlink" title="2.3 字符类型"></a>2.3 字符类型</h2><p>字符类型的定义</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">char c &#x3D; &#39;a&#39;;</code></pre></div></figure>
+
+<p>char类型大小为1字节，并采用ASC码表示</p>
+<blockquote>
+<p>注意事项：</p>
+<p>​	C语言把字符类型当做整型来使用，因此可以进行算术计算，如</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">char c &#x3D; &#39;a&#39;;
+printf(&quot;%d\n&quot;, c);	&#x2F;&#x2F; 输出97
+printf(&quot;%d\n&quot;, c + 8);	&#x2F;&#x2F; 输出105
+printf(&quot;%c\n&quot;, c + 8);	&#x2F;&#x2F; 输出&#39;i&#39;,对标ASC码</code></pre></div></figure>
+</blockquote>
+<h3 id="2-3-1-转义序列"><a href="#2-3-1-转义序列" class="headerlink" title="2.3.1 转义序列"></a>2.3.1 转义序列</h3><p>转义序列，是不能直接输入的字符，带有特殊功能，分为两种：</p>
+<p>字符转义序列：</p>
+<ul>
+<li>\a	alert</li>
+<li>\n 	newline</li>
+<li>\b	backspce</li>
+</ul>
+<p>数字转义序列：</p>
+<ul>
+<li>八进制表示形式，以<code>\</code>开头，后面最多接3个8进制数</li>
+<li>十六进制表示形式，以<code>\x</code>开头，后面接十六进制数</li>
+</ul>
+<h3 id="2-3-2-读写字符"><a href="#2-3-2-读写字符" class="headerlink" title="2.3.2 读写字符"></a>2.3.2 读写字符</h3><p><strong>方法一：</strong>使用<code>scanf</code>和<code>prinf</code>函数输入输出</p>
+<p>字符的读写使用<code>%c</code>，使用的时候注意它默认不会忽略空格</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">char c &#x3D; &#39;a&#39;;
+&#x2F;&#x2F; 一般用法
+scanf(&quot;%c&quot;, &amp;c);	&#x2F;&#x2F; 输入:空格空格t， 输出：空格
+&#x2F;&#x2F; 推荐用法
+scanf(&quot; %c&quot;, &amp;c);	&#x2F;&#x2F; 输入:空格空格t， 输出：t， 将自动忽略前面的空格</code></pre></div></figure>
+
+
+
+<p><strong>方法二：</strong>使用<code>getchar</code>和<code>putchar</code>函数输入输出</p>
+<p>一般使用：</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">char c &#x3D; &#39;a&#39;;
+c &#x3D; getchar();	&#x2F;&#x2F; 注意，也不会忽视前面的空格
+putchar(c);</code></pre></div></figure>
+
+<p>惯用法：</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">while(getchar() !&#x3D; &#39;\n&#39;); &#x2F;&#x2F; 用于读取一行剩余的字符</code></pre></div></figure>
+
+
+
+<h2 id="2-4-布尔类型"><a href="#2-4-布尔类型" class="headerlink" title="2.4 布尔类型"></a>2.4 布尔类型</h2><p>布尔类型从C99开始定义，放在<code>&lt;stdbool.h&gt;</code>头文件中</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">#include &lt;stdbool.h&gt;
+
+int main(void) &#123;
+	bool flag1, flag2, flag3, flag4, flag5;
+	&#x2F;&#x2F; 正常赋值
+	flag1 &#x3D; true;	&#x2F;&#x2F; 1
+	flag2 &#x3D; false;	&#x2F;&#x2F; 0
+
+	&#x2F;&#x2F; 赋值数字会怎样？
+	flag3 &#x3D; 1999;	&#x2F;&#x2F; 1
+	flag4 &#x3D; -19321;	&#x2F;&#x2F; 1
+	flag5 &#x3D; 0;	&#x2F;&#x2F; 0
+&#125;</code></pre></div></figure>
+
+<blockquote>
+<p>注意事项：</p>
+<p>​	bool类型赋值，如赋值非零数，则为true，只有当赋值为0时，才是false</p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/C/" class="category-chain-item">C++</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/C/01-C%E8%AF%AD%E8%A8%80/" class="category-chain-item">01_C语言</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>C语言-Day02</div>
+      <div>https://gblog.github.io/2024/03/06/04_C++/01_C语言/day02/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Haris</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年3月6日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/03/07/04_C++/01_C%E8%AF%AD%E8%A8%80/day03/" title="C语言-Day03">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">C语言-Day03</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/01/30/02_%E6%B5%8B%E8%AF%95/08_%E9%B2%B2%E9%B9%8F%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="鲲鹏服务器性能测试最佳实践">
+                        <span class="hidden-mobile">鲲鹏服务器性能测试最佳实践</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

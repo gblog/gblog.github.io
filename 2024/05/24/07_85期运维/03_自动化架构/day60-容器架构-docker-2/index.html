@@ -1,0 +1,1269 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Haris">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="容器架构-Docker-02今日内容：  Docker容器管理  一、Docker容器管理🌟🌟运行起来的镜像可以称为容器，1个容器相当于是1个进程。  以docker container开头的指令一般表示容器管理指令，部分指令container可以省略   # 完整写法 docker container ps # 缩略写法 docker ps  1.1 容器管理的操作1.1.1 查看容器[ro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="day60-容器架构-Docker（二）">
+<meta property="og:url" content="https://gblog.github.io/2024/05/24/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day60-%E5%AE%B9%E5%99%A8%E6%9E%B6%E6%9E%84-docker-2/index.html">
+<meta property="og:site_name" content="Haris的小站">
+<meta property="og:description" content="容器架构-Docker-02今日内容：  Docker容器管理  一、Docker容器管理🌟🌟运行起来的镜像可以称为容器，1个容器相当于是1个进程。  以docker container开头的指令一般表示容器管理指令，部分指令container可以省略   # 完整写法 docker container ps # 缩略写法 docker ps  1.1 容器管理的操作1.1.1 查看容器[ro">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240524154601603.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240524161534148.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240524161910037.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240524162640454.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240524164011370.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240524170033688.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20240528140249375.png">
+<meta property="article:published_time" content="2024-05-24T05:08:52.000Z">
+<meta property="article:modified_time" content="2026-07-10T06:20:16.338Z">
+<meta property="article:author" content="Haris">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gblog.github.io/img/image-20240524154601603.png">
+  
+  
+  
+  <title>day60-容器架构-Docker（二） - Haris的小站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"gblog.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Haris的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="day60-容器架构-Docker（二）"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-05-24 13:08" pubdate>
+          2024年5月24日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          31 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">day60-容器架构-Docker（二）</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="容器架构-Docker-02"><a href="#容器架构-Docker-02" class="headerlink" title="容器架构-Docker-02"></a>容器架构-Docker-02</h1><p>今日内容：</p>
+<ul>
+<li>Docker容器管理</li>
+</ul>
+<h1 id="一、Docker容器管理🌟🌟"><a href="#一、Docker容器管理🌟🌟" class="headerlink" title="一、Docker容器管理🌟🌟"></a>一、Docker容器管理🌟🌟</h1><p>运行起来的镜像可以称为容器，1个容器相当于是1个进程。 </p>
+<p>以<code>docker container</code>开头的指令一般表示容器管理指令，部分指令container可以省略  </p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 完整写法
+docker container ps
+# 缩略写法
+docker ps</code></pre></div></figure>
+
+<h2 id="1-1-容器管理的操作"><a href="#1-1-容器管理的操作" class="headerlink" title="1.1 容器管理的操作"></a>1.1 容器管理的操作</h2><h3 id="1-1-1-查看容器"><a href="#1-1-1-查看容器" class="headerlink" title="1.1.1 查看容器"></a>1.1.1 查看容器</h3><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@docker01[ ~]#docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED       STATUS       PORTS                               NAMES
+50715f7f85a3   nginx     &quot;&#x2F;docker-entrypoint.…&quot;   4 hours ago   Up 4 hours   0.0.0.0:80-&gt;80&#x2F;tcp, :::80-&gt;80&#x2F;tcp   bold_bartik
+
+# 完整写法
+[root@docker01[ ~]#docker container ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED       STATUS       PORTS                               NAMES
+50715f7f85a3   nginx     &quot;&#x2F;docker-entrypoint.…&quot;   4 hours ago   Up 4 hours   0.0.0.0:80-&gt;80&#x2F;tcp, :::80-&gt;80&#x2F;tcp   bold_bartik</code></pre></div></figure>
+
+<p>案例：查看当前运行中的容器，查看下80端口是否被占用</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@docker01[ ~]#docker ps -a	
+CONTAINER ID   IMAGE     COMMAND                  CREATED       STATUS       PORTS                               NAMES
+50715f7f85a3   nginx     &quot;&#x2F;docker-entrypoint.…&quot;   5 hours ago   Up 5 hours   0.0.0.0:80-&gt;80&#x2F;tcp, :::80-&gt;80&#x2F;tcp   bold_bartik
+
+# 可见80端口已被占用</code></pre></div></figure>
+
+<h3 id="1-1-2-创建-运行容器"><a href="#1-1-2-创建-运行容器" class="headerlink" title="1.1.2 创建&#x2F;运行容器"></a>1.1.2 创建&#x2F;运行容器</h3><p>创建容器（一般直接用run）</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker create 创建容器 --name</code></pre></div></figure>
+
+<p>运行容器</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker run -d -it -p 80:80 nginx:latest</code></pre></div></figure>
+
+<blockquote>
+<p>选项说明：</p>
+<ul>
+<li>-d 容器后台运行.</li>
+<li>-p 端口映射,外部或其他服务器想要访问容器内部的某个服务的端口. </li>
+<li>-p 外部用于访问的端口:容器内部服务的端口</li>
+<li>–name 指定容器的名字  </li>
+<li>-i 以交互式模式运行容器，通常与<code>-t</code>一起</li>
+<li>-i 为程序重新分配一个伪输入终端，通常与<code>-i</code>一起</li>
+</ul>
+<p>docker run 的背后做了很多事情：</p>
+<ul>
+<li>docker create 创建容器.</li>
+<li>docker start 启动容器.</li>
+<li>docker stop 关闭容器. #向容器中的主进程,pid 1 进程发出信号(kill),关闭.</li>
+<li>docker restart重启重启</li>
+</ul>
+</blockquote>
+<p><strong>案例01</strong>：创建一个nginx-alpine的容器并运行</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 创建
+[root@docker01[ ~]#docker run -d -p 80:80 --name test_nginx_alpine_v1 nginx:stable-alpine 
+cd4d36318002007a8354146d376e85d1a711ddfdfeb24d1a393258347844f0fa
+
+# 查看
+[root@docker01[ ~]#docker ps -a
+CONTAINER ID   IMAGE                 COMMAND                  CREATED          STATUS          PORTS                               NAMES
+cd4d36318002   nginx:stable-alpine   &quot;&#x2F;docker-entrypoint.…&quot;   31 seconds ago   Up 31 seconds   0.0.0.0:80-&gt;80&#x2F;tcp, :::80-&gt;80&#x2F;tcp   test_nginx_alpine_v1</code></pre></div></figure>
+
+<p><strong>案例02</strong>：创建centos容器，并交互运行，进入容器内部</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># run 创建并运行centos容器
+[root@docker01[ ~]#docker run -it --name &quot;my_docker_centos&quot; centos
+Unable to find image &#39;centos:latest&#39; locally
+latest: Pulling from library&#x2F;centos
+a1d0c7532777: Pull complete 
+Digest: sha256:a27fd8080b517143cbbbab9dfb7c8571c40d67d534bbdee55bd6c473f432b177
+Status: Downloaded newer image for centos:latest
+# 因为-it选项的使用，已经进入容器内部，查看系统版本
+[root@631cf5e874ba &#x2F;]# cat &#x2F;etc&#x2F;system-release
+CentOS Linux release 8.4.2105</code></pre></div></figure>
+
+<blockquote>
+<p>注意事项：</p>
+<p>以<code>-it</code>运行的容器，如果退出了会怎么样？</p>
+<ul>
+<li>容器退出后，直接关闭</li>
+</ul>
+<p><strong>这也是<code>-it</code>的缺点！</strong></p>
+</blockquote>
+<h3 id="1-1-3-启动-停止容器"><a href="#1-1-3-启动-停止容器" class="headerlink" title="1.1.3 启动&#x2F;停止容器"></a>1.1.3 启动&#x2F;停止容器</h3><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 启动容器
+docker start
+# 停止容器
+docker stop 
+# 重启容器
+docker restart 
+# 强制停止容器
+docker kill </code></pre></div></figure>
+
+<p>案例：以上方法均在容器上用一遍</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@docker01[ ~]#docker stop cd4d36318002
+cd4d36318002
+[root@docker01[ ~]#docker restart cd4d36318002
+cd4d36318002
+[root@docker01[ ~]#docker start cd4d36318002
+cd4d36318002
+[root@docker01[ ~]#docker kill -s 9 cd4d36318002
+# -s表示信号 -s 9 等于 kill -9 pid强制结束
+cd4d36318002
+[root@docker01[ ~]#docker ps -a
+CONTAINER ID   IMAGE                 COMMAND                  CREATED              STATUS                        PORTS     NAMES
+cd4d36318002   nginx:stable-alpine   &quot;&#x2F;docker-entrypoint.…&quot;   About a minute ago   Exited (137) 11 seconds ago             test_nginx_alpine_v1</code></pre></div></figure>
+
+
+
+<h3 id="1-1-4-删除容器"><a href="#1-1-4-删除容器" class="headerlink" title="1.1.4 删除容器"></a>1.1.4 删除容器</h3><p>单个删除</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker rm</code></pre></div></figure>
+
+<p>批量删除</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker rm -f &#96;docker ps -a -q&#96;</code></pre></div></figure>
+
+<p>案例：删除已有的容器</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 找到一个容器
+[root@docker01[ ~]#docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED       STATUS       PORTS                               NAMES
+50715f7f85a3   nginx     &quot;&#x2F;docker-entrypoint.…&quot;   5 hours ago   Up 5 hours   0.0.0.0:80-&gt;80&#x2F;tcp, :::80-&gt;80&#x2F;tcp   bold_bartik
+
+# 删除，不成功，因为容器正在运行
+[root@docker01[ ~]#docker  rm 50715f7f85a3
+Error response from daemon: cannot remove container &quot;&#x2F;bold_bartik&quot;: container is running: stop the container before removing or force remove
+
+# -f强制删除
+[root@docker01[ ~]#docker  rm -f 50715f7f85a3</code></pre></div></figure>
+
+<h3 id="1-1-5-进入正在运行的容器"><a href="#1-1-5-进入正在运行的容器" class="headerlink" title="1.1.5 进入正在运行的容器"></a>1.1.5 进入正在运行的容器</h3><p>方法一<code>exec</code>：将分配一个新的终端</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker exec -it 容器id&#x2F;容器名字 &#x2F;bin&#x2F;bash(&#x2F;bin&#x2F;sh)</code></pre></div></figure>
+
+<p>方法二<code>attach</code>：使用相同的终端</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker attach
+
+# 暂时退出：ctrl + p, ctrl + q</code></pre></div></figure>
+
+<p>案例：exec进入已经运行的容器</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 查看已有容器
+[root@docker01[ ~]#docker ps
+CONTAINER ID   IMAGE                 COMMAND                  CREATED          STATUS          PORTS                               NAMES
+5251e5df489e   nginx:stable-alpine   &quot;&#x2F;docker-entrypoint.…&quot;   19 minutes ago   Up 19 minutes   0.0.0.0:80-&gt;80&#x2F;tcp, :::80-&gt;80&#x2F;tcp   test_nginx_alpine_v1
+# 进入容器
+[root@docker01[ ~]#docker exec -it test_nginx_alpine_v1 &#x2F;bin&#x2F;sh
+&#x2F; # ls
+bin                   etc                   mnt                   run                   tmp
+dev                   home                  opt                   sbin                  usr
+docker-entrypoint.d   lib                   proc                  srv                   var
+docker-entrypoint.sh  media                 root                  sys
+# 修改nginx首页内容
+&#x2F; # cd &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html
+&#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html # echo &quot;New Page&quot; &gt; &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html&#x2F;index.html </code></pre></div></figure>
+
+<p>测试访问</p>
+<p><img src="/../../../img/image-20240524154601603.png" srcset="/img/loading.gif" lazyload alt="image-20240524154601603"></p>
+<h4 id="exec和attach的区别"><a href="#exec和attach的区别" class="headerlink" title="exec和attach的区别"></a>exec和attach的区别</h4><table>
+<thead>
+<tr>
+<th>docker container 指令</th>
+<th>exec</th>
+<th>attach</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>共同点</td>
+<td>连接到容器</td>
+<td>连接到容器</td>
+</tr>
+<tr>
+<td>区别</td>
+<td>连接的时候创建终端</td>
+<td>容器要有终端(容器进程中要有个&#x2F;bin&#x2F;bash 或&#x2F;bin&#x2F;sh) 只能连接到已有的终端中.</td>
+</tr>
+<tr>
+<td>区别</td>
+<td>不同的exec连接互不影响,</td>
+<td>共用,所有连接都一样</td>
+</tr>
+</tbody></table>
+<h3 id="1-1-6-查看容器信息与状态"><a href="#1-1-6-查看容器信息与状态" class="headerlink" title="1.1.6 查看容器信息与状态"></a>1.1.6 查看容器信息与状态</h3><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker inspect
+docker stats
+docker top</code></pre></div></figure>
+
+
+
+<h3 id="1-1-7-容器夯住才能一直运行🌟"><a href="#1-1-7-容器夯住才能一直运行🌟" class="headerlink" title="1.1.7 容器夯住才能一直运行🌟"></a>1.1.7 容器夯住才能一直运行🌟</h3><p>体会下面2个命令的区别：</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker run -d --name &quot;oldboy_centos_v2&quot; centos
+docker run -d --name &quot;oldboy_centos_v2&quot; centos sleep 20</code></pre></div></figure>
+
+<p>执行后，没加<code>sleep</code>的容器刚运行就消失了，加了<code>sleep</code>的容器维持了20秒</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@docker01[ ~]#docker run -d --name &quot;oldboy_centos_v2&quot; centos
+fb8ba4d7a6c5dceffc6123953b2ad5235b0b13454ea7a4b0d072bf3fff0201d0
+[root@docker01[ ~]#docker ps	
+CONTAINER ID   IMAGE                 COMMAND                  CREATED          STATUS          PORTS                               NAMES
+5251e5df489e   nginx:stable-alpine   &quot;&#x2F;docker-entrypoint.…&quot;   12 minutes ago   Up 12 minutes   0.0.0.0:80-&gt;80&#x2F;tcp, :::80-&gt;80&#x2F;tcp   test_nginx_alpine_v1
+# centos容器不见了
+
+[root@docker01[ ~]#docker run -d --name &quot;oldboy_centos_v3&quot; centos sleep 20
+bed3239b9850cda3235c73eda64472b8e3bd233ac3a40ede82ddec3acd24d801
+[root@docker01[ ~]#docker run -ps
+CONTAINER ID   IMAGE                 COMMAND                  CREATED          STATUS          PORTS                               NAMES
+bed3239b9850   centos                &quot;sleep 20&quot;               2 seconds ago    Up 1 second                                         oldboy_centos_v3
+5251e5df489e   nginx:stable-alpine   &quot;&#x2F;docker-entrypoint.…&quot;   12 minutes ago   Up 12 minutes   0.0.0.0:80-&gt;80&#x2F;tcp, :::80-&gt;80&#x2F;tcp   test_nginx_alpine_v1
+# centos容器还在</code></pre></div></figure>
+
+<p>这是因为容器任务执行结束后，它也就自动退出了，因此 ，想要容器在后台（-d）一直运行，那么就要对容器运行的时候<strong>加上初始命令，使容器夯住</strong>(阻塞&#x2F;前台运行)</p>
+<p>例如：如何后台持续运行纯净系统的容器（Centos）</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 通过-itd选项来指定命令解释器持续运行
+[root@docker01[ ~]#docker run -itd --name oldboy_centos_v6 centos
+c4a59405f253ba62bfaa4f7431be2d21bbd8ca73ce174d27bb8b9f8475c0e872
+
+# 容器还在
+[root@docker01[ ~]#docker ps -a
+CONTAINER ID   IMAGE                 COMMAND                  CREATED          STATUS                      PORTS                               NAMES
+c4a59405f253   centos                &quot;&#x2F;bin&#x2F;bash&quot;              13 seconds ago   Up 13 seconds                                                   oldboy_centos_v6
+...
+
+# 进入容器
+[root@docker01[ ~]#docker exec -it oldboy_centos_v6 &#x2F;bin&#x2F;bash
+[root@c4a59405f253 &#x2F;]# ls
+bin  dev  etc  home  lib  lib64  lost+found  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var</code></pre></div></figure>
+
+
+
+<h3 id="1-1-8-容器传输文件"><a href="#1-1-8-容器传输文件" class="headerlink" title="1.1.8 容器传输文件"></a>1.1.8 容器传输文件</h3><p>怎么跟容器互相传输文件？使用<code>docker cp</code>命令</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th>源</th>
+<th>目标</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>宿主机–&gt;容器 上传</td>
+<td>docker cp</td>
+<td>路径或文件</td>
+<td>容器:容器中目录</td>
+</tr>
+<tr>
+<td>容器–&gt;宿主机 下载</td>
+<td>docker cp</td>
+<td>容器:容器中目录</td>
+<td>路径或文件</td>
+</tr>
+</tbody></table>
+<p>案例01：从容器下载文件</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 拷贝容器中的hosts文件下来
+[root@docker01[ ~]#docker cp oldboy_centos_v6:&#x2F;etc&#x2F;hosts .&#x2F;docker_centos_hosts
+Successfully copied 2.05kB to &#x2F;root&#x2F;docker_centos_hosts</code></pre></div></figure>
+
+<p>案例02：上传文件到容器</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 百度首页，保存到物理机
+[root@docker01[ ~]#curl -o index.html www.baidu.com
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  2381  100  2381    0     0  31048      0 --:--:-- --:--:-- --:--:-- 30922
+
+# 上传到nginx容器，替换首页
+[root@docker01[ ~]#docker cp index.html test_nginx_alpine_v1:&#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html&#x2F;index.html
+Successfully copied 4.1kB to test_nginx_alpine_v1:&#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html&#x2F;index.html</code></pre></div></figure>
+
+
+
+<h3 id="1-1-9-commit自定义镜像🌟"><a href="#1-1-9-commit自定义镜像🌟" class="headerlink" title="1.1.9 commit自定义镜像🌟"></a>1.1.9 commit自定义镜像🌟</h3><p>commit用于处理容器，生成镜像.  </p>
+<p>使用流程:</p>
+<ul>
+<li>运行服务镜像或系统镜像,启动后成为容器.</li>
+<li>根据我们的需求,对容器进行修改.</li>
+<li>测试完成后.</li>
+<li>最后通过commit命令把容器保存为镜像.</li>
+<li>根据新生成的镜像创建容器并测试.</li>
+</ul>
+<p>案例：修改nginx容器，生成自定义镜像</p>
+<ul>
+<li>需求：<ul>
+<li>基于ngx镜像创建容器</li>
+<li>修改站点目录 &#x2F;app&#x2F;code&#x2F;restart&#x2F; (default.conf)</li>
+<li>上传代码,解压</li>
+<li>测试</li>
+<li>commit</li>
+</ul>
+</li>
+</ul>
+<p>1、创建容器</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@docker01[ ~]#docker run -d -p 80:80 --name &quot;commit_nginx&quot; nginx:stable-alpine 
+d7919255e43900e6ac3b556e1e27dff6ba3c4932fe354e27a62319a215cc20aa</code></pre></div></figure>
+
+<p>2、进入容器，修改配置文件，准备环境</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 修改配置文件
+&#x2F;etc&#x2F;nginx&#x2F;conf.d # cat default.conf
+server &#123;
+    listen       80;
+    server_name  restart.commit.cn;
+    root   &#x2F;app&#x2F;code&#x2F;restart;
+    location &#x2F; &#123;
+        index  index.html index.htm;
+    &#125;
+&#125;
+
+# 创建文件夹
+&#x2F; # mkdir -p &#x2F;app&#x2F;code&#x2F;restart</code></pre></div></figure>
+
+<p>3、上传html代码</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@docker01[ ~]#echo &quot;RESTART PAGE&quot; &gt; index.html 
+[root@docker01[ ~]#docker cp index.html  commit_nginx:&#x2F;app&#x2F;code&#x2F;restart
+Successfully copied 2.05kB to commit_nginx:&#x2F;app&#x2F;code&#x2F;restart</code></pre></div></figure>
+
+<p>重启服务测试下</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@docker01[ ~]#docker restart d7919255e439
+d7919255e439</code></pre></div></figure>
+
+<p><img src="/../../../img/image-20240524161534148.png" srcset="/img/loading.gif" lazyload alt="image-20240524161534148"></p>
+<p>4、根据容器生成镜像</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@docker01[ ~]#docker commit commit_nginx nginx:stable-alpine_restart_v1
+sha256:21ca067362e8bf124ea914db502b69de62053cddcdae61699951abc34f8cf832
+
+# 查看
+[root@docker01[ ~]#docker images
+REPOSITORY   TAG                        IMAGE ID       CREATED          SIZE
+nginx        stable-alpine_restart_v1   21ca067362e8   18 seconds ago   23.2MB
+...</code></pre></div></figure>
+
+<p>5、根据新的镜像，重新创建容器，端口81</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@docker01[ ~]#docker run -d -p 81:80 nginx:stable-alpine_restart_v1 
+5477c2d5e0c9fab71a23b8bd6183277c2c4219fef8137ba761474909bbd34817</code></pre></div></figure>
+
+<p>测试访问<a target="_blank" rel="noopener" href="http://10.0.0.81:81/">http://10.0.0.81:81</a></p>
+<p><img src="/../../../img/image-20240524161910037.png" srcset="/img/loading.gif" lazyload alt="image-20240524161910037"></p>
+<h3 id="1-1-10-容器导出导入"><a href="#1-1-10-容器导出导入" class="headerlink" title="1.1.10 容器导出导入"></a>1.1.10 容器导出导入</h3><p>导出容器成tar包</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 查看容器
+[root@docker01 ~]#docker ps
+CONTAINER ID   IMAGE              COMMAND                  CREATED         STATUS         PORTS                               NAMES
+e4ee1efb593c   tengine:birds-v1   &quot;nginx -g &#39;daemon of…&quot;   3 seconds ago   Up 2 seconds   0.0.0.0:80-&gt;80&#x2F;tcp, :::80-&gt;80&#x2F;tcp   birds_test
+
+# 导出容器
+[root@docker01 ~]#docker export birds_test -o bird_test.tar</code></pre></div></figure>
+
+<p>将打包文件拷贝到另一台机器中，导入成镜像（有坑）</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 拷贝到docker02中
+[root@docker01 ~]#scp bird_test.tar 10.0.0.82:&#x2F;tmp
+
+# docker02虚拟机中没有任何镜像和容器
+[root@docker02 ~]#docker images
+REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
+[root@docker02 ~]#docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+# docker02导入
+[root@docker02 ~]#docker import &#x2F;tmp&#x2F;bird_test.tar 
+sha256:a823ac7e01d4c783ec8f00356662176c5c279b10999fe6f463a4476a9b16bb05
+
+# 坑，导入后生成的镜像没有名字标签
+[root@docker02 ~]#docker images
+REPOSITORY   TAG       IMAGE ID       CREATED          SIZE
+&lt;none&gt;       &lt;none&gt;    a823ac7e01d4   11 seconds ago   409MB
+
+# 重新添加仓库名和标签
+[root@docker02 ~]#docker tag a823ac7e01d4 tengine:birds-v1
+[root@docker02 ~]#docker images
+REPOSITORY   TAG        IMAGE ID       CREATED         SIZE
+tengine      birds-v1   a823ac7e01d4   3 minutes ago   409MB</code></pre></div></figure>
+
+
+
+<h1 id="二、端口映射"><a href="#二、端口映射" class="headerlink" title="二、端口映射"></a>二、端口映射</h1><p>容器的端口映射怎么实现的？</p>
+<ul>
+<li>使用<code>docker run -p</code>的时候，外界访问docker容器中的服务或端口，需要使用端口映射。</li>
+<li>本质是通过iptables nat规则实现的，在nat表中创建了docker自定义的链</li>
+</ul>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@docker01[ ~]#iptables -t nat -nL
+Chain PREROUTING (policy ACCEPT)
+target     prot opt source               destination         
+DOCKER     all  --  0.0.0.0&#x2F;0            0.0.0.0&#x2F;0            ADDRTYPE match dst-type LOCAL
+
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+DOCKER     all  --  0.0.0.0&#x2F;0           !127.0.0.0&#x2F;8          ADDRTYPE match dst-type LOCA
+
+Chain POSTROUTING (policy ACCEPT)
+target     prot opt source               destination         
+MASQUERADE  all  --  172.17.0.0&#x2F;16        0.0.0.0&#x2F;0           
+MASQUERADE  tcp  --  172.17.0.2           172.17.0.2           tcp dpt:80
+MASQUERADE  tcp  --  172.17.0.3           172.17.0.3           tcp dpt:80
+
+Chain DOCKER (2 references)
+target     prot opt source               destination         
+RETURN     all  --  0.0.0.0&#x2F;0            0.0.0.0&#x2F;0           
+DNAT       tcp  --  0.0.0.0&#x2F;0            0.0.0.0&#x2F;0            tcp dpt:80 to:172.17.0.2:80
+DNAT       tcp  --  0.0.0.0&#x2F;0            0.0.0.0&#x2F;0            tcp dpt:81 to:172.17.0.3:80</code></pre></div></figure>
+
+
+
+<h2 id="2-1-背后具体做了什么？"><a href="#2-1-背后具体做了什么？" class="headerlink" title="2.1 背后具体做了什么？"></a>2.1 背后具体做了什么？</h2><ul>
+<li>添加了对应防火墙规则</li>
+</ul>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 类似于
+iptables -t nat -A DOCKER ! -i docker0 -p tcp -m tcp --dport 81 -j DNAT --todestination 10.0.0.81:80</code></pre></div></figure>
+
+<p>-<br>  开启内核转发功能(需要我们自己开启)  </p>
+<p>查看端口信息：</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@docker01[ ~]#ss -lntup | grep 81
+tcp    LISTEN     0      128       *:81                    *:*                   users:((&quot;docker-proxy&quot;,pid&#x3D;26582,fd&#x3D;4))
+tcp    LISTEN     0      128    [::]:81                 [::]:*                   users:((&quot;docker-proxy&quot;,pid&#x3D;26586,fd&#x3D;4))</code></pre></div></figure>
+
+
+
+<h2 id="2-2-用户访问的时候经历了什么"><a href="#2-2-用户访问的时候经历了什么" class="headerlink" title="2.2 用户访问的时候经历了什么"></a>2.2 用户访问的时候经历了什么</h2><p>内部通过<code>虚拟网卡</code>来实现分配，如图</p>
+<p><img src="/../../../img/image-20240524162640454.png" srcset="/img/loading.gif" lazyload alt="image-20240524162640454"></p>
+<h2 id="2-3-端口映射的案例"><a href="#2-3-端口映射的案例" class="headerlink" title="2.3 端口映射的案例"></a>2.3 端口映射的案例</h2><h3 id="2-3-1-一对一映射"><a href="#2-3-1-一对一映射" class="headerlink" title="2.3.1 一对一映射"></a>2.3.1 一对一映射</h3><p>还是使用<code>docker run -p</code></p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker run -d --name &quot;oldboy_nginx_80&quot; -p 80:80 nginx:1.20.2-alpine</code></pre></div></figure>
+
+<p>关于<code>-p</code>选项的详细描述</p>
+<table>
+<thead>
+<tr>
+<th>docker run</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-p选项(小写字母P) 宿主机端口:容器中的端口</td>
+<td>-p 80:80 -p 443:443</td>
+</tr>
+<tr>
+<td>-p :容器中端口</td>
+<td>-p :80 表示宿主机端口随机,很少用.</td>
+</tr>
+<tr>
+<td>-p 端口范围:端口范围</td>
+<td>80-88:80-88</td>
+</tr>
+</tbody></table>
+<h3 id="2-3-2-多对多映射"><a href="#2-3-2-多对多映射" class="headerlink" title="2.3.2 多对多映射"></a>2.3.2 多对多映射</h3><p>映射8080,8081,8082 到容器中容器中也是8080,8081,8082  </p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># -d一个个写
+[root@docker01[ ~]#dockedocker run -d -p 8080:8080 -p 8081:8081 -p 8082:8082 -p 86:80 nginx:stable-alpine
+43bcb519597f7a2f00ceea65fcb4664c5e52419d80c92c62dd5fbc1ccc2a0f5e
+
+# 查看状态
+[root@docker01[ ~]#docker ps
+CONTAINER ID   IMAGE                 COMMAND                  CREATED         STATUS         PORTS                                                                                              NAMES
+43bcb519597f   nginx:stable-alpine   &quot;&#x2F;docker-entrypoint.…&quot;   3 seconds ago   Up 2 seconds   0.0.0.0:8080-8082-&gt;8080-8082&#x2F;tcp, :::8080-8082-&gt;8080-8082&#x2F;tcp, 0.0.0.0:86-&gt;80&#x2F;tcp, :::86-&gt;80&#x2F;tcp   magical_margulis
+
+# 查看port信息
+[root@docker01[ ~]#docker port magical_margulis
+80&#x2F;tcp -&gt; 0.0.0.0:86
+80&#x2F;tcp -&gt; [::]:86
+8080&#x2F;tcp -&gt; 0.0.0.0:8080
+8080&#x2F;tcp -&gt; [::]:8080
+8081&#x2F;tcp -&gt; 0.0.0.0:8081
+8081&#x2F;tcp -&gt; [::]:8081
+8082&#x2F;tcp -&gt; 0.0.0.0:8082
+8082&#x2F;tcp -&gt; [::]:8082	# 容器中的端口 -&gt; 宿主机端口</code></pre></div></figure>
+
+
+
+<h3 id="2-3-3-IP绑定端口"><a href="#2-3-3-IP绑定端口" class="headerlink" title="2.3.3 IP绑定端口"></a>2.3.3 IP绑定端口</h3><p>用户只能通过宿主机的某个网卡连接这个端口，起安全防护作用</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 只能用172.16.1.8:12306来访问容器的80端口
+[root@docker01[ ~]#docker run -d -p 172.16.1.81:12306:80 nginx:stable-alpine
+44d0e51e63f65650e0faadd705fb33c944409591b30a4d4731fa1c3643200f75
+
+# 查看
+[root@docker01[ ~]#docker ps
+CONTAINER ID   IMAGE                 COMMAND                  CREATED          STATUS          PORTS                       NAMES
+44d0e51e63f6   nginx:stable-alpine   &quot;&#x2F;docker-entrypoint.…&quot;   44 seconds ago   Up 43 seconds   172.16.1.81:12306-&gt;80&#x2F;tcp   nice_mendel</code></pre></div></figure>
+
+
+
+<h1 id="三、数据卷挂载"><a href="#三、数据卷挂载" class="headerlink" title="三、数据卷挂载"></a>三、数据卷挂载</h1><h2 id="3-1-为什么需要挂载数据"><a href="#3-1-为什么需要挂载数据" class="headerlink" title="3.1 为什么需要挂载数据"></a>3.1 为什么需要挂载数据</h2><p>数据放容器里，要是不小心<code>rm -f</code>删了怎么办？</p>
+<p>为了解决这个数据持久化的问题，需要让数据永久<strong>保存在宿主机</strong>中，通过挂载的方式挂</p>
+<p>到容器上</p>
+<p><img src="/../../../img/image-20240524164011370.png" srcset="/img/loading.gif" lazyload alt="image-20240524164011370"></p>
+<h2 id="3-2-选项补充"><a href="#3-2-选项补充" class="headerlink" title="3.2 选项补充"></a>3.2 选项补充</h2><h3 id="3-2-1-docker-run选项补充"><a href="#3-2-1-docker-run选项补充" class="headerlink" title="3.2.1 docker run选项补充"></a>3.2.1 docker run选项补充</h3><p><code>--rm</code>选项</p>
+<ul>
+<li>容器退出的时候，容器自动删除</li>
+<li>一般用于测试，临时使用容器</li>
+</ul>
+<p><code>--restart</code>选项，容器的重启策略</p>
+<ul>
+<li>always 自动重启</li>
+<li>unless-stopped 只在容器关闭，停止的时候</li>
+<li>on-failure 只在失败的时候重启</li>
+<li>默认，不自动重启</li>
+</ul>
+<h3 id="3-2-2-docker-exec选项补充"><a href="#3-2-2-docker-exec选项补充" class="headerlink" title="3.2.2 docker exec选项补充"></a>3.2.2 docker exec选项补充</h3><p>在进入Mysql或者redis等数据库时候，可以直接exec进入数据库操作终端，而不是&#x2F;bin&#x2F;bash，方法如下：</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 对Mysql
+docker exec -it 容器 mysql -u root -p
+
+# 对redis
+docker exec -it 容器 redis-cli</code></pre></div></figure>
+
+<h2 id="3-3-挂载项目"><a href="#3-3-挂载项目" class="headerlink" title="3.3 挂载项目"></a>3.3 挂载项目</h2><p>将站点文件&#x2F;站点目录、配置文件目录、日志目录以<code>-v</code>的方式挂载</p>
+<h3 id="3-3-1-挂载单个站点文件"><a href="#3-3-1-挂载单个站点文件" class="headerlink" title="3.3.1 挂载单个站点文件"></a>3.3.1 挂载单个站点文件</h3><p>使用数据卷挂载index.html到容器中的&#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html&#x2F;index.html  </p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 创建本地文件
+mkdir -p &#x2F;app&#x2F;docker&#x2F;test&#x2F;code
+echo &quot;&lt;h1&gt;THIS IS MOUNTED PAGE&lt;&#x2F;h1&gt;&quot; &gt; &#x2F;app&#x2F;docker&#x2F;test&#x2F;code&#x2F;index.html
+
+# 运行容器（挂载卷）
+docker run -d \
+--name &quot;docker_volumnt_ngx_v1&quot; \
+-p 80:80 \
+-v &#x2F;app&#x2F;docker&#x2F;test&#x2F;code&#x2F;index.html:&#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html&#x2F;index.html \
+nginx:stable-alpine
+
+# 查看挂载
+[root@docker01[ ~]#docker inspect docker_volumnt_ngx_v1 | jq .[].HostConfig.Binds
+[
+  &quot;&#x2F;app&#x2F;docker&#x2F;test&#x2F;code&#x2F;index.html:&#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html&#x2F;index.html&quot;
+]</code></pre></div></figure>
+
+<p>测试</p>
+<p><img src="/../../../img/image-20240524170033688.png" srcset="/img/loading.gif" lazyload alt="image-20240524170033688"></p>
+<blockquote>
+<p>提示：</p>
+<p>如果宿主机文件内容改变了，需要<strong>重启容器才能生效</strong></p>
+</blockquote>
+<h3 id="3-3-2-挂载站点目录"><a href="#3-3-2-挂载站点目录" class="headerlink" title="3.3.2 挂载站点目录"></a>3.3.2 挂载站点目录</h3><p>需求：</p>
+<ul>
+<li>用数据卷挂载：代码目录.</li>
+<li>用数据卷挂载：配置文件，配置文件目录.</li>
+<li>用数据卷挂载：数据目录(数据库)</li>
+<li>还可以用于日志</li>
+</ul>
+<blockquote>
+<p>补充：</p>
+<p>Nginx - alpine镜像的配置文件：</p>
+<ul>
+<li>配置文件子目录: &#x2F;app&#x2F;docker&#x2F;restart&#x2F;conf&#x2F;nginx&#x2F;conf.d&#x2F;</li>
+<li>挂载到：&#x2F;etc&#x2F;nginx&#x2F;conf.d&#x2F;</li>
+<li>配置文件主目录: &#x2F;app&#x2F;docker&#x2F;restart&#x2F;conf&#x2F;nginx&#x2F;nginx.conf</li>
+<li>挂载到：&#x2F;etc&#x2F;nginx&#x2F;nginx.conf</li>
+<li>站点目录: &#x2F;app&#x2F;docker&#x2F;restart&#x2F;code&#x2F;</li>
+<li>挂载到：&#x2F;app&#x2F;code&#x2F;restart&#x2F;</li>
+</ul>
+</blockquote>
+<p>实现：</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 物理机，创建文件夹
+[root@docker01[ &#x2F;app&#x2F;docker&#x2F;test&#x2F;code]#mkdir -p &#x2F;app&#x2F;docker&#x2F;conf&#x2F;nginx&#x2F;conf.d &#x2F;app&#x2F;docker&#x2F;code&#x2F;restart
+
+# 启动docker并挂载文件
+docker run -d --name &quot;oldboy_restart_volume_v1&quot; -p 80:80 \
+-v &#x2F;app&#x2F;docker&#x2F;restart&#x2F;conf&#x2F;nginx&#x2F;conf.d&#x2F;:&#x2F;etc&#x2F;nginx&#x2F;conf.d&#x2F; \
+-v &#x2F;app&#x2F;docker&#x2F;restart&#x2F;conf&#x2F;nginx&#x2F;nginx.conf:&#x2F;etc&#x2F;nginx&#x2F;nginx.conf \
+-v &#x2F;app&#x2F;docker&#x2F;restart&#x2F;code&#x2F;:&#x2F;app&#x2F;code&#x2F;restart&#x2F; \
+--restart&#x3D;always \
+nginx:alpine</code></pre></div></figure>
+
+
+
+<h2 id="3-4-数据卷空间"><a href="#3-4-数据卷空间" class="headerlink" title="3.4 数据卷空间"></a>3.4 数据卷空间</h2><p>应用场景：只关注容器中的数据不丢，不关注数据具体放在哪里</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 创建数据卷
+[root@docker01[ &#x2F;]#docker volume create oldboydata
+oldboydata
+
+# 查看数据卷
+[root@docker01[ &#x2F;]#docker volume ls
+DRIVER    VOLUME NAME
+local     oldboydata
+
+# 在物理机的实际存放位置
+[root@docker01[ &#x2F;]#tree &#x2F;var&#x2F;lib&#x2F;docker&#x2F;volumes&#x2F;oldboydata&#x2F;
+&#x2F;var&#x2F;lib&#x2F;docker&#x2F;volumes&#x2F;oldboydata&#x2F;
+└── _data
+1 directory, 0 files
+
+# 挂载数据卷运行
+[root@docker01[ &#x2F;]#docker run -d --name &quot;nginx_vol&quot; -p 80:80 -v oldboydata:&#x2F;var&#x2F;log&#x2F;nginx&#x2F; nginx:stable-alpine
+8c2800b434161fd7401b56b45ba236b3e0f10e354baecbc47be03e47e4b70878
+
+# 已经生效
+[root@docker01[ &#x2F;app&#x2F;docker&#x2F;restart&#x2F;conf&#x2F;nginx]#ls -l &#x2F;var&#x2F;lib&#x2F;docker&#x2F;volumes&#x2F;
+total 24
+brw-------. 1 root root 253, 0 May 24 10:35 backingFsBlockDev
+-rw-------. 1 root root  32768 May 27 09:09 metadata.db
+drwx-----x. 3 root root     19 May 27 09:09 oldboydata
+[root@docker01[ &#x2F;app&#x2F;docker&#x2F;restart&#x2F;conf&#x2F;nginx]#ls -l &#x2F;var&#x2F;lib&#x2F;docker&#x2F;volumes&#x2F;oldboydata&#x2F;_data&#x2F;
+total 0
+lrwxrwxrwx. 1 root root 11 Nov 17  2021 access.log -&gt; &#x2F;dev&#x2F;stdout
+lrwxrwxrwx. 1 root root 11 Nov 17  2021 error.log -&gt; &#x2F;dev&#x2F;stderr</code></pre></div></figure>
+
+<blockquote>
+<p>注意：</p>
+<p>nginx容器的日志默认是输出到docker标准输出和标准错误输出的，而不是存放在文</p>
+<p>件中。未来查看日志的时候，不用进入到容器，然后tail&#x2F;less使用命令查看.</p>
+<p>直接使用docker logs 容器id或名字 就可以看日志。</p>
+<p>相当于查看access.log或error.log  </p>
+</blockquote>
+<h2 id="3-5-随机数据卷（较少使用）"><a href="#3-5-随机数据卷（较少使用）" class="headerlink" title="3.5 随机数据卷（较少使用）"></a>3.5 随机数据卷（较少使用）</h2><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># -v不指定具体的卷标
+docker run -d --name &quot;nginx_vol_oldboylogdatav2&quot; -p :80 -v :&#x2F;var&#x2F;log&#x2F;nginx&#x2F; nginx:stable-alpine</code></pre></div></figure>
+
+<blockquote>
+<p>注意：</p>
+<p>在Docker version 26.1.3中，测试已经不行了，会报错</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">&gt;docker: invalid spec: :&#x2F;var&#x2F;log&#x2F;nginx&#x2F;: empty section between colons</code></pre></div></figure>
+</blockquote>
+<h2 id="3-6-容器时区的问题"><a href="#3-6-容器时区的问题" class="headerlink" title="3.6 容器时区的问题"></a>3.6 容器时区的问题</h2><p>进入容器内执行</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 安装tzdata工具，设置时区
+apk update \
+&amp;&amp; apk add tzdata \
+&amp;&amp; cp &#x2F;usr&#x2F;share&#x2F;zoneinfo&#x2F;Asia&#x2F;Shanghai &#x2F;etc&#x2F;locatime \
+&amp;&amp; echo &quot;Asia&#x2F;Shanghai&quot; &gt; &#x2F;etc&#x2F;timezone</code></pre></div></figure>
+
+<blockquote>
+<p>测试，时区没有生效。。。。还是要用时网上找吧</p>
+</blockquote>
+<h2 id="3-7-数据卷使用与容器架构"><a href="#3-7-数据卷使用与容器架构" class="headerlink" title="3.7 数据卷使用与容器架构"></a>3.7 数据卷使用与容器架构</h2><p>运行多个docker的时候，只需要维护一份代码</p>
+<p><img src="/../../../img/image-20240528140249375.png" srcset="/img/loading.gif" lazyload alt="image-20240528140249375"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%BF%90%E7%BB%B4/" class="category-chain-item">运维</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/" class="category-chain-item">（二）综合架构</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>day60-容器架构-Docker（二）</div>
+      <div>https://gblog.github.io/2024/05/24/07_85期运维/03_自动化架构/day60-容器架构-docker-2/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Haris</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年5月24日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/05/28/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day61-%E5%AE%B9%E5%99%A8%E6%9E%B6%E6%9E%84-docker-3/" title="day61-容器架构-Docker（三）">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">day61-容器架构-Docker（三）</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/05/24/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day59-%E5%AE%B9%E5%99%A8%E6%9E%B6%E6%9E%84-docker-1/" title="day59-容器架构-Docker（一）">
+                        <span class="hidden-mobile">day59-容器架构-Docker（一）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,1114 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Haris">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、LVM介绍​	逻辑卷管理LVM是一个多才多艺的硬盘系统工具。无论在Linux或者其他类似的系统，都是非常的好用。传统分区使用固定大小分区，重新调整大小十分麻烦。但是，LVM可以创建和管理“逻辑”卷，而不是直接使用物理硬盘。可以让管理员弹性的管理逻辑卷的扩大缩小，操作简单，而不损坏已存储的数据。可以随意将新的硬盘添加到LVM，以直接扩展已经存在的逻辑卷。LVM并不需要重启就可以让内核知道分区的存">
+<meta property="og:type" content="article">
+<meta property="og:title" content="运维之基础命令--逻辑卷管理">
+<meta property="og:url" content="https://gblog.github.io/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day19-%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA/02_%E9%80%BB%E8%BE%91%E5%8D%B7%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="Haris的小站">
+<meta property="og:description" content="一、LVM介绍​	逻辑卷管理LVM是一个多才多艺的硬盘系统工具。无论在Linux或者其他类似的系统，都是非常的好用。传统分区使用固定大小分区，重新调整大小十分麻烦。但是，LVM可以创建和管理“逻辑”卷，而不是直接使用物理硬盘。可以让管理员弹性的管理逻辑卷的扩大缩小，操作简单，而不损坏已存储的数据。可以随意将新的硬盘添加到LVM，以直接扩展已经存在的逻辑卷。LVM并不需要重启就可以让内核知道分区的存">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gblog.github.io/02_%E9%80%BB%E8%BE%91%E5%8D%B7%E7%AE%A1%E7%90%86.assets/134408sa12dauefffyszfg.jpg">
+<meta property="article:published_time" content="2022-07-06T03:19:52.000Z">
+<meta property="article:modified_time" content="2026-07-10T06:20:16.017Z">
+<meta property="article:author" content="Haris">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gblog.github.io/02_%E9%80%BB%E8%BE%91%E5%8D%B7%E7%AE%A1%E7%90%86.assets/134408sa12dauefffyszfg.jpg">
+  
+  
+  
+  <title>运维之基础命令--逻辑卷管理 - Haris的小站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"gblog.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Haris的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="运维之基础命令--逻辑卷管理"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-06 11:19" pubdate>
+          2022年7月6日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          16 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">运维之基础命令--逻辑卷管理</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="一、LVM介绍"><a href="#一、LVM介绍" class="headerlink" title="一、LVM介绍"></a>一、LVM介绍</h2><p>​	逻辑卷管理LVM是一个多才多艺的硬盘系统工具。无论在Linux或者其他类似的系统，都是非常的好用。传统分区使用固定大小分区，重新调整大小十分麻烦。但是，LVM可以创建和管理“逻辑”卷，而不是直接使用物理硬盘。可以让管理员弹性的管理逻辑卷的扩大缩小，操作简单，而不损坏已存储的数据。可以随意将新的硬盘添加到LVM，以直接扩展已经存在的逻辑卷。LVM并不需要重启就可以让内核知道分区的存在。</p>
+<p>LVM使用分层结构，如下如所示：</p>
+<p><img src="/02_%E9%80%BB%E8%BE%91%E5%8D%B7%E7%AE%A1%E7%90%86.assets/134408sa12dauefffyszfg.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>​	图中顶部，首先是实际的物理磁盘及其划分的分区和其上的物理卷（PV）。一个或多个物理卷可以用来创建卷组（VG）。然后基于卷组可以创建逻辑卷（LV）。只要在卷组中有可用空间，就可以随心所欲的创建逻辑卷。文件系统就是在逻辑卷上创建的，然后可以在操作系统挂载和访问</p>
+<h2 id="二、LVM使用"><a href="#二、LVM使用" class="headerlink" title="二、LVM使用"></a>二、LVM使用</h2><h3 id="2-1-磁盘准备"><a href="#2-1-磁盘准备" class="headerlink" title="2.1 磁盘准备"></a>2.1 磁盘准备</h3><p>加装两块硬盘，sdb-10G与sdc-5G</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# lsblk
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda      8:0    0   50G  0 disk
+├─sda1   8:1    0    1G  0 part &#x2F;boot
+├─sda2   8:2    0    2G  0 part [SWAP]
+└─sda3   8:3    0   47G  0 part &#x2F;
+sdb      8:16   0   10G  0 disk
+sdc      8:32   0    5G  0 disk
+sr0     11:0    1  792M  0 rom</code></pre></div></figure>
+
+<p>给sbd创建LVM分区</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# fdisk &#x2F;dev&#x2F;sdb
+Welcome to fdisk (util-linux 2.23.2).
+
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+
+Command (m for help): n  # 新建分区
+Partition type:
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended
+Select (default p):
+Using default response p
+Partition number (1-4, default 1):
+First sector (2048-20971519, default 2048):
+Using default value 2048
+Last sector, +sectors or +size&#123;K,M,G&#125; (2048-20971519, default 20971519): +2G
+Partition 1 of type Linux and of size 2 GiB is set
+
+Command (m for help): t  # 将分区改为LVM分区
+Selected partition 1
+Hex code (type L to list all codes): L
+
+ 0  Empty           24  NEC DOS         81  Minix &#x2F; old Lin bf  Solaris
+ 1  FAT12           27  Hidden NTFS Win 82  Linux swap &#x2F; So c1  DRDOS&#x2F;sec (FAT-
+ 2  XENIX root      39  Plan 9          83  Linux           c4  DRDOS&#x2F;sec (FAT-
+ 3  XENIX usr       3c  PartitionMagic  84  OS&#x2F;2 hidden C:  c6  DRDOS&#x2F;sec (FAT-
+ 4  FAT16 &lt;32M      40  Venix 80286     85  Linux extended  c7  Syrinx
+ 5  Extended        41  PPC PReP Boot   86  NTFS volume set da  Non-FS data
+ 6  FAT16           42  SFS             87  NTFS volume set db  CP&#x2F;M &#x2F; CTOS &#x2F; .
+ 7  HPFS&#x2F;NTFS&#x2F;exFAT 4d  QNX4.x          88  Linux plaintext de  Dell Utility
+ 8  AIX             4e  QNX4.x 2nd part 8e  Linux LVM       df  BootIt
+ 9  AIX bootable    4f  QNX4.x 3rd part 93  Amoeba          e1  DOS access
+ a  OS&#x2F;2 Boot Manag 50  OnTrack DM      94  Amoeba BBT      e3  DOS R&#x2F;O
+ b  W95 FAT32       51  OnTrack DM6 Aux 9f  BSD&#x2F;OS          e4  SpeedStor
+ c  W95 FAT32 (LBA) 52  CP&#x2F;M            a0  IBM Thinkpad hi eb  BeOS fs
+ e  W95 FAT16 (LBA) 53  OnTrack DM6 Aux a5  FreeBSD         ee  GPT
+ f  W95 Ext&#39;d (LBA) 54  OnTrackDM6      a6  OpenBSD         ef  EFI (FAT-12&#x2F;16&#x2F;
+10  OPUS            55  EZ-Drive        a7  NeXTSTEP        f0  Linux&#x2F;PA-RISC b
+11  Hidden FAT12    56  Golden Bow      a8  Darwin UFS      f1  SpeedStor
+12  Compaq diagnost 5c  Priam Edisk     a9  NetBSD          f4  SpeedStor
+14  Hidden FAT16 &lt;3 61  SpeedStor       ab  Darwin boot     f2  DOS secondary
+16  Hidden FAT16    63  GNU HURD or Sys af  HFS &#x2F; HFS+      fb  VMware VMFS
+17  Hidden HPFS&#x2F;NTF 64  Novell Netware  b7  BSDI fs         fc  VMware VMKCORE
+18  AST SmartSleep  65  Novell Netware  b8  BSDI swap       fd  Linux raid auto
+1b  Hidden W95 FAT3 70  DiskSecure Mult bb  Boot Wizard hid fe  LANstep
+1c  Hidden W95 FAT3 75  PC&#x2F;IX           be  Solaris boot    ff  BBT
+1e  Hidden W95 FAT1 80  Old Minix
+Hex code (type L to list all codes): 8e
+Changed type of partition &#39;Linux&#39; to &#39;Linux LVM&#39;
+
+Command (m for help): p
+
+Disk &#x2F;dev&#x2F;sdb: 10.7 GB, 10737418240 bytes, 20971520 sectors
+Units &#x3D; sectors of 1 * 512 &#x3D; 512 bytes
+Sector size (logical&#x2F;physical): 512 bytes &#x2F; 512 bytes
+I&#x2F;O size (minimum&#x2F;optimal): 512 bytes &#x2F; 512 bytes
+Disk label type: dos
+Disk identifier: 0x0005122b
+
+   Device Boot      Start         End      Blocks   Id  System
+&#x2F;dev&#x2F;sdb1            2048     4196351     2097152   8e  Linux LVM</code></pre></div></figure>
+
+<p>重复添加，再加一个3G，一个2G的分区，可见分区表如下：</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# fdisk -l &#x2F;dev&#x2F;sdb
+
+Disk &#x2F;dev&#x2F;sdb: 10.7 GB, 10737418240 bytes, 20971520 sectors
+Units &#x3D; sectors of 1 * 512 &#x3D; 512 bytes
+Sector size (logical&#x2F;physical): 512 bytes &#x2F; 512 bytes
+I&#x2F;O size (minimum&#x2F;optimal): 512 bytes &#x2F; 512 bytes
+Disk label type: dos
+Disk identifier: 0x0005122b
+
+   Device Boot      Start         End      Blocks   Id  System
+&#x2F;dev&#x2F;sdb1            2048     4196351     2097152   8e  Linux LVM
+&#x2F;dev&#x2F;sdb2         4196352    10487807     3145728   8e  Linux LVM
+&#x2F;dev&#x2F;sdb3        10487808    14682111     2097152   8e  Linux LVM</code></pre></div></figure>
+
+<h3 id="2-2-创建物理卷（PV）"><a href="#2-2-创建物理卷（PV）" class="headerlink" title="2.2 创建物理卷（PV）"></a>2.2 创建物理卷（PV）</h3><p>安装LVM工具</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# yum install lvm2 </code></pre></div></figure>
+
+<p>将准备好的LVM分区生成为物理卷</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# pvcreate &#x2F;dev&#x2F;sdb1
+WARNING: ext4 signature detected on &#x2F;dev&#x2F;sdb1 at offset 1080. Wipe it? [y&#x2F;n]: y
+  Wiping ext4 signature on &#x2F;dev&#x2F;sdb1.
+  Physical volume &quot;&#x2F;dev&#x2F;sdb1&quot; successfully created.
+[root@lb01 ~]# pvcreate &#x2F;dev&#x2F;sdb2
+  Physical volume &quot;&#x2F;dev&#x2F;sdb2&quot; successfully created.
+[root@lb01 ~]# pvcreate &#x2F;dev&#x2F;sdb3
+  Physical volume &quot;&#x2F;dev&#x2F;sdb3&quot; successfully created.</code></pre></div></figure>
+
+<p>查看物理卷信息</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# pvdisplay
+  &quot;&#x2F;dev&#x2F;sdb1&quot; is a new physical volume of &quot;2.00 GiB&quot;
+  --- NEW Physical volume ---
+  PV Name               &#x2F;dev&#x2F;sdb1
+  VG Name
+  PV Size               2.00 GiB
+  Allocatable           NO
+  PE Size               0
+  Total PE              0
+  Free PE               0
+  Allocated PE          0
+  PV UUID               YUHdrd-AH1x-ew0m-Mp9i-3GHp-S4zc-XxlDJM
+
+  &quot;&#x2F;dev&#x2F;sdb2&quot; is a new physical volume of &quot;3.00 GiB&quot;
+  --- NEW Physical volume ---
+  PV Name               &#x2F;dev&#x2F;sdb2
+  VG Name
+  PV Size               3.00 GiB
+  Allocatable           NO
+  PE Size               0
+  Total PE              0
+  Free PE               0
+  Allocated PE          0
+  PV UUID               wGDQvx-7zfs-g018-wqx4-Y8rh-1kWT-PnLuFu
+
+  &quot;&#x2F;dev&#x2F;sdb3&quot; is a new physical volume of &quot;2.00 GiB&quot;
+  --- NEW Physical volume ---
+  PV Name               &#x2F;dev&#x2F;sdb3
+  VG Name
+  PV Size               2.00 GiB
+  Allocatable           NO
+  PE Size               0
+  Total PE              0
+  Free PE               0
+  Allocated PE          0
+  PV UUID               fykcuR-jooY-WKbi-yM8j-7fQ5-mhnH-JCkXC8</code></pre></div></figure>
+
+<p>补充：如何删除物理卷</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# pvremove &#x2F;dev&#x2F;sdb1</code></pre></div></figure>
+
+<h3 id="2-3-创建卷组（VG）"><a href="#2-3-创建卷组（VG）" class="headerlink" title="2.3 创建卷组（VG）"></a>2.3 创建卷组（VG）</h3><p>将&#x2F;dev&#x2F;sdb{1,2,3}合并为卷组vg01</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# vgcreate vg01 &#x2F;dev&#x2F;sdb1 &#x2F;dev&#x2F;sdb2 &#x2F;dev&#x2F;sdb3</code></pre></div></figure>
+
+<p>查看卷组信息</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# vgdisplay
+  --- Volume group ---
+  VG Name               vg01
+  System ID
+  Format                lvm2
+  Metadata Areas        3
+  Metadata Sequence No  1
+  VG Access             read&#x2F;write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                0
+  Open LV               0
+  Max PV                0
+  Cur PV                3
+  Act PV                3
+  VG Size               &lt;6.99 GiB
+  PE Size               4.00 MiB
+  Total PE              1789
+  Alloc PE &#x2F; Size       0 &#x2F; 0
+  Free  PE &#x2F; Size       1789 &#x2F; &lt;6.99 GiB
+  VG UUID               gzeouH-16qO-n6xv-V6VM-A9ep-eK6E-ODuIwU</code></pre></div></figure>
+
+<p>补充：如何删除卷组</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# vgremove vg01
+  Volume group &quot;vg01&quot; successfully removed</code></pre></div></figure>
+
+<h3 id="2-4-创建逻辑卷（LV）"><a href="#2-4-创建逻辑卷（LV）" class="headerlink" title="2.4 创建逻辑卷（LV）"></a>2.4 创建逻辑卷（LV）</h3><p>创建一个名为lv01，大小为100M的逻辑卷</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# lvcreate -L 100M -n lv01 vg01
+  Logical volume &quot;lv01&quot; created.</code></pre></div></figure>
+
+<p>查看逻辑卷</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# lvdisplay
+  --- Logical volume ---
+  LV Path                &#x2F;dev&#x2F;vg01&#x2F;lv01
+  LV Name                lv01
+  VG Name                vg01
+  LV UUID                xFksnb-ENc2-mEo4-5gEb-yaJj-wP2c-oFuBeT
+  LV Write Access        read&#x2F;write
+  LV Creation host, time lb01, 2021-09-01 20:39:16 +0800
+  LV Status              available
+  # open                 0
+  LV Size                100.00 MiB
+  Current LE             25
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:0</code></pre></div></figure>
+
+<p>补充：删除逻辑卷</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# lvremove &#x2F;dev&#x2F;vg01&#x2F;lv02
+Do you really want to remove active logical volume vg01&#x2F;lv02? [y&#x2F;n]: y
+  Logical volume &quot;lv02&quot; successfully removed</code></pre></div></figure>
+
+<h3 id="2-5-逻辑卷挂载"><a href="#2-5-逻辑卷挂载" class="headerlink" title="2.5 逻辑卷挂载"></a>2.5 逻辑卷挂载</h3><p>格式化逻辑卷</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# mkfs.ext4 &#x2F;dev&#x2F;vg01&#x2F;lv01
+mke2fs 1.42.9 (28-Dec-2013)
+Filesystem label&#x3D;
+OS type: Linux
+Block size&#x3D;1024 (log&#x3D;0)
+Fragment size&#x3D;1024 (log&#x3D;0)
+Stride&#x3D;0 blocks, Stripe width&#x3D;0 blocks
+25688 inodes, 102400 blocks
+5120 blocks (5.00%) reserved for the super user
+First data block&#x3D;1
+Maximum filesystem blocks&#x3D;33685504
+13 block groups
+8192 blocks per group, 8192 fragments per group
+1976 inodes per group
+Superblock backups stored on blocks:
+        8193, 24577, 40961, 57345, 73729
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (4096 blocks): done
+Writing superblocks and filesystem accounting information: done</code></pre></div></figure>
+
+<p>挂载逻辑卷</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# mkdir &#x2F;mnt&#x2F;test-lv01
+[root@lb01 ~]# mount &#x2F;dev&#x2F;vg01&#x2F;lv01 &#x2F;mnt&#x2F;test-lv01
+[root@lb01 ~]# df -h
+Filesystem             Size  Used Avail Use% Mounted on
+&#x2F;dev&#x2F;sda3               47G  1.9G   46G   4% &#x2F;
+devtmpfs               479M     0  479M   0% &#x2F;dev
+tmpfs                  489M     0  489M   0% &#x2F;dev&#x2F;shm
+tmpfs                  489M  6.8M  482M   2% &#x2F;run
+tmpfs                  489M     0  489M   0% &#x2F;sys&#x2F;fs&#x2F;cgroup
+&#x2F;dev&#x2F;sda1             1014M  119M  896M  12% &#x2F;boot
+tmpfs                   98M     0   98M   0% &#x2F;run&#x2F;user&#x2F;0
+&#x2F;dev&#x2F;mapper&#x2F;vg01-lv01   93M  1.6M   85M   2% &#x2F;mnt&#x2F;test-lv01</code></pre></div></figure>
+
+<h3 id="2-6-扩展逻辑卷"><a href="#2-6-扩展逻辑卷" class="headerlink" title="2.6 扩展逻辑卷"></a>2.6 扩展逻辑卷</h3><p>卸载逻辑卷</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# umount &#x2F;dev&#x2F;vg01&#x2F;lv01</code></pre></div></figure>
+
+<p>将逻辑卷lv01调整为200M</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# lvresize -L 200M &#x2F;dev&#x2F;vg01&#x2F;lv01 
+  Size of logical volume vg01&#x2F;lv01 changed from 100.00 MiB (25 extents) to 200.00 MiB (50 extents).
+  Logical volume vg01&#x2F;lv01 successfully resized.</code></pre></div></figure>
+
+<p>检查磁盘错误</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# e2fsck -f &#x2F;dev&#x2F;vg01&#x2F;lv01
+e2fsck 1.42.9 (28-Dec-2013)
+Pass 1: Checking inodes, blocks, and sizes
+Pass 2: Checking directory structure
+Pass 3: Checking directory connectivity
+Pass 4: Checking reference counts
+Pass 5: Checking group summary information
+&#x2F;dev&#x2F;vg01&#x2F;lv01: 11&#x2F;25688 files (9.1% non-contiguous), 8896&#x2F;102400 blocks</code></pre></div></figure>
+
+<p>调整文件系统大小</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# resize2fs &#x2F;dev&#x2F;vg01&#x2F;lv01</code></pre></div></figure>
+
+<p>查看逻辑卷信息</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# lvdisplay
+  --- Logical volume ---
+  LV Path                &#x2F;dev&#x2F;vg01&#x2F;lv01
+  LV Name                lv01
+  VG Name                vg01
+  LV UUID                svm5Xk-B8jZ-QhZw-egCm-x6b2-e5Jt-wvMi2F
+  LV Write Access        read&#x2F;write
+  LV Creation host, time lb01, 2021-09-01 20:41:53 +0800
+  LV Status              available
+  # open                 0
+  LV Size                200.00 MiB
+  Current LE             50
+  Segments               2
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:0
+  ...</code></pre></div></figure>
+
+<p>重新挂载使用</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# !mount
+mount &#x2F;dev&#x2F;vg01&#x2F;lv01 &#x2F;mnt&#x2F;test-lv01
+[root@lb01 ~]# df -h
+Filesystem             Size  Used Avail Use% Mounted on
+&#x2F;dev&#x2F;sda3               47G  1.9G   46G   4% &#x2F;
+devtmpfs               479M     0  479M   0% &#x2F;dev
+tmpfs                  489M     0  489M   0% &#x2F;dev&#x2F;shm
+tmpfs                  489M  6.8M  482M   2% &#x2F;run
+tmpfs                  489M     0  489M   0% &#x2F;sys&#x2F;fs&#x2F;cgroup
+&#x2F;dev&#x2F;sda1             1014M  119M  896M  12% &#x2F;boot
+tmpfs                   98M     0   98M   0% &#x2F;run&#x2F;user&#x2F;0
+&#x2F;dev&#x2F;mapper&#x2F;vg01-lv01  190M  1.6M  175M   1% &#x2F;mnt&#x2F;test-lv01</code></pre></div></figure>
+
+<h3 id="2-7-缩减逻辑卷"><a href="#2-7-缩减逻辑卷" class="headerlink" title="2.7 缩减逻辑卷"></a>2.7 缩减逻辑卷</h3><p>卸载逻辑卷</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# umount &#x2F;dev&#x2F;vg01&#x2F;lv01</code></pre></div></figure>
+
+<p>检查磁盘错误</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# e2fsck -f &#x2F;dev&#x2F;vg01&#x2F;lv01
+e2fsck 1.42.9 (28-Dec-2013)
+Pass 1: Checking inodes, blocks, and sizes
+Pass 2: Checking directory structure
+Pass 3: Checking directory connectivity
+Pass 4: Checking reference counts
+Pass 5: Checking group summary information
+&#x2F;dev&#x2F;vg01&#x2F;lv01: 11&#x2F;49400 files (9.1% non-contiguous), 11884&#x2F;204800 blocks</code></pre></div></figure>
+
+<p>缩减文件系统大小，更新ext4信息</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# resize2fs &#x2F;dev&#x2F;vg01&#x2F;lv01 100M
+resize2fs 1.42.9 (28-Dec-2013)
+Resizing the filesystem on &#x2F;dev&#x2F;vg01&#x2F;lv01 to 102400 (1k) blocks.
+The filesystem on &#x2F;dev&#x2F;vg01&#x2F;lv01 is now 102400 blocks long.</code></pre></div></figure>
+
+<p>完成后，减小逻辑卷大小</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# lvresize -L 100M &#x2F;dev&#x2F;vg01&#x2F;lv01
+  WARNING: Reducing active logical volume to 100.00 MiB.
+  THIS MAY DESTROY YOUR DATA (filesystem etc.)
+Do you really want to reduce vg01&#x2F;lv01? [y&#x2F;n]: y
+  Size of logical volume vg01&#x2F;lv01 changed from 200.00 MiB (50 extents) to 100.00 MiB (25 extents).
+  Logical volume vg01&#x2F;lv01 successfully resized.</code></pre></div></figure>
+
+<p>查看逻辑卷信息</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# lvdisplay
+  --- Logical volume ---
+  LV Path                &#x2F;dev&#x2F;vg01&#x2F;lv01
+  LV Name                lv01
+  VG Name                vg01
+  LV UUID                svm5Xk-B8jZ-QhZw-egCm-x6b2-e5Jt-wvMi2F
+  LV Write Access        read&#x2F;write
+  LV Creation host, time lb01, 2021-09-01 20:41:53 +0800
+  LV Status              available
+  # open                 0
+  LV Size                100.00 MiB
+  Current LE             25
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:0
+  ...</code></pre></div></figure>
+
+<p>挂载使用</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# !mo
+mount &#x2F;dev&#x2F;vg01&#x2F;lv01 &#x2F;mnt&#x2F;test-lv01
+[root@lb01 ~]# df -h
+Filesystem             Size  Used Avail Use% Mounted on
+&#x2F;dev&#x2F;sda3               47G  1.9G   46G   4% &#x2F;
+devtmpfs               479M     0  479M   0% &#x2F;dev
+tmpfs                  489M     0  489M   0% &#x2F;dev&#x2F;shm
+tmpfs                  489M  6.8M  482M   2% &#x2F;run
+tmpfs                  489M     0  489M   0% &#x2F;sys&#x2F;fs&#x2F;cgroup
+&#x2F;dev&#x2F;sda1             1014M  119M  896M  12% &#x2F;boot
+tmpfs                   98M     0   98M   0% &#x2F;run&#x2F;user&#x2F;0
+&#x2F;dev&#x2F;mapper&#x2F;vg01-lv01   93M  1.6M   85M   2% &#x2F;mnt&#x2F;test-lv01</code></pre></div></figure>
+
+<h3 id="2-8-VG增加一块磁盘"><a href="#2-8-VG增加一块磁盘" class="headerlink" title="2.8 VG增加一块磁盘"></a>2.8 VG增加一块磁盘</h3><p>新盘创建lvm分区</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# fdisk &#x2F;dev&#x2F;sdc
+Welcome to fdisk (util-linux 2.23.2).
+
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+Device does not contain a recognized partition table
+Building a new DOS disklabel with disk identifier 0x05ff27fa.
+
+Command (m for help): n
+Partition type:
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended
+Select (default p):
+Using default response p
+Partition number (1-4, default 1):
+First sector (2048-10485759, default 2048):
+Using default value 2048
+Last sector, +sectors or +size&#123;K,M,G&#125; (2048-10485759, default 10485759): +4G
+Partition 1 of type Linux and of size 4 GiB is set
+
+Command (m for help): t
+Selected partition 1
+Hex code (type L to list all codes):
+Hex code (type L to list all codes): 8e
+Changed type of partition &#39;Linux&#39; to &#39;Linux LVM&#39;
+
+Command (m for help): p
+
+Disk &#x2F;dev&#x2F;sdc: 5368 MB, 5368709120 bytes, 10485760 sectors
+Units &#x3D; sectors of 1 * 512 &#x3D; 512 bytes
+Sector size (logical&#x2F;physical): 512 bytes &#x2F; 512 bytes
+I&#x2F;O size (minimum&#x2F;optimal): 512 bytes &#x2F; 512 bytes
+Disk label type: dos
+Disk identifier: 0x05ff27fa
+
+   Device Boot      Start         End      Blocks   Id  System
+&#x2F;dev&#x2F;sdc1            2048     8390655     4194304   8e  Linux LVM</code></pre></div></figure>
+
+<p>创建物理卷</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# pvcreate &#x2F;dev&#x2F;sdc1
+  Physical volume &quot;&#x2F;dev&#x2F;sdc1&quot; successfully created.</code></pre></div></figure>
+
+<p>扩容VG</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# vgextend vg01 &#x2F;dev&#x2F;sdc1
+  Volume group &quot;vg01&quot; successfully extended</code></pre></div></figure>
+
+<p>查看VG信息</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# vgdisplay vg01
+  --- Volume group ---
+  VG Name               vg01
+  System ID
+  Format                lvm2
+  Metadata Areas        4
+  Metadata Sequence No  10
+  VG Access             read&#x2F;write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                2
+  Open LV               1
+  Max PV                0
+  Cur PV                4
+  Act PV                4
+  VG Size               10.98 GiB
+  PE Size               4.00 MiB
+  Total PE              2812
+  Alloc PE &#x2F; Size       50 &#x2F; 200.00 MiB
+  Free  PE &#x2F; Size       2762 &#x2F; &lt;10.79 GiB
+  VG UUID               2Tjzna-XmXI-9MQ7-zeyc-AARV-84r5-jyymkf</code></pre></div></figure>
+
+<blockquote>
+<p>PS：尽管我们使用一个单独的磁盘做示范，其实只要是‘8e’类型的磁盘分区都可以用来扩展卷组。</p>
+</blockquote>
+<p>在VG中创建LV，可以看到磁盘都用上了</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# lvcreate -L 10G -n lv03 vg01
+  Logical volume &quot;lv03&quot; created.
+[root@lb01 ~]# lsblk
+NAME          MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda             8:0    0   50G  0 disk
+├─sda1          8:1    0    1G  0 part &#x2F;boot
+├─sda2          8:2    0    2G  0 part [SWAP]
+└─sda3          8:3    0   47G  0 part &#x2F;
+sdb             8:16   0   10G  0 disk
+├─sdb1          8:17   0    2G  0 part
+│ ├─vg01-lv01 253:0    0  100M  0 lvm  &#x2F;mnt&#x2F;test-lv01
+│ ├─vg01-lv02 253:1    0  100M  0 lvm
+│ └─vg01-lv03 253:2    0   10G  0 lvm
+├─sdb2          8:18   0    3G  0 part
+│ └─vg01-lv03 253:2    0   10G  0 lvm
+└─sdb3          8:19   0    2G  0 part
+  └─vg01-lv03 253:2    0   10G  0 lvm
+sdc             8:32   0    5G  0 disk
+└─sdc1          8:33   0    4G  0 part
+  └─vg01-lv03 253:2    0   10G  0 lvm
+sr0            11:0    1  792M  0 rom</code></pre></div></figure>
+
+
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%BF%90%E7%BB%B4/" class="category-chain-item">运维</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/" class="category-chain-item">（一）基础命令</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>运维之基础命令--逻辑卷管理</div>
+      <div>https://gblog.github.io/2022/07/06/01_运维/01-基础命令/day19-磁盘分区/02_逻辑卷管理/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Haris</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年7月6日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day13-yum%E4%BB%93%E5%BA%93/yum%E4%BB%93%E5%BA%93/" title="运维之基础命令--yum仓库">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">运维之基础命令--yum仓库</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day20-dd%E4%B8%8E%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%A4%87%E4%BB%BD/%E7%AC%94%E8%AE%B0/" title="运维之基础命令--dd与文件系统备份">
+                        <span class="hidden-mobile">运维之基础命令--dd与文件系统备份</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

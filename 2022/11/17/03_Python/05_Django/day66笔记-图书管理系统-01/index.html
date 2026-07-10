@@ -1,0 +1,1066 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Haris">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="“Day66 图书管理系统（一） 学习笔记” 今日内容概述 项目准备 图书管理–图书增删改查 choices参数（数据库字段设计常见） MTV与MVC模型 多对多关系的三种创建方式 Ajax操作（重点） 前后端传输数据编码格式 ajax发送json格式数据 ajax发送文件 django自带的序列化功能（了解，后面讲路飞学城的时候会将更加牛逼的序列化drf） ajax结合sweetalert实现删">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Day66-图书管理系统-01">
+<meta property="og:url" content="https://gblog.github.io/2022/11/17/03_Python/05_Django/day66%E7%AC%94%E8%AE%B0-%E5%9B%BE%E4%B9%A6%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F-01/index.html">
+<meta property="og:site_name" content="Haris的小站">
+<meta property="og:description" content="“Day66 图书管理系统（一） 学习笔记” 今日内容概述 项目准备 图书管理–图书增删改查 choices参数（数据库字段设计常见） MTV与MVC模型 多对多关系的三种创建方式 Ajax操作（重点） 前后端传输数据编码格式 ajax发送json格式数据 ajax发送文件 django自带的序列化功能（了解，后面讲路飞学城的时候会将更加牛逼的序列化drf） ajax结合sweetalert实现删">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gblog.github.io/img/image-20221117104513853.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20221117144310521.png">
+<meta property="og:image" content="https://gblog.github.io/img/image-20221117151215258.png">
+<meta property="article:published_time" content="2022-11-17T00:05:22.000Z">
+<meta property="article:modified_time" content="2026-07-10T06:20:16.258Z">
+<meta property="article:author" content="Haris">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gblog.github.io/img/image-20221117104513853.png">
+  
+  
+  
+  <title>Day66-图书管理系统-01 - Haris的小站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"gblog.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Haris的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Day66-图书管理系统-01"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-11-17 08:05" pubdate>
+          2022年11月17日 早上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          29 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Day66-图书管理系统-01</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>“Day66 图书管理系统（一） 学习笔记”</p>
+<h1 id="今日内容概述"><a href="#今日内容概述" class="headerlink" title="今日内容概述"></a>今日内容概述</h1><ul>
+<li>项目准备</li>
+<li>图书管理–图书增删改查</li>
+<li>choices参数（数据库字段设计常见）</li>
+<li>MTV与MVC模型</li>
+<li>多对多关系的三种创建方式</li>
+<li>Ajax操作（重点）</li>
+<li>前后端传输数据编码格式</li>
+<li>ajax发送json格式数据</li>
+<li>ajax发送文件</li>
+<li>django自带的序列化功能（了解，后面讲路飞学城的时候会将更加牛逼的序列化drf）</li>
+<li>ajax结合sweetalert实现删除按钮的二次确认操作</li>
+</ul>
+<h1 id="一、项目准备"><a href="#一、项目准备" class="headerlink" title="一、项目准备"></a>一、项目准备</h1><h2 id="1-1-创建day66-BMS项目"><a href="#1-1-创建day66-BMS项目" class="headerlink" title="1.1 创建day66_BMS项目"></a>1.1 创建<code>day66_BMS</code>项目</h2><p><img src="/../../../img/image-20221117104513853.png" srcset="/img/loading.gif" lazyload alt="image-20221117104513853"></p>
+<h2 id="1-2-创建数据库"><a href="#1-2-创建数据库" class="headerlink" title="1.2 创建数据库"></a>1.2 创建数据库</h2><figure><div class="code-wrapper"><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">mysql&gt; create database day66;
+Query OK, 1 row affected (0.01 sec)</code></pre></div></figure>
+
+<h2 id="1-3-配置连接数据库"><a href="#1-3-配置连接数据库" class="headerlink" title="1.3 配置连接数据库"></a>1.3 配置连接数据库</h2><p>编辑<code>app01/init.,py</code>文件</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">import pymysql
+pymysql.install_as_MySQLdb()</code></pre></div></figure>
+
+<p>编辑<code>settings.py</code>文件</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">DATABASES &#x3D; &#123;
+    &#39;default&#39;: &#123;
+        &#39;ENGINE&#39;: &#39;django.db.backends.mysql&#39;,
+        &#39;NAME&#39;: &#39;day66&#39;,
+        &#39;HOST&#39;:&#39;127.0.0.1&#39;,
+        &#39;PORT&#39;:3306,
+        &#39;USER&#39;:&#39;root&#39;,
+        &#39;PASSWORD&#39;:&#39;123123&#39;,
+        &#39;CHARSET&#39;:&#39;utf8&#39;
+    &#125;
+&#125;</code></pre></div></figure>
+
+<h2 id="1-4-创建数据表模型"><a href="#1-4-创建数据表模型" class="headerlink" title="1.4 创建数据表模型"></a>1.4 创建数据表模型</h2><p>编辑<code>models.py</code>文件</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">from django.db import models
+
+# Create your models here.
+
+# 创建数据表对象
+class Book(models.Model):
+    title &#x3D; models.CharField(max_length&#x3D;32)
+    price &#x3D; models.DecimalField(max_digits&#x3D;8,decimal_places&#x3D;2)
+    publish_date &#x3D; models.DateField(auto_now_add&#x3D;True)
+    # 一对多
+    publish &#x3D; models.ForeignKey(to&#x3D;&#39;Publish&#39;, on_delete&#x3D;models.CASCADE)
+    # 多对多
+    authors &#x3D; models.ManyToManyField(to&#x3D;&#39;Author&#39;)
+
+    def __str__(self):
+        return self.title
+
+
+class Publish(models.Model):
+    name &#x3D; models.CharField(max_length&#x3D;32)
+    addr &#x3D; models.CharField(max_length&#x3D;64)
+    email &#x3D; models.EmailField()
+    # varchar(254)  该字段类型不是给models看的 而是给后面我们会学到的校验性组件看的
+
+    def __str__(self):
+        return &#39;对象:%s&#39;%self.name
+
+
+class Author(models.Model):
+    name &#x3D; models.CharField(max_length&#x3D;32)
+    age &#x3D; models.IntegerField()
+    # 一对一
+    author_detail &#x3D; models.OneToOneField(to&#x3D;&#39;AuthorDetail&#39;, on_delete&#x3D;models.CASCADE)
+
+
+class AuthorDetail(models.Model):
+    phone &#x3D; models.BigIntegerField()  # 电话号码用BigIntegerField或者直接用CharField
+    addr &#x3D; models.CharField(max_length&#x3D;64)
+</code></pre></div></figure>
+
+<p>执行同步数据库操作</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">python .\manage.py makemigrations
+python .\manage.py migrate</code></pre></div></figure>
+
+<p>确保数据表已经创建</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">mysql&gt; show tables;
++----------------------------+
+| Tables_in_day66            |
++----------------------------+
+| app01_author               |
+| app01_authordetail         |
+| app01_book                 |
+| app01_book_authors         |
+| app01_publish              |
+| auth_group                 |
+| auth_group_permissions     |
+| auth_permission            |
+| auth_user                  |
+| auth_user_groups           |
+| auth_user_user_permissions |
+| django_admin_log           |
+| django_content_type        |
+| django_migrations          |
+| django_session             |
++----------------------------+
+15 rows in set (0.00 sec)</code></pre></div></figure>
+
+<h2 id="1-5-数据库添加数据"><a href="#1-5-数据库添加数据" class="headerlink" title="1.5 数据库添加数据"></a>1.5 数据库添加数据</h2><p>使用<code>navicat</code>给数据库添加数据</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql"># 作者信息表
+mysql&gt; select * from app01_authordetail;
++----+-------+------+
+| id | phone | addr |
++----+-------+------+
+|  1 | 11111 | 一区 |
+|  2 | 22222 | 二区 |
+|  3 | 33333 | 二区 |
+|  4 | 44444 | 四区 |
++----+-------+------+
+
+# 作者表
+mysql&gt; select * from app01_author;
++----+--------+-----+------------------+
+| id | name   | age | author_detail_id |
++----+--------+-----+------------------+
+|  1 | 老一头 |  11 |                1 |
+|  2 | 老二头 |  22 |                2 |
+|  3 | 老三头 |  33 |                3 |
+|  4 | 老四头 |  44 |                4 |
++----+--------+-----+------------------+
+
+# 出版社表
+mysql&gt; select * from app01_publish;
++----+------------+------+------------+
+| id | name       | addr | email      |
++----+------------+------+------------+
+|  1 | 浪迹出版社 | 北京 | 123@qq.com |
+|  2 | 天涯出版社 | 深圳 | 234@qq.com |
+|  3 | 落花出版社 | 上海 | 456@qq,com |
+|  4 | 流水出版社 | 广州 | 678@qq,com |
++----+------------+------+------------+
+
+# 书表
+mysql&gt; select * from app01_book;
++----+----------+--------+--------------+------------+
+| id | title    | price  | publish_date | publish_id |
++----+----------+--------+--------------+------------+
+|  1 | 红楼梦   | 128.00 | 2022-11-17   |          3 |
+|  2 | 水浒传   |  68.00 | 2022-11-01   |          2 |
+|  3 | 西游记   | 200.00 | 2022-11-02   |          1 |
+|  4 | 三国演义 |  60.00 | 2022-11-18   |          4 |
++----+----------+--------+--------------+------------+
+
+# 书—作者表
+mysql&gt; select * from app01_book_authors;
++----+---------+-----------+
+| id | book_id | author_id |
++----+---------+-----------+
+|  1 |       1 |         2 |
+|  2 |       1 |         3 |
+|  4 |       2 |         1 |
+|  7 |       2 |         2 |
+|  3 |       2 |         4 |
+|  5 |       3 |         3 |
+|  6 |       4 |         2 |
++----+---------+-----------+</code></pre></div></figure>
+
+<h2 id="1-6-添加首页"><a href="#1-6-添加首页" class="headerlink" title="1.6 添加首页"></a>1.6 添加首页</h2><p>编辑<code>views.py</code>, 定义页面view</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">from django.shortcuts import render
+
+
+# Create your views here.
+def home(request):
+    return render(request, &#39;home.html&#39;)</code></pre></div></figure>
+
+<p>编辑<code>urls.py</code>添加解析</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">from django.contrib import admin
+from django.urls import path
+from app01 import views
+
+urlpatterns &#x3D; [
+    path(&#39;admin&#x2F;&#39;, admin.site.urls),
+    # 首页
+    path(r&#39;^S&#39;, views.home, name&#x3D;&#39;home&#39;)
+]</code></pre></div></figure>
+
+<p>新建文件<code>template/home.html</code>添加首页</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup">&lt;!DOCTYPE html&gt;
+&lt;html lang&#x3D;&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;
+    &lt;title&gt;Title&lt;&#x2F;title&gt;
+    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1&quot;&gt;
+    &lt;link href&#x3D;&quot;https:&#x2F;&#x2F;cdn.bootcss.com&#x2F;twitter-bootstrap&#x2F;3.4.1&#x2F;css&#x2F;bootstrap.min.css&quot; rel&#x3D;&quot;stylesheet&quot;&gt;
+    &lt;script src&#x3D;&quot;https:&#x2F;&#x2F;cdn.bootcss.com&#x2F;jquery&#x2F;3.3.1&#x2F;jquery.min.js&quot;&gt;&lt;&#x2F;script&gt;
+    &lt;script src&#x3D;&quot;https:&#x2F;&#x2F;cdn.bootcss.com&#x2F;twitter-bootstrap&#x2F;3.4.1&#x2F;js&#x2F;bootstrap.min.js&quot;&gt;&lt;&#x2F;script&gt;
+    &#123;% block css %&#125;
+
+    &#123;% endblock %&#125;
+&lt;&#x2F;head&gt;
+&lt;body&gt;
+&lt;nav class&#x3D;&quot;navbar navbar-inverse&quot;&gt;
+  &lt;div class&#x3D;&quot;container-fluid&quot;&gt;
+    &lt;!-- Brand and toggle get grouped for better mobile display --&gt;
+    &lt;div class&#x3D;&quot;navbar-header&quot;&gt;
+      &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;navbar-toggle collapsed&quot; data-toggle&#x3D;&quot;collapse&quot; data-target&#x3D;&quot;#bs-example-navbar-collapse-1&quot; aria-expanded&#x3D;&quot;false&quot;&gt;
+        &lt;span class&#x3D;&quot;sr-only&quot;&gt;Toggle navigation&lt;&#x2F;span&gt;
+        &lt;span class&#x3D;&quot;icon-bar&quot;&gt;&lt;&#x2F;span&gt;
+        &lt;span class&#x3D;&quot;icon-bar&quot;&gt;&lt;&#x2F;span&gt;
+        &lt;span class&#x3D;&quot;icon-bar&quot;&gt;&lt;&#x2F;span&gt;
+      &lt;&#x2F;button&gt;
+      &lt;a class&#x3D;&quot;navbar-brand&quot; href&#x3D;&quot;#&quot;&gt;图书管理系统&lt;&#x2F;a&gt;
+    &lt;&#x2F;div&gt;
+
+    &lt;!-- Collect the nav links, forms, and other content for toggling --&gt;
+    &lt;div class&#x3D;&quot;collapse navbar-collapse&quot; id&#x3D;&quot;bs-example-navbar-collapse-1&quot;&gt;
+      &lt;ul class&#x3D;&quot;nav navbar-nav&quot;&gt;
+        &lt;li class&#x3D;&quot;active&quot;&gt;&lt;a href&#x3D;&quot;#&quot;&gt;图书 &lt;span class&#x3D;&quot;sr-only&quot;&gt;(current)&lt;&#x2F;span&gt;&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+        &lt;li&gt;&lt;a href&#x3D;&quot;#&quot;&gt;作者&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+        &lt;li class&#x3D;&quot;dropdown&quot;&gt;
+          &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;dropdown-toggle&quot; data-toggle&#x3D;&quot;dropdown&quot; role&#x3D;&quot;button&quot; aria-haspopup&#x3D;&quot;true&quot; aria-expanded&#x3D;&quot;false&quot;&gt;更多 &lt;span class&#x3D;&quot;caret&quot;&gt;&lt;&#x2F;span&gt;&lt;&#x2F;a&gt;
+          &lt;ul class&#x3D;&quot;dropdown-menu&quot;&gt;
+            &lt;li&gt;&lt;a href&#x3D;&quot;#&quot;&gt;Action&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+            &lt;li&gt;&lt;a href&#x3D;&quot;#&quot;&gt;Another action&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+            &lt;li&gt;&lt;a href&#x3D;&quot;#&quot;&gt;Something else here&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+            &lt;li role&#x3D;&quot;separator&quot; class&#x3D;&quot;divider&quot;&gt;&lt;&#x2F;li&gt;
+            &lt;li&gt;&lt;a href&#x3D;&quot;#&quot;&gt;Separated link&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+            &lt;li role&#x3D;&quot;separator&quot; class&#x3D;&quot;divider&quot;&gt;&lt;&#x2F;li&gt;
+            &lt;li&gt;&lt;a href&#x3D;&quot;#&quot;&gt;One more separated link&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+          &lt;&#x2F;ul&gt;
+        &lt;&#x2F;li&gt;
+      &lt;&#x2F;ul&gt;
+      &lt;form class&#x3D;&quot;navbar-form navbar-left&quot;&gt;
+        &lt;div class&#x3D;&quot;form-group&quot;&gt;
+          &lt;input type&#x3D;&quot;text&quot; class&#x3D;&quot;form-control&quot; placeholder&#x3D;&quot;Search&quot;&gt;
+        &lt;&#x2F;div&gt;
+        &lt;button type&#x3D;&quot;submit&quot; class&#x3D;&quot;btn btn-default&quot;&gt;Submit&lt;&#x2F;button&gt;
+      &lt;&#x2F;form&gt;
+      &lt;ul class&#x3D;&quot;nav navbar-nav navbar-right&quot;&gt;
+        &lt;li&gt;&lt;a href&#x3D;&quot;#&quot;&gt;Jason&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+        &lt;li class&#x3D;&quot;dropdown&quot;&gt;
+          &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;dropdown-toggle&quot; data-toggle&#x3D;&quot;dropdown&quot; role&#x3D;&quot;button&quot; aria-haspopup&#x3D;&quot;true&quot; aria-expanded&#x3D;&quot;false&quot;&gt;更多操作 &lt;span class&#x3D;&quot;caret&quot;&gt;&lt;&#x2F;span&gt;&lt;&#x2F;a&gt;
+          &lt;ul class&#x3D;&quot;dropdown-menu&quot;&gt;
+            &lt;li&gt;&lt;a href&#x3D;&quot;#&quot;&gt;Action&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+            &lt;li&gt;&lt;a href&#x3D;&quot;#&quot;&gt;Another action&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+            &lt;li&gt;&lt;a href&#x3D;&quot;#&quot;&gt;Something else here&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+            &lt;li role&#x3D;&quot;separator&quot; class&#x3D;&quot;divider&quot;&gt;&lt;&#x2F;li&gt;
+            &lt;li&gt;&lt;a href&#x3D;&quot;#&quot;&gt;Separated link&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+          &lt;&#x2F;ul&gt;
+        &lt;&#x2F;li&gt;
+      &lt;&#x2F;ul&gt;
+    &lt;&#x2F;div&gt;&lt;!-- &#x2F;.navbar-collapse --&gt;
+  &lt;&#x2F;div&gt;&lt;!-- &#x2F;.container-fluid --&gt;
+&lt;&#x2F;nav&gt;
+&lt;div class&#x3D;&quot;container-fluid&quot;&gt;
+    &lt;div class&#x3D;&quot;row&quot;&gt;
+        &lt;div class&#x3D;&quot;col-md-3&quot;&gt;
+                &lt;div class&#x3D;&quot;list-group&quot;&gt;
+                  &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;list-group-item active&quot;&gt;
+                    首页
+                  &lt;&#x2F;a&gt;
+                  &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;list-group-item&quot;&gt;图书列表&lt;&#x2F;a&gt;
+                  &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;list-group-item&quot;&gt;出版社列表&lt;&#x2F;a&gt;
+                  &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;list-group-item&quot;&gt;作者列表&lt;&#x2F;a&gt;
+                  &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;list-group-item&quot;&gt;更多&lt;&#x2F;a&gt;
+                &lt;&#x2F;div&gt;
+        &lt;&#x2F;div&gt;
+    &lt;div class&#x3D;&quot;col-md-9&quot;&gt;
+        &lt;div class&#x3D;&quot;panel panel-primary&quot;&gt;
+          &lt;div class&#x3D;&quot;panel-heading&quot;&gt;
+            &lt;h3 class&#x3D;&quot;panel-title&quot;&gt;BMS&lt;&#x2F;h3&gt;
+          &lt;&#x2F;div&gt;
+          &lt;div class&#x3D;&quot;panel-body&quot;&gt;
+              &#123;% block content %&#125;
+                &lt;div class&#x3D;&quot;jumbotron&quot;&gt;
+                  &lt;h1&gt;欢迎来到亚洲最大的线上读书平台!&lt;&#x2F;h1&gt;
+                  &lt;p&gt;这里有的没有的书籍都有&lt;&#x2F;p&gt;
+                  &lt;p&gt;&lt;a class&#x3D;&quot;btn btn-primary btn-lg&quot; href&#x3D;&quot;#&quot; role&#x3D;&quot;button&quot;&gt;点击有你好看哟～&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+                &lt;&#x2F;div&gt;
+                &lt;div class&#x3D;&quot;row&quot;&gt;
+                  &lt;div class&#x3D;&quot;col-sm-6 col-md-4&quot;&gt;
+                    &lt;div class&#x3D;&quot;thumbnail&quot;&gt;
+                      &lt;img src&#x3D;&quot;data:image&#x2F;jpeg;base64,&#x2F;9j&#x2F;4AAQSkZJRgABAQAAAQABAAD&#x2F;2wCEABsbGxscGx4hIR4qLSgtKj04MzM4PV1CR0JHQl2NWGdYWGdYjX2Xe3N7l33gsJycsOD&#x2F;2c7Z&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;8BGxsbGxwbHiEhHiotKC0qPTgzMzg9XUJHQkdCXY1YZ1hYZ1iNfZd7c3uXfeCwnJyw4P&#x2F;Zztn&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;CABEIALkAsAMBIgACEQEDEQH&#x2F;xAAZAAEAAwEBAAAAAAAAAAAAAAAAAgMEAQX&#x2F;2gAIAQEAAAAAzAAAAAAAAAAADvAAAC2vhKaMDs6wE7K2uzqPMadUQC&#x2F;s9FF8a7qqY0gC+23sc7RLsK6KgGyyblFFWnWVdxRBZqrvlG67zqN&#x2F;I4uQAG6&#x2F;T0z30ZcQAL&#x2F;Wnh1TzaWLzQAetfLPZCadfigA1782fdb5rd51AADW324K80AABr9BHyIgAErb&#x2F;Zr75WeqIAd2XOTuoj1Tj4AbrQAz5AF21R24A86IHoT5XKYOdZsoLdznQHOo+cDZe50BzpgrD0ZudAc6Y87&#x2F;xAAZAQEBAQEBAQAAAAAAAAAAAAAAAwIBBAX&#x2F;2gAKAgIQAxAAAACH0wAAAOOgAAMT7uec80prmd0AxmMstMurUpsOI4liub4jqO70proCEbzCW63ABF1NZhYAOOcQV7voA4ljGbwnvNa730CGJ444DT1W6OPJEOAPRSuiWfPMACuvRT&#x2F;&#x2F;xAAxEAACAQMCBQIEBAcAAAAAAAABAgMAETESIQQQMEFREyAyYXFyBRRAkRUiIzNCYIH&#x2F;2gAIAQEAAT8A&#x2F;wBGtsT1bG1+imDRFibY9gR2wpNehL4FehJ4FGKQf4n2KLkCn2UDoxnciiAaKG5tSxsxtikhRe1z5NEgZIHNWVxdWBFMiuNxRjIOa0AHegCBa96c3PSU3HJBdvpyng9cINVrHkyh1ZT3BFQQiFCoJO9yeTpfccma316aQyZ2WjG3kUoCi1XGL076B5JxWp2O7N+9qV3HwuT9dxSPrGLEZFb+ORRTRgjOCQaeFk3yOiiCIXO7UrFifZMCGU2JBstOzQt&#x2F;URwGwTQ4hNXcKMVwzo5azb+O9h7HU3uKQt3x5NPbU2nF9vfEQJATTAZLqKMyICF&#x2F;mNISyKT3HIlydMa3b54H1qLhxGS7MXkOWNOiupVlBB7Gn&#x2F;DEO6OVr+GSjEy0sTogDPqPc2tyfZH+00ssiiwamkd8npwm8Y+W1Kuo0Bb2Hi+GvYShvtBagQygg3BFxTpbcVObRn57dXh2sxXzSrpHKaHgYV1yoNzk3ZqjVVRQhJXtc3rYjsQaPEKnErwwQ7rnkRepuFZxcPuBsOrw6hIEKi5YXNK4aiQBcmwqT8vOND2YXp5I4gutgoOwJxXrwJpRGVjhUTenlRDYneklRzYHemJAq5jVndsdWDifTGhxdaSSJt1cVO5Z7dhVj571AxZCp7VpWNGKKo27C1G5796Fx3p50RAzZIwKmneY+FGB1gSCCMigwk3HxdxQBJsBUMZRd8miLgg08LqcEiiNIu+wqRzI1&#x2F;2H6AEjcVHxbrswvXqeVr1B4NF3ONqZ2c3Y&#x2F;oFR2wpNDh3OSBUUSxsGO5BBoxRSjUO&#x2F;cUeFHZzQgjTd2qeJJXd12JYmjw7jBBpkdcqR1FUsQAN6SBV3O55kUkrx4JFfm5bfEtPKz5YtQvk83hRsbGiCpIPSij0L8zn3WHj3cQlxrHbPRgTU1zheXenmKOVKgi1QyFw1wBbo52NOuhivQjTQgHLualj9QC2RSIEWw957fXnxC4b&#x2F;AIffAuqQeBvzGT0W5uupWXyPfw62S&#x2F;nmvRbB9ky6ZG90X9tPtHNcdFvhPs4j4x9vP&#x2F;&#x2F;EACQRAAEEAAUFAQEAAAAAAAAAAAEAAgMREBIgMVETISJAQTBx&#x2F;9oACAECAQE&#x2F;APYuiVYRl4C6rkJT9CzBXZ0uqu5RcKTbBFbrIeU6yTe6Dk1zdB7AogEcuwjYdygGqSP6DhldVGtWS3nhDArp+YI9PuP4swVk7LbW6XhGRx+oTRncG0+W6yighK5NeHaZXfEGk7IijWhpykHQTQJRNlAkGwib0xG21jKfH8Ij5Yf&#x2F;xAAiEQEAAgEEAgIDAAAAAAAAAAABAAIREBIgITAxA0ETQFH&#x2F;2gAIAQMBAT8A&#x2F;YVraFiN5vYXm8gtnjYNHQ0rg49J&#x2F;XRY7vqVX7NMOMcrdMdCVTPfOwmcw+PJ3ERxPxmIVXwZQ6jlcytrPgbRVmy56t1KFhyuWb2CPGz9QM8Rw8HwVetbevBX3p&#x2F;&#x2F;2Q&#x3D;&#x3D;&quot; alt&#x3D;&quot;...&quot;&gt;
+                      &lt;div class&#x3D;&quot;caption&quot;&gt;
+                        &lt;h3&gt;Thumbnail label&lt;&#x2F;h3&gt;
+                        &lt;p&gt;...&lt;&#x2F;p&gt;
+                        &lt;p&gt;&lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;btn btn-primary&quot; role&#x3D;&quot;button&quot;&gt;Button&lt;&#x2F;a&gt; &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;btn btn-default&quot; role&#x3D;&quot;button&quot;&gt;Button&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+                      &lt;&#x2F;div&gt;
+                    &lt;&#x2F;div&gt;
+                  &lt;&#x2F;div&gt;
+                  &lt;div class&#x3D;&quot;col-sm-6 col-md-4&quot;&gt;
+                    &lt;div class&#x3D;&quot;thumbnail&quot;&gt;
+                      &lt;img src&#x3D;&quot;data:image&#x2F;jpeg;base64,&#x2F;9j&#x2F;4AAQSkZJRgABAQAAAQABAAD&#x2F;2wCEABsbGxscGx4hIR4qLSgtKj04MzM4PV1CR0JHQl2NWGdYWGdYjX2Xe3N7l33gsJycsOD&#x2F;2c7Z&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;8BGxsbGxwbHiEhHiotKC0qPTgzMzg9XUJHQkdCXY1YZ1hYZ1iNfZd7c3uXfeCwnJyw4P&#x2F;Zztn&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;CABEIALkAsQMBIgACEQEDEQH&#x2F;xAAaAAACAwEBAAAAAAAAAAAAAAADBAECBQAG&#x2F;9oACAEBAAAAAMfulrdwWSHLdNLVrkKsNOijMbdIUuK3BbyoC7eWkZ16Iuza&#x2F;RmdBCcIElFlkffDwWht1qPh1vFa1Gxnj3BhlZ+G02qIAu31JJcSU6NO44y2AXgJjegCBHTpmZm&#x2F;Q3WlYtVWx6BEU8jiaFL3cIJGKgIzVO7F4Wpa1qMLFg4A0EXpizHCrRwogEXMTlYgVoibzA9KawrS0zZdhYw1GaAcsE7dxgHDS4grDtpQQVJKLMd0DiGMekqjSgn7ZW3eKqKA0g69b07NbWWV0S1ytM8hHnG0MjeZZGHBmlBaDNcorAwiu+TO1NI895SKj7QYXQiI6Hjzm62ra&#x2F;eVilY0yJLTWsdr9TO0nTTTErTo0zZArRFSa1KZjDDA6Apa5XRZNZiOZ0KBzjQTp6&#x2F;oBiaxs6O6IdaumgSevLO7o589k5cU6Z0nj4Kc3m1vaTCQe7LRXNeNw3Y+dxOm3tegOVfpErF3WWF8TN4ndHuolXMETpJIzmMLAz6mt3f&#x2F;xAAYAQEBAQEBAAAAAAAAAAAAAAABAAIDBP&#x2F;aAAoCAhADEAAAAO&#x2F;Mc3PtjVMXTFkSaaHOqqk3gJE25NJlQ1EI5N51MUg0Mym+OOlCkwapHMFPbjXLvaDWHOOmsPO1o6c98uHq59K68XPD0OdY7Ypy5z1yzrkPD0FHp405o1I65Z3jeVOuc2sTI1rlnqJRNWdg1Tg6CUTG8OTROeHbqTVf&#x2F;8QANhAAAgIBAgQEAwYGAgMAAAAAAQIAEQMSIQQxQVEQEyJxBTJhFCBCgZGxIzNTYnKCFVI0Y6H&#x2F;2gAIAQEAAT8Al0ItUTYsdIZwCa+JX+0EzMLxZPaJvlaAese0Y17xBVCIdz7xjYimg&#x2F;e7jg6jUxPrQNcz&#x2F;JH2acmisfTOGO7TVGMo9pl4d8TaPm7UJi+F58gtyEEX4Pg6vkM&#x2F;4vhf7&#x2F;1mLgeHwtqQEN3uPjYqRYNiYsZ81wZopiYE9RMWAbmHlHFNqjCiGHKYn8tq&#x2F;CeUZgyzMtExvmi&#x2F;KJwwFtK+s0iaBF2YQOw6zzhNYMLQOLmFafMxj5d9oHJ6RWlwtcbw0CIByuZsVqYy7ReU4TGWDQ4py6y&#x2F;rEJ5mIxMq8gvvNXQzK2hZgU1rPNv2mktrvq5JnlqIyj7hE0iHGx5GFXTeIdazMuhjE9dATCgxrMvEDkIA55AzRl+kxZhyNg9jMZ5zfXF5TJqyPpgYrQqEgXUy8RRoC5k4nJiNMoMxcQmXlzgO3gTvAVHMwMIQpEVNJNTix6x7ThMQJLEbCNXKAheSgTUe81Q8NiyA2oszHw5wMdzRh9XSNaKID6tUDgwrtH08iJlw4n52Jj4dMZGljzgWhCI+oaQBzO57TiWdMhCs1CqmI59IammPLexBB7HwyocmQCOAiKByiY8jAUIFxnYsbnldiDNDdjFZg2lukBDCEgdIXB2M0IN5akgAbDfwfGGG8OIRUHQQYiRHxlYy9pZERm6CeWW5wYBBix6qYC4+JVddR9Aj5wo9MAGYll27npEZkYqTNZ7zMuoahzEV9hGaG7s7CNkZwdALV2EwE6STsZqheO8xKdOo9YDH3EY1zEVdUVFHhcztQDdRHOtFN7iJsppKPeKjhQFEbHYBcmx22mgdz+sbkfaJUuBR1FmCgJloGFjCxjbmeawAEGb6xeIUHczNkVwKmJ6EGQTzBHy1BqIsrFFMFPKA2YI7iqM1r3nm3qGg8vfnAaMBgNQvULNlygIL8DGIU2eUV0cbMDCBKHgsuFqBMRiTZiepfpGRStVUAqF6jtZ8CgGT8RAhimNlFR8ndgJiz8JhQ+sk9TUbjuHyZdgVvq3g66oqHDk1fhmq1Wk17bkECFnsacRA66iBUfJlU6A1t7THegXzhjtyF9YFTymoxDsIWhNRzcPg6FQGHOMeo&#x2F;MdRC8Ds7EKDQ6xwbJuNss4TFrPmP8oPpHczXvEzJkLAHccxGW4cf0hRj3i46gNTLlVBZiZXzcShPIGwJnZ1x6lNFTf5GYMmvGrDqJcYnwcvdLKy9zFyJlHp59VmVN47AGmBPtC5TGa1b9NNRmBEKnI4QHnFAAAAoAUBGJG4jsycRqBptUx5BkW+vhUNAWZkznkn6zJ6UZ236ThTWT8pkGrHkHdDPh&#x2F;EUTib3WavAJtcqVFy1U+12Kaj9TC6C6aNk7maz+U4BbTNkb2gmxPOFi3q63cxvVTzXEOZuwjEtzMagCZlyHIw7DlOFT1EmA713mK9VjpMOUZUDRL+kG8yYQw9LFfafZn&#x2F;qvL3hNxmMdunhwxIxVfMkzrMx04chrmK&#x2F;WCJmK&#x2F;UT7Yv8ATMbi2PJAIeJzH8VQsx5sTMKaiSeQmJQvKA+tfeINI&#x2F;OcJpUsgJugTYiL1gl&#x2F;cPfxwisae0AnGHSiL3JMEI+7gT+CD3JMFiKfUPeBixqcKhbIMg&#x2F;6BXEAIggBIvp3PKWn9RP18DG7eKClHtKO04s3krsAIPA&#x2F;cClAijooEO8NgMfoZiNODMWUiiGKsOTROLz8mCGfaMx5BRDdB8zmp5uDs0uMYBCJUAiDcTK2t2buT4344l15ca92EYmz4Oax5P8AAwbERWq5jzd4vEaAKazHz6jdkn6zzW8DvAu0y4XRcbMpAdbExcHlfS1oOR3MfGQ1AdJqKjIT0Uw+B5D7nCD+OD2DGFgQR4ZjWHJ9aEMT1AfpFJBIgN8oLEsfWUTAlkACyTQAnDfDseMKco1PPi6WmJ5wwJxYgLsoJ5JBPcipmasDV+N68TOkPhwY3yt2AEJBoxELXOIPoA7t+3hjPMQj1t4Bb5zTEwu50opY&#x2F;ScDwQwDXkAOT9vD4mL4U+4mFQFrsAP0nEP5eF26hTX57TLwpZAi2SFsQCzGFeIUmMtTgMWvG&#x2F;1aeQ40U60OQIgxlVrSL+k4lGUJY6tKi7NH2aXA30mpf+sVVUUoAHYePHgnhv8AdZrZXNd5l9SoGbnkH&#x2F;yzC1OP8RONxaM7Ho&#x2F;qjix4KsEbfacJj8jhsasKZhZm7EDtBfPrPiROtAe1w9BOprvGFwbiAXNDdvucRWij1M1Mtm4mda&#x2F;iKaEGXXqYiuoH0hbHlATImoA7RuE4ZrCsymP8Ly3aOrQ8FxQoeTF4E882UL&#x2F;avqMxomEEYl0tys7tGQPpgGkaVAAEyjS3uJ8T&#x2F;nIP&#x2F;WJzaLBKINw33M37nxHOcZyWPyPvPwz8OL&#x2F;ExOkf5T7ROSQ&#x2F;Pm9x+0PziL8x95+IewmT+Yv+v7zP8yz4j&#x2F;5X+iwdZ0nfw6eH&#x2F;8QAIBEAAgICAgMBAQAAAAAAAAAAAAEQEQIxEiADITAiUf&#x2F;aAAgBAgEBPwC0ckN2NyoxmizF7LvLsnDh6E6TMdXH5qErH6ELK2y40Nl&#x2F;CoyafwU0yyhYIfiv2j2vThmGNs8mPFwoeAsEUaPIoowVGauEy10Yziv4UhaGZbin8ctjRxZxUWWtX2fS44PnY5UPqtxQ1QkP0eJ&#x2F;tdf&#x2F;xAAiEQACAgICAwEAAwAAAAAAAAAAAQIREDESIQMgQTIiYnH&#x2F;2gAIAQMBAT8AooSF6telHkSVUcUoW9+zGLC2NXJHk7aQju8N0LtDHFJJji18x+kJHGu&#x2F;uH6Ltl0l1bHL58P4kLWF60iWui7Ol2zmhLEpti8qj0yLT&#x2F;xnH+w6JyqLPFLlHvEnhTHN&#x2F;Bm2ePVZ8jtM8Tq8NWcXmWhbNHJlkn2Q+i1i1mRFesNMTo5L4jk8UNNkdZeniOvbkuFCeW+hojperxYnY3SF3sn+GLQ8&#x2F;wD&#x2F;2Q&#x3D;&#x3D;&quot; alt&#x3D;&quot;...&quot;&gt;
+                      &lt;div class&#x3D;&quot;caption&quot;&gt;
+                        &lt;h3&gt;Thumbnail label&lt;&#x2F;h3&gt;
+                        &lt;p&gt;...&lt;&#x2F;p&gt;
+                        &lt;p&gt;&lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;btn btn-primary&quot; role&#x3D;&quot;button&quot;&gt;Button&lt;&#x2F;a&gt; &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;btn btn-default&quot; role&#x3D;&quot;button&quot;&gt;Button&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+                      &lt;&#x2F;div&gt;
+                    &lt;&#x2F;div&gt;
+                  &lt;&#x2F;div&gt;
+                  &lt;div class&#x3D;&quot;col-sm-6 col-md-4&quot;&gt;
+                    &lt;div class&#x3D;&quot;thumbnail&quot;&gt;
+                      &lt;img src&#x3D;&quot;data:image&#x2F;jpeg;base64,&#x2F;9j&#x2F;4AAQSkZJRgABAQAAAQABAAD&#x2F;2wCEABsbGxscGx4hIR4qLSgtKj04MzM4PV1CR0JHQl2NWGdYWGdYjX2Xe3N7l33gsJycsOD&#x2F;2c7Z&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;8BGxsbGxwbHiEhHiotKC0qPTgzMzg9XUJHQkdCXY1YZ1hYZ1iNfZd7c3uXfeCwnJyw4P&#x2F;Zztn&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;CABEIALkAsAMBIgACEQEDEQH&#x2F;xAAaAAEAAwEBAQAAAAAAAAAAAAAAAgMEAQUG&#x2F;9oACAEBAAAAAPPAAAAAd4AAOJ6bXaO0VgAX35M1SzXqYQA088+EXHO7PT8&#x2F;gCy&#x2F;zYiLnO79&#x2F;mgNuKuRyKEeT9zDSDu&#x2F;FyXUYcjCLfr80F98rW3leJzFm5f7HkA0X+jZMjGumGHz7vd8QE&#x2F;V28WRgjVGHjPe8MHPY1OaI1c5THvl1+p5YH0sYQ1xprU8nilb5oOfSzhKNNvYVVx5TLz+A922Mqs+mfM9bubuIDdvo7oqZtddbkMMQJezPD5tcPW9XLDLkAC&#x2F;1LclbV2qjzwAJ79kYcjmxAAJT9CNcZ56HAA0+r5VuqmqvN3fhiAc365YaOR5drozQAJ3V7dkYc7XghyIBqsxz9G+POYMV92bjj&#x2F;&#x2F;xAAZAQEBAQEBAQAAAAAAAAAAAAAAAQIDBAX&#x2F;2gAKAgIQAxAAAADpkCCgADFxss1NZoDGueqEWzpioOHVRKsl689SJeHZYtS5s3jpmDh3m5FpnWN46Zg4emWCmV6Z68IOPozVRQ7cN4DG+XbWZc3pz6cqAM64dzWe&#x2F;FACXzd&#x2F;RzlOG&#x2F;TwsAutPmek1Po+bBD&#x2F;xAA2EAACAQMDAAkCAwcFAAAAAAABAgADESEEEjEQEyAwMkFRcYFhkSIzQgUUNENygqFAUFKx0f&#x2F;aAAgBAQABPwD&#x2F;AGAKzcKTCCORb&#x2F;RKjNwItEjhb&#x2F;4gpi34j8cwikDyBLUjm+76HMq0w35agQUFFgw+Y1J1YjaYQQbEWPe06JOSPj&#x2F;2F0ojJF&#x2F;pH1bMTtwI9Zz+ozeYKrDzi6motrGUte45iaujVwSVPkZVo7kDAg28xCLd3RpcO3xK1fbdVjsW6bS0t0AzT6l6bDManTrpuXBjKVJB5Hc0k3tK9TYLCMSZaFZtm2WzCJaWgmlrbTNVSDoKiDI7miNlLceTmVCWabYFhWbZtgXMK8zbCJbmUjZppahamBNRT6uobeE5Xtou9lX1MrGwAlswrNsKm82G3E2m0CwiWhHM9YviE0dSx+ZrKeD9LMPY9ugv4ryucyjpXfJwsNHTocvc+gm0ubUqXyZ1Sek6lPSVaIKHYBeWUYqUyJ1Wnbh7e8bS4uDKlJk5E8ujTmxmqzT90Pb05G5R6tFXrdWqHK5J+IaPWfmn2QYAgpUl4RewZgw0aR5RYdPTGUJU&#x2F;Qwq&#x2F;D2YesraYAErDi4lDxTUC1FD7dumdrqfrNKoNd6g4NOEy8B6TLwmFoTDNWu2sZpsuJqfAF+ghySe3+zxUCPuUhbDbHdEIDOoJ9TLi1wYDnoMMvDCR6iA9GtH4hNGCayia17qQD6Qm57VrkD1Mpbm3348oaaqxIUXPJjIp8s+owYlw4U&#x2F;B6DHwILvgH3MNJDyu7+rMajSP8tYqbTybfWGV031FESmlLgXYzFQbGHMOCR2jKBuzN5FBb5jdAtC58oatuYCGlgBGhMJl4QCYXybRDci&#x2F;IMJuSfU9vRODpgfMDaYWtOsEBvHJWHcTKZ2qAZvEJjGGDoLDcbRz1dMk+JsDuNA9ndPJl&#x2F;yI8&#x2F;F5SjqqZqdSyuKnpGq0eC1veGpQH6xN6nw3PsI9dFfZkt6CKDbMfo4iujXswj1KVO&#x2F;BPoI7tUYs3cI5R1ccgxXVwGHBgE11AvaomGEGo1gTNZ&#x2F;nM&#x2F;ftX5VD9hDX1lY7OtqNu8rzR6YUucseTDxH56NTU&#x2F;lj+7vKNc0jY5UxHDAEG4mGFo9EZBRWUnIIxDR0540yj5aJRRPCgETEZ4ZWrdWMeL&#x2F;AK76nUamcfaU9Sp+hgYGECG0vLypqQMJk+sJJNz3yo7i4GPXynVqOW+0poqom0HK35hqMvIMNYehnWMYHG0q6hgZVFIJcJbMweDCpXkd5paArud3gXmOqtT2WAFsW8o6FSVYSjX2AK4uBwZ1lB&#x2F;1D5xGpLyCIV28kfeGpTHLX9pUc1CMWA4Ep0y5+nnLBl2sMSohRivd0qjUUCj3IiV1f6GOi1BYiPQdeBcdBEKiBb8C8TTE5bAgQAWAsI9YDC5MZi+ScjuqalnUAXjcxmtKFfADn2PQVB5AMNOn&#x2F;wAF+06umP0L9pYRiFFybSpW3kL+mGAEmw7rRfxK&#x2F;wBLTU&#x2F;xD+8fiL4R7TTeA+8PQejU&#x2F;mf2w+Nffo03jaN4m9z2f&#x2F;&#x2F;EACMRAAICAQQBBQEAAAAAAAAAAAECABEgAxASMSETIjBBUlH&#x2F;2gAIAQIBAT8A+YtUszz&#x2F;AGWYGyZqyVqNHEmzLly9zFNjc9ZXDE6wIo5fUTr49M94MKO1SjvRMVeIwdbnUsQnZF+8+HLdasSqyIZlPHuaeo+ixVwanp6ep5Vp6B&#x2F;c4pp+WaFn1W9olEAX3ije7jX1cdF1BRjDgxAM5N+jNNebUTEQKKEJtyN&#x2F;&#x2F;8QAIhEAAQQCAgEFAAAAAAAAAAAAAQACESAQIRJBMQMTMFFh&#x2F;9oACAEDAQE&#x2F;APmAUBaUBEWAsRUDShQoyEcjzYjDvNG7UV7TvNO8RRokr1gBFGGW4kqUMBwG09&#x2F;M0Y6McSoAw93Vw4jLuXVxEiUWh4kLk5uiF7n4pc&#x2F;QCADBtGJ1WNSmuLTIQMhQPpOPEIkk7RGhn&#x2F;&#x2F;Z&quot; alt&#x3D;&quot;...&quot;&gt;
+                      &lt;div class&#x3D;&quot;caption&quot;&gt;
+                        &lt;h3&gt;Thumbnail label&lt;&#x2F;h3&gt;
+                        &lt;p&gt;...&lt;&#x2F;p&gt;
+                        &lt;p&gt;&lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;btn btn-primary&quot; role&#x3D;&quot;button&quot;&gt;Button&lt;&#x2F;a&gt; &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;btn btn-default&quot; role&#x3D;&quot;button&quot;&gt;Button&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+                      &lt;&#x2F;div&gt;
+                    &lt;&#x2F;div&gt;
+                  &lt;&#x2F;div&gt;
+                &lt;&#x2F;div&gt;
+              &#123;% endblock %&#125;
+
+          &lt;&#x2F;div&gt;
+        &lt;&#x2F;div&gt;
+
+    &lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;&lt;&#x2F;div&gt;
+
+&#123;% block js %&#125;
+
+&#123;% endblock %&#125;
+&lt;&#x2F;body&gt;
+&lt;&#x2F;html&gt;</code></pre></div></figure>
+
+<p>运行后的界面如下:</p>
+<p><img src="/../../../img/image-20221117144310521.png" srcset="/img/loading.gif" lazyload alt="image-20221117144310521"></p>
+<h1 id="二、图书管理系统的增删改查"><a href="#二、图书管理系统的增删改查" class="headerlink" title="二、图书管理系统的增删改查"></a>二、图书管理系统的增删改查</h1><h2 id="2-1-图书列表展示页面"><a href="#2-1-图书列表展示页面" class="headerlink" title="2.1 图书列表展示页面"></a>2.1 图书列表展示页面</h2><blockquote>
+<p>实现功能：点击“图书列表”展示当前已有的图书</p>
+</blockquote>
+<p>1、编辑<code>urls.py</code>添加url</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">urlpatterns &#x3D; [
+    path(&#39;admin&#x2F;&#39;, admin.site.urls),
+    # 首页
+    path(&#39;&#39;, views.home, name&#x3D;&#39;home&#39;),
+    # 添加图书展示页
+    path(&#39;book&#x2F;list&#x2F;&#39;, views.book_list, name&#x3D;&quot;book_list&quot;)
+]</code></pre></div></figure>
+
+<p>2、编辑<code>views.py</code>添加view</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">from django.shortcuts import render
+from app01 import models  # 导入模块
+
+
+# Create your views here.
+def home(request):
+    return render(request, &#39;home.html&#39;)
+
+# 创建书籍展示页的view
+def book_list(request):
+    # 先查询出所有的书籍信息 传递给html页面
+    book_queryset &#x3D; models.Book.objects.all()
+    return render(request, &#39;book_list.html&#39;, locals())</code></pre></div></figure>
+
+<p>3、创建书籍展示页的html文件<code>templates/book_list.html</code></p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup">&#123;#继承home页面#&#125;
+&#123;% extends &#39;home.html&#39; %&#125;
+
+&#123;#重写已定义的content块#&#125;
+&#123;% block content %&#125;
+&#123;#    添加按钮#&#125;
+    &lt;a href&#x3D;&quot;&quot; class&#x3D;&quot;btn btn-success&quot;&gt;添加&lt;&#x2F;a&gt;
+    &lt;br&gt; &#123;#    添加空格#&#125;
+    &lt;br&gt;
+&#123;#    创建表格,使用bootstrp的模板#&#125;
+    &lt;table class&#x3D;&quot;table table-hover tabular-stripped&quot;&gt;
+        &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;ID&lt;&#x2F;th&gt;
+            &lt;th&gt;书名&lt;&#x2F;th&gt;
+            &lt;th&gt;价格&lt;&#x2F;th&gt;
+            &lt;th&gt;出版日期&lt;&#x2F;th&gt;
+            &lt;th&gt;出版社&lt;&#x2F;th&gt;
+            &lt;th&gt;作者&lt;&#x2F;th&gt;
+            &lt;th&gt;操作&lt;&#x2F;th&gt;
+        &lt;&#x2F;tr&gt;
+        &lt;&#x2F;thead&gt;
+        &lt;tbody&gt;
+            &#123;% for book_obj in book_queryset %&#125;
+                &lt;tr&gt;
+                    &lt;td&gt;&#123;&#123; book_obj.pk &#125;&#125;&lt;&#x2F;td&gt;
+                    &lt;td&gt;&#123;&#123; book_obj.title &#125;&#125;&lt;&#x2F;td&gt;
+                    &lt;td&gt;&#123;&#123; book_obj.price &#125;&#125;&lt;&#x2F;td&gt;
+                    &lt;td&gt;&#123;&#123; book_obj.publish_date | date:&#39;Y-m-d&#39;&#125;&#125;&lt;&#x2F;td&gt;
+                    &lt;td&gt;&#123;&#123; book_obj.publish.name &#125;&#125;&lt;&#x2F;td&gt;
+                    &lt;td&gt;
+                        &#123;% for author_obj in book_obj.authors.all %&#125;
+                            &#123;% if author_obj.last %&#125;
+                                &#123;&#123; author_obj.name &#125;&#125;
+                            &#123;% else %&#125;
+                                &#123;&#123; author_obj.name &#125;&#125;、
+                            &#123;% endif %&#125;
+
+                        &#123;% endfor %&#125;
+                    &lt;&#x2F;td&gt;
+                    &lt;td&gt;
+                        &lt;a href&#x3D;&quot;&quot; class&#x3D;&quot;btn btn-primary btn-sm&quot;&gt;编辑&lt;&#x2F;a&gt;
+                        &lt;a href&#x3D;&quot;&quot; class&#x3D;&quot;btn btn-danger btn-sm&quot;&gt;删除&lt;&#x2F;a&gt;
+                    &lt;&#x2F;td&gt;
+                &lt;&#x2F;tr&gt;
+            &#123;% endfor %&#125;
+        &lt;&#x2F;tbody&gt;
+    &lt;&#x2F;table&gt;
+&#123;% endblock %&#125;</code></pre></div></figure>
+
+<p>4、给<code>图书列表</code>按钮添加链接，修改<code>home.html</code>文件</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"># 75行
+&lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;list-group-item&quot;&gt;图书列表&lt;&#x2F;a&gt;
+# 改为
+&lt;a href&#x3D;&quot;&#123;% url &#39;book_list&#39; %&#125;&quot; class&#x3D;&quot;list-group-item&quot;&gt;图书列表&lt;&#x2F;a&gt;</code></pre></div></figure>
+
+<p>5、点击<code>图书列表</code>查看效果</p>
+<p><img src="/../../../img/image-20221117151215258.png" srcset="/img/loading.gif" lazyload alt="image-20221117151215258"></p>
+<h2 id="2-2-书籍的添加"><a href="#2-2-书籍的添加" class="headerlink" title="2.2 书籍的添加"></a>2.2 书籍的添加</h2><h2 id="2-3-书籍的编辑"><a href="#2-3-书籍的编辑" class="headerlink" title="2.3 书籍的编辑"></a>2.3 书籍的编辑</h2><h2 id="2-4-书籍的删除"><a href="#2-4-书籍的删除" class="headerlink" title="2.4 书籍的删除"></a>2.4 书籍的删除</h2><h1 id="三、Choies参数"><a href="#三、Choies参数" class="headerlink" title="三、Choies参数"></a>三、Choies参数</h1><h1 id="四、MTV与MVC模型"><a href="#四、MTV与MVC模型" class="headerlink" title="四、MTV与MVC模型"></a>四、MTV与MVC模型</h1><h1 id="五、多对多的三种创建方式"><a href="#五、多对多的三种创建方式" class="headerlink" title="五、多对多的三种创建方式"></a>五、多对多的三种创建方式</h1><h1 id="六、Ajax"><a href="#六、Ajax" class="headerlink" title="六、Ajax"></a>六、Ajax</h1>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Python/09-Django/" class="category-chain-item">09_Django</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Day66-图书管理系统-01</div>
+      <div>https://gblog.github.io/2022/11/17/03_Python/05_Django/day66笔记-图书管理系统-01/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Haris</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年11月17日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/11/22/05_%E7%AE%97%E6%B3%95/01-%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F/" title="01-冒泡排序">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">01-冒泡排序</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/11/16/03_Python/05_Django/day65%E7%AC%94%E8%AE%B0-DjangoORM%E8%BF%9B%E9%98%B6-02/" title="Day65-DjangoORM进阶-02">
+                        <span class="hidden-mobile">Day65-DjangoORM进阶-02</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

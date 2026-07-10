@@ -1,0 +1,2015 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Haris">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一 客户端&#x2F;服务器架构1.硬件C&#x2F;S架构(打印机) 2.软件C&#x2F;S架构 互联网中处处是C&#x2F;S架构 如黄色网站是服务端，你的浏览器是客户端（B&#x2F;S架构也是C&#x2F;S架构的一种） 腾讯作为服务端为你提供视频，你得下个腾讯视频客户端才能看它的视频） C&#x2F;S架构与socket的关系： 我们学习socket就是为了完成C&#x2F;S架构的开">
+<meta property="og:type" content="article">
+<meta property="og:title" content="31-网络编程">
+<meta property="og:url" content="https://gblog.github.io/2022/07/18/03_Python/02_Python%E8%BF%9B%E9%98%B6/31_%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Haris的小站">
+<meta property="og:description" content="一 客户端&#x2F;服务器架构1.硬件C&#x2F;S架构(打印机) 2.软件C&#x2F;S架构 互联网中处处是C&#x2F;S架构 如黄色网站是服务端，你的浏览器是客户端（B&#x2F;S架构也是C&#x2F;S架构的一种） 腾讯作为服务端为你提供视频，你得下个腾讯视频客户端才能看它的视频） C&#x2F;S架构与socket的关系： 我们学习socket就是为了完成C&#x2F;S架构的开">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic4.zhimg.com/80/v2-3f2ab5646d1bbca993e920c8ae27f40f_720w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-a4a1fd105e5e7af5d7db820b303ad7e2_720w.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-7d4ff6c59a5201bac25926b792826a40_720w.jpg">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-aeeffa09a60bc1037ae69a2856cf8941_720w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-b8475dd2de46da061d4f507bc2414206_720w.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-7fa4072d1b9ed772c81fe72b20497eec_720w.jpg">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-c70ea48a4774814cbc6d58657b811539_720w.jpg">
+<meta property="og:image" content="https://pic4.zhimg.com/80/v2-5e9568f888a55cd273aca6f561cea2d7_720w.jpg">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-d7c66c9a0abe12041ae948a553b908c9_720w.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-8888d725cb767594afe03b558814ba28_720w.jpg">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-d39565c190e7edc28f8cf8be1bf981f9_720w.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-16fcc2d93beebe3f1739951dc5d80114_720w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-154c5cb9cc464fac3e81703938479446_720w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-43cec3a3b133fd33c4d4db33af86807a_720w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-37d4aec9c5fe06d298f0d35258c0a222_720w.jpg">
+<meta property="article:published_time" content="2022-07-18T01:50:22.000Z">
+<meta property="article:modified_time" content="2026-07-10T06:20:16.229Z">
+<meta property="article:author" content="Haris">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://pic4.zhimg.com/80/v2-3f2ab5646d1bbca993e920c8ae27f40f_720w.jpg">
+  
+  
+  
+  <title>31-网络编程 - Haris的小站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"gblog.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Haris的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="31-网络编程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-18 09:50" pubdate>
+          2022年7月18日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          81 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">31-网络编程</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="一-客户端-服务器架构"><a href="#一-客户端-服务器架构" class="headerlink" title="一 客户端&#x2F;服务器架构"></a>一 客户端&#x2F;服务器架构</h2><p>1.硬件C&#x2F;S架构(打印机)</p>
+<p>2.软件C&#x2F;S架构</p>
+<p><em>互联网中处处是C&#x2F;S架构</em></p>
+<p><em>如黄色网站是服务端，你的浏览器是客户端（B&#x2F;S架构也是C&#x2F;S架构的一种）</em></p>
+<p><em>腾讯作为服务端为你提供视频，你得下个腾讯视频客户端才能看它的视频）</em></p>
+<p>C&#x2F;S架构与socket的关系：</p>
+<p><em>我们学习socket就是为了完成C&#x2F;S架构的开发</em></p>
+<h3 id="二-osi七层"><a href="#二-osi七层" class="headerlink" title="二 osi七层"></a>二 osi七层</h3><p><strong>引子：</strong></p>
+<p><em>须知一个完整的计算机系统是由硬件、操作系统、应用软件三者组成,具备了这三个条件，一台计算机系统就可以自己跟自己玩了（打个单机游戏，玩个扫雷啥的）</em></p>
+<p><em>如果你要跟别人一起玩，那你就需要上网了，什么是互联网？</em></p>
+<p><em>互联网的核心就是由一堆协议组成，协议就是标准，比如全世界人通信的标准是英语</em></p>
+<p><em>如果把计算机比作人，互联网协议就是计算机界的英语。所有的计算机都学会了互联网协议，那所有的计算机都就可以按照统一的标准去收发信息从而完成通信了。</em></p>
+<p><em>人们按照分工不同把互联网协议从逻辑上划分了层级，</em></p>
+<p><a href="https://link.zhihu.com/?target=http://www.cnblogs.com/linhaifeng/articles/5937962.html">详见网络通信原理：http://www.cnblogs.com/linhaifeng/articles/5937962.html</a></p>
+<p><strong>为何学习socket一定要先学习互联网协议：</strong></p>
+<p><em>1.首先：本节课程的目标就是教会你如何基于socket编程，来开发一款自己的C&#x2F;S架构软件</em></p>
+<p><em>2.其次：C&#x2F;S架构的软件（软件属于应用层）是基于网络进行通信的</em></p>
+<p><em>3.然后：网络的核心即一堆协议，协议即标准，你想开发一款基于网络通信的软件，就必须遵循这些标准。</em></p>
+<p><em>4.最后：就让我们从这些标准开始研究，开启我们的socket编程之旅</em></p>
+<p><img src="https://pic4.zhimg.com/80/v2-3f2ab5646d1bbca993e920c8ae27f40f_720w.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p> 图1</p>
+<h3 id="三-socket层"><a href="#三-socket层" class="headerlink" title="三 socket层"></a>三 socket层</h3><p>在图1中，我们没有看到Socket的影子，那么它到底在哪里呢？还是用图来说话，一目了然。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-a4a1fd105e5e7af5d7db820b303ad7e2_720w.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>图2</strong></p>
+<h3 id="四-socket是什么"><a href="#四-socket是什么" class="headerlink" title="四 socket是什么"></a>四 socket是什么</h3><p>Socket是应用层与TCP&#x2F;IP协议族通信的中间软件抽象层，它是一组接口。在设计模式中，Socket其实就是一个门面模式，它把复杂的TCP&#x2F;IP协议族隐藏在Socket接口后面，对用户来说，一组简单的接口就是全部，让Socket去组织数据，以符合指定的协议。</p>
+<p>所以，我们无需深入理解tcp&#x2F;udp协议，socket已经为我们封装好了，我们只需要遵循socket的规定去编程，写出的程序自然就是遵循tcp&#x2F;udp标准的。</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">也有人将socket说成ip+port，ip是用来标识互联网中的一台主机的位置，而port是用来标识这台机器上的一个应用程序，ip地址是配置到网卡上的，而port是应用程序开启的，ip与port的绑定就标识了互联网中独一无二的一个应用程序
+
+而程序的pid是同一台机器上不同进程或者线程的标识</code></pre></div></figure>
+
+<h3 id="五-套接字发展史及分类"><a href="#五-套接字发展史及分类" class="headerlink" title="五 套接字发展史及分类"></a>五 套接字发展史及分类</h3><p>套接字起源于 20 世纪 70 年代加利福尼亚大学伯克利分校版本的 Unix,即人们所说的 BSD Unix。 因此,有时人们也把套接字称为“伯克利套接字”或“BSD 套接字”。一开始,套接字被设计用在同 一台主机上多个应用程序之间的通讯。这也被称进程间通讯,或 IPC。套接字有两种（或者称为有两个种族）,分别是基于文件型的和基于网络型的。</p>
+<p>*<strong>基于文件类型的套接字家族*</strong></p>
+<p>套接字家族的名字：AF_UNIX</p>
+<p>unix一切皆文件，基于文件的套接字调用的就是底层的文件系统来取数据，两个套接字进程运行在同一机器，可以通过访问同一个文件系统间接完成通信</p>
+<p>*<strong>基于网络类型的套接字家族*</strong></p>
+<p>套接字家族的名字：AF_INET</p>
+<p>(还有AF_INET6被用于ipv6，还有一些其他的地址家族，不过，他们要么是只用于某个平台，要么就是已经被废弃，或者是很少被使用，或者是根本没有实现，所有地址家族中，AF_INET是使用最广泛的一个，python支持很多种地址家族，但是由于我们只关心网络编程，所以大部分时候我么只使用AF_INET)</p>
+<h3 id="六-套接字工作流程"><a href="#六-套接字工作流程" class="headerlink" title="六 套接字工作流程"></a>六 套接字工作流程</h3><p> 一个生活中的场景。你要打电话给一个朋友，先拨号，朋友听到电话铃声后提起电话，这时你和你的朋友就建立起了连接，就可以讲话了。等交流结束，挂断电话结束此次交谈。 生活中的场景就解释了这工作原理。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-7d4ff6c59a5201bac25926b792826a40_720w.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p> 图3</p>
+<p>先从服务器端说起。服务器端先初始化Socket，然后与端口绑定(bind)，对端口进行监听(listen)，调用accept阻塞，等待客户端连接。在这时如果有个客户端初始化一个Socket，然后连接服务器(connect)，如果连接成功，这时客户端与服务器端的连接就建立了。客户端发送数据请求，服务器端接收请求并处理请求，然后把回应数据发送给客户端，客户端读取数据，最后关闭连接，一次交互结束</p>
+<p>socket()模块函数用法</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">1 import socket
+ 2 socket.socket(socket_family,socket_type,protocal&#x3D;0)
+ 3 socket_family 可以是 AF_UNIX 或 AF_INET。socket_type 可以是 SOCK_STREAM 或 SOCK_DGRAM。protocol 一般不填,默认值为 0。
+ 4 
+ 5 获取tcp&#x2F;ip套接字
+ 6 tcpSock &#x3D; socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+ 7 
+ 8 获取udp&#x2F;ip套接字
+ 9 udpSock &#x3D; socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+10 
+11 由于 socket 模块中有太多的属性。我们在这里破例使用了&#39;from module import *&#39;语句。使用 &#39;from socket import *&#39;,我们就把 socket 模块里的所有属性都带到我们的命名空间里了,这样能 大幅减短我们的代码。
+12 例如tcpSock &#x3D; socket(AF_INET, SOCK_STREAM</code></pre></div></figure>
+
+<p><em><strong>服务端套接字函数</strong></em><br>s.bind() 绑定(主机,端口号)到套接字<br>s.listen() 开始TCP监听<br>s.accept() 被动接受TCP客户的连接,(阻塞式)等待连接的到来</p>
+<p><em><strong>客户端套接字函数</strong></em><br>s.connect() 主动初始化TCP服务器连接<br>s.connect_ex() connect()函数的扩展版本,出错时返回出错码,而不是抛出异常</p>
+<p><em><strong>公共用途的套接字函数</strong></em><br>s.recv() 接收TCP数据<br>s.send() 发送TCP数据(send在待发送数据量大于己端缓存区剩余空间时,数据丢失,不会发完)<br>s.sendall() 发送完整的TCP数据(本质就是循环调用send,sendall在待发送数据量大于己端缓存区剩余空间时,数据不丢失,循环调用send直到发完)<br>s.recvfrom() 接收UDP数据<br>s.sendto() 发送UDP数据<br>s.getpeername() 连接到当前套接字的远端的地址<br>s.getsockname() 当前套接字的地址<br>s.getsockopt() 返回指定套接字的参数<br>s.setsockopt() 设置指定套接字的参数<br>s.close() 关闭套接字</p>
+<p><em><strong>面向锁的套接字方法</strong></em><br>s.setblocking() 设置套接字的阻塞与非阻塞模式<br>s.settimeout() 设置阻塞套接字操作的超时时间<br>s.gettimeout() 得到阻塞套接字操作的超时时间</p>
+<p><em><strong>面向文件的套接字的函数</strong></em><br>s.fileno() 套接字的文件描述符<br>s.makefile() 创建一个与该套接字相关的文件</p>
+<h3 id="七-基于TCP的套接字"><a href="#七-基于TCP的套接字" class="headerlink" title="七 基于TCP的套接字"></a>七 基于TCP的套接字</h3><p>*<strong>tcp是基于链接的，必须先启动服务端，然后再启动客户端去链接服务端*</strong></p>
+<p>*<strong>tcp服务端*</strong></p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">1 ss &#x3D; socket() #创建服务器套接字
+2 ss.bind()      #把地址绑定到套接字
+3 ss.listen()      #监听链接
+4 inf_loop:      #服务器无限循环
+5     cs &#x3D; ss.accept() #接受客户端链接
+6     comm_loop:         #通讯循环
+7         cs.recv()&#x2F;cs.send() #对话(接收与发送)
+8     cs.close()    #关闭客户端套接字
+9 ss.close()        #关闭服务器套接字(可选)</code></pre></div></figure>
+
+<p>*<strong>tcp客户端*</strong></p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">1 cs &#x3D; socket()    # 创建客户套接字
+2 cs.connect()    # 尝试连接服务器
+3 comm_loop:        # 通讯循环
+4     cs.send()&#x2F;cs.recv()    # 对话(发送&#x2F;接收)
+5 cs.close()            # 关闭客户套接字</code></pre></div></figure>
+
+<p>socket通信流程与打电话流程类似，我们就以打电话为例来实现一个low版的套接字通信</p>
+<p>服务端：</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">#_*_coding:utf-8_*_
+__author__ &#x3D; &#39;Linhaifeng&#39;
+import socket
+ip_port&#x3D;(&#39;127.0.0.1&#39;,9000)  #电话卡
+BUFSIZE&#x3D;1024                #收发消息的尺寸
+s&#x3D;socket.socket(socket.AF_INET,socket.SOCK_STREAM) #买手机
+s.bind(ip_port) #手机插卡
+s.listen(5)     #手机待机
+
+
+conn,addr&#x3D;s.accept()            #手机接电话
+# print(conn)
+# print(addr)
+print(&#39;接到来自%s的电话&#39; %addr[0])
+
+msg&#x3D;conn.recv(BUFSIZE)             #听消息,听话
+print(msg,type(msg))
+
+conn.send(msg.upper())          #发消息,说话
+
+conn.close()                    #挂电话
+
+s.close()                       #手机关机</code></pre></div></figure>
+
+<p>客户端：</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">#_*_coding:utf-8_*_
+__author__ &#x3D; &#39;Linhaifeng&#39;
+import socket
+ip_port&#x3D;(&#39;127.0.0.1&#39;,9000)
+BUFSIZE&#x3D;1024
+s&#x3D;socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+
+s.connect_ex(ip_port)           #拨电话
+
+s.send(&#39;linhaifeng nb&#39;.encode(&#39;utf-8&#39;))         #发消息,说话(只能发送字节类型)
+
+feedback&#x3D;s.recv(BUFSIZE)                           #收消息,听话
+print(feedback.decode(&#39;utf-8&#39;))
+
+s.close()                                       #挂电话</code></pre></div></figure>
+
+<p>加上链接循环与通信循环</p>
+<p>服务端改进版:</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">#_*_coding:utf-8_*_
+__author__ &#x3D; &#39;Linhaifeng&#39;
+import socket
+ip_port&#x3D;(&#39;127.0.0.1&#39;,8081)#电话卡
+BUFSIZE&#x3D;1024
+s&#x3D;socket.socket(socket.AF_INET,socket.SOCK_STREAM) #买手机
+s.bind(ip_port) #手机插卡
+s.listen(5)     #手机待机
+
+
+while True:                         #新增接收链接循环,可以不停的接电话
+    conn,addr&#x3D;s.accept()            #手机接电话
+    # print(conn)
+    # print(addr)
+    print(&#39;接到来自%s的电话&#39; %addr[0])
+    while True:                         #新增通信循环,可以不断的通信,收发消息
+        msg&#x3D;conn.recv(BUFSIZE)             #听消息,听话
+
+        # if len(msg) &#x3D;&#x3D; 0:break        #如果不加,那么正在链接的客户端突然断开,recv便不再阻塞,死循环发生
+
+        print(msg,type(msg))
+
+        conn.send(msg.upper())          #发消息,说话
+
+    conn.close()                    #挂电话
+
+s.close()                       #手机关机</code></pre></div></figure>
+
+<p>客户端改进版</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">#_*_coding:utf-8_*_
+__author__ &#x3D; &#39;Linhaifeng&#39;
+import socket
+ip_port&#x3D;(&#39;127.0.0.1&#39;,8081)
+BUFSIZE&#x3D;1024
+s&#x3D;socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+
+s.connect_ex(ip_port)           #拨电话
+
+while True:                             #新增通信循环,客户端可以不断发收消息
+    msg&#x3D;input(&#39;&gt;&gt;: &#39;).strip()
+    if len(msg) &#x3D;&#x3D; 0:continue
+    s.send(msg.encode(&#39;utf-8&#39;))         #发消息,说话(只能发送字节类型)
+
+    feedback&#x3D;s.recv(BUFSIZE)                           #收消息,听话
+    print(feedback.decode(&#39;utf-8&#39;))
+
+s.close()                                       #挂电话</code></pre></div></figure>
+
+<p>问题：</p>
+<p>有的同学在重启服务端时可能会遇到</p>
+<p><img src="https://pic2.zhimg.com/80/v2-aeeffa09a60bc1037ae69a2856cf8941_720w.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>这个是由于你的服务端仍然存在四次挥手的time_wait状态在占用地址（如果不懂，请深入研究1.tcp三次握手，四次挥手 2.syn洪水攻击 3.服务器高并发情况下会有大量的time_wait状态的优化方法）</p>
+<p>解决方法：</p>
+<p>方法一</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">#加入一条socket配置，重用ip和端口
+
+phone&#x3D;socket(AF_INET,SOCK_STREAM)
+phone.setsockopt(SOL_SOCKET,SO_REUSEADDR,1) #就是它，在bind前加
+phone.bind((&#39;127.0.0.1&#39;,8080))</code></pre></div></figure>
+
+<p>方法二</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">发现系统存在大量TIME_WAIT状态的连接，通过调整linux内核参数解决，
+vi &#x2F;etc&#x2F;sysctl.conf
+
+编辑文件，加入以下内容：
+net.ipv4.tcp_syncookies &#x3D; 1
+net.ipv4.tcp_tw_reuse &#x3D; 1
+net.ipv4.tcp_tw_recycle &#x3D; 1
+net.ipv4.tcp_fin_timeout &#x3D; 30
+
+然后执行 &#x2F;sbin&#x2F;sysctl -p 让参数生效。
+
+net.ipv4.tcp_syncookies &#x3D; 1 表示开启SYN Cookies。当出现SYN等待队列溢出时，启用cookies来处理，可防范少量SYN攻击，默认为0，表示关闭；
+
+net.ipv4.tcp_tw_reuse &#x3D; 1 表示开启重用。允许将TIME-WAIT sockets重新用于新的TCP连接，默认为0，表示关闭；
+
+net.ipv4.tcp_tw_recycle &#x3D; 1 表示开启TCP连接中TIME-WAIT sockets的快速回收，默认为0，表示关闭。
+
+net.ipv4.tcp_fin_timeout 修改系統默认的 TIMEOUT 时间</code></pre></div></figure>
+
+<h3 id="八-基于UDP的套接字"><a href="#八-基于UDP的套接字" class="headerlink" title="八 基于UDP的套接字"></a>八 基于UDP的套接字</h3><p>*<strong>udp是无链接的，先启动哪一端都不会报错*</strong></p>
+<p>udp服务端</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">1 ss &#x3D; socket()   #创建一个服务器的套接字
+2 ss.bind()       #绑定服务器套接字
+3 inf_loop:       #服务器无限循环
+4     cs &#x3D; ss.recvfrom()&#x2F;ss.sendto() # 对话(接收与发送)
+5 ss.close()                         # 关闭服务器套接字</code></pre></div></figure>
+
+<p>udp客户端</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">cs &#x3D; socket()   # 创建客户套接字
+comm_loop:      # 通讯循环
+    cs.sendto()&#x2F;cs.recvfrom()   # 对话(发送&#x2F;接收)
+cs.close()                      # 关闭客户套接字</code></pre></div></figure>
+
+<p>*<strong>udp套接字简单示例*</strong></p>
+<p>udp服务端</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">#_*_coding:utf-8_*_
+__author__ &#x3D; &#39;Linhaifeng&#39;
+import socket
+ip_port&#x3D;(&#39;127.0.0.1&#39;,9000)
+BUFSIZE&#x3D;1024
+udp_server_client&#x3D;socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+
+udp_server_client.bind(ip_port)
+
+while True:
+    msg,addr&#x3D;udp_server_client.recvfrom(BUFSIZE)
+    print(msg,addr)
+
+    udp_server_client.sendto(msg.upper(),addr)</code></pre></div></figure>
+
+<p>udp客户端</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">#_*_coding:utf-8_*_
+__author__ &#x3D; &#39;Linhaifeng&#39;
+import socket
+ip_port&#x3D;(&#39;127.0.0.1&#39;,9000)
+BUFSIZE&#x3D;1024
+udp_server_client&#x3D;socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+
+while True:
+    msg&#x3D;input(&#39;&gt;&gt;: &#39;).strip()
+    if not msg:continue
+
+    udp_server_client.sendto(msg.encode(&#39;utf-8&#39;),ip_port)
+
+    back_msg,addr&#x3D;udp_server_client.recvfrom(BUFSIZE)
+    print(back_msg.decode(&#39;utf-8&#39;),addr)</code></pre></div></figure>
+
+<p>*<strong>qq聊天(由于udp无连接，所以可以同时多个客户端去跟服务端通信)*</strong></p>
+<p>udp服务端</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">#_*_coding:utf-8_*_
+__author__ &#x3D; &#39;Linhaifeng&#39;
+import socket
+ip_port&#x3D;(&#39;127.0.0.1&#39;,8081)
+udp_server_sock&#x3D;socket.socket(socket.AF_INET,socket.SOCK_DGRAM) #买手机
+udp_server_sock.bind(ip_port)
+
+while True:
+    qq_msg,addr&#x3D;udp_server_sock.recvfrom(1024)
+    print(&#39;来自[%s:%s]的一条消息:\033[1;44m%s\033[0m&#39; %(addr[0],addr[1],qq_msg.decode(&#39;utf-8&#39;)))
+    back_msg&#x3D;input(&#39;回复消息: &#39;).strip()
+
+    udp_server_sock.sendto(back_msg.encode(&#39;utf-8&#39;),addr)</code></pre></div></figure>
+
+<p>udp客户端1</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">#_*_coding:utf-8_*_
+__author__ &#x3D; &#39;Linhaifeng&#39;
+import socket
+BUFSIZE&#x3D;1024
+udp_client_socket&#x3D;socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+
+qq_name_dic&#x3D;&#123;
+    &#39;狗哥alex&#39;:(&#39;127.0.0.1&#39;,8081),
+    &#39;瞎驴&#39;:(&#39;127.0.0.1&#39;,8081),
+    &#39;一棵树&#39;:(&#39;127.0.0.1&#39;,8081),
+    &#39;武大郎&#39;:(&#39;127.0.0.1&#39;,8081),
+&#125;
+
+
+while True:
+    qq_name&#x3D;input(&#39;请选择聊天对象: &#39;).strip()
+    while True:
+        msg&#x3D;input(&#39;请输入消息,回车发送: &#39;).strip()
+        if msg &#x3D;&#x3D; &#39;quit&#39;:break
+        if not msg or not qq_name or qq_name not in qq_name_dic:continue
+        udp_client_socket.sendto(msg.encode(&#39;utf-8&#39;),qq_name_dic[qq_name])
+
+        back_msg,addr&#x3D;udp_client_socket.recvfrom(BUFSIZE)
+        print(&#39;来自[%s:%s]的一条消息:\033[1;44m%s\033[0m&#39; %(addr[0],addr[1],back_msg.decode(&#39;utf-8&#39;)))
+
+udp_client_socket.close()</code></pre></div></figure>
+
+<p>udp客户端2</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">#_*_coding:utf-8_*_
+__author__ &#x3D; &#39;Linhaifeng&#39;
+import socket
+BUFSIZE&#x3D;1024
+udp_client_socket&#x3D;socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+
+qq_name_dic&#x3D;&#123;
+    &#39;狗哥alex&#39;:(&#39;127.0.0.1&#39;,8081),
+    &#39;瞎驴&#39;:(&#39;127.0.0.1&#39;,8081),
+    &#39;一棵树&#39;:(&#39;127.0.0.1&#39;,8081),
+    &#39;武大郎&#39;:(&#39;127.0.0.1&#39;,8081),
+&#125;
+
+
+while True:
+    qq_name&#x3D;input(&#39;请选择聊天对象: &#39;).strip()
+    while True:
+        msg&#x3D;input(&#39;请输入消息,回车发送: &#39;).strip()
+        if msg &#x3D;&#x3D; &#39;quit&#39;:break
+        if not msg or not qq_name or qq_name not in qq_name_dic:continue
+        udp_client_socket.sendto(msg.encode(&#39;utf-8&#39;),qq_name_dic[qq_name])
+
+        back_msg,addr&#x3D;udp_client_socket.recvfrom(BUFSIZE)
+        print(&#39;来自[%s:%s]的一条消息:\033[1;44m%s\033[0m&#39; %(addr[0],addr[1],back_msg.decode(&#39;utf-8&#39;)))
+
+udp_client_socket.close()</code></pre></div></figure>
+
+<p>服务端运行结果</p>
+<p><img src="https://pic3.zhimg.com/80/v2-b8475dd2de46da061d4f507bc2414206_720w.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>客户端1运行结果</p>
+<p><img src="https://pic1.zhimg.com/80/v2-7fa4072d1b9ed772c81fe72b20497eec_720w.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>客户端2运行结果</p>
+<p><img src="https://pic2.zhimg.com/80/v2-c70ea48a4774814cbc6d58657b811539_720w.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>*<strong>时间服务器*</strong></p>
+<p>ntp服务端</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">#_*_coding:utf-8_*_
+__author__ &#x3D; &#39;Linhaifeng&#39;
+from socket import *
+from time import strftime
+
+ip_port&#x3D;(&#39;127.0.0.1&#39;,9000)
+bufsize&#x3D;1024
+
+tcp_server&#x3D;socket(AF_INET,SOCK_DGRAM)
+tcp_server.bind(ip_port)
+
+while True:
+    msg,addr&#x3D;tcp_server.recvfrom(bufsize)
+    print(&#39;&#x3D;&#x3D;&#x3D;&gt;&#39;,msg)
+
+    if not msg:
+        time_fmt&#x3D;&#39;%Y-%m-%d %X&#39;
+    else:
+        time_fmt&#x3D;msg.decode(&#39;utf-8&#39;)
+    back_msg&#x3D;strftime(time_fmt)
+
+    tcp_server.sendto(back_msg.encode(&#39;utf-8&#39;),addr)
+
+tcp_server.close()</code></pre></div></figure>
+
+<p>ntp客户端</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">#_*_coding:utf-8_*_
+__author__ &#x3D; &#39;Linhaifeng&#39;
+from socket import *
+ip_port&#x3D;(&#39;127.0.0.1&#39;,9000)
+bufsize&#x3D;1024
+
+tcp_client&#x3D;socket(AF_INET,SOCK_DGRAM)
+
+
+while True:
+    msg&#x3D;input(&#39;请输入时间格式(例%Y %m %d)&gt;&gt;: &#39;).strip()
+    tcp_client.sendto(msg.encode(&#39;utf-8&#39;),ip_port)
+    data&#x3D;tcp_client.recv(bufsize)
+    print(data.decode(&#39;utf-8&#39;))
+
+tcp_client.close()</code></pre></div></figure>
+
+<h3 id="九-粘包现象"><a href="#九-粘包现象" class="headerlink" title="九 粘包现象"></a>九 粘包现象</h3><p>让我们基于tcp先制作一个远程执行命令的程序（1：执行错误命令 2：执行ls 3：执行ifconfig）</p>
+<p><strong>注意注意注意：</strong></p>
+<p>res&#x3D;subprocess.Popen(cmd.decode(‘utf-8’), shell&#x3D;True, stderr&#x3D;subprocess.PIPE, stdout&#x3D;subprocess.PIPE)</p>
+<p>的结果的编码是以当前所在的系统为准的，如果是windows，那么<strong>res.stdout.read()读出的就是GBK编码的</strong>，在接收端需<strong>要用GBK解码</strong></p>
+<p><strong>且只能从管道里读一次结果</strong></p>
+<p>注意：命令ls -l ; lllllll ; pwd 的结果是既有正确stdout结果，又有错误stderr结果</p>
+<p>服务端</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">#_*_coding:utf-8_*_
+__author__ &#x3D; &#39;Linhaifeng&#39;
+from socket import *
+import subprocess
+
+ip_port&#x3D;(&#39;127.0.0.1&#39;,8080)
+BUFSIZE&#x3D;1024
+
+tcp_socket_server&#x3D;socket(AF_INET,SOCK_STREAM)
+tcp_socket_server.bind(ip_port)
+tcp_socket_server.listen(5)
+
+while True:
+    conn,addr&#x3D;tcp_socket_server.accept()
+    print(&#39;客户端&#39;,addr)
+
+    while True:
+        cmd&#x3D;conn.recv(BUFSIZE)
+        if len(cmd) &#x3D;&#x3D; 0:break
+
+        res&#x3D;subprocess.Popen(cmd.decode(&#39;utf-8&#39;),shell&#x3D;True,
+                         stdout&#x3D;subprocess.PIPE,
+                         stdin&#x3D;subprocess.PIPE,
+                         stderr&#x3D;subprocess.PIPE)
+
+        stderr&#x3D;act_res.stderr.read()
+        stdout&#x3D;act_res.stdout.read()
+        conn.send(stderr)
+        conn.send(stdout)</code></pre></div></figure>
+
+<p>客户端</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">#_*_coding:utf-8_*_
+__author__ &#x3D; &#39;Linhaifeng&#39;
+import socket
+BUFSIZE&#x3D;1024
+ip_port&#x3D;(&#39;127.0.0.1&#39;,8080)
+
+s&#x3D;socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+res&#x3D;s.connect_ex(ip_port)
+
+while True:
+    msg&#x3D;input(&#39;&gt;&gt;: &#39;).strip()
+    if len(msg) &#x3D;&#x3D; 0:continue
+    if msg &#x3D;&#x3D; &#39;quit&#39;:break
+
+    s.send(msg.encode(&#39;utf-8&#39;))
+    act_res&#x3D;s.recv(BUFSIZE)
+
+    print(act_res.decode(&#39;utf-8&#39;),end&#x3D;&#39;&#39;)</code></pre></div></figure>
+
+<p>上述程序是基于tcp的socket，在运行时会发生粘包</p>
+<p>让我们再基于udp制作一个远程执行命令的程序</p>
+<p>服务端</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">#_*_coding:utf-8_*_
+__author__ &#x3D; &#39;Linhaifeng&#39;
+from socket import *
+import subprocess
+
+ip_port&#x3D;(&#39;127.0.0.1&#39;,9003)
+bufsize&#x3D;1024
+
+udp_server&#x3D;socket(AF_INET,SOCK_DGRAM)
+udp_server.bind(ip_port)
+
+while True:
+    #收消息
+    cmd,addr&#x3D;udp_server.recvfrom(bufsize)
+    print(&#39;用户命令-----&gt;&#39;,cmd)
+
+    #逻辑处理
+    res&#x3D;subprocess.Popen(cmd.decode(&#39;utf-8&#39;),shell&#x3D;True,stderr&#x3D;subprocess.PIPE,stdin&#x3D;subprocess.PIPE,stdout&#x3D;subprocess.PIPE)
+    stderr&#x3D;res.stderr.read()
+    stdout&#x3D;res.stdout.read()
+
+    #发消息
+    udp_server.sendto(stderr,addr)
+    udp_server.sendto(stdout,addr)
+udp_server.close()</code></pre></div></figure>
+
+<p>客户端</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">from socket import *
+ip_port&#x3D;(&#39;127.0.0.1&#39;,9003)
+bufsize&#x3D;1024
+
+udp_client&#x3D;socket(AF_INET,SOCK_DGRAM)
+
+
+while True:
+    msg&#x3D;input(&#39;&gt;&gt;: &#39;).strip()
+    udp_client.sendto(msg.encode(&#39;utf-8&#39;),ip_port)
+
+    data,addr&#x3D;udp_client.recvfrom(bufsize)
+    print(data.decode(&#39;utf-8&#39;),end&#x3D;&#39;&#39;)</code></pre></div></figure>
+
+<p>上述程序是基于udp的socket，在运行时永远不会发生粘包</p>
+<h3 id="十-什么是粘包"><a href="#十-什么是粘包" class="headerlink" title="十 什么是粘包"></a>十 什么是粘包</h3><p>须知：只有TCP有粘包现象，UDP永远不会粘包，为何，且听我娓娓道来</p>
+<p>首先需要掌握一个socket收发消息的原理</p>
+<p><img src="https://pic4.zhimg.com/80/v2-5e9568f888a55cd273aca6f561cea2d7_720w.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>发送端可以是一K一K地发送数据，而接收端的应用程序可以两K两K地提走数据，当然也有可能一次提走3K或6K数据，或者一次只提走几个字节的数据，也就是说，应用程序所看到的数据是一个整体，或说是一个流（stream），一条消息有多少字节对应用程序是不可见的，因此TCP协议是面向流的协议，这也是容易出现粘包问题的原因。而UDP是面向消息的协议，每个UDP段都是一条消息，应用程序必须以消息为单位提取数据，不能一次提取任意字节的数据，这一点和TCP是很不同的。怎样定义消息呢？可以认为对方一次性write&#x2F;send的数据为一个消息，需要明白的是当对方send一条信息的时候，无论底层怎样分段分片，TCP协议层会把构成整条消息的数据段排序完成后才呈现在内核缓冲区。</p>
+<p>例如基于tcp的套接字客户端往服务端上传文件，发送时文件内容是按照一段一段的字节流发送的，在接收方看了，根本不知道该文件的字节流从何处开始，在何处结束</p>
+<p>所谓粘包问题主要还是因为接收方不知道消息之间的界限，不知道一次性提取多少字节的数据所造成的。</p>
+<p>此外，发送方引起的粘包是由TCP协议本身造成的，TCP为提高传输效率，发送方往往要收集到足够多的数据后才发送一个TCP段。若连续几次需要send的数据都很少，通常TCP会根据优化<a href="https://link.zhihu.com/?target=http://lib.csdn.net/base/datastructure">算法</a>把这些数据合成一个TCP段后一次发送出去，这样接收方就收到了粘包数据。</p>
+<ol>
+<li>TCP（transport control protocol，传输控制协议）是面向连接的，面向流的，提供高可靠性服务。收发两端（客户端和服务器端）都要有一一成对的socket，因此，发送端为了将多个发往接收端的包，更有效的发到对方，使用了优化方法（Nagle算法），将多次间隔较小且数据量小的数据，合并成一个大的数据块，然后进行封包。这样，接收端，就难于分辨出来了，必须提供科学的拆包机制。 即面向流的通信是无消息保护边界的。</li>
+<li>UDP（user datagram protocol，用户数据报协议）是无连接的，面向消息的，提供高效率服务。不会使用块的合并优化算法，, 由于UDP支持的是一对多的模式，所以接收端的skbuff(套接字缓冲区）采用了链式结构来记录每一个到达的UDP包，在每个UDP包中就有了消息头（消息来源地址，端口等信息），这样，对于接收端来说，就容易进行区分处理了。 <strong>即面向消息的通信是有消息保护边界的。</strong></li>
+<li><strong>tcp是基于数据流的，于是收发的消息不能为空，这就需要在客户端和服务端都添加空消息的处理机制，防止程序卡住，而udp是基于数据报的，即便是你输入的是空内容（直接回车），那也不是空消息，udp协议会帮你封装上消息头，实验略</strong></li>
+</ol>
+<p>udp的recvfrom是阻塞的，一个recvfrom(x)必须对唯一一个sendinto(y),收完了x个字节的数据就算完成,若是y&gt;x数据就丢失，这意味着udp根本不会粘包，但是会丢数据，不可靠</p>
+<p>tcp的协议数据不会丢，没有收完包，下次接收，会继续上次继续接收，己端总是在收到ack时才会清除缓冲区内容。数据是可靠的，但是会粘包。</p>
+<p>*<strong>两种情况下会发生粘包。*</strong></p>
+<p>发送端需要等缓冲区满才发送出去，造成粘包（发送数据时间间隔很短，数据了很小，会合到一起，产生粘包）</p>
+<p>服务端</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">#_*_coding:utf-8_*_
+__author__ &#x3D; &#39;Linhaifeng&#39;
+from socket import *
+ip_port&#x3D;(&#39;127.0.0.1&#39;,8080)
+
+tcp_socket_server&#x3D;socket(AF_INET,SOCK_STREAM)
+tcp_socket_server.bind(ip_port)
+tcp_socket_server.listen(5)
+
+
+conn,addr&#x3D;tcp_socket_server.accept()
+
+
+data1&#x3D;conn.recv(10)
+data2&#x3D;conn.recv(10)
+
+print(&#39;-----&gt;&#39;,data1.decode(&#39;utf-8&#39;))
+print(&#39;-----&gt;&#39;,data2.decode(&#39;utf-8&#39;))
+
+conn.close()</code></pre></div></figure>
+
+<p>客户端</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">#_*_coding:utf-8_*_
+__author__ &#x3D; &#39;Linhaifeng&#39;
+import socket
+BUFSIZE&#x3D;1024
+ip_port&#x3D;(&#39;127.0.0.1&#39;,8080)
+
+s&#x3D;socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+res&#x3D;s.connect_ex(ip_port)
+
+
+s.send(&#39;hello&#39;.encode(&#39;utf-8&#39;))
+s.send(&#39;feng&#39;.encode(&#39;utf-8&#39;))</code></pre></div></figure>
+
+<p>接收方不及时接收缓冲区的包，造成多个包接收（客户端发送了一段数据，服务端只收了一小部分，服务端下次再收的时候还是从缓冲区拿上次遗留的数据，产生粘包）</p>
+<p>服务端</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">#_*_coding:utf-8_*_
+__author__ &#x3D; &#39;Linhaifeng&#39;
+from socket import *
+ip_port&#x3D;(&#39;127.0.0.1&#39;,8080)
+
+tcp_socket_server&#x3D;socket(AF_INET,SOCK_STREAM)
+tcp_socket_server.bind(ip_port)
+tcp_socket_server.listen(5)
+
+
+conn,addr&#x3D;tcp_socket_server.accept()
+
+
+data1&#x3D;conn.recv(2) #一次没有收完整
+data2&#x3D;conn.recv(10)#下次收的时候,会先取旧的数据,然后取新的
+
+print(&#39;-----&gt;&#39;,data1.decode(&#39;utf-8&#39;))
+print(&#39;-----&gt;&#39;,data2.decode(&#39;utf-8&#39;))
+
+conn.close()</code></pre></div></figure>
+
+<p>客户端</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">#_*_coding:utf-8_*_
+__author__ &#x3D; &#39;Linhaifeng&#39;
+import socket
+BUFSIZE&#x3D;1024
+ip_port&#x3D;(&#39;127.0.0.1&#39;,8080)
+
+s&#x3D;socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+res&#x3D;s.connect_ex(ip_port)
+
+
+s.send(&#39;hello feng&#39;.encode(&#39;utf-8&#39;))</code></pre></div></figure>
+
+<p>*<strong>拆包的发生情况*</strong></p>
+<p>当发送端缓冲区的长度大于网卡的MTU时，tcp会将这次发送的数据拆成几个数据包发送出去。</p>
+<p>*<strong>补充问题一：为何tcp是可靠传输，udp是不可靠传输*</strong></p>
+<p>基于tcp的数据传输请参考我的另一篇文章<a href="https://link.zhihu.com/?target=http://www.cnblogs.com/linhaifeng/articles/5937962.html">http://www.cnblogs.com/linhaifeng/articles/5937962.html</a>，tcp在数据传输时，发送端先把数据发送到自己的缓存中，然后协议控制将缓存中的数据发往对端，对端返回一个ack&#x3D;1，发送端则清理缓存中的数据，对端返回ack&#x3D;0，则重新发送数据，所以tcp是可靠的</p>
+<p>而udp发送数据，对端是不会返回确认信息的，因此不可靠</p>
+<p>*<strong>补充问题二：send(字节流)和recv(1024)及sendall*</strong></p>
+<p>recv里指定的1024意思是从缓存里一次拿出1024个字节的数据</p>
+<p>send的字节流是先放入己端缓存，然后由协议控制将缓存内容发往对端，如果待发送的字节流大小大于缓存剩余空间，那么数据丢失，用sendall就会循环调用send，数据不会丢失</p>
+<h3 id="十一-解决粘包的low比处理方法"><a href="#十一-解决粘包的low比处理方法" class="headerlink" title="十一 解决粘包的low比处理方法"></a>十一 解决粘包的low比处理方法</h3><p>问题的根源在于，接收端不知道发送端将要传送的字节流的长度，所以解决粘包的方法就是围绕，如何让发送端在发送数据前，把自己将要发送的字节流总大小让接收端知晓，然后接收端来一个死循环接收完所有数据</p>
+<p>low版本的解决方法</p>
+<p>服务端</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">#_*_coding:utf-8_*_
+__author__ &#x3D; &#39;Linhaifeng&#39;
+import socket,subprocess
+ip_port&#x3D;(&#39;127.0.0.1&#39;,8080)
+s&#x3D;socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
+s.bind(ip_port)
+s.listen(5)
+
+while True:
+    conn,addr&#x3D;s.accept()
+    print(&#39;客户端&#39;,addr)
+    while True:
+        msg&#x3D;conn.recv(1024)
+        if not msg:break
+        res&#x3D;subprocess.Popen(msg.decode(&#39;utf-8&#39;),shell&#x3D;True,\
+                            stdin&#x3D;subprocess.PIPE,\
+                         stderr&#x3D;subprocess.PIPE,\
+                         stdout&#x3D;subprocess.PIPE)
+        err&#x3D;res.stderr.read()
+        if err:
+            ret&#x3D;err
+        else:
+            ret&#x3D;res.stdout.read()
+        data_length&#x3D;len(ret)
+        conn.send(str(data_length).encode(&#39;utf-8&#39;))
+        data&#x3D;conn.recv(1024).decode(&#39;utf-8&#39;)
+        if data &#x3D;&#x3D; &#39;recv_ready&#39;:
+            conn.sendall(ret)
+    conn.close()</code></pre></div></figure>
+
+<p>客户端</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">#_*_coding:utf-8_*_
+__author__ &#x3D; &#39;Linhaifeng&#39;
+import socket,time
+s&#x3D;socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+res&#x3D;s.connect_ex((&#39;127.0.0.1&#39;,8080))
+
+while True:
+    msg&#x3D;input(&#39;&gt;&gt;: &#39;).strip()
+    if len(msg) &#x3D;&#x3D; 0:continue
+    if msg &#x3D;&#x3D; &#39;quit&#39;:break
+
+    s.send(msg.encode(&#39;utf-8&#39;))
+    length&#x3D;int(s.recv(1024).decode(&#39;utf-8&#39;))
+    s.send(&#39;recv_ready&#39;.encode(&#39;utf-8&#39;))
+    send_size&#x3D;0
+    recv_size&#x3D;0
+    data&#x3D;b&#39;&#39;
+    while recv_size &lt; length:
+        data+&#x3D;s.recv(1024)
+        recv_size+&#x3D;len(data)
+
+
+    print(data.decode(&#39;utf-8&#39;))</code></pre></div></figure>
+
+<p>为何low：</p>
+<p>程序的运行速度远快于网络传输速度，所以在发送一段字节前，先用send去发送该字节流长度，这种方式会放大网络延迟带来的性能损耗</p>
+<h3 id="十二-峰哥解决粘包的方法"><a href="#十二-峰哥解决粘包的方法" class="headerlink" title="十二 峰哥解决粘包的方法"></a>十二 峰哥解决粘包的方法</h3><p>为字节流加上自定义固定长度报头，报头中包含字节流长度，然后一次send到对端，对端在接收时，先从缓存中取出定长的报头，然后再取真实数据</p>
+<p><strong>struct模块</strong></p>
+<p>该模块可以把一个类型，如数字，转成固定长度的bytes</p>
+<p>&gt;&gt;&gt; struct.pack(‘i’,1111111111111)</p>
+<p>。。。。。。。。。</p>
+<p>struct.error: ‘i’ format requires -2147483648 &lt;&#x3D; number &lt;&#x3D; 2147483647 #这个是范围</p>
+<p><img src="https://pic2.zhimg.com/80/v2-d7c66c9a0abe12041ae948a553b908c9_720w.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">import json,struct
+#假设通过客户端上传1T:1073741824000的文件a.txt
+
+#为避免粘包,必须自定制报头
+header&#x3D;&#123;&#39;file_size&#39;:1073741824000,&#39;file_name&#39;:&#39;&#x2F;a&#x2F;b&#x2F;c&#x2F;d&#x2F;e&#x2F;a.txt&#39;,&#39;md5&#39;:&#39;8f6fbf8347faa4924a76856701edb0f3&#39;&#125; #1T数据,文件路径和md5值
+
+#为了该报头能传送,需要序列化并且转为bytes
+head_bytes&#x3D;bytes(json.dumps(header),encoding&#x3D;&#39;utf-8&#39;) #序列化并转成bytes,用于传输
+
+#为了让客户端知道报头的长度,用struck将报头长度这个数字转成固定长度:4个字节
+head_len_bytes&#x3D;struct.pack(&#39;i&#39;,len(head_bytes)) #这4个字节里只包含了一个数字,该数字是报头的长度
+
+#客户端开始发送
+conn.send(head_len_bytes) #先发报头的长度,4个bytes
+conn.send(head_bytes) #再发报头的字节格式
+conn.sendall(文件内容) #然后发真实内容的字节格式
+
+#服务端开始接收
+head_len_bytes&#x3D;s.recv(4) #先收报头4个bytes,得到报头长度的字节格式
+x&#x3D;struct.unpack(&#39;i&#39;,head_len_bytes)[0] #提取报头的长度
+
+head_bytes&#x3D;s.recv(x) #按照报头长度x,收取报头的bytes格式
+header&#x3D;json.loads(json.dumps(header)) #提取报头
+
+#最后根据报头的内容提取真实的数据,比如
+real_data_len&#x3D;s.recv(header[&#39;file_size&#39;])
+s.recv(real_data_len)</code></pre></div></figure>
+
+<p>关于struct的详细用法</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">#_*_coding:utf-8_*_
+#http:&#x2F;&#x2F;www.cnblogs.com&#x2F;coser&#x2F;archive&#x2F;2011&#x2F;12&#x2F;17&#x2F;2291160.html
+__author__ &#x3D; &#39;Linhaifeng&#39;
+import struct
+import binascii
+import ctypes
+
+values1 &#x3D; (1, &#39;abc&#39;.encode(&#39;utf-8&#39;), 2.7)
+values2 &#x3D; (&#39;defg&#39;.encode(&#39;utf-8&#39;),101)
+s1 &#x3D; struct.Struct(&#39;I3sf&#39;)
+s2 &#x3D; struct.Struct(&#39;4sI&#39;)
+
+print(s1.size,s2.size)
+prebuffer&#x3D;ctypes.create_string_buffer(s1.size+s2.size)
+print(&#39;Before : &#39;,binascii.hexlify(prebuffer))
+# t&#x3D;binascii.hexlify(&#39;asdfaf&#39;.encode(&#39;utf-8&#39;))
+# print(t)
+
+
+s1.pack_into(prebuffer,0,*values1)
+s2.pack_into(prebuffer,s1.size,*values2)
+
+print(&#39;After pack&#39;,binascii.hexlify(prebuffer))
+print(s1.unpack_from(prebuffer,0))
+print(s2.unpack_from(prebuffer,s1.size))
+
+s3&#x3D;struct.Struct(&#39;ii&#39;)
+s3.pack_into(prebuffer,0,123,123)
+print(&#39;After pack&#39;,binascii.hexlify(prebuffer))
+print(s3.unpack_from(prebuffer,0))</code></pre></div></figure>
+
+<p>服务端（自定制报头）</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">import socket,struct,json
+import subprocess
+phone&#x3D;socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+phone.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1) #就是它，在bind前加
+
+phone.bind((&#39;127.0.0.1&#39;,8080))
+
+phone.listen(5)
+
+while True:
+    conn,addr&#x3D;phone.accept()
+    while True:
+        cmd&#x3D;conn.recv(1024)
+        if not cmd:break
+        print(&#39;cmd: %s&#39; %cmd)
+
+        res&#x3D;subprocess.Popen(cmd.decode(&#39;utf-8&#39;),
+                             shell&#x3D;True,
+                             stdout&#x3D;subprocess.PIPE,
+                             stderr&#x3D;subprocess.PIPE)
+        err&#x3D;res.stderr.read()
+        print(err)
+        if err:
+            back_msg&#x3D;err
+        else:
+            back_msg&#x3D;res.stdout.read()
+
+
+        conn.send(struct.pack(&#39;i&#39;,len(back_msg))) #先发back_msg的长度
+        conn.sendall(back_msg) #在发真实的内容
+
+    conn.close()</code></pre></div></figure>
+
+<p>客户端（自定制报头）</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">#_*_coding:utf-8_*_
+__author__ &#x3D; &#39;Linhaifeng&#39;
+import socket,time,struct
+
+s&#x3D;socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+res&#x3D;s.connect_ex((&#39;127.0.0.1&#39;,8080))
+
+while True:
+    msg&#x3D;input(&#39;&gt;&gt;: &#39;).strip()
+    if len(msg) &#x3D;&#x3D; 0:continue
+    if msg &#x3D;&#x3D; &#39;quit&#39;:break
+
+    s.send(msg.encode(&#39;utf-8&#39;))
+
+
+
+    l&#x3D;s.recv(4)
+    x&#x3D;struct.unpack(&#39;i&#39;,l)[0]
+    print(type(x),x)
+    # print(struct.unpack(&#39;I&#39;,l))
+    r_s&#x3D;0
+    data&#x3D;b&#39;&#39;
+    while r_s &lt; x:
+        r_d&#x3D;s.recv(1024)
+        data+&#x3D;r_d
+        r_s+&#x3D;len(r_d)
+
+    # print(data.decode(&#39;utf-8&#39;))
+    print(data.decode(&#39;gbk&#39;)) #windows默认gbk编码</code></pre></div></figure>
+
+<p>我们可以把报头做成字典，字典里包含将要发送的真实数据的详细信息，然后json序列化，然后用struck将序列化后的数据长度打包成4个字节（4个自己足够用了）</p>
+<p>发送时：</p>
+<p>先发报头长度</p>
+<p>再编码报头内容然后发送</p>
+<p>最后发真实内容</p>
+<p>接收时：</p>
+<p>先手报头长度，用struct取出来</p>
+<p>根据取出的长度收取报头内容，然后解码，反序列化</p>
+<p>从反序列化的结果中取出待取数据的详细信息，然后去取真实的数据内容</p>
+<p>服务端：定制稍微复杂一点的报头</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">import socket,struct,json
+import subprocess
+phone&#x3D;socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+phone.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1) #就是它，在bind前加
+
+phone.bind((&#39;127.0.0.1&#39;,8080))
+
+phone.listen(5)
+
+while True:
+    conn,addr&#x3D;phone.accept()
+    while True:
+        cmd&#x3D;conn.recv(1024)
+        if not cmd:break
+        print(&#39;cmd: %s&#39; %cmd)
+
+        res&#x3D;subprocess.Popen(cmd.decode(&#39;utf-8&#39;),
+                             shell&#x3D;True,
+                             stdout&#x3D;subprocess.PIPE,
+                             stderr&#x3D;subprocess.PIPE)
+        err&#x3D;res.stderr.read()
+        print(err)
+        if err:
+            back_msg&#x3D;err
+        else:
+            back_msg&#x3D;res.stdout.read()
+
+        headers&#x3D;&#123;&#39;data_size&#39;:len(back_msg)&#125;
+        head_json&#x3D;json.dumps(headers)
+        head_json_bytes&#x3D;bytes(head_json,encoding&#x3D;&#39;utf-8&#39;)
+
+        conn.send(struct.pack(&#39;i&#39;,len(head_json_bytes))) #先发报头的长度
+        conn.send(head_json_bytes) #再发报头
+        conn.sendall(back_msg) #在发真实的内容
+
+    conn.close()</code></pre></div></figure>
+
+<p>客户端</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">from socket import *
+import struct,json
+
+ip_port&#x3D;(&#39;127.0.0.1&#39;,8080)
+client&#x3D;socket(AF_INET,SOCK_STREAM)
+client.connect(ip_port)
+
+while True:
+    cmd&#x3D;input(&#39;&gt;&gt;: &#39;)
+    if not cmd:continue
+    client.send(bytes(cmd,encoding&#x3D;&#39;utf-8&#39;))
+
+    head&#x3D;client.recv(4)
+    head_json_len&#x3D;struct.unpack(&#39;i&#39;,head)[0]
+    head_json&#x3D;json.loads(client.recv(head_json_len).decode(&#39;utf-8&#39;))
+    data_len&#x3D;head_json[&#39;data_size&#39;]
+
+    recv_size&#x3D;0
+    recv_data&#x3D;b&#39;&#39;
+    while recv_size &lt; data_len:
+        recv_data+&#x3D;client.recv(1024)
+        recv_size+&#x3D;len(recv_data)
+
+    print(recv_data.decode(&#39;utf-8&#39;))
+    #print(recv_data.decode(&#39;gbk&#39;)) #windows默认gbk编码</code></pre></div></figure>
+
+<p>FTP作业：上传下载文件</p>
+<p>服务端</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">import socket
+import struct
+import json
+import subprocess
+import os
+
+class MYTCPServer:
+    address_family &#x3D; socket.AF_INET
+
+    socket_type &#x3D; socket.SOCK_STREAM
+
+    allow_reuse_address &#x3D; False
+
+    max_packet_size &#x3D; 8192
+
+    coding&#x3D;&#39;utf-8&#39;
+
+    request_queue_size &#x3D; 5
+
+    server_dir&#x3D;&#39;file_upload&#39;
+
+    def __init__(self, server_address, bind_and_activate&#x3D;True):
+        &quot;&quot;&quot;Constructor.  May be extended, do not override.&quot;&quot;&quot;
+        self.server_address&#x3D;server_address
+        self.socket &#x3D; socket.socket(self.address_family,
+                                    self.socket_type)
+        if bind_and_activate:
+            try:
+                self.server_bind()
+                self.server_activate()
+            except:
+                self.server_close()
+                raise
+
+    def server_bind(self):
+        &quot;&quot;&quot;Called by constructor to bind the socket.
+        &quot;&quot;&quot;
+        if self.allow_reuse_address:
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.socket.bind(self.server_address)
+        self.server_address &#x3D; self.socket.getsockname()
+
+    def server_activate(self):
+        &quot;&quot;&quot;Called by constructor to activate the server.
+        &quot;&quot;&quot;
+        self.socket.listen(self.request_queue_size)
+
+    def server_close(self):
+        &quot;&quot;&quot;Called to clean-up the server.
+        &quot;&quot;&quot;
+        self.socket.close()
+
+    def get_request(self):
+        &quot;&quot;&quot;Get the request and client address from the socket.
+        &quot;&quot;&quot;
+        return self.socket.accept()
+
+    def close_request(self, request):
+        &quot;&quot;&quot;Called to clean up an individual request.&quot;&quot;&quot;
+        request.close()
+
+    def run(self):
+        while True:
+            self.conn,self.client_addr&#x3D;self.get_request()
+            print(&#39;from client &#39;,self.client_addr)
+            while True:
+                try:
+                    head_struct &#x3D; self.conn.recv(4)
+                    if not head_struct:break
+
+                    head_len &#x3D; struct.unpack(&#39;i&#39;, head_struct)[0]
+                    head_json &#x3D; self.conn.recv(head_len).decode(self.coding)
+                    head_dic &#x3D; json.loads(head_json)
+
+                    print(head_dic)
+                    #head_dic&#x3D;&#123;&#39;cmd&#39;:&#39;put&#39;,&#39;filename&#39;:&#39;a.txt&#39;,&#39;filesize&#39;:123123&#125;
+                    cmd&#x3D;head_dic[&#39;cmd&#39;]
+                    if hasattr(self,cmd):
+                        func&#x3D;getattr(self,cmd)
+                        func(head_dic)
+                except Exception:
+                    break
+
+    def put(self,args):
+        file_path&#x3D;os.path.normpath(os.path.join(
+            self.server_dir,
+            args[&#39;filename&#39;]
+        ))
+
+        filesize&#x3D;args[&#39;filesize&#39;]
+        recv_size&#x3D;0
+        print(&#39;-----&gt;&#39;,file_path)
+        with open(file_path,&#39;wb&#39;) as f:
+            while recv_size &lt; filesize:
+                recv_data&#x3D;self.conn.recv(self.max_packet_size)
+                f.write(recv_data)
+                recv_size+&#x3D;len(recv_data)
+                print(&#39;recvsize:%s filesize:%s&#39; %(recv_size,filesize))
+
+
+tcpserver1&#x3D;MYTCPServer((&#39;127.0.0.1&#39;,8080))
+
+tcpserver1.run()</code></pre></div></figure>
+
+<p>客户端</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">import socket
+import struct
+import json
+import os
+
+
+
+class MYTCPClient:
+    address_family &#x3D; socket.AF_INET
+
+    socket_type &#x3D; socket.SOCK_STREAM
+
+    allow_reuse_address &#x3D; False
+
+    max_packet_size &#x3D; 8192
+
+    coding&#x3D;&#39;utf-8&#39;
+
+    request_queue_size &#x3D; 5
+
+    def __init__(self, server_address, connect&#x3D;True):
+        self.server_address&#x3D;server_address
+        self.socket &#x3D; socket.socket(self.address_family,
+                                    self.socket_type)
+        if connect:
+            try:
+                self.client_connect()
+            except:
+                self.client_close()
+                raise
+
+    def client_connect(self):
+        self.socket.connect(self.server_address)
+
+    def client_close(self):
+        self.socket.close()
+
+    def run(self):
+        while True:
+            inp&#x3D;input(&quot;&gt;&gt;: &quot;).strip()
+            if not inp:continue
+            l&#x3D;inp.split()
+            cmd&#x3D;l[0]
+            if hasattr(self,cmd):
+                func&#x3D;getattr(self,cmd)
+                func(l)
+
+
+    def put(self,args):
+        cmd&#x3D;args[0]
+        filename&#x3D;args[1]
+        if not os.path.isfile(filename):
+            print(&#39;file:%s is not exists&#39; %filename)
+            return
+        else:
+            filesize&#x3D;os.path.getsize(filename)
+
+        head_dic&#x3D;&#123;&#39;cmd&#39;:cmd,&#39;filename&#39;:os.path.basename(filename),&#39;filesize&#39;:filesize&#125;
+        print(head_dic)
+        head_json&#x3D;json.dumps(head_dic)
+        head_json_bytes&#x3D;bytes(head_json,encoding&#x3D;self.coding)
+
+        head_struct&#x3D;struct.pack(&#39;i&#39;,len(head_json_bytes))
+        self.socket.send(head_struct)
+        self.socket.send(head_json_bytes)
+        send_size&#x3D;0
+        with open(filename,&#39;rb&#39;) as f:
+            for line in f:
+                self.socket.send(line)
+                send_size+&#x3D;len(line)
+                print(send_size)
+            else:
+                print(&#39;upload successful&#39;)
+
+
+
+
+client&#x3D;MYTCPClient((&#39;127.0.0.1&#39;,8080))
+
+client.run()</code></pre></div></figure>
+
+<h3 id="十三-认证客户端的链接合法性"><a href="#十三-认证客户端的链接合法性" class="headerlink" title="十三 认证客户端的链接合法性"></a>十三 认证客户端的链接合法性</h3><p>如果你想在分布式系统中实现一个简单的客户端链接认证功能，又不像SSL那么复杂，那么利用hmac+加盐的方式来实现</p>
+<p>服务端</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">#_*_coding:utf-8_*_
+__author__ &#x3D; &#39;Linhaifeng&#39;
+from socket import *
+import hmac,os
+
+secret_key&#x3D;b&#39;linhaifeng bang bang bang&#39;
+def conn_auth(conn):
+    &#39;&#39;&#39;
+    认证客户端链接
+    :param conn:
+    :return:
+    &#39;&#39;&#39;
+    print(&#39;开始验证新链接的合法性&#39;)
+    msg&#x3D;os.urandom(32)
+    conn.sendall(msg)
+    h&#x3D;hmac.new(secret_key,msg)
+    digest&#x3D;h.digest()
+    respone&#x3D;conn.recv(len(digest))
+    return hmac.compare_digest(respone,digest)
+
+def data_handler(conn,bufsize&#x3D;1024):
+    if not conn_auth(conn):
+        print(&#39;该链接不合法,关闭&#39;)
+        conn.close()
+        return
+    print(&#39;链接合法,开始通信&#39;)
+    while True:
+        data&#x3D;conn.recv(bufsize)
+        if not data:break
+        conn.sendall(data.upper())
+
+def server_handler(ip_port,bufsize,backlog&#x3D;5):
+    &#39;&#39;&#39;
+    只处理链接
+    :param ip_port:
+    :return:
+    &#39;&#39;&#39;
+    tcp_socket_server&#x3D;socket(AF_INET,SOCK_STREAM)
+    tcp_socket_server.bind(ip_port)
+    tcp_socket_server.listen(backlog)
+    while True:
+        conn,addr&#x3D;tcp_socket_server.accept()
+        print(&#39;新连接[%s:%s]&#39; %(addr[0],addr[1]))
+        data_handler(conn,bufsize)
+
+if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
+    ip_port&#x3D;(&#39;127.0.0.1&#39;,9999)
+    bufsize&#x3D;1024
+    server_handler(ip_port,bufsize)</code></pre></div></figure>
+
+<p>客户端(合法)</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">#_*_coding:utf-8_*_
+__author__ &#x3D; &#39;Linhaifeng&#39;
+from socket import *
+import hmac,os
+
+secret_key&#x3D;b&#39;linhaifeng bang bang bang&#39;
+def conn_auth(conn):
+    &#39;&#39;&#39;
+    验证客户端到服务器的链接
+    :param conn:
+    :return:
+    &#39;&#39;&#39;
+    msg&#x3D;conn.recv(32)
+    h&#x3D;hmac.new(secret_key,msg)
+    digest&#x3D;h.digest()
+    conn.sendall(digest)
+
+def client_handler(ip_port,bufsize&#x3D;1024):
+    tcp_socket_client&#x3D;socket(AF_INET,SOCK_STREAM)
+    tcp_socket_client.connect(ip_port)
+
+    conn_auth(tcp_socket_client)
+
+    while True:
+        data&#x3D;input(&#39;&gt;&gt;: &#39;).strip()
+        if not data:continue
+        if data &#x3D;&#x3D; &#39;quit&#39;:break
+
+        tcp_socket_client.sendall(data.encode(&#39;utf-8&#39;))
+        respone&#x3D;tcp_socket_client.recv(bufsize)
+        print(respone.decode(&#39;utf-8&#39;))
+    tcp_socket_client.close()
+
+if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
+    ip_port&#x3D;(&#39;127.0.0.1&#39;,9999)
+    bufsize&#x3D;1024
+    client_handler(ip_port,bufsize)</code></pre></div></figure>
+
+<p>客户端(非法:不知道加密方式)</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">#_*_coding:utf-8_*_
+__author__ &#x3D; &#39;Linhaifeng&#39;
+from socket import *
+
+def client_handler(ip_port,bufsize&#x3D;1024):
+    tcp_socket_client&#x3D;socket(AF_INET,SOCK_STREAM)
+    tcp_socket_client.connect(ip_port)
+
+    while True:
+        data&#x3D;input(&#39;&gt;&gt;: &#39;).strip()
+        if not data:continue
+        if data &#x3D;&#x3D; &#39;quit&#39;:break
+
+        tcp_socket_client.sendall(data.encode(&#39;utf-8&#39;))
+        respone&#x3D;tcp_socket_client.recv(bufsize)
+        print(respone.decode(&#39;utf-8&#39;))
+    tcp_socket_client.close()
+
+if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
+    ip_port&#x3D;(&#39;127.0.0.1&#39;,9999)
+    bufsize&#x3D;1024
+    client_handler(ip_port,bufsize)</code></pre></div></figure>
+
+<p>客户端(非法:不知道secret_key)</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">#_*_coding:utf-8_*_
+__author__ &#x3D; &#39;Linhaifeng&#39;
+from socket import *
+import hmac,os
+
+secret_key&#x3D;b&#39;linhaifeng bang bang bang1111&#39;
+def conn_auth(conn):
+    &#39;&#39;&#39;
+    验证客户端到服务器的链接
+    :param conn:
+    :return:
+    &#39;&#39;&#39;
+    msg&#x3D;conn.recv(32)
+    h&#x3D;hmac.new(secret_key,msg)
+    digest&#x3D;h.digest()
+    conn.sendall(digest)
+
+def client_handler(ip_port,bufsize&#x3D;1024):
+    tcp_socket_client&#x3D;socket(AF_INET,SOCK_STREAM)
+    tcp_socket_client.connect(ip_port)
+
+    conn_auth(tcp_socket_client)
+
+    while True:
+        data&#x3D;input(&#39;&gt;&gt;: &#39;).strip()
+        if not data:continue
+        if data &#x3D;&#x3D; &#39;quit&#39;:break
+
+        tcp_socket_client.sendall(data.encode(&#39;utf-8&#39;))
+        respone&#x3D;tcp_socket_client.recv(bufsize)
+        print(respone.decode(&#39;utf-8&#39;))
+    tcp_socket_client.close()
+
+if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
+    ip_port&#x3D;(&#39;127.0.0.1&#39;,9999)
+    bufsize&#x3D;1024
+    client_handler(ip_port,bufsize)</code></pre></div></figure>
+
+<h3 id="十四-socketserver实现并发"><a href="#十四-socketserver实现并发" class="headerlink" title="十四 socketserver实现并发"></a>十四 socketserver实现并发</h3><p>基于tcp的套接字，关键就是两个循环，一个链接循环，一个通信循环</p>
+<p>socketserver模块中分两大类：server类（解决链接问题）和request类（解决通信问题）</p>
+<p>server类：</p>
+<p><img src="https://pic1.zhimg.com/80/v2-8888d725cb767594afe03b558814ba28_720w.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>request类：</p>
+<p><img src="https://pic2.zhimg.com/80/v2-d39565c190e7edc28f8cf8be1bf981f9_720w.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>继承关系:</p>
+<p><img src="https://pic1.zhimg.com/80/v2-16fcc2d93beebe3f1739951dc5d80114_720w.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://pic3.zhimg.com/80/v2-154c5cb9cc464fac3e81703938479446_720w.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://pic3.zhimg.com/80/v2-43cec3a3b133fd33c4d4db33af86807a_720w.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>以下述代码为例，分析socketserver源码：</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">ftpserver&#x3D;socketserver.ThreadingTCPServer((&#39;127.0.0.1&#39;,8080),FtpServer)
+ftpserver.serve_forever()</code></pre></div></figure>
+
+<p>查找属性的顺序：ThreadingTCPServer-&gt;ThreadingMixIn-&gt;TCPServer-&gt;BaseServer</p>
+<ol>
+<li>实例化得到ftpserver，先找类ThreadingTCPServer的<strong>init</strong>,在TCPServer中找到，进而执行server_bind,server_active</li>
+<li>找ftpserver下的serve_forever,在BaseServer中找到，进而执行self._handle_request_noblock()，该方法同样是在BaseServer中</li>
+<li>执行self._handle_request_noblock()进而执行request, client_address &#x3D; self.get_request()（就是TCPServer中的self.socket.accept()），然后执行self.process_request(request, client_address)</li>
+<li>在ThreadingMixIn中找到process_request，开启多线程应对并发，进而执行process_request_thread，执行self.finish_request(request, client_address)</li>
+<li>上述四部分完成了链接循环，本部分开始进入处理通讯部分，在BaseServer中找到finish_request,触发我们自己定义的类的实例化，去找<strong>init</strong>方法，而我们自己定义的类没有该方法，则去它的父类也就是BaseRequestHandler中找….</li>
+</ol>
+<p>源码分析总结：</p>
+<p>基于tcp的socketserver我们自己定义的类中的</p>
+<ol>
+<li>self.server即套接字对象</li>
+<li>self.request即一个链接</li>
+<li>self.client_address即客户端地址</li>
+</ol>
+<p>基于udp的socketserver我们自己定义的类中的</p>
+<ol>
+<li>self.request是一个元组（第一个元素是客户端发来的数据，第二部分是服务端的udp套接字对象），如(b’adsf’, )</li>
+<li>self.client_address即客户端地址</li>
+</ol>
+<p>FtpServer</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">import socketserver
+import struct
+import json
+import os
+class FtpServer(socketserver.BaseRequestHandler):
+    coding&#x3D;&#39;utf-8&#39;
+    server_dir&#x3D;&#39;file_upload&#39;
+    max_packet_size&#x3D;1024
+    BASE_DIR&#x3D;os.path.dirname(os.path.abspath(__file__))
+    def handle(self):
+        print(self.request)
+        while True:
+            data&#x3D;self.request.recv(4)
+            data_len&#x3D;struct.unpack(&#39;i&#39;,data)[0]
+            head_json&#x3D;self.request.recv(data_len).decode(self.coding)
+            head_dic&#x3D;json.loads(head_json)
+            # print(head_dic)
+            cmd&#x3D;head_dic[&#39;cmd&#39;]
+            if hasattr(self,cmd):
+                func&#x3D;getattr(self,cmd)
+                func(head_dic)
+    def put(self,args):
+        file_path &#x3D; os.path.normpath(os.path.join(
+            self.BASE_DIR,
+            self.server_dir,
+            args[&#39;filename&#39;]
+        ))
+
+        filesize &#x3D; args[&#39;filesize&#39;]
+        recv_size &#x3D; 0
+        print(&#39;-----&gt;&#39;, file_path)
+        with open(file_path, &#39;wb&#39;) as f:
+            while recv_size &lt; filesize:
+                recv_data &#x3D; self.request.recv(self.max_packet_size)
+                f.write(recv_data)
+                recv_size +&#x3D; len(recv_data)
+                print(&#39;recvsize:%s filesize:%s&#39; % (recv_size, filesize))
+
+
+ftpserver&#x3D;socketserver.ThreadingTCPServer((&#39;127.0.0.1&#39;,8080),FtpServer)
+ftpserver.serve_forever()</code></pre></div></figure>
+
+<p>FtpClient</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">import socket
+import struct
+import json
+import os
+
+
+
+class MYTCPClient:
+    address_family &#x3D; socket.AF_INET
+
+    socket_type &#x3D; socket.SOCK_STREAM
+
+    allow_reuse_address &#x3D; False
+
+    max_packet_size &#x3D; 8192
+
+    coding&#x3D;&#39;utf-8&#39;
+
+    request_queue_size &#x3D; 5
+
+    def __init__(self, server_address, connect&#x3D;True):
+        self.server_address&#x3D;server_address
+        self.socket &#x3D; socket.socket(self.address_family,
+                                    self.socket_type)
+        if connect:
+            try:
+                self.client_connect()
+            except:
+                self.client_close()
+                raise
+
+    def client_connect(self):
+        self.socket.connect(self.server_address)
+
+    def client_close(self):
+        self.socket.close()
+
+    def run(self):
+        while True:
+            inp&#x3D;input(&quot;&gt;&gt;: &quot;).strip()
+            if not inp:continue
+            l&#x3D;inp.split()
+            cmd&#x3D;l[0]
+            if hasattr(self,cmd):
+                func&#x3D;getattr(self,cmd)
+                func(l)
+
+
+    def put(self,args):
+        cmd&#x3D;args[0]
+        filename&#x3D;args[1]
+        if not os.path.isfile(filename):
+            print(&#39;file:%s is not exists&#39; %filename)
+            return
+        else:
+            filesize&#x3D;os.path.getsize(filename)
+
+        head_dic&#x3D;&#123;&#39;cmd&#39;:cmd,&#39;filename&#39;:os.path.basename(filename),&#39;filesize&#39;:filesize&#125;
+        print(head_dic)
+        head_json&#x3D;json.dumps(head_dic)
+        head_json_bytes&#x3D;bytes(head_json,encoding&#x3D;self.coding)
+
+        head_struct&#x3D;struct.pack(&#39;i&#39;,len(head_json_bytes))
+        self.socket.send(head_struct)
+        self.socket.send(head_json_bytes)
+        send_size&#x3D;0
+        with open(filename,&#39;rb&#39;) as f:
+            for line in f:
+                self.socket.send(line)
+                send_size+&#x3D;len(line)
+                print(send_size)
+            else:
+                print(&#39;upload successful&#39;)
+
+
+
+
+client&#x3D;MYTCPClient((&#39;127.0.0.1&#39;,8080))
+
+client.run()</code></pre></div></figure>
+
+<h3 id="十五-作业"><a href="#十五-作业" class="headerlink" title="十五 作业"></a>十五 作业</h3><p><img src="https://pic3.zhimg.com/80/v2-37d4aec9c5fe06d298f0d35258c0a222_720w.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="视频链接"><a href="#视频链接" class="headerlink" title="视频链接"></a>视频链接</h2><p><a href="https://link.zhihu.com/?target=https://www.bilibili.com/video/av73342471?p=119">
+  </a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Python/02-Python%E8%BF%9B%E9%98%B6/" class="category-chain-item">02_Python进阶</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>31-网络编程</div>
+      <div>https://gblog.github.io/2022/07/18/03_Python/02_Python进阶/31_网络编程/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Haris</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年7月18日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/18/03_Python/02_Python%E8%BF%9B%E9%98%B6/32_python%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86/" title="32-并发编程（一）">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">32-并发编程（一）</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/18/03_Python/02_Python%E8%BF%9B%E9%98%B6/30_%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" title="30-异常处理">
+                        <span class="hidden-mobile">30-异常处理</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
