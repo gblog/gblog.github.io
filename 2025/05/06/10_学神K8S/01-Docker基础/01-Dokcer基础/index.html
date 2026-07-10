@@ -1,0 +1,822 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Haris">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、虚拟机准备1.1 虚拟机配置模板机，2G内存、2核CPU、80G存储空间 网络两个网卡： ​	ens33: NAT模式，192.168.40.0&#x2F;24网段，网关192.168.40.2 ​	ens36: LAN区段，172.16.1.0&#x2F;24网段 系统：RockyLinux 8.10 1.2 基础初始化1、关闭防火墙安装基础软件 # 1、关闭防火墙 systemctl st">
+<meta property="og:type" content="article">
+<meta property="og:title" content="01-Docker基础">
+<meta property="og:url" content="http://gblog.github.io/2025/05/06/10_%E5%AD%A6%E7%A5%9EK8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="Haris的小站">
+<meta property="og:description" content="一、虚拟机准备1.1 虚拟机配置模板机，2G内存、2核CPU、80G存储空间 网络两个网卡： ​	ens33: NAT模式，192.168.40.0&#x2F;24网段，网关192.168.40.2 ​	ens36: LAN区段，172.16.1.0&#x2F;24网段 系统：RockyLinux 8.10 1.2 基础初始化1、关闭防火墙安装基础软件 # 1、关闭防火墙 systemctl st">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-05-06T05:52:52.000Z">
+<meta property="article:modified_time" content="2026-07-10T06:20:16.472Z">
+<meta property="article:author" content="Haris">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>01-Docker基础 - Haris的小站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"gblog.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Haris的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="01-Docker基础"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-05-06 13:52" pubdate>
+          2025年5月6日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          12 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">01-Docker基础</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="一、虚拟机准备"><a href="#一、虚拟机准备" class="headerlink" title="一、虚拟机准备"></a>一、虚拟机准备</h1><h2 id="1-1-虚拟机配置"><a href="#1-1-虚拟机配置" class="headerlink" title="1.1 虚拟机配置"></a>1.1 虚拟机配置</h2><p>模板机，2G内存、2核CPU、80G存储空间</p>
+<p>网络两个网卡：</p>
+<p>​	ens33: NAT模式，192.168.40.0&#x2F;24网段，网关192.168.40.2</p>
+<p>​	ens36: LAN区段，172.16.1.0&#x2F;24网段</p>
+<p>系统：RockyLinux 8.10</p>
+<h2 id="1-2-基础初始化"><a href="#1-2-基础初始化" class="headerlink" title="1.2 基础初始化"></a>1.2 基础初始化</h2><p>1、关闭防火墙安装基础软件</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 1、关闭防火墙
+systemctl stop firewalld
+systemctl disable firewalld
+
+# 2、关闭selinux
+sed -i &#39;s#SELINUX&#x3D;enforcing#SELINUX&#x3D;disable#g&#39; &#x2F;etc&#x2F;selinux&#x2F;config
+setenforce 0
+
+# 3、安装常用软件
+yum install -y vim tree wget bash-completion bashcompletion-extras lrzsz net-tools sysstat iotop iftop htop unzip nc nmap telnet bc psmisc httpd-tools bindutils
+
+# 4、设置主机名
+hostnamectl set-hostname muban</code></pre></div></figure>
+
+<p>2、配置时间同步</p>
+<p>编辑<code>vim /etc/chrony.conf</code>文件，添加时间同步服务器</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># Please consider joining the pool (http:&#x2F;&#x2F;www.pool.ntp.org&#x2F;join.html).
+server 210.72.145.44 iburst
+server ntp.aliyun.com iburst
+...</code></pre></div></figure>
+
+<p>重启服务生效</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl restart chronyd.service</code></pre></div></figure>
+
+<p>查看当前的时间同步服务器</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@localhost yum.repos.d]# chronyc sources -y
+MS Name&#x2F;IP address         Stratum Poll Reach LastRx Last sample               
+&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+^? 210.72.145.44                 0   8     0     -     +0ns[   +0ns] +&#x2F;-    0ns
+^* 203.107.6.88                  2   6   377    30    -97us[ -564us] +&#x2F;-   37ms</code></pre></div></figure>
+
+<p>加到crontab里面定时执行</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 一分钟自动重启一次服务
+* * * * * &#x2F;usr&#x2F;bin&#x2F;systemctl restart chronyd</code></pre></div></figure>
+
+<p>3、命令行颜色</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 写入到&#x2F;etc&#x2F;profile中
+export PS1&#x3D;&#39;[\[\e[34;1m\]\u@\[\e[0m\]\[\e[32;1m\]\H\[\e[0m\]\[\e[31;1m\] \w\[\e[0m\]]\$&#39;
+# 生效
+source &#x2F;etc&#x2F;profile</code></pre></div></figure>
+
+<p>4、一键修改IP和hostname</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@muban &#x2F;etc]#cat &#x2F;usr&#x2F;local&#x2F;mytools&#x2F;bin&#x2F;setip.sh 
+#!&#x2F;bin&#x2F;bash
+#author: haris
+#desc: change ip and hostname
+#version: v1.0
+#判断参数格式是否为2
+[ $# -ne 2 ] &amp;&amp; &#123;
+echo &quot;脚本使用姿势不对&quot;
+echo &quot;正确姿势:$0 主机名 ip地址&quot;
+echo &quot;如:$0 muban 211&quot;
+        exit 1
+&#125;
+#获取当前主机ip地址
+ip&#x3D;&#96;hostname -I |awk &#39;&#123;print $1&#125;&#39;|sed &#39;s#.*\.##g&#39;&#96;
+#新的ip
+ip_new&#x3D;&#96;echo $2 |sed &#39;s#^.*\.##g&#39;&#96;
+#新的主机名
+hostname&#x3D;$1
+#修改ip
+sed -i &quot;s#192.168.40.$ip#192.168.40.$ip_new#g&quot; &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33
+sed -i &quot;s#172.16.1.$ip#172.16.1.$ip_new#g&quot; &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens36
+#重启网卡
+systemctl restart NetworkManager
+#修改主机名
+hostnamectl set-hostname $hostname</code></pre></div></figure>
+
+<h2 id="1-3-开启包转发功能"><a href="#1-3-开启包转发功能" class="headerlink" title="1.3 开启包转发功能"></a>1.3 开启包转发功能</h2><p>1、br_netfilter模块用于将桥接流量转发至iptables链，需要开启转发。</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 开启模块
+modprobe br_netfilter
+
+# 验证是否已加载
+[root@master1 &#x2F;etc&#x2F;sysctl.d]#lsmod | grep br_netfilter
+br_netfilter           22256  0 
+bridge                151336  1 br_netfilter</code></pre></div></figure>
+
+<p>2、创建配置文件，修改内核参数</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 创建配置文件
+cat &gt; &#x2F;etc&#x2F;sysctl.d&#x2F;docker.conf &lt;&lt; EOF
+net.bridge.bridge-nf-call-ip6tables &#x3D; 1
+net.bridge.bridge-nf-call-iptables &#x3D; 1
+net.ipv4.ip_forward &#x3D; 1
+EOF
+
+# 执行命令，使内核参数生效
+sysctl -p &#x2F;etc&#x2F;sysctl.d&#x2F;docker.conf</code></pre></div></figure>
+
+<p>3、自动加载模块</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 编辑配置文件
+[root@master1 ~]#cat &#x2F;etc&#x2F;rc.sysint 
+#!&#x2F;bin&#x2F;bash
+for file in &#x2F;etc&#x2F;sysconfig&#x2F;modules&#x2F;*.modules; 
+do
+[ -x $file ] &amp;&amp; $file
+done
+
+# 添加模块自动加载的文件
+[root@master1 ~]#cat &#x2F;etc&#x2F;sysconfig&#x2F;modules&#x2F;br_netfilter.modules
+modprobe br_netfilter
+
+# 添加可执行权限
+chmod 755 &#x2F;etc&#x2F;sysconfig&#x2F;modules&#x2F;br_netfilter.modules</code></pre></div></figure>
+
+<p>重启docker生效</p>
+<h2 id="1-4-安装Docker"><a href="#1-4-安装Docker" class="headerlink" title="1.4 安装Docker"></a>1.4 安装Docker</h2><blockquote>
+<p>在线联网安装，Docker-ce</p>
+</blockquote>
+<p>1、配置docker-ce国内的yum源（阿里云）</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum-config-manager --add-repo https:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;docker-ce&#x2F;linux&#x2F;centos&#x2F;docker-ce.repo</code></pre></div></figure>
+
+<p>2、安装docker依赖包</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum install -y device-mapper-persistent-data lvm2</code></pre></div></figure>
+
+<p>3、安装docker-ce</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum install docker-ce -y</code></pre></div></figure>
+
+<p>4、启动docker服务器</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl start docker &amp;&amp; systemctl enable docker</code></pre></div></figure>
+
+<p>5、查看docker版本</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker verison</code></pre></div></figure>
+
+
+
+<h2 id="2-5-配置镜像加速"><a href="#2-5-配置镜像加速" class="headerlink" title="2.5 配置镜像加速"></a>2.5 配置镜像加速</h2><p>在OS中通过配置文件配置镜像加速</p>
+<blockquote>
+<p>镜像加速器多写几个，不然容易超时拉取失败</p>
+<p>Error response from daemon: Get “<a target="_blank" rel="noopener" href="https://registry-1.docker.io/v2/">https://registry-1.docker.io/v2/</a></p>
+</blockquote>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">sudo mkdir -p &#x2F;etc&#x2F;docker
+sudo tee &#x2F;etc&#x2F;docker&#x2F;daemon.json &lt;&lt;-&#39;EOF&#39;
+&#123;
+  &quot;registry-mirrors&quot;: [
+    &quot;https:&#x2F;&#x2F;docker.m.daocloud.io&quot;,
+    &quot;https:&#x2F;&#x2F;docker.imgdb.de&quot;,
+    &quot;https:&#x2F;&#x2F;docker-0.unsee.tech&quot;,
+    &quot;https:&#x2F;&#x2F;docker.hlmirror.com&quot;,
+    &quot;https:&#x2F;&#x2F;docker.1ms.run&quot;,
+    &quot;https:&#x2F;&#x2F;func.ink&quot;,
+    &quot;https:&#x2F;&#x2F;lispy.org&quot;,
+    &quot;https:&#x2F;&#x2F;docker.xiaogenban1993.com&quot;
+  ]
+&#125;
+EOF
+sudo systemctl daemon-reload
+sudo systemctl restart docker</code></pre></div></figure>
+
+
+
+
+
+
+
+<h1 id="二、Docker基本概念"><a href="#二、Docker基本概念" class="headerlink" title="二、Docker基本概念"></a>二、Docker基本概念</h1><h2 id="1-1-Docker常用概念"><a href="#1-1-Docker常用概念" class="headerlink" title="1.1 Docker常用概念"></a>1.1 Docker常用概念</h2><p><strong>镜像（image）</strong>：一个可运行的二进制文件，包含了运行应用程序所需的依赖项和配置信息，可以通过dockerfile来创建镜像</p>
+<p><strong>容器（container）</strong>：一个运行中的镜像实例，包含了应用程序和其依赖项，可以使用Docker CLI或者Docker Compose来创建和管理容器。</p>
+<p><strong>仓库（registry）</strong>：一个存储和分发镜像的地方，DockerHub是Docker官方提供的仓库，可以在里面找到许多常用的镜像，也可以在里面上传和分享自己的镜像。 </p>
+<h2 id="1-2-Docker特性"><a href="#1-2-Docker特性" class="headerlink" title="1.2 Docker特性"></a>1.2 Docker特性</h2><p><strong>1、高度可移植性</strong>：可以在任何支持Docker的平台上运行，容器可以在不同环境中快速、简单部署和移植。</p>
+<p><strong>2、轻量级和高效</strong>：非常轻量级，启动和停止速度块，对系统资源的占用很少。以前一台服务器只能跑10台虚拟机，现在可以跑100个docker容器。</p>
+<p><strong>3、隔离性好</strong>：docker使用namespace和cgroups技术实现容器的隔离，每个容器拥有自己的进程、网络、文件系统和其他资源，保障了容器之间的隔离性和安全性。</p>
+<p><strong>4、易于管理</strong>：拥有一系列的命令行工具或图形化界面，方便管理和监控容器，还支持容器编排工具，入kubernetes，可以轻松管理和扩展容器集群。</p>
+<p><strong>5、生态系统丰富</strong>：Docker拥有庞大的社区和生态系统，提供了丰富的镜像和插件，可以方便的构建、部署和运行应用程序。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E7%A5%9EK8S/" class="category-chain-item">学神K8S</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E7%A5%9EK8S/%EF%BC%88%E4%B8%80%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E5%85%A5%E9%97%A8/" class="category-chain-item">（一）Docker容器入门</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>01-Docker基础</div>
+      <div>http://gblog.github.io/2025/05/06/10_学神K8S/01-Docker基础/01-Dokcer基础/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Haris</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年5月6日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/05/14/06_%E6%9D%82%E8%AE%B0/%E5%8D%8E%E4%B8%BAUSG6615F%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AESSL%20VPN/" title="华为USG6615F防火墙配置SSLVPN">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">华为USG6615F防火墙配置SSLVPN</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/04/30/06_%E6%9D%82%E8%AE%B0/vllm%E9%83%A8%E7%BD%B2Qwen3%E5%A4%A7%E6%A8%A1%E5%9E%8B/" title="VLLM部署Qwen3大模型">
+                        <span class="hidden-mobile">VLLM部署Qwen3大模型</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

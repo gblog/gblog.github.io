@@ -1,0 +1,1121 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Haris">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、磁盘分区方案1.1 MBR与GPT介绍Linux中磁盘分区有两种方案  MBR（主引导记录） GPT（GUID分区表）  **MBR分区方案**的特点（支持的磁盘容量&lt;&#x3D;2T）：  最多支持四个主分区  在Linux上使用扩展分区和逻辑分区最多可以创建15个分区，  由于分区中的数据以32位存储，使用MBR分区是最大支持2T空间。  用fdisk管理工具来创建MBR分区  **">
+<meta property="og:type" content="article">
+<meta property="og:title" content="运维之基础命令--磁盘分区">
+<meta property="og:url" content="http://gblog.github.io/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day19-%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA/01_%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Haris的小站">
+<meta property="og:description" content="一、磁盘分区方案1.1 MBR与GPT介绍Linux中磁盘分区有两种方案  MBR（主引导记录） GPT（GUID分区表）  **MBR分区方案**的特点（支持的磁盘容量&lt;&#x3D;2T）：  最多支持四个主分区  在Linux上使用扩展分区和逻辑分区最多可以创建15个分区，  由于分区中的数据以32位存储，使用MBR分区是最大支持2T空间。  用fdisk管理工具来创建MBR分区  **">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-06T03:19:52.000Z">
+<meta property="article:modified_time" content="2026-07-10T06:20:16.014Z">
+<meta property="article:author" content="Haris">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>运维之基础命令--磁盘分区 - Haris的小站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"gblog.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Haris的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="运维之基础命令--磁盘分区"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-06 11:19" pubdate>
+          2022年7月6日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          17 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">运维之基础命令--磁盘分区</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="一、磁盘分区方案"><a href="#一、磁盘分区方案" class="headerlink" title="一、磁盘分区方案"></a>一、磁盘分区方案</h2><h3 id="1-1-MBR与GPT介绍"><a href="#1-1-MBR与GPT介绍" class="headerlink" title="1.1 MBR与GPT介绍"></a>1.1 MBR与GPT介绍</h3><p>Linux中磁盘分区有两种方案</p>
+<ul>
+<li><strong>MBR</strong>（主引导记录）</li>
+<li><strong>GPT</strong>（GUID分区表）</li>
+</ul>
+<p>**<font color='blue'>MBR分区方案</font>**的特点（支持的磁盘容量&lt;&#x3D;2T）：</p>
+<ol>
+<li>最多支持四个主分区 </li>
+<li>在Linux上使用扩展分区和逻辑分区最多可以创建15个分区， </li>
+<li>由于分区中的数据以32位存储，使用MBR分区是最大支持2T空间。 </li>
+<li>用fdisk管理工具来创建MBR分区</li>
+</ol>
+<p>**<font color='red'>GPT分区方案</font>**的特点（支持的磁盘容量&gt;2T）：</p>
+<ol>
+<li>是UEFI标准的一部分，主板必须要支持UEFI标准 </li>
+<li>GPT分区列表支持最大128PB(1PB&#x3D;1024TB) </li>
+<li>可以定义128个分区 </li>
+<li>没有主分区，扩展分区和逻辑分区的概念，所有分区都能格式化 </li>
+<li>gdisk和parted管理工具可以创建GPT分区</li>
+</ol>
+<h3 id="1-2-MBR与GTP的区别"><a href="#1-2-MBR与GTP的区别" class="headerlink" title="1.2 MBR与GTP的区别"></a>1.2 MBR与GTP的区别</h3><table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>MBR</th>
+<th>GPT</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>新旧度</td>
+<td>旧</td>
+<td>新</td>
+</tr>
+<tr>
+<td>支持的硬盘容量大小</td>
+<td>最大2TB</td>
+<td>支持2T以上</td>
+</tr>
+<tr>
+<td>分区计数</td>
+<td>最多支持4个主分区或3个主分区一个扩展分区</td>
+<td>最多支持128个分区,部分主分区、扩展分区</td>
+</tr>
+<tr>
+<td>安全功能</td>
+<td>不提供任何安全功能</td>
+<td>支持CRC32校验和机制</td>
+</tr>
+</tbody></table>
+<h2 id="二、分区工具使用"><a href="#二、分区工具使用" class="headerlink" title="二、分区工具使用"></a>二、分区工具使用</h2><h3 id="2-1-MBR分区工具fdisk"><a href="#2-1-MBR分区工具fdisk" class="headerlink" title="2.1 MBR分区工具fdisk"></a>2.1 MBR分区工具fdisk</h3><h3 id="2-2-GPT分区工具gdisk"><a href="#2-2-GPT分区工具gdisk" class="headerlink" title="2.2 GPT分区工具gdisk"></a>2.2 GPT分区工具gdisk</h3><h3 id="2-3-GPT分区工具parted"><a href="#2-3-GPT分区工具parted" class="headerlink" title="2.3 GPT分区工具parted"></a>2.3 GPT分区工具parted</h3><p>​	parted用于对磁盘（或RAID磁盘）进行分区及管理，与fdisk分区工具相比，支持2TB以上的磁盘分区，并且允许调整分区的大小，<font color='red'>支持命令行方式或交互式方式</font>，常用命令如下：</p>
+<table>
+<thead>
+<tr>
+<th>parted交互命令</th>
+<th>说 明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>check NUMBER</td>
+<td>做一次简单的文件系统检测</td>
+</tr>
+<tr>
+<td>cp [FROM-DEVICE] FROM-NUMBER TO-NUMBER</td>
+<td>复制文件系统到另一个分区</td>
+</tr>
+<tr>
+<td>help [COMMAND]</td>
+<td>显示所有的命令帮助</td>
+</tr>
+<tr>
+<td>mklabel,mktable LABEL-TYPE</td>
+<td>创建新的磁盘卷标（分区表）</td>
+</tr>
+<tr>
+<td>mkfs NUMBER FS-TYPE</td>
+<td>在分区上建立文件系统</td>
+</tr>
+<tr>
+<td>mkpart PART-TYPE [FS-TYPE] START END</td>
+<td>创建一个分区</td>
+</tr>
+<tr>
+<td>mkpartfs PART-TYPE FS-TYPE START END</td>
+<td>创建分区，并建立文件系统</td>
+</tr>
+<tr>
+<td>move NUMBER START END</td>
+<td>移动分区</td>
+</tr>
+<tr>
+<td>name NUMBER NAME</td>
+<td>给分区命名</td>
+</tr>
+<tr>
+<td>print [devices|free|list,all|NUMBER]</td>
+<td>显示分区表、活动设备、空闲空间、所有分区</td>
+</tr>
+<tr>
+<td>quit</td>
+<td>退出</td>
+</tr>
+<tr>
+<td>rescue START END</td>
+<td>修复丢失的分区</td>
+</tr>
+<tr>
+<td>resize NUMBER START END</td>
+<td>修改分区大小</td>
+</tr>
+<tr>
+<td>rm NUMBER</td>
+<td>删除分区</td>
+</tr>
+<tr>
+<td>select DEVICE</td>
+<td>选择需要编辑的设备</td>
+</tr>
+<tr>
+<td>set NUMBER FLAG STATE</td>
+<td>改变分区标记</td>
+</tr>
+<tr>
+<td>toggle [NUMBER [FLAG]]</td>
+<td>切换分区表的状态</td>
+</tr>
+<tr>
+<td>unit UNIT</td>
+<td>设置默认的单位</td>
+</tr>
+<tr>
+<td>Version</td>
+<td>显示版本</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>关于mkpart与PART-TYPE（FS-TYPE）的解释：</p>
+<p>Make a part-type partition for filesystem fs-type (if specified), beginning at start and ending at end (by default in megabytes).  fs-type can  be  one  of  “btrfs”,  “ext2”, “ext3”, “ext4”, “fat16”, “fat32”, “hfs”, “hfs+”, “linux-swap”, “ntfs”, “reiserfs”, or “xfs”.  part-type should be one of “primary”, “logical”, or “extended”.</p>
+</blockquote>
+<h4 id="2-3-1-使用parted"><a href="#2-3-1-使用parted" class="headerlink" title="2.3.1 使用parted"></a>2.3.1 使用parted</h4><h4 id="2-3-1-1-列出所有块设备分区情况"><a href="#2-3-1-1-列出所有块设备分区情况" class="headerlink" title="2.3.1.1 列出所有块设备分区情况"></a>2.3.1.1 列出所有块设备分区情况</h4><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 查看当前有哪些块设备
+[root@lb01 ~]# lsblk
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda      8:0    0   50G  0 disk
+├─sda1   8:1    0    1G  0 part &#x2F;boot
+├─sda2   8:2    0    2G  0 part [SWAP]
+└─sda3   8:3    0   47G  0 part &#x2F;
+sdb      8:16   0   10G  0 disk
+sr0     11:0    1  792M  0 rom
+
+# 查看分区情况
+[root@lb01 ~]# parted -l
+Model: VMware, VMware Virtual S (scsi)
+Disk &#x2F;dev&#x2F;sda: 53.7GB
+Sector size (logical&#x2F;physical): 512B&#x2F;512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system     Flags
+ 1      1049kB  1075MB  1074MB  primary  xfs             boot
+ 2      1075MB  3223MB  2149MB  primary  linux-swap(v1)
+ 3      3223MB  53.7GB  50.5GB  primary  xfs
+
+
+Error: &#x2F;dev&#x2F;sdb: unrecognised disk label	# sdb还没有分区
+Model: VMware, VMware Virtual S (scsi)
+Disk &#x2F;dev&#x2F;sdb: 10.7GB
+Sector size (logical&#x2F;physical): 512B&#x2F;512B
+Partition Table: unknown
+Disk Flags:
+
+Warning: Unable to open &#x2F;dev&#x2F;sr0 read-write (Read-only file system).  &#x2F;dev&#x2F;sr0
+has been opened read-only.
+Model: NECVMWar VMware IDE CDR10 (scsi)
+Disk &#x2F;dev&#x2F;sr0: 830MB
+Sector size (logical&#x2F;physical): 2048B&#x2F;2048B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start  End     Size    Type     File system  Flags
+ 2      885kB  37.7MB  36.8MB  primary</code></pre></div></figure>
+
+<h4 id="2-3-1-2-创建分区"><a href="#2-3-1-2-创建分区" class="headerlink" title="2.3.1.2 创建分区"></a>2.3.1.2 创建分区</h4><blockquote>
+<p>案例：在&#x2F;dev&#x2F;sdb中创建一个1GB的分区</p>
+</blockquote>
+<p>a、命令行方式，创建一个主分区</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 转换为MBR分区方案msdos, GPT方案为gpt
+[root@lb01 ~]# parted &#x2F;dev&#x2F;sdb mklabel msdos
+Information: You may need to update &#x2F;etc&#x2F;fstab.
+
+# 创建主分区
+[root@lb01 ~]# parted &#x2F;dev&#x2F;sdb mkpart primary ext4 0GB 1GB  # 把1GB换成100%就是分完剩余空间
+Information: You may need to update &#x2F;etc&#x2F;fstab.
+
+[root@lb01 ~]# lsblk
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda      8:0    0   50G  0 disk
+├─sda1   8:1    0    1G  0 part &#x2F;boot
+├─sda2   8:2    0    2G  0 part [SWAP]
+└─sda3   8:3    0   47G  0 part &#x2F;
+sdb      8:16   0   10G  0 disk
+└─sdb1   8:17   0  953M  0 part
+sr0     11:0    1  792M  0 rom
+</code></pre></div></figure>
+
+<p>b、再用交互方式，继续创建一个主分区</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# parted
+GNU Parted 3.1
+Using &#x2F;dev&#x2F;sda
+Welcome to GNU Parted! Type &#39;help&#39; to view a list of commands.
+(parted) select &#x2F;dev&#x2F;sdb # 选择块设备
+Using &#x2F;dev&#x2F;sdb
+(parted) mkpart	# 新建分区
+Partition type?  primary&#x2F;extended? primary
+File system type?  [ext2]? ext4
+Start? 1GB
+End? 2GB</code></pre></div></figure>
+
+<p>c、扩展分区与逻辑分区的创建</p>
+<blockquote>
+<p>扩展分区最多只有一个，再创建会提示选择primary&#x2F;logical</p>
+</blockquote>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">(parted) select &#x2F;dev&#x2F;sdb
+Using &#x2F;dev&#x2F;sdb
+(parted) print
+Model: VMware, VMware Virtual S (scsi)
+Disk &#x2F;dev&#x2F;sdb: 10.7GB
+Sector size (logical&#x2F;physical): 512B&#x2F;512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type      File system  Flags
+ 1      1049kB  1000MB  999MB   primary   ext4
+ 2      1000MB  4000MB  3000MB  extended               lba
+
+# 给扩展分区2创建一个逻辑分区（使用范围只能在扩展分区2的范围内）
+(parted) mkpart logical 1GB 2GB
+(parted) print
+Model: VMware, VMware Virtual S (scsi)
+Disk &#x2F;dev&#x2F;sdb: 10.7GB
+Sector size (logical&#x2F;physical): 512B&#x2F;512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type      File system  Flags
+ 1      1049kB  1000MB  999MB   primary   ext4
+ 2      1000MB  4000MB  3000MB  extended               lba
+ 5      1001MB  2000MB  998MB   logical
+
+# 给扩展分区2再创建一个逻辑分区
+(parted) mkpart logical 2GB 3GB
+(parted) print
+Model: VMware, VMware Virtual S (scsi)
+Disk &#x2F;dev&#x2F;sdb: 10.7GB
+Sector size (logical&#x2F;physical): 512B&#x2F;512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type      File system  Flags
+ 1      1049kB  1000MB  999MB   primary   ext4
+ 2      1000MB  4000MB  3000MB  extended               lba
+ 5      1001MB  2000MB  998MB   logical
+ 6      2001MB  3000MB  999MB   logical</code></pre></div></figure>
+
+<h4 id="2-3-1-3-查看分区"><a href="#2-3-1-3-查看分区" class="headerlink" title="2.3.1.3 查看分区"></a>2.3.1.3 查看分区</h4><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">(parted) print # 打印分区
+Model: VMware, VMware Virtual S (scsi)
+Disk &#x2F;dev&#x2F;sdb: 10.7GB
+Sector size (logical&#x2F;physical): 512B&#x2F;512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size   Type     File system  Flags
+ 1      1049kB  1000MB  999MB  primary
+ 2      1000MB  2000MB  999MB  primary
+ 
+ (parted) print free # 查看剩余空间
+Model: VMware, VMware Virtual S (scsi)
+Disk &#x2F;dev&#x2F;sdb: 10.7GB
+Sector size (logical&#x2F;physical): 512B&#x2F;512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+        32.3kB  1049kB  1016kB           Free Space
+ 1      1049kB  1000MB  999MB   primary
+ 2      1000MB  2000MB  999MB   primary
+        2000MB  10.7GB  8738MB           Free Space
+</code></pre></div></figure>
+
+<h4 id="2-3-1-4-调整分区大小"><a href="#2-3-1-4-调整分区大小" class="headerlink" title="2.3.1.4 调整分区大小"></a>2.3.1.4 调整分区大小</h4><blockquote>
+<p>将分区2从1GB扩展到2GB</p>
+<p>PS：v2.4之后的版本，resize命令已经移除，更新到3.1-32版本有resizepart</p>
+</blockquote>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# parted &#x2F;dev&#x2F;sdb print
+Model: VMware, VMware Virtual S (scsi)
+Disk &#x2F;dev&#x2F;sdb: 10.7GB
+Sector size (logical&#x2F;physical): 512B&#x2F;512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size   Type     File system  Flags
+ 1      1049kB  1000MB  999MB  primary
+ 2      1000MB  2000MB  999MB  primary
+
+# 调整分区2的大小为2GB
+[root@lb01 ~]# parted &#x2F;dev&#x2F;sdb resizepart 2 3GB	(3GB是指END位置，即使用1GB-3GB的空间，共2GB)
+Information: You may need to update &#x2F;etc&#x2F;fstab.
+
+[root@lb01 ~]# parted &#x2F;dev&#x2F;sdb print
+Model: VMware, VMware Virtual S (scsi)
+Disk &#x2F;dev&#x2F;sdb: 10.7GB
+Sector size (logical&#x2F;physical): 512B&#x2F;512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1049kB  1000MB  999MB   primary
+ 2      1000MB  3000MB  2000MB  primary
+ 
+ # 如果已经格式化并挂载使用，需要重新调整文件系统大小
+ [root@lb01 ~]# resize2fs &#x2F;dev&#x2F;sdb2</code></pre></div></figure>
+
+<blockquote>
+<p>缩小分区大小会怎样？将提示有数据丢失的风险</p>
+</blockquote>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# parted &#x2F;dev&#x2F;sdb resizepart 2 2GB
+Warning: Shrinking a partition can cause data loss, are you sure you want to continue?
+Yes&#x2F;No?</code></pre></div></figure>
+
+<h4 id="2-3-1-5-删除分区"><a href="#2-3-1-5-删除分区" class="headerlink" title="2.3.1.5 删除分区"></a>2.3.1.5 删除分区</h4><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# parted &#x2F;dev&#x2F;sdb print
+Model: VMware, VMware Virtual S (scsi)
+Disk &#x2F;dev&#x2F;sdb: 10.7GB
+Sector size (logical&#x2F;physical): 512B&#x2F;512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1049kB  1000MB  999MB   primary
+ 2      1000MB  4000MB  3000MB  primary  ext4
+
+[root@lb01 ~]# parted &#x2F;dev&#x2F;sdb rm 2   &#x2F;&#x2F; 删除2号分区，因为已挂载，会提示要先卸载
+Error: Partition &#x2F;dev&#x2F;sdb2 is being used. You must unmount it before you modify it with Parted.
+[root@lb01 ~]# umount &#x2F;dev&#x2F;sdb2
+[root@lb01 ~]# parted &#x2F;dev&#x2F;sdb rm 2 &#x2F;&#x2F; 删除成功
+Information: You may need to update &#x2F;etc&#x2F;fstab.
+
+[root@lb01 ~]# print
+-bash: print: command not found
+[root@lb01 ~]# parted &#x2F;dev&#x2F;sdb print
+Model: VMware, VMware Virtual S (scsi)
+Disk &#x2F;dev&#x2F;sdb: 10.7GB
+Sector size (logical&#x2F;physical): 512B&#x2F;512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size   Type     File system  Flags
+ 1      1049kB  1000MB  999MB  primary</code></pre></div></figure>
+
+<h4 id="2-3-1-6-设置-更改分区标志"><a href="#2-3-1-6-设置-更改分区标志" class="headerlink" title="2.3.1.6 设置&#x2F;更改分区标志"></a>2.3.1.6 设置&#x2F;更改分区标志</h4><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# parted &#x2F;dev&#x2F;sdb set 1 lvm on
+Information: You may need to update &#x2F;etc&#x2F;fstab.
+
+[root@lb01 ~]# parted &#x2F;dev&#x2F;sdb print
+Model: VMware, VMware Virtual S (scsi)
+Disk &#x2F;dev&#x2F;sdb: 10.7GB
+Sector size (logical&#x2F;physical): 512B&#x2F;512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size   Type     File system  Flags
+ 1      1049kB  1000MB  999MB  primary               lvm</code></pre></div></figure>
+
+<p>查看有哪些标志可以设置</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# parted
+GNU Parted 3.1
+Using &#x2F;dev&#x2F;sda
+Welcome to GNU Parted! Type &#39;help&#39; to view a list of commands.
+(parted) help set
+  set NUMBER FLAG STATE                    change the FLAG on partition NUMBER
+
+        NUMBER is the partition number used by Linux.  On MS-DOS disk labels, the primary partitions number from 1 to 4, logical partitions from 5 onwards.
+        FLAG is one of: boot, root, swap, hidden, raid, lvm, lba, hp-service, palo, prep, msftres, bios_grub, atvrecv, diag, legacy_boot
+        STATE is one of: on, off</code></pre></div></figure>
+
+<h4 id="2-3-16-GPT分区方案下的NAME标签"><a href="#2-3-16-GPT分区方案下的NAME标签" class="headerlink" title="2.3.16 GPT分区方案下的NAME标签"></a>2.3.16 GPT分区方案下的NAME标签</h4><p>GPT分区的print</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# parted &#x2F;dev&#x2F;sdb print
+Model: VMware, VMware Virtual S (scsi)
+Disk &#x2F;dev&#x2F;sdb: 10.7GB
+Sector size (logical&#x2F;physical): 512B&#x2F;512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start  End  Size  File system  Name  Flags</code></pre></div></figure>
+
+<p>MBR分区的print</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# parted &#x2F;dev&#x2F;sdb mklabel msdos
+Warning: The existing disk label on &#x2F;dev&#x2F;sdb will be destroyed and all data on this disk will be lost. Do you want to continue?
+Yes&#x2F;No? Yes
+Information: You may need to update &#x2F;etc&#x2F;fstab.
+
+[root@lb01 ~]# parted &#x2F;dev&#x2F;sdb print
+Model: VMware, VMware Virtual S (scsi)
+Disk &#x2F;dev&#x2F;sdb: 10.7GB
+Sector size (logical&#x2F;physical): 512B&#x2F;512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start  End  Size  Type  File system  Flags</code></pre></div></figure>
+
+<blockquote>
+<p><strong><font color='red'>可见GPT标志中多了一个Name标签</font></strong></p>
+</blockquote>
+<p>使用的时候GPT分区方式可以指定分区名，不用指定主分区、扩展分区这些类型</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# parted &#x2F;dev&#x2F;sdb mkpart BOOT 0GB 1GB
+Information: You may need to update &#x2F;etc&#x2F;fstab.
+
+[root@lb01 ~]# parted &#x2F;dev&#x2F;sdb print
+Model: VMware, VMware Virtual S (scsi)
+Disk &#x2F;dev&#x2F;sdb: 10.7GB
+Sector size (logical&#x2F;physical): 512B&#x2F;512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End     Size   File system  Name  Flags
+ 1      1049kB  1000MB  999MB  xfs          BOOT</code></pre></div></figure>
+
+<p>但是MBR就不能</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01 ~]# parted &#x2F;dev&#x2F;sdb mkpart BOOT 0GB 1GB
+parted: invalid token: BOOT
+Partition type?  primary&#x2F;extended?
+[root@lb01 ~]# parted &#x2F;dev&#x2F;sdb mkpart primary BOOT 0GB 1GB
+parted: invalid token: BOOT
+File system type?  [ext2]?</code></pre></div></figure>
+
+<h2 id="三、磁盘挂载"><a href="#三、磁盘挂载" class="headerlink" title="三、磁盘挂载"></a>三、磁盘挂载</h2><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">1、开机自动挂载
+	开机自动执行：&#x2F;etc&#x2F;rc.local
+	
+	chmod +x &#x2F;etc&#x2F;ec.local
+	
+	echo &quot;mount &#x2F;dev&#x2F;sdc1 &#x2F;root&#x2F;test&quot; &gt;&gt; &#x2F;etc&#x2F;rc.local
+
+2、修改配置文件 &#x2F;etc&#x2F;fstab
+&#x2F;dev&#x2F;sdc100     &#x2F;opt    xfs         defaults   0      0
+设备				挂载点  文件系统类型   挂载类型  是否备份  是否检测
+UUID&#x3D;1327e665-44b3-4223-a93b-69c36ec602f9   &#x2F;root&#x2F;oldboy  xfs   defaults 0 0
+
+ &#x2F;dev&#x2F;sdc100  等价于  UUID
+
+3、查询设备UUID
+	[root@localhost ~]# blkid 
+&#x2F;dev&#x2F;sdc1: UUID&#x3D;&quot;b5797ad6-9b98-452c-8962-fa12f6590fa6&quot; TYPE&#x3D;&quot;xfs&quot; PARTLABEL&#x3D;&quot;Linux filesystem&quot;</code></pre></div></figure>
+
+<h2 id="四、创建SWAP分区"><a href="#四、创建SWAP分区" class="headerlink" title="四、创建SWAP分区"></a>四、创建SWAP分区</h2><figure><div class="code-wrapper"><pre class="line-numbers language-she" data-language="she"><code class="language-she">1、创建一个硬盘分区
+
+2、制作swap分区
+mkswap &#x2F;dev&#x2F;sdb3
+
+3、激活swap
+swapon &#x2F;dev&#x2F;sdb3
+
+4、关闭swap
+swapoff 
+
+5、自动挂载
+	5.1、
+        echo &quot;mkswap &#x2F;dev&#x2F;sdb3&quot; &gt;&gt; &#x2F;etc&#x2F;rc.local
+        echo &quot;swapon &#x2F;dev&#x2F;sdb3&quot; &gt;&gt; &#x2F;etc&#x2F;rc.local
+	5.2、
+		echo &quot;&#x2F;dev&#x2F;sdb3  swap  swap  defaults 0  0&quot; &gt;&gt; &#x2F;etc&#x2F;fstab</code></pre></div></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%BF%90%E7%BB%B4/" class="category-chain-item">运维</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/" class="category-chain-item">（一）基础命令</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>运维之基础命令--磁盘分区</div>
+      <div>http://gblog.github.io/2022/07/06/01_运维/01-基础命令/day19-磁盘分区/01_磁盘分区笔记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Haris</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年7月6日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day21-%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1/%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1/" title="运维之基础命令--计划任务">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">运维之基础命令--计划任务</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day19-%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA/02_%E9%80%BB%E8%BE%91%E5%8D%B7%E7%AE%A1%E7%90%86/" title="运维之基础命令--逻辑卷管理">
+                        <span class="hidden-mobile">运维之基础命令--逻辑卷管理</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

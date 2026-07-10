@@ -1,0 +1,1086 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Haris">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="“C语言部分-Day08” 一、数据结构常用数据结构分为链表、栈、队列、哈希表、红黑树等 1.1 链表1.1.1 单链表的基本操作初始化链表：  创建链表：create_list  增加节点：  头插法：add_before_head 尾插法：add_behind_tail 根据索引插入：add_node  删除节点：  根据索引删除：remove_node 销毁链表：destroy_list">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C语言-Day08">
+<meta property="og:url" content="http://gblog.github.io/2024/03/20/04_C++/01_C%E8%AF%AD%E8%A8%80/day08/index.html">
+<meta property="og:site_name" content="Haris的小站">
+<meta property="og:description" content="“C语言部分-Day08” 一、数据结构常用数据结构分为链表、栈、队列、哈希表、红黑树等 1.1 链表1.1.1 单链表的基本操作初始化链表：  创建链表：create_list  增加节点：  头插法：add_before_head 尾插法：add_behind_tail 根据索引插入：add_node  删除节点：  根据索引删除：remove_node 销毁链表：destroy_list">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:/C++/gsproj.github.io/source/img/image-20240417093524017.png">
+<meta property="article:published_time" content="2024-03-20T07:36:22.000Z">
+<meta property="article:modified_time" content="2026-07-10T06:20:16.276Z">
+<meta property="article:author" content="Haris">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="d:/C++/gsproj.github.io/source/img/image-20240417093524017.png">
+  
+  
+  
+  <title>C语言-Day08 - Haris的小站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"gblog.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Haris的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="C语言-Day08"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-03-20 15:36" pubdate>
+          2024年3月20日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          15 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">C语言-Day08</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>“C语言部分-Day08”</p>
+<h1 id="一、数据结构"><a href="#一、数据结构" class="headerlink" title="一、数据结构"></a>一、数据结构</h1><p>常用数据结构分为链表、栈、队列、哈希表、红黑树等</p>
+<h2 id="1-1-链表"><a href="#1-1-链表" class="headerlink" title="1.1 链表"></a>1.1 链表</h2><h3 id="1-1-1-单链表的基本操作"><a href="#1-1-1-单链表的基本操作" class="headerlink" title="1.1.1 单链表的基本操作"></a>1.1.1 单链表的基本操作</h3><p>初始化链表：</p>
+<ul>
+<li>创建链表：create_list</li>
+</ul>
+<p>增加节点：</p>
+<ul>
+<li>头插法：add_before_head</li>
+<li>尾插法：add_behind_tail</li>
+<li>根据索引插入：add_node</li>
+</ul>
+<p>删除节点：</p>
+<ul>
+<li>根据索引删除：remove_node</li>
+<li>销毁链表：destroy_list</li>
+</ul>
+<p>查询节点：</p>
+<ul>
+<li>根据数值查询：indexOf</li>
+</ul>
+<p><strong><font color=blue>实现单链表的基本操作</font></strong></p>
+<p>头文件：linklist.h</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">#include &lt;stdbool.h&gt;
+
+&#x2F;&#x2F; 链表的接口
+typedef struct node_s &#123;
+	int val;
+	struct node_s* next;
+&#125; Node;
+
+typedef struct linkedlist_s &#123;
+	Node* head;
+	Node* tail;
+	int size;
+&#125; LinkedList;
+
+&#x2F;&#x2F; 构造方法: 创建一个空链表
+LinkedList* create_list();
+
+&#x2F;&#x2F; 析构方法：释放堆堆存空间
+void destroy_list(LinkedList* list);
+
+void add_before_head(LinkedList* list, int val);
+void add_behind_tail(LinkedList* list, int val);
+void add_node(LinkedList* list, int index, int val);
+
+&#x2F;&#x2F; 删除第一个与val相等的结点, 如果没有这样的结点返回false
+bool remove_node(LinkedList* list, int val);
+
+&#x2F;&#x2F; 找出第一个与val相等结点的索引，如果没有这样的结点, 返回-1
+int indexOf(LinkedList* list, int val);
+
+&#x2F;&#x2F; 打印
+void print_list(LinkedList* list);</code></pre></div></figure>
+
+<p>实现：linklist.c</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">&#x2F;&#x2F; 链表的实现
+#include &quot;linklist.h&quot;
+#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+
+&#x2F;&#x2F; 创建空链表
+LinkedList* create_list() &#123;
+	return (LinkedList*)calloc(1, sizeof(LinkedList));
+&#125;
+
+&#x2F;&#x2F; 头插法
+void add_before_head(LinkedList* list, int val) &#123;
+	&#x2F;&#x2F; 创建新结点
+	Node* newNode &#x3D; (Node*)malloc(sizeof(Node));
+	if (newNode &#x3D;&#x3D; NULL) &#123;
+		printf(&quot;Error: malloc failed in add_before_head.\n&quot;);
+		exit(1);
+	&#125;
+	&#x2F;&#x2F; 初始化结点
+	newNode-&gt;val &#x3D; val;
+	newNode-&gt;next &#x3D; list-&gt;head;
+	list-&gt;head &#x3D; newNode;
+	&#x2F;&#x2F; 判断链表是否为空
+	if (list-&gt;tail &#x3D;&#x3D; NULL) &#123;
+		list-&gt;tail &#x3D; newNode;
+	&#125;
+	&#x2F;&#x2F; 更新size
+	list-&gt;size++;
+&#125;
+
+&#x2F;&#x2F; 尾插法
+void add_behind_tail(LinkedList* list, int val) &#123;
+	&#x2F;&#x2F; 创建新结点
+	Node* newNode &#x3D; (Node*)malloc(sizeof(Node));
+	if (newNode &#x3D;&#x3D; NULL) &#123;
+		printf(&quot;Error: malloc failed in add_before_head.\n&quot;);
+		exit(1);
+	&#125;
+	&#x2F;&#x2F; 初始化结点
+	newNode-&gt;val &#x3D; val;
+	newNode-&gt;next &#x3D; NULL;
+	&#x2F;&#x2F; 判断链表是否为空
+	if (list-&gt;size &#x3D;&#x3D; 0) &#123;
+		list-&gt;head &#x3D; newNode;
+		list-&gt;tail &#x3D; newNode;
+	&#125;
+	else &#123;
+		&#x2F;&#x2F; 链接新结点
+		list-&gt;tail-&gt;next &#x3D; newNode;
+		&#x2F;&#x2F; 更新list-&gt;tail
+		list-&gt;tail &#x3D; newNode;
+	&#125;
+	list-&gt;size++;
+&#125;
+
+void add_node(LinkedList* list, int index, int val) &#123;
+	if (index &lt; 0 || index &gt; list-&gt;size) &#123;
+		printf(&quot;Error: Illegal index.\n&quot;);
+		exit(1);
+	&#125;
+	&#x2F;&#x2F; 创建新结点
+	Node* newNode &#x3D; (Node*)malloc(sizeof(Node));
+	if (newNode &#x3D;&#x3D; NULL) &#123;
+		printf(&quot;Error: malloc failed in add_before_head.\n&quot;);
+		exit(1);
+	&#125;
+	newNode-&gt;val &#x3D; val;
+
+	if (index &#x3D;&#x3D; 0) &#123;
+		&#x2F;&#x2F; 头插法的逻辑
+		newNode-&gt;next &#x3D; list-&gt;head;
+		list-&gt;head &#x3D; newNode;
+	&#125;
+	else &#123;
+		&#x2F;&#x2F; 找到索引为 indx-1 的结点
+		Node* p &#x3D; list-&gt;head;
+		for (int i &#x3D; 0; i &lt; index - 1; i++) &#123;
+			p &#x3D; p-&gt;next;
+		&#125;
+		newNode-&gt;next &#x3D; p-&gt;next;
+		p-&gt;next &#x3D; newNode;
+	&#125;
+	&#x2F;&#x2F; 更新尾结点
+	if (index &#x3D;&#x3D; list-&gt;size) &#123;
+		list-&gt;tail &#x3D; newNode;
+	&#125;
+	list-&gt;size++;
+&#125;
+
+&#x2F;&#x2F; 删除第一个与val相等的结点, 如果没有这样的结点返回false
+bool remove_node(LinkedList* list, int val) &#123;
+	Node* prev &#x3D; NULL;
+	Node* curr &#x3D; list-&gt;head;
+	&#x2F;&#x2F; 寻找前驱结点
+	while (curr !&#x3D; NULL &amp;&amp; curr-&gt;val !&#x3D; val) &#123; &#x2F;&#x2F; 短路原则
+		prev &#x3D; curr;
+		curr &#x3D; curr-&gt;next;
+	&#125;
+	&#x2F;&#x2F; 没有这样的元素
+	if (curr &#x3D;&#x3D; NULL) return false;
+	&#x2F;&#x2F; 删除第一个元素
+	if (prev &#x3D;&#x3D; NULL) &#123;
+		if (list-&gt;size &#x3D;&#x3D; 1) &#123;
+			list-&gt;head &#x3D; list-&gt;tail &#x3D; NULL;
+		&#125;
+		else &#123;
+			list-&gt;head &#x3D; curr-&gt;next;
+		&#125;
+		free(curr);
+	&#125;
+	else &#123;
+		prev-&gt;next &#x3D; curr-&gt;next;
+		if (prev-&gt;next &#x3D;&#x3D; NULL) &#123;
+			list-&gt;tail &#x3D; prev;
+		&#125;
+		free(curr);
+	&#125;
+	list-&gt;size--;
+	return true;
+&#125;
+
+&#x2F;&#x2F; 找出第一个与val相等结点的索引，如果没有这样的结点, 返回-1
+int indexOf(LinkedList* list, int val) &#123;
+	Node* curr &#x3D; list-&gt;head;
+	for (int i &#x3D; 0; i &lt; list-&gt;size; i++, curr &#x3D; curr-&gt;next) &#123;
+		if (curr-&gt;val &#x3D;&#x3D; val) &#123;
+			return i;
+		&#125;
+	&#125;
+	&#x2F;&#x2F; 没有找到
+	return -1;
+&#125;
+
+void destroy_list(LinkedList* list) &#123;
+	&#x2F;&#x2F; 释放结点空间
+	Node* curr &#x3D; list-&gt;head;
+	while (curr !&#x3D; NULL) &#123;
+		&#x2F;&#x2F; 保存curr后继结点
+		Node* next &#x3D; curr-&gt;next;
+		free(curr);
+		curr &#x3D; next;
+	&#125;
+	&#x2F;&#x2F; 释放LinkedList结构体
+	free(list);
+&#125;
+
+void print_list(LinkedList *list) &#123;
+	if (list &#x3D;&#x3D; NULL) &#123;
+		return;
+	&#125;
+
+	Node* curr &#x3D; list-&gt;head;
+	printf(&quot;Head: %d\nTail: %d\nSize: %d\n&quot;, list-&gt;head-&gt;val, list-&gt;tail-&gt;val, list-&gt;size);
+	while (curr !&#x3D; NULL) &#123;
+		printf(&quot;%d &quot;, curr-&gt;val);
+		curr &#x3D; curr-&gt;next;
+	&#125;
+	printf(&quot;\n------------------\n&quot;);
+&#125;</code></pre></div></figure>
+
+<p>测试：</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">#include &lt;stdio.h&gt;
+#include &quot;linklist.h&quot;
+
+&#x2F;&#x2F; 测试
+int main(void) &#123;
+	&#x2F;&#x2F; 创建链表
+	LinkedList* list &#x3D; create_list();
+
+	&#x2F;&#x2F; 位置插入
+	add_node(list, 0, 55);	&#x2F;&#x2F; 55
+	print_list(list);
+
+	&#x2F;&#x2F; 头插
+	add_before_head(list, 11);	&#x2F;&#x2F; 11 55
+	add_before_head(list, 22);	&#x2F;&#x2F; 22 11 55
+
+	print_list(list);
+
+	&#x2F;&#x2F; 尾插
+	add_behind_tail(list, 33);	&#x2F;&#x2F; 22 11 55 33
+	add_behind_tail(list, 44);	&#x2F;&#x2F; 22 11 55 33 44
+	print_list(list);
+
+	&#x2F;&#x2F; 位置插入
+	add_node(list, 2, 66);	&#x2F;&#x2F; 22 11 66 55 33 44
+	print_list(list);
+
+	add_node(list, 5, 77);	&#x2F;&#x2F; 22 11 66 55 33 77 44
+	print_list(list);
+
+	add_behind_tail(list, 88);	&#x2F;&#x2F; 22 11 66 55 33 77 44 88
+	print_list(list);
+
+	&#x2F;&#x2F; 按值，删除结点
+	remove_node(list, 44);
+	print_list(list);	&#x2F;&#x2F; 22 11 66 55 33 77 88
+
+	remove_node(list, 22);
+	print_list(list);	&#x2F;&#x2F; 11 66 55 33 77 88
+
+	remove_node(list, 33);
+	print_list(list);	&#x2F;&#x2F; 11 66 55 77 88
+
+	remove_node(list, 44);
+	print_list(list);	&#x2F;&#x2F; 11 66 55 77 88
+
+	&#x2F;&#x2F; 查找结点
+	printf(&quot;Index &#x3D; %d\n&quot;, indexOf(list, 66));	&#x2F;&#x2F; 1
+	printf(&quot;Index &#x3D; %d\n&quot;, indexOf(list, 11));	&#x2F;&#x2F; 0	
+	printf(&quot;Index &#x3D; %d\n&quot;, indexOf(list, 44));	&#x2F;&#x2F; -1
+	printf(&quot;Index &#x3D; %d\n&quot;, indexOf(list, 55));	&#x2F;&#x2F; 2
+
+	&#x2F;&#x2F; 销毁链表
+	destroy_list(list);
+	printf(&quot;Index &#x3D; %d\n&quot;, indexOf(list, 55));	&#x2F;&#x2F; -1
+
+	return 0;
+&#125;</code></pre></div></figure>
+
+<h3 id="1-1-3-双向和单向链表的对比"><a href="#1-1-3-双向和单向链表的对比" class="headerlink" title="1.1.3 双向和单向链表的对比"></a>1.1.3 双向和单向链表的对比</h3><p>时间复杂度对比</p>
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>单向链表</th>
+<th>双向链表</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>增加结点（在某个结点前面添加）</td>
+<td>O(n)</td>
+<td>O(1)</td>
+<td></td>
+</tr>
+<tr>
+<td>删除结点（</td>
+<td>O(n)</td>
+<td>O(1)</td>
+<td></td>
+</tr>
+<tr>
+<td>查找：前驱结点</td>
+<td>O(n)</td>
+<td>O(1)</td>
+<td></td>
+</tr>
+<tr>
+<td>查找：根据index</td>
+<td>O(n)</td>
+<td>O(n)</td>
+<td>单向链表只能单向遍历，双向链表可以逆向，双向更快</td>
+</tr>
+<tr>
+<td>查找：根据value（大小有序）</td>
+<td>O(n)</td>
+<td>O(n)</td>
+<td></td>
+</tr>
+<tr>
+<td>查找：根据value（大小无序）</td>
+<td>O(n)</td>
+<td>O(n)</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="1-2-链表作业"><a href="#1-2-链表作业" class="headerlink" title="1.2 链表作业"></a>1.2 链表作业</h2><h3 id="1-2-1-求单链表的中间元素"><a href="#1-2-1-求单链表的中间元素" class="headerlink" title="1.2.1 求单链表的中间元素"></a>1.2.1 求单链表的中间元素</h3><p>需求：</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">int middleElement(Node* list);
+输入: 1 --&gt; 2 --&gt; 3
+输出: 2
+输入: 1 --&gt; 2 --&gt; 3 --&gt; 4
+输出: 3</code></pre></div></figure>
+
+<p>实现</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">int middleElement(Node* list) &#123;
+	if (list &#x3D;&#x3D; NULL) &#123;
+		return -1;
+	&#125;
+
+	Node* slow &#x3D; list;
+	Node* fast &#x3D; list;
+	while (fast !&#x3D; NULL &amp;&amp; fast-&gt;next !&#x3D; NULL) &#123;
+		slow &#x3D; slow-&gt;next;
+		fast &#x3D; fast-&gt;next-&gt;next;
+	&#125;
+	return slow-&gt;val;
+&#125;</code></pre></div></figure>
+
+
+
+<h3 id="1-2-2-判断单链表是否有环"><a href="#1-2-2-判断单链表是否有环" class="headerlink" title="1.2.2 判断单链表是否有环"></a>1.2.2 判断单链表是否有环</h3><p>何为有环？</p>
+<p><img src="D:/C++/gsproj.github.io/source/img/image-20240417093524017.png" srcset="/img/loading.gif" lazyload alt="image-20240417093524017"></p>
+<p>思路：</p>
+<ul>
+<li>使用双指针</li>
+</ul>
+<p>实现：</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">bool hasCycle(Node* list) &#123;
+	if (list &#x3D;&#x3D; NULL) &#123;
+		return false;
+	&#125;
+
+	Node* slow &#x3D; list;
+	Node* fast &#x3D; list;
+
+	do &#123;
+		&#x2F;&#x2F; 如果fast达到了链表末尾
+		if (fast &#x3D;&#x3D; NULL || fast-&gt;next &#x3D;&#x3D; NULL) &#123;
+			return false;
+		&#125;
+
+		&#x2F;&#x2F; 快慢指针，慢指针每次一步，快指针每次两步
+		fast &#x3D; fast-&gt;next-&gt;next;
+		slow &#x3D; slow-&gt;next;
+
+	&#125; while (slow !&#x3D; fast);
+
+	&#x2F;&#x2F; 如循环结束: fast &#x3D;&#x3D; slow, 说明链表有环
+	return true;
+&#125;</code></pre></div></figure>
+
+
+
+<h3 id="1-2-3-反转单链表"><a href="#1-2-3-反转单链表" class="headerlink" title="1.2.3 反转单链表"></a>1.2.3 反转单链表</h3><p>需求：</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">Node* reverse(Node* list);
+输入: 1 --&gt; 2 --&gt; 3
+输出: 3 --&gt; 2 --&gt; 1</code></pre></div></figure>
+
+<p>思路：</p>
+<ul>
+<li>头插法</li>
+<li>双指针(prev, curr)</li>
+</ul>
+<p>实现：</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">Node* reverse(Node* list) &#123;
+	Node* prev &#x3D; NULL;
+	Node* curr &#x3D; list;
+
+	while (curr !&#x3D; NULL) &#123;
+		&#x2F;&#x2F; 保留当前节点的下一个节点
+		Node* next &#x3D; curr-&gt;next;
+        &#x2F;&#x2F; 反转当前节点
+		curr-&gt;next &#x3D; prev;
+        &#x2F;&#x2F; 后移
+		prev &#x3D; curr;
+		curr &#x3D; next;
+	&#125;
+
+	&#x2F;&#x2F; 循环结束后，curr&#x3D;&#x3D;NULL，prev成为反转后的第一个结点
+	return prev;
+&#125;</code></pre></div></figure>
+
+<p>测试：</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">print_list(list);
+Node *reNode &#x3D; reverse(list-&gt;head);
+
+while (reNode !&#x3D; NULL) &#123;
+    printf(&quot;%d &quot;, reNode-&gt;val);
+    reNode &#x3D; reNode-&gt;next;
+&#125;
+printf(&quot;\n&quot;);
+
+输出：
+Head: 33
+Tail: 55
+Size: 4
+33 22 11 55
+------------------
+55 11 22 33</code></pre></div></figure>
+
+
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/C/" class="category-chain-item">C++</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/C/01-C%E8%AF%AD%E8%A8%80/" class="category-chain-item">01_C语言</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>C语言-Day08</div>
+      <div>http://gblog.github.io/2024/03/20/04_C++/01_C语言/day08/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Haris</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年3月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/03/20/04_C++/01_C%E8%AF%AD%E8%A8%80/day09/" title="C语言-Day09">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">C语言-Day09</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/03/18/04_C++/01_C%E8%AF%AD%E8%A8%80/day07/" title="C语言-Day07">
+                        <span class="hidden-mobile">C语言-Day07</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

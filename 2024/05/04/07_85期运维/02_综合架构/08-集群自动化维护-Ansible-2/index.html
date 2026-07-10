@@ -1,0 +1,1157 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Haris">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Ansible集群自动化维护（二）主要内容：剧本和变量 1 剧本1.1 剧本介绍什么是ansible的剧本(play book)？  剧本是一个yaml格式的文件，用于长久保存并且实现批量管理、维护、部署的文件。 类似于脚本存放命令和变量，剧本中存放各模块的使用命令 剧本是未来我们批量管理、运维必会的内容  剧本和ansible命令的区别：     ansible剧本 ans ad-hoc（单条命">
+<meta property="og:type" content="article">
+<meta property="og:title" content="08-集群自动化维护-Ansible(二)">
+<meta property="og:url" content="http://gblog.github.io/2024/05/04/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/08-%E9%9B%86%E7%BE%A4%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BB%B4%E6%8A%A4-Ansible-2/index.html">
+<meta property="og:site_name" content="Haris的小站">
+<meta property="og:description" content="Ansible集群自动化维护（二）主要内容：剧本和变量 1 剧本1.1 剧本介绍什么是ansible的剧本(play book)？  剧本是一个yaml格式的文件，用于长久保存并且实现批量管理、维护、部署的文件。 类似于脚本存放命令和变量，剧本中存放各模块的使用命令 剧本是未来我们批量管理、运维必会的内容  剧本和ansible命令的区别：     ansible剧本 ans ad-hoc（单条命">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://gblog.github.io/img/image-20240504152707076.png">
+<meta property="article:published_time" content="2024-05-04T08:35:52.000Z">
+<meta property="article:modified_time" content="2026-07-10T06:20:16.315Z">
+<meta property="article:author" content="Haris">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://gblog.github.io/img/image-20240504152707076.png">
+  
+  
+  
+  <title>08-集群自动化维护-Ansible(二) - Haris的小站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"gblog.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Haris的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="08-集群自动化维护-Ansible(二)"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-05-04 16:35" pubdate>
+          2024年5月4日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          23 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">08-集群自动化维护-Ansible(二)</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Ansible集群自动化维护（二）"><a href="#Ansible集群自动化维护（二）" class="headerlink" title="Ansible集群自动化维护（二）"></a>Ansible集群自动化维护（二）</h1><p>主要内容：剧本和变量</p>
+<h1 id="1-剧本"><a href="#1-剧本" class="headerlink" title="1 剧本"></a>1 剧本</h1><h2 id="1-1-剧本介绍"><a href="#1-1-剧本介绍" class="headerlink" title="1.1 剧本介绍"></a>1.1 剧本介绍</h2><p>什么是ansible的剧本(play book)？</p>
+<ul>
+<li>剧本是一个yaml格式的文件，用于长久保存并且实现批量管理、维护、部署的文件。</li>
+<li>类似于脚本存放命令和变量，剧本中存放各模块的使用命令</li>
+<li>剧本是未来我们批量管理、运维必会的内容</li>
+</ul>
+<p>剧本和ansible命令的区别：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>ansible剧本</th>
+<th>ans ad-hoc（单条命令）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>共同点</td>
+<td>批量管理,使用模块</td>
+<td>批量管理,使用模块</td>
+</tr>
+<tr>
+<td>区别</td>
+<td>方便重复调用</td>
+<td>不是很方便，不容易重复</td>
+</tr>
+<tr>
+<td>应用建议(应用场景)</td>
+<td>部署服务，多个步骤的任务</td>
+<td>测试模块，临时性任务</td>
+</tr>
+</tbody></table>
+<h2 id="1-2-剧本的书写格式"><a href="#1-2-剧本的书写格式" class="headerlink" title="1.2 剧本的书写格式"></a>1.2 剧本的书写格式</h2><p>剧本的书写格式</p>
+<p><img src="/../../../img/image-20240504152707076.png" srcset="/img/loading.gif" lazyload alt="image-20240504152707076"></p>
+<blockquote>
+<p>书写playbook注意事项:</p>
+<ul>
+<li>同一个层级的内容对齐的.</li>
+<li>不同层级的通过2个空格对齐</li>
+<li>不能使用tab键</li>
+</ul>
+</blockquote>
+<h2 id="1-3-第一个剧本"><a href="#1-3-第一个剧本" class="headerlink" title="1.3 第一个剧本"></a>1.3 第一个剧本</h2><p>使用剧本在对象机器创建文件</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 01、创建剧本文件
+[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#cat 01-show.yml
+---
+- hosts: all
+  tasks:
+    - name: 01 打开冰箱门
+      shell: echo 01 &gt;&gt; &#x2F;tmp&#x2F;bingxiang.log
+    - name: 02 把大象放进冰箱
+      shell: echo 02 &gt;&gt; &#x2F;tmp&#x2F;bingxiang.log
+    - name: 03 关上冰箱门
+      shell: echo 03 &gt;&gt; &#x2F;tmp&#x2F;bingxiang.log
+      
+# 02、执行剧本
+[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#ansible-playbook -i &#x2F;etc&#x2F;ansible&#x2F;hosts 01-show.yml
+ ____________
+&lt; PLAY [all] &gt;
+ ------------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\&#x2F;\
+                ||----w |
+                ||     ||
+...
+ok: [172.16.1.7]
+ok: [172.16.1.31]
+ok: [172.16.1.41]
+ _________________
+&lt; TASK [01 打开冰箱门] &gt;
+ -----------------
+...
+
+# 03、查看结果
+[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#ansible all -m shell -a &quot;cat &#x2F;tmp&#x2F;bingxiang.log&quot;
+172.16.1.31 | CHANGED | rc&#x3D;0 &gt;&gt;
+01
+02
+03
+172.16.1.7 | CHANGED | rc&#x3D;0 &gt;&gt;
+01
+02
+03
+172.16.1.41 | CHANGED | rc&#x3D;0 &gt;&gt;
+01
+02
+03</code></pre></div></figure>
+
+<blockquote>
+<p>执行的时候有奶牛：</p>
+<p>可以删除软件 或 修改ansible.cfg配置进行关闭 #nocows &#x3D; 1去掉注释即可  </p>
+</blockquote>
+<h2 id="1-4-剧本案例"><a href="#1-4-剧本案例" class="headerlink" title="1.4 剧本案例"></a>1.4 剧本案例</h2><h3 id="1-4-1-案例01-创建目录"><a href="#1-4-1-案例01-创建目录" class="headerlink" title="1.4.1 案例01-创建目录"></a>1.4.1 案例01-创建目录</h3><p>创建目录并分发文件，要求:</p>
+<ol>
+<li>创建目录&#x2F;server&#x2F;files&#x2F;</li>
+<li>&#x2F;etc&#x2F;hosts文件发送过去&#x2F;server&#x2F;files&#x2F;</li>
+</ol>
+<p>剧本编写：</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#cat 02-disk-file.yml
+- hosts: all
+  tasks:
+    - name: 01 创建目录
+      file: path&#x3D;&#x2F;server&#x2F;files&#x2F; state&#x3D;directory
+    - name: 02 分发文件
+      copy: src&#x3D;&#x2F;etc&#x2F;hosts dst&#x3D;&#x2F;server&#x2F;files</code></pre></div></figure>
+
+<p>以上剧本path和state仍写在一行，更像是一条命令，改进后如下：</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#cat 02-disk-file.yml
+- hosts: all
+  tasks:
+    - name: 01 创建目录
+      file:
+        path: &#x2F;server&#x2F;files&#x2F;
+        state: directory
+    - name: 02 分发文件
+      copy:
+        src: &#x2F;etc&#x2F;hosts
+        dest: &#x2F;server&#x2F;files&#x2F;</code></pre></div></figure>
+
+<p>执行</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#ansible-playbook 02-disk-file.yml
+ ____________
+&lt; PLAY [all] &gt;
+ ------------
+...
+
+ok: [172.16.1.31]
+ok: [172.16.1.7]
+ok: [172.16.1.41]
+ ________________
+&lt; TASK [01 创建目录] &gt;
+ ----------------
+...
+</code></pre></div></figure>
+
+<h3 id="1-4-2-案例02-安装软件"><a href="#1-4-2-案例02-安装软件" class="headerlink" title="1.4.2 案例02-安装软件"></a>1.4.2 案例02-安装软件</h3><p>分发软件包、安装软件包、启动服务</p>
+<p>步骤:</p>
+<ul>
+<li>zabbix-agent软件包(下载)</li>
+<li>安装软件包</li>
+<li>配置(略)</li>
+<li>启动开机自启动</li>
+</ul>
+<p>实现如下：</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 01、创建剧本
+[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#cat 03-install-zabbix-agent.yml
+- hosts: all
+  tasks:
+    - name: 01. 下载安装包到&#x2F;tmp
+      get_url:
+        url: &quot;https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;zabbix&#x2F;zabbix&#x2F;6.0&#x2F;rhel&#x2F;7&#x2F;x86_64&#x2F;zabbix-agent-6.0.7-1.el7.x86_64.rpm&quot;
+        validate_certs: no
+        dest: &#x2F;tmp&#x2F;
+    - name: 02. 安装软件包
+      yum:
+        name: &#x2F;tmp&#x2F;zabbix-agent-6.0.7-1.el7.x86_64.rpm
+        state: present
+    - name: 03. 配置
+      debug:
+        msg: &quot;进行配置zabbix-agent&quot;
+    - name: 04. 启动
+      systemd:
+        name: zabbix-agent
+        enabled: yes
+        state: started</code></pre></div></figure>
+
+<p>运行剧本</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 02、运行脚本
+[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#ansible-playbook 03-install-zabbix-agent.yml
+ ____________
+&lt; PLAY [all] &gt;
+...
+ok: [172.16.1.7]
+ok: [172.16.1.31]
+ok: [172.16.1.41]
+ _______________________
+&lt; TASK [01. 下载安装包到&#x2F;tmp] &gt;
+...
+ok: [172.16.1.31]
+ok: [172.16.1.41]
+ok: [172.16.1.7]
+ __________________
+&lt; TASK [02. 安装软件包] &gt;
+...
+ok: [172.16.1.41]
+ok: [172.16.1.31]
+changed: [172.16.1.7]
+ _______________
+&lt; TASK [03. 配置] &gt;
+ ---------------
+...
+ok: [172.16.1.7] &#x3D;&gt; &#123;
+    &quot;msg&quot;: &quot;进行配置zabbix-agent&quot;
+&#125;
+ok: [172.16.1.31] &#x3D;&gt; &#123;
+    &quot;msg&quot;: &quot;进行配置zabbix-agent&quot;
+&#125;
+ok: [172.16.1.41] &#x3D;&gt; &#123;
+    &quot;msg&quot;: &quot;进行配置zabbix-agent&quot;
+&#125;
+ _______________
+&lt; TASK [04. 启动] &gt;
+...
+ok: [172.16.1.31]
+ok: [172.16.1.41]
+changed: [172.16.1.7]
+ ____________
+&lt; PLAY RECAP &gt;
+ ------------</code></pre></div></figure>
+
+<h3 id="1-4-3-案例03-部署服务"><a href="#1-4-3-案例03-部署服务" class="headerlink" title="1.4.3 案例03-部署服务"></a>1.4.3 案例03-部署服务</h3><p>NFS服务</p>
+<ul>
+<li>nfs服务端:在backup上部署nfs服务,共享&#x2F;backup-nfs目录,all_squash,匿名用户:nfsnobody</li>
+<li>nfs客户端:web挂载 &#x2F;ans-upload目录挂载nfs服务端共享的&#x2F;backup-nfs(永久挂载)</li>
+</ul>
+<p>流程梳理：</p>
+<ul>
+<li>服务端流程:<ol>
+<li>部署nfs-utils,rpcbind</li>
+<li>修改配置文件</li>
+<li>创建共享目录并改所有者</li>
+<li>启动服务rpcbind,nfs(注意顺序)</li>
+</ol>
+</li>
+<li>客户端流程:<ol>
+<li>安装nfs-utils</li>
+<li>挂载与永久挂载</li>
+</ol>
+</li>
+</ul>
+<p>实现：</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#cat 04-deploy-nfs.yml
+# nfs服务端部署
+- hosts: backup01
+  tasks:
+    - name: 01 部署nfs-utils, rpcbind
+      yum:
+        name: nfs-utils,rpcbind
+        state: present
+    - name: 02 修改配置文件
+      lineinfile:
+        path: &#x2F;etc&#x2F;exports
+        line: &quot;&#x2F;backup-nfs 172.16.1.0&#x2F;24(rw,all_squash)&quot;
+        create: true
+    - name: 03 创建共享目录所有者并改权限
+      file:
+        path: &#x2F;backup-nfs
+        owner: nfsnobody
+        group: nfsnobody
+        state: directory
+    - name: 04 启动服务rpcbind（注意顺序）
+      systemd:
+        name: rpcbind
+        enabled: yes
+        state: started
+    - name: 05 启动服务nfs
+      systemd:
+        name: nfs
+        enabled: yes
+        state: started
+
+# nfs客户端部署
+- hosts: web01
+  tasks:
+    - name: 01 部署nfs-utils
+      yum:
+        name: nfs-utils
+        state: present
+    - name: 02 挂载nfs
+      mount:
+        src: 172.16.1.41:&#x2F;backup-nfs
+        path: &#x2F;ans-upload
+        fstype: nfs
+        state: mounted</code></pre></div></figure>
+
+
+
+<h1 id="2-变量"><a href="#2-变量" class="headerlink" title="2 变量"></a>2 变量</h1><p>ansible中额的变量无处不在,，ans中大部分地方都可以定义变量.</p>
+<table>
+<thead>
+<tr>
+<th>可以定义变量的地方</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>在剧本文件中定义</td>
+<td>比较常用. 仅仅限于当前的play使用.</td>
+</tr>
+<tr>
+<td>register变量(注册变量)</td>
+<td>实现例如脚本中<code>反引号</code>的功能,可以获取命令结果</td>
+</tr>
+<tr>
+<td>变量文件（根据主机清单分分组进行定义变量 ）</td>
+<td>如果多个剧本,使用相同的变量,大型的剧本roles</td>
+</tr>
+<tr>
+<td>inventory主机清单中定义变量</td>
+<td>未来可以用于批量修改主机使用,其他很少用了.</td>
+</tr>
+<tr>
+<td>命令行中</td>
+<td>几乎不用.</td>
+</tr>
+<tr>
+<td>facts变量</td>
+<td>一般用于获取主机基本信息:ip,主机名,系统 (centos&#x2F;ubuntu) 如果不需要可以关闭,用于加速剧本的执行</td>
+</tr>
+</tbody></table>
+<h2 id="2-1-剧本中的变量"><a href="#2-1-剧本中的变量" class="headerlink" title="2.1 剧本中的变量"></a>2.1 剧本中的变量</h2><p>在剧本中使用变量：</p>
+<ol>
+<li>仅仅在当前play生效.</li>
+<li>一般用来存放路径,用户名,ip地址,类似于之前使用的脚本.</li>
+<li>注意引号使用.</li>
+</ol>
+<p>案例：批量创建&#x2F;oldboy&#x2F;lidao&#x2F;upload&#x2F;  </p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#cat 05-vars.yml
+- hosts: all
+  # 定义变量
+  vars:
+    dir: &#x2F;oldboy&#x2F;lidao&#x2F;upload
+  tasks:
+    - name: mkdir
+      file:
+        # 使用变量
+        path: &quot;&#123;&#123;dir&#125;&#125;&quot;
+        state: directory</code></pre></div></figure>
+
+<blockquote>
+<p>关于双引号的注意事项：</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">&gt;dir: &#x2F;oldboy&#x2F;lidao&#x2F;upload&#x2F;
+&gt;file:
+ path: &quot;&#123;&#123; dir &#125;&#125;&quot; #这种要添加,变量是开头.
+&gt;file:
+ path: &#x2F;oldboy-new&#x2F;&#123;&#123; dir &#125;&#125; #这种可以不加引号,变量不是开头.</code></pre></div></figure>
+</blockquote>
+<h2 id="2-2-共用变量（变量文件）"><a href="#2-2-共用变量（变量文件）" class="headerlink" title="2.2 共用变量（变量文件）"></a>2.2 共用变量（变量文件）</h2><p>将变量写入新建的变量文件vars.yml，然后在剧本中引用</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@m01 &#x2F;server&#x2F;scripts&#x2F;playbook]# cat 05.vars.yml
+- hosts: all
+  vars_files: .&#x2F;vars.yml
+  tasks:
+    - name: file
+      file:
+        path: &quot;&#123;&#123; dir &#125;&#125;&#x2F;&#123;&#123; user &#125;&#125;-&#123;&#123; file &#125;&#125;&quot;
+        state: touch
+        
+[root@m01 &#x2F;server&#x2F;scripts&#x2F;playbook]# cat vars.yml
+dir: &#x2F;tmp&#x2F;
+file: lidao.txt
+user: lidao996kkk</code></pre></div></figure>
+
+<h2 id="2-3-共用变量（根据主机组）"><a href="#2-3-共用变量（根据主机组）" class="headerlink" title="2.3 共用变量（根据主机组）"></a>2.3 共用变量（根据主机组）</h2><p>group_vars根据主机清单的分组去匹配变量文件，可以根据主机组创建变量文件，例如：</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">xxxx-check.yml
+group_vars&#x2F;
+	lb&#x2F;vars.yml #存放lb组的变量
+	web&#x2F;vars.yml #存放web组的变量
+	data&#x2F;vars.yml #存放xxx组的变量
+	all&#x2F;vars.yml #所有主机共用的变量</code></pre></div></figure>
+
+<blockquote>
+<p>未来一般使用all分组即可,把所有变量存放在一起,供剧本使用</p>
+</blockquote>
+<p>案例：</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 创建主机组变量文件
+[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#cat group_vars&#x2F;all&#x2F;vars.yml
+user: www
+nfs_dir: &#x2F;nfs_backup
+web_mount_dir: &#x2F;web_nfs
+nfs_server: 172.16.1.41
+rsync_pass: 1
+
+# 调用变量文件
+[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#cat 07.group_vars.yml
+- hosts: all
+  tasks:
+  - name: 测试group变量
+    debug:
+      msg: &quot;变量内容 &#123;&#123;user&#125;&#125; &#123;&#123;rsync_pass&#125;&#125;&quot;
+- hosts: web01
+  tasks:
+  - name: 测试web组是否识别group变量
+    debug:
+      msg: &quot;web组识别的变量变量内容 &#123;&#123;user&#125;&#125; &#123;&#123;rsync_pass&#125;&#125;&quot;</code></pre></div></figure>
+
+<p>执行：</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#ansible-playbook 07.group_vars.yml
+ ____________
+&lt; PLAY [all] &gt;
+ ------------
+...
+ok: [172.16.1.7]
+ __________________
+&lt; TASK [测试group变量] &gt;
+ ------------------
+...
+ok: [172.16.1.7] &#x3D;&gt; &#123;
+    &quot;msg&quot;: &quot;变量内容 www 1&quot;
+&#125;
+...
+&lt; TASK [测试web组是否识别group变量] &gt;
+...
+ok: [172.16.1.7] &#x3D;&gt; &#123;
+    &quot;msg&quot;: &quot;web组识别的变量变量内容 www 1&quot;
+&#125;
+ ____________
+&lt; PLAY RECAP &gt;
+ ------------</code></pre></div></figure>
+
+<h2 id="2-4-facts变量"><a href="#2-4-facts变量" class="headerlink" title="2.4 facts变量"></a>2.4 facts变量</h2><p>什么是facts变量？</p>
+<ul>
+<li>运行剧本的时候ans会收集每个主机的基本信息，这些信息形成的变量叫做facts变量。</li>
+<li>facts变量可以通过setup模块获取</li>
+</ul>
+<p>常用的fact变量</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-she" data-language="she"><code class="language-she">ansible_hostname #主机名
+ansible_memtotal_mb #内存大小(总计) 单位mb
+ansible_processor_vcpus #cpu数量
+ansible_default_ipv4.address #默认的网卡ip eth0
+ansible_distribution #系统发行版本名字
+CentOS Ubuntu Debian ՎՎʢ
+ansible_processor_vcpus
+ansible_processor_cores
+ansible_date_time.date</code></pre></div></figure>
+
+<p>案例：批量修改系统&#x2F;etc&#x2F;motd文件，登录的时候输出系统的基本信息，如</p>
+<p>主机名、内存总大小、ip地址、发行版本、cpu数、核心数  </p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 创建fatcs变量文件
+[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#cat templates&#x2F;motd.j2
+#######################################
+welcome to oldboy elastic linux system
+操作需谨慎,删根弹指间.
+主机名: &#123;&#123; ansible_hostname &#125;&#125;
+ip地址: &#123;&#123; ansible_default_ipv4.address &#125;&#125;
+内存大小: &#123;&#123; ansible_memtotal_mb &#125;&#125;
+CPU数量: &#123;&#123; ansible_processor_vcpus &#125;&#125;
+核心总数: &#123;&#123; ansible_processor_cores &#125;&#125;
+发行版本: &#123;&#123; ansible_distribution &#125;&#125;
+
+# 分发
+[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#cat 08-change-motd.yml
+- hosts: all
+  tasks:
+    - name: 分发motd文件
+      template:
+        src: templates&#x2F;motd.j2
+        dest: &#x2F;etc&#x2F;motd
+        backup: yes
+
+    - name: 分发motd文件
+      copy:
+        src: templates&#x2F;motd.j2
+        dest: &#x2F;tmp&#x2F;motd
+        backup: yes</code></pre></div></figure>
+
+<blockquote>
+<p><strong>温馨提示: template vs copy模块</strong></p>
+<p>copy仅仅传输数据,复制文件</p>
+<p>template 传输数据,复制文件的时候,文件中的变量会被解析和运行  </p>
+<p>关于facts变量实际应用案例:</p>
+<ol>
+<li>通过facts变量获取系统的基本信息</li>
+<li>通过facts变量获取信息并进行判断</li>
+<li>如果不需要可以进行关闭,加速剧本的运行( gather_facts: no)</li>
+</ol>
+</blockquote>
+<h2 id="2-5-register变量"><a href="#2-5-register变量" class="headerlink" title="2.5 register变量"></a>2.5 register变量</h2><p>本质上就是用来实现脚本中的<em>反引号</em>功能，用户通过命令获取的内容都存放到Register变量中  </p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 编写
+[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#cat 09-regvars.yml
+- hosts: all
+  tasks:
+    - name: 获取日期
+      shell: date +%F
+      register: result
+    - name: print result 变量内容
+      debug:
+        msg: |
+             &quot;register变量的全部内容是:&#123;&#123; result.stderr &#125;&#125;&quot;
+             &quot;register变量的精确的内容是:&#123;&#123; result.stdout &#125;&#125;&quot;
+               
+# 执行
+[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#ansible-playbook 09-regvars.yml
+ ____________
+&lt; PLAY [all] &gt;
+ ------------
+...
+ok: [172.16.1.7] &#x3D;&gt; &#123;
+    &quot;msg&quot;: &quot;\&quot;register变量的全部内容是:\&quot;\n\&quot;register变量的精确的内容是:2024-05-04\&quot;\n&quot;
+&#125;
+ok: [172.16.1.31] &#x3D;&gt; &#123;
+    &quot;msg&quot;: &quot;\&quot;register变量的全部内容是:\&quot;\n\&quot;register变量的精确的内容是:2024-05-04\&quot;\n&quot;
+&#125;
+ok: [172.16.1.41] &#x3D;&gt; &#123;
+    &quot;msg&quot;: &quot;\&quot;register变量的全部内容是:\&quot;\n\&quot;register变量的精确的内容是:2024-05-04\&quot;\n&quot;
+&#125;</code></pre></div></figure>
+
+<blockquote>
+<p>符号说明：</p>
+<p>msg:中的<code>|</code>表示下面的内容是多行. <code>|</code>也可以用于其他模块中  </p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%BF%90%E7%BB%B4/" class="category-chain-item">运维</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/" class="category-chain-item">（二）综合架构</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>08-集群自动化维护-Ansible(二)</div>
+      <div>http://gblog.github.io/2024/05/04/07_85期运维/02_综合架构/08-集群自动化维护-Ansible-2/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Haris</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年5月4日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/05/06/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/09-%E9%9B%86%E7%BE%A4%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BB%B4%E6%8A%A4-Ansible-3/" title="09-集群自动化维护-Ansible(三)">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">09-集群自动化维护-Ansible(三)</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/04/29/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/07-%E9%9B%86%E7%BE%A4%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BB%B4%E6%8A%A4-Ansible-1/" title="07-集群自动化维护-Ansible(一)">
+                        <span class="hidden-mobile">07-集群自动化维护-Ansible(一)</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
