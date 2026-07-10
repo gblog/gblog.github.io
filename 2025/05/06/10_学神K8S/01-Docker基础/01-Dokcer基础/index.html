@@ -19,12 +19,12 @@
   <meta name="author" content="Haris">
   <meta name="keywords" content="">
   
-    <meta name="description" content="一、虚拟机准备1.1 虚拟机配置模板机，2G内存、2核CPU、80G存储空间 网络两个网卡： ​	ens33: NAT模式，192.168.40.0&#x2F;24网段，网关192.168.40.2 ​	ens36: LAN区段，172.16.1.0&#x2F;24网段 系统：RockyLinux 8.10 1.2 基础初始化1、关闭防火墙安装基础软件 # 1、关闭防火墙 systemctl st">
+    <meta name="description" content="一、虚拟机准备1.1 虚拟机配置模板机，2G内存、2核CPU、80G存储空间 网络两个网卡： ​	ens33: NAT模式，192.168.40.0&#x2F;24网段，网关192.168.40.2 ​	ens36: LAN区段，172.16.1.0&#x2F;24网段 系统：RockyLinux 8.10 1.2 基础初始化1、关闭防火墙安装基础软件 12345678910111213# 1、关">
 <meta property="og:type" content="article">
 <meta property="og:title" content="01-Docker基础">
 <meta property="og:url" content="https://gblog.github.io/2025/05/06/10_%E5%AD%A6%E7%A5%9EK8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%9F%BA%E7%A1%80/index.html">
 <meta property="og:site_name" content="Haris的小站">
-<meta property="og:description" content="一、虚拟机准备1.1 虚拟机配置模板机，2G内存、2核CPU、80G存储空间 网络两个网卡： ​	ens33: NAT模式，192.168.40.0&#x2F;24网段，网关192.168.40.2 ​	ens36: LAN区段，172.16.1.0&#x2F;24网段 系统：RockyLinux 8.10 1.2 基础初始化1、关闭防火墙安装基础软件 # 1、关闭防火墙 systemctl st">
+<meta property="og:description" content="一、虚拟机准备1.1 虚拟机配置模板机，2G内存、2核CPU、80G存储空间 网络两个网卡： ​	ens33: NAT模式，192.168.40.0&#x2F;24网段，网关192.168.40.2 ​	ens36: LAN区段，172.16.1.0&#x2F;24网段 系统：RockyLinux 8.10 1.2 基础初始化1、关闭防火墙安装基础软件 12345678910111213# 1、关">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-05-06T05:52:52.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.472Z">
@@ -42,8 +42,6 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -67,6 +65,10 @@
     <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
 
 
 
@@ -224,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k 字
+          1.2k 字
         
       </span>
     
@@ -235,7 +237,7 @@
         
         
         
-          12 分钟
+          10 分钟
         
       </span>
     
@@ -296,128 +298,54 @@
 <p>​	ens36: LAN区段，172.16.1.0&#x2F;24网段</p>
 <p>系统：RockyLinux 8.10</p>
 <h2 id="1-2-基础初始化"><a href="#1-2-基础初始化" class="headerlink" title="1.2 基础初始化"></a>1.2 基础初始化</h2><p>1、关闭防火墙安装基础软件</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 1、关闭防火墙
-systemctl stop firewalld
-systemctl disable firewalld
-
-# 2、关闭selinux
-sed -i &#39;s#SELINUX&#x3D;enforcing#SELINUX&#x3D;disable#g&#39; &#x2F;etc&#x2F;selinux&#x2F;config
-setenforce 0
-
-# 3、安装常用软件
-yum install -y vim tree wget bash-completion bashcompletion-extras lrzsz net-tools sysstat iotop iftop htop unzip nc nmap telnet bc psmisc httpd-tools bindutils
-
-# 4、设置主机名
-hostnamectl set-hostname muban</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">1、关闭防火墙</span><br>systemctl stop firewalld<br>systemctl disable firewalld<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">2、关闭selinux</span><br>sed -i &#x27;s#SELINUX=enforcing#SELINUX=disable#g&#x27; /etc/selinux/config<br>setenforce 0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">3、安装常用软件</span><br>yum install -y vim tree wget bash-completion bashcompletion-extras lrzsz net-tools sysstat iotop iftop htop unzip nc nmap telnet bc psmisc httpd-tools bindutils<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">4、设置主机名</span><br>hostnamectl set-hostname muban<br></code></pre></td></tr></table></figure>
 
 <p>2、配置时间同步</p>
 <p>编辑<code>vim /etc/chrony.conf</code>文件，添加时间同步服务器</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># Please consider joining the pool (http:&#x2F;&#x2F;www.pool.ntp.org&#x2F;join.html).
-server 210.72.145.44 iburst
-server ntp.aliyun.com iburst
-...</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">Please consider joining the pool (http://www.pool.ntp.org/join.html).</span><br>server 210.72.145.44 iburst<br>server ntp.aliyun.com iburst<br>...<br></code></pre></td></tr></table></figure>
 
 <p>重启服务生效</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl restart chronyd.service</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl restart chronyd.service<br></code></pre></td></tr></table></figure>
 
 <p>查看当前的时间同步服务器</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@localhost yum.repos.d]# chronyc sources -y
-MS Name&#x2F;IP address         Stratum Poll Reach LastRx Last sample               
-&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
-^? 210.72.145.44                 0   8     0     -     +0ns[   +0ns] +&#x2F;-    0ns
-^* 203.107.6.88                  2   6   377    30    -97us[ -564us] +&#x2F;-   37ms</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@localhost yum.repos.d]# chronyc sources -y<br>MS Name/IP address         Stratum Poll Reach LastRx Last sample               <br>===============================================================================<br>^? 210.72.145.44                 0   8     0     -     +0ns[   +0ns] +/-    0ns<br>^* 203.107.6.88                  2   6   377    30    -97us[ -564us] +/-   37ms<br></code></pre></td></tr></table></figure>
 
 <p>加到crontab里面定时执行</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 一分钟自动重启一次服务
-* * * * * &#x2F;usr&#x2F;bin&#x2F;systemctl restart chronyd</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">一分钟自动重启一次服务</span><br>* * * * * /usr/bin/systemctl restart chronyd<br></code></pre></td></tr></table></figure>
 
 <p>3、命令行颜色</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 写入到&#x2F;etc&#x2F;profile中
-export PS1&#x3D;&#39;[\[\e[34;1m\]\u@\[\e[0m\]\[\e[32;1m\]\H\[\e[0m\]\[\e[31;1m\] \w\[\e[0m\]]\$&#39;
-# 生效
-source &#x2F;etc&#x2F;profile</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">写入到/etc/profile中</span><br>export PS1=&#x27;[\[\e[34;1m\]\u@\[\e[0m\]\[\e[32;1m\]\H\[\e[0m\]\[\e[31;1m\] \w\[\e[0m\]]\$&#x27;<br><span class="hljs-meta prompt_"># </span><span class="language-bash">生效</span><br>source /etc/profile<br></code></pre></td></tr></table></figure>
 
 <p>4、一键修改IP和hostname</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@muban &#x2F;etc]#cat &#x2F;usr&#x2F;local&#x2F;mytools&#x2F;bin&#x2F;setip.sh 
-#!&#x2F;bin&#x2F;bash
-#author: haris
-#desc: change ip and hostname
-#version: v1.0
-#判断参数格式是否为2
-[ $# -ne 2 ] &amp;&amp; &#123;
-echo &quot;脚本使用姿势不对&quot;
-echo &quot;正确姿势:$0 主机名 ip地址&quot;
-echo &quot;如:$0 muban 211&quot;
-        exit 1
-&#125;
-#获取当前主机ip地址
-ip&#x3D;&#96;hostname -I |awk &#39;&#123;print $1&#125;&#39;|sed &#39;s#.*\.##g&#39;&#96;
-#新的ip
-ip_new&#x3D;&#96;echo $2 |sed &#39;s#^.*\.##g&#39;&#96;
-#新的主机名
-hostname&#x3D;$1
-#修改ip
-sed -i &quot;s#192.168.40.$ip#192.168.40.$ip_new#g&quot; &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33
-sed -i &quot;s#172.16.1.$ip#172.16.1.$ip_new#g&quot; &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens36
-#重启网卡
-systemctl restart NetworkManager
-#修改主机名
-hostnamectl set-hostname $hostname</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@muban /etc]#cat /usr/local/mytools/bin/setip.sh <br><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">author: haris</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">desc: change ip and hostname</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">version: v1.0</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">判断参数格式是否为2</span><br>[ $# -ne 2 ] &amp;&amp; &#123;<br>echo &quot;脚本使用姿势不对&quot;<br>echo &quot;正确姿势:$0 主机名 ip地址&quot;<br>echo &quot;如:$0 muban 211&quot;<br>        exit 1<br>&#125;<br><span class="hljs-meta prompt_">#</span><span class="language-bash">获取当前主机ip地址</span><br>ip=`hostname -I |awk &#x27;&#123;print $1&#125;&#x27;|sed &#x27;s#.*\.##g&#x27;`<br><span class="hljs-meta prompt_">#</span><span class="language-bash">新的ip</span><br>ip_new=`echo $2 |sed &#x27;s#^.*\.##g&#x27;`<br><span class="hljs-meta prompt_">#</span><span class="language-bash">新的主机名</span><br>hostname=$1<br><span class="hljs-meta prompt_">#</span><span class="language-bash">修改ip</span><br>sed -i &quot;s#192.168.40.$ip#192.168.40.$ip_new#g&quot; /etc/sysconfig/network-scripts/ifcfg-ens33<br>sed -i &quot;s#172.16.1.$ip#172.16.1.$ip_new#g&quot; /etc/sysconfig/network-scripts/ifcfg-ens36<br><span class="hljs-meta prompt_">#</span><span class="language-bash">重启网卡</span><br>systemctl restart NetworkManager<br><span class="hljs-meta prompt_">#</span><span class="language-bash">修改主机名</span><br>hostnamectl set-hostname $hostname<br></code></pre></td></tr></table></figure>
 
 <h2 id="1-3-开启包转发功能"><a href="#1-3-开启包转发功能" class="headerlink" title="1.3 开启包转发功能"></a>1.3 开启包转发功能</h2><p>1、br_netfilter模块用于将桥接流量转发至iptables链，需要开启转发。</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 开启模块
-modprobe br_netfilter
-
-# 验证是否已加载
-[root@master1 &#x2F;etc&#x2F;sysctl.d]#lsmod | grep br_netfilter
-br_netfilter           22256  0 
-bridge                151336  1 br_netfilter</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">开启模块</span><br>modprobe br_netfilter<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">验证是否已加载</span><br>[root@master1 /etc/sysctl.d]#lsmod | grep br_netfilter<br>br_netfilter           22256  0 <br>bridge                151336  1 br_netfilter<br></code></pre></td></tr></table></figure>
 
 <p>2、创建配置文件，修改内核参数</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 创建配置文件
-cat &gt; &#x2F;etc&#x2F;sysctl.d&#x2F;docker.conf &lt;&lt; EOF
-net.bridge.bridge-nf-call-ip6tables &#x3D; 1
-net.bridge.bridge-nf-call-iptables &#x3D; 1
-net.ipv4.ip_forward &#x3D; 1
-EOF
-
-# 执行命令，使内核参数生效
-sysctl -p &#x2F;etc&#x2F;sysctl.d&#x2F;docker.conf</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">创建配置文件</span><br>cat &gt; /etc/sysctl.d/docker.conf &lt;&lt; EOF<br>net.bridge.bridge-nf-call-ip6tables = 1<br>net.bridge.bridge-nf-call-iptables = 1<br>net.ipv4.ip_forward = 1<br>EOF<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">执行命令，使内核参数生效</span><br>sysctl -p /etc/sysctl.d/docker.conf<br></code></pre></td></tr></table></figure>
 
 <p>3、自动加载模块</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 编辑配置文件
-[root@master1 ~]#cat &#x2F;etc&#x2F;rc.sysint 
-#!&#x2F;bin&#x2F;bash
-for file in &#x2F;etc&#x2F;sysconfig&#x2F;modules&#x2F;*.modules; 
-do
-[ -x $file ] &amp;&amp; $file
-done
-
-# 添加模块自动加载的文件
-[root@master1 ~]#cat &#x2F;etc&#x2F;sysconfig&#x2F;modules&#x2F;br_netfilter.modules
-modprobe br_netfilter
-
-# 添加可执行权限
-chmod 755 &#x2F;etc&#x2F;sysconfig&#x2F;modules&#x2F;br_netfilter.modules</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">编辑配置文件</span><br>[root@master1 ~]#cat /etc/rc.sysint <br><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br>for file in /etc/sysconfig/modules/*.modules; <br>do<br>[ -x $file ] &amp;&amp; $file<br>done<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">添加模块自动加载的文件</span><br>[root@master1 ~]#cat /etc/sysconfig/modules/br_netfilter.modules<br>modprobe br_netfilter<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">添加可执行权限</span><br>chmod 755 /etc/sysconfig/modules/br_netfilter.modules<br></code></pre></td></tr></table></figure>
 
 <p>重启docker生效</p>
 <h2 id="1-4-安装Docker"><a href="#1-4-安装Docker" class="headerlink" title="1.4 安装Docker"></a>1.4 安装Docker</h2><blockquote>
 <p>在线联网安装，Docker-ce</p>
 </blockquote>
 <p>1、配置docker-ce国内的yum源（阿里云）</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum-config-manager --add-repo https:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;docker-ce&#x2F;linux&#x2F;centos&#x2F;docker-ce.repo</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo<br></code></pre></td></tr></table></figure>
 
 <p>2、安装docker依赖包</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum install -y device-mapper-persistent-data lvm2</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">yum install -y device-mapper-persistent-data lvm2<br></code></pre></td></tr></table></figure>
 
 <p>3、安装docker-ce</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum install docker-ce -y</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">yum install docker-ce -y<br></code></pre></td></tr></table></figure>
 
 <p>4、启动docker服务器</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl start docker &amp;&amp; systemctl enable docker</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl start docker &amp;&amp; systemctl enable docker<br></code></pre></td></tr></table></figure>
 
 <p>5、查看docker版本</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker verison</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker verison<br></code></pre></td></tr></table></figure>
 
 
 
@@ -426,23 +354,7 @@ chmod 755 &#x2F;etc&#x2F;sysconfig&#x2F;modules&#x2F;br_netfilter.modules</code>
 <p>镜像加速器多写几个，不然容易超时拉取失败</p>
 <p>Error response from daemon: Get “<a target="_blank" rel="noopener" href="https://registry-1.docker.io/v2/">https://registry-1.docker.io/v2/</a></p>
 </blockquote>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">sudo mkdir -p &#x2F;etc&#x2F;docker
-sudo tee &#x2F;etc&#x2F;docker&#x2F;daemon.json &lt;&lt;-&#39;EOF&#39;
-&#123;
-  &quot;registry-mirrors&quot;: [
-    &quot;https:&#x2F;&#x2F;docker.m.daocloud.io&quot;,
-    &quot;https:&#x2F;&#x2F;docker.imgdb.de&quot;,
-    &quot;https:&#x2F;&#x2F;docker-0.unsee.tech&quot;,
-    &quot;https:&#x2F;&#x2F;docker.hlmirror.com&quot;,
-    &quot;https:&#x2F;&#x2F;docker.1ms.run&quot;,
-    &quot;https:&#x2F;&#x2F;func.ink&quot;,
-    &quot;https:&#x2F;&#x2F;lispy.org&quot;,
-    &quot;https:&#x2F;&#x2F;docker.xiaogenban1993.com&quot;
-  ]
-&#125;
-EOF
-sudo systemctl daemon-reload
-sudo systemctl restart docker</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo mkdir -p /etc/docker<br>sudo tee /etc/docker/daemon.json &lt;&lt;-&#x27;EOF&#x27;<br>&#123;<br>  &quot;registry-mirrors&quot;: [<br>    &quot;https://docker.m.daocloud.io&quot;,<br>    &quot;https://docker.imgdb.de&quot;,<br>    &quot;https://docker-0.unsee.tech&quot;,<br>    &quot;https://docker.hlmirror.com&quot;,<br>    &quot;https://docker.1ms.run&quot;,<br>    &quot;https://func.ink&quot;,<br>    &quot;https://lispy.org&quot;,<br>    &quot;https://docker.xiaogenban1993.com&quot;<br>  ]<br>&#125;<br>EOF<br>sudo systemctl daemon-reload<br>sudo systemctl restart docker<br></code></pre></td></tr></table></figure>
 
 
 
@@ -742,12 +654,6 @@ sudo systemctl restart docker</code></pre></div></figure>
   });
 </script>
 
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
 

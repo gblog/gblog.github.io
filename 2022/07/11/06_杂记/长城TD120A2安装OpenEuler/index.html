@@ -19,12 +19,12 @@
   <meta name="author" content="Haris">
   <meta name="keywords" content="">
   
-    <meta name="description" content="记录安装过程  一、环境    型号    CPU 飞腾D2000&#x2F;8核   内存 紫光DDR4 3200   显卡 AMD RX520   安装系统 OpenEuler 20.09   二、OpenEuler安装1、镜像准备： openEuler-20.09-aarch64-dvd.iso  2、制作启动盘 使用win32diskimager制作U盘启动器  3、安装 进入安装界面：">
+    <meta name="description" content="记录安装过程  一、环境    型号    CPU 飞腾D2000&#x2F;8核   内存 紫光DDR4 3200   显卡 AMD RX520   安装系统 OpenEuler 20.09   二、OpenEuler安装1、镜像准备： 1openEuler-20.09-aarch64-dvd.iso  2、制作启动盘 1使用win32diskimager制作U盘启动器  3、安装 12345">
 <meta property="og:type" content="article">
 <meta property="og:title" content="长城TD120A2安装OpenEuler">
 <meta property="og:url" content="https://gblog.github.io/2022/07/11/06_%E6%9D%82%E8%AE%B0/%E9%95%BF%E5%9F%8ETD120A2%E5%AE%89%E8%A3%85OpenEuler/index.html">
 <meta property="og:site_name" content="Haris的小站">
-<meta property="og:description" content="记录安装过程  一、环境    型号    CPU 飞腾D2000&#x2F;8核   内存 紫光DDR4 3200   显卡 AMD RX520   安装系统 OpenEuler 20.09   二、OpenEuler安装1、镜像准备： openEuler-20.09-aarch64-dvd.iso  2、制作启动盘 使用win32diskimager制作U盘启动器  3、安装 进入安装界面：">
+<meta property="og:description" content="记录安装过程  一、环境    型号    CPU 飞腾D2000&#x2F;8核   内存 紫光DDR4 3200   显卡 AMD RX520   安装系统 OpenEuler 20.09   二、OpenEuler安装1、镜像准备： 1openEuler-20.09-aarch64-dvd.iso  2、制作启动盘 1使用win32diskimager制作U盘启动器  3、安装 12345">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-11T01:29:52.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.303Z">
@@ -42,8 +42,6 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -67,6 +65,10 @@
     <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
 
 
 
@@ -224,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          252 字
+          247 字
         
       </span>
     
@@ -318,21 +320,13 @@
 </tr>
 </tbody></table>
 <h3 id="二、OpenEuler安装"><a href="#二、OpenEuler安装" class="headerlink" title="二、OpenEuler安装"></a>二、OpenEuler安装</h3><p>1、镜像准备：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-she" data-language="she"><code class="language-she">openEuler-20.09-aarch64-dvd.iso</code></pre></div></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs she">openEuler-20.09-aarch64-dvd.iso<br></code></pre></td></tr></table></figure>
 
 <p>2、制作启动盘</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">使用win32diskimager制作U盘启动器</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">使用win32diskimager制作U盘启动器<br></code></pre></td></tr></table></figure>
 
 <p>3、安装</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">进入安装界面：
-Install openEuler 20.09...
-Test this media &amp; install openEuler 20.09...
-Troubleshooting
-
-选择到Install openEuler 20.09...行
-Ctrl + e 进入编辑界面
-删除&quot;video&#x3D;efifb:off&quot;
-Ctrl + x 保存并退出，进入图形化安装界面</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">进入安装界面：<br>Install openEuler 20.09...<br>Test this media &amp; install openEuler 20.09...<br>Troubleshooting<br><br>选择到Install openEuler 20.09...行<br>Ctrl + e 进入编辑界面<br>删除&quot;video=efifb:off&quot;<br>Ctrl + x 保存并退出，进入图形化安装界面<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>为什么要删除此grub参数？ —直接安装将卡在此界面</p>
@@ -342,21 +336,16 @@ Ctrl + x 保存并退出，进入图形化安装界面</code></pre></div></figur
 <p>EFT stub: Exiting boot services and installing virtual address map…</p>
 </blockquote>
 <p>4、启动系统</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">进入系统后，修改&#x2F;boot&#x2F;efi&#x2F;EFI&#x2F;openEuler&#x2F;grub.cfg文件
-同样，将&quot;video&#x3D;efifb:off&quot;注释或者删除
-&gt;&gt;防止重启卡在引导界面</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">进入系统后，修改/boot/efi/EFI/openEuler/grub.cfg文件<br>同样，将&quot;video=efifb:off&quot;注释或者删除<br><span class="hljs-meta prompt_">&gt;</span><span class="language-bash">&gt;防止重启卡在引导界面</span><br></code></pre></td></tr></table></figure>
 
 <p>5、无线网卡连接wifi</p>
 <blockquote>
 <p>TD120A2安装OpenEuler后,有线网卡无法识别，需要安装USB无线网卡，并安装配套的驱动，无线网卡识别后可以连接wifi</p>
 </blockquote>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">nmcli dev wifi # 查询wifi
-nmcli dev wifi connet 网络名 password 密码</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">nmcli dev wifi # 查询wifi<br>nmcli dev wifi connet 网络名 password 密码<br></code></pre></td></tr></table></figure>
 
 <p>6、图形化界面安装</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">sudo dnf makecache
-sudo dnf groupinstall ukui
-systemctl set-default graphical</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo dnf makecache<br>sudo dnf groupinstall ukui<br>systemctl set-default graphical<br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -633,12 +622,6 @@ systemctl set-default graphical</code></pre></div></figure>
   });
 </script>
 
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
 

@@ -19,12 +19,12 @@
   <meta name="author" content="Haris">
   <meta name="keywords" content="">
   
-    <meta name="description" content="一、Docker容器控制CPU1.1 根据权重分配CPU 通过选项设置CPU使用权重，值越大，能获取资源的概率越高  选项：-c或者--cpu-shares 例子：容器A设置权重1000，容器B设置权重500，当两个容器都在使用同一个CPU时候，容器A比容器B多一倍的寄回获得CPU的时间片。 # 容器A的CPU权重1000 docker run -it --name &quot;workerA&amp;q">
+    <meta name="description" content="一、Docker容器控制CPU1.1 根据权重分配CPU 通过选项设置CPU使用权重，值越大，能获取资源的概率越高  选项：-c或者--cpu-shares 例子：容器A设置权重1000，容器B设置权重500，当两个容器都在使用同一个CPU时候，容器A比容器B多一倍的寄回获得CPU的时间片。 1234# 容器A的CPU权重1000docker run -it --name &quot;worker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="06-Docker资源配额">
 <meta property="og:url" content="https://gblog.github.io/2025/03/26/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/06-Docker%E8%B5%84%E6%BA%90%E9%85%8D%E9%A2%9D/index.html">
 <meta property="og:site_name" content="Haris的小站">
-<meta property="og:description" content="一、Docker容器控制CPU1.1 根据权重分配CPU 通过选项设置CPU使用权重，值越大，能获取资源的概率越高  选项：-c或者--cpu-shares 例子：容器A设置权重1000，容器B设置权重500，当两个容器都在使用同一个CPU时候，容器A比容器B多一倍的寄回获得CPU的时间片。 # 容器A的CPU权重1000 docker run -it --name &quot;workerA&amp;q">
+<meta property="og:description" content="一、Docker容器控制CPU1.1 根据权重分配CPU 通过选项设置CPU使用权重，值越大，能获取资源的概率越高  选项：-c或者--cpu-shares 例子：容器A设置权重1000，容器B设置权重500，当两个容器都在使用同一个CPU时候，容器A比容器B多一倍的寄回获得CPU的时间片。 1234# 容器A的CPU权重1000docker run -it --name &quot;worker">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gblog.github.io/img/image-20250326143207581.png">
 <meta property="og:image" content="https://gblog.github.io/img/image-20250326160418178.png">
@@ -48,8 +48,6 @@
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
-
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
@@ -72,6 +70,10 @@
     <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
 
 
 
@@ -229,7 +231,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          747 字
+          722 字
         
       </span>
     
@@ -300,17 +302,14 @@
 </blockquote>
 <p>选项：<code>-c</code>或者<code>--cpu-shares</code></p>
 <p>例子：容器A设置权重1000，容器B设置权重500，当两个容器都在使用同一个CPU时候，容器A比容器B多一倍的寄回获得CPU的时间片。</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 容器A的CPU权重1000
-docker run -it --name &quot;workerA&quot; -c 1000 centos &#x2F;bin&#x2F;bash
-# 容器B的CPU权重1000
-docker run -it --name &quot;workerB&quot; -c 1000 centos &#x2F;bin&#x2F;bash</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">容器A的CPU权重1000</span><br>docker run -it --name &quot;workerA&quot; -c 1000 centos /bin/bash<br><span class="hljs-meta prompt_"># </span><span class="language-bash">容器B的CPU权重1000</span><br>docker run -it --name &quot;workerB&quot; -c 1000 centos /bin/bash<br></code></pre></td></tr></table></figure>
 
 <h2 id="1-2-直接指定CPU"><a href="#1-2-直接指定CPU" class="headerlink" title="1.2 直接指定CPU"></a>1.2 直接指定CPU</h2><blockquote>
 <p>直接指定容器只能使用哪些CPU</p>
 </blockquote>
 <p>选项：<code>--cpuset-cpus</code></p>
 <p>例子：容器C只能使用CPU0、1</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker run -it --name &quot;workerA&quot; --cpuset-cpus 0,1 centos &#x2F;bin&#x2F;bash</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker run -it --name &quot;workerA&quot; --cpuset-cpus 0,1 centos /bin/bash<br></code></pre></td></tr></table></figure>
 
 <hr>
 <h1 id="二、Docker容器控制内存"><a href="#二、Docker容器控制内存" class="headerlink" title="二、Docker容器控制内存"></a>二、Docker容器控制内存</h1><blockquote>
@@ -318,11 +317,10 @@ docker run -it --name &quot;workerB&quot; -c 1000 centos &#x2F;bin&#x2F;bash</co
 </blockquote>
 <p>选项：<code>-m</code>或者<code>--memory=</code></p>
 <p>例子：容器D只能使用128m内存空间</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker run -it --name &quot;workerD&quot; -m 128m centos &#x2F;bin&#x2F;bash</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker run -it --name &quot;workerD&quot; -m 128m centos /bin/bash<br></code></pre></td></tr></table></figure>
 
 <p>查看配置文件，确认已生效</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@056f1a027d5a &#x2F;]# cat &#x2F;sys&#x2F;fs&#x2F;cgroup&#x2F;memory&#x2F;memory.limit_in_bytes 
-134217728</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@056f1a027d5a /]# cat /sys/fs/cgroup/memory/memory.limit_in_bytes <br>134217728<br></code></pre></td></tr></table></figure>
 
 <hr>
 <h1 id="三、Docker容器控制IO"><a href="#三、Docker容器控制IO" class="headerlink" title="三、Docker容器控制IO"></a>三、Docker容器控制IO</h1><blockquote>
@@ -330,7 +328,7 @@ docker run -it --name &quot;workerB&quot; -c 1000 centos &#x2F;bin&#x2F;bash</co
 </blockquote>
 <p>案例：限制容器E，对硬盘的最高写入速度为2MB&#x2F;s</p>
 <p>1、创建并运行容器</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker run -it --name &quot;workerE&quot; -v &#x2F;mnt&#x2F;:&#x2F;var&#x2F;www&#x2F;html --device &#x2F;dev&#x2F;sda:&#x2F;dev&#x2F;sda --device-write-bps &#x2F;dev&#x2F;sda:2mb centos &#x2F;bin&#x2F;bash</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker run -it --name &quot;workerE&quot; -v /mnt/:/var/www/html --device /dev/sda:/dev/sda --device-write-bps /dev/sda:2mb centos /bin/bash<br></code></pre></td></tr></table></figure>
 
 <p>选项解析：</p>
 <ul>
@@ -348,7 +346,7 @@ docker run -it --name &quot;workerB&quot; -c 1000 centos &#x2F;bin&#x2F;bash</co
 <hr>
 <h1 id="四、Docker容器自动释放资源"><a href="#四、Docker容器自动释放资源" class="headerlink" title="四、Docker容器自动释放资源"></a>四、Docker容器自动释放资源</h1><h2 id="4-1-容器资源不会自动释放的问题"><a href="#4-1-容器资源不会自动释放的问题" class="headerlink" title="4.1 容器资源不会自动释放的问题"></a>4.1 容器资源不会自动释放的问题</h2><p>当我们运行一个容器，只是做测试<strong>用完就关</strong>，表面上容器已经运行结束关闭，但实际上后台资源并没有释放。</p>
 <p>例如：运行容器<code>workerF</code>，执行<code>sleep 6</code></p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker run -it --name &quot;workerF&quot; centos sleep 6s</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker run -it --name &quot;workerF&quot; centos sleep 6s<br></code></pre></td></tr></table></figure>
 
 <p>等待几秒之后，容器wokerF会停止运行，此时<code>docker ps</code>已经看不到此容器。</p>
 <p><img src="/./../../../img/image-20250326160418178.png" srcset="/img/loading.gif" lazyload alt="image-20250326160418178"></p>
@@ -358,7 +356,7 @@ docker run -it --name &quot;workerB&quot; -c 1000 centos &#x2F;bin&#x2F;bash</co
 <p><img src="/./../../../img/image-20250326160530931.png" srcset="/img/loading.gif" lazyload alt="image-20250326160530931"></p>
 <h2 id="4-2-解决问题"><a href="#4-2-解决问题" class="headerlink" title="4.2 解决问题"></a>4.2 解决问题</h2><p>处理方法也很简单，在运行docker容器时，加上<code>--rm</code>选项就行</p>
 <p>例如：运行容器<code>workerG</code>，执行<code>sleep 6</code>，自动释放资源</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker run -it --name &quot;workerF&quot; centos sleep 6s</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker run -it --name &quot;workerF&quot; centos sleep 6s<br></code></pre></td></tr></table></figure>
 
 
 
@@ -646,12 +644,6 @@ docker run -it --name &quot;workerB&quot; -c 1000 centos &#x2F;bin&#x2F;bash</co
   });
 </script>
 
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
 

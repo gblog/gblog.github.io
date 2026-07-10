@@ -19,12 +19,12 @@
   <meta name="author" content="Haris">
   <meta name="keywords" content="">
   
-    <meta name="description" content="一、什么是容器数据持久化？当容器删除后，里面的数据也会被一起删除，这样非常容易丢失数据，怎么解决这个问题呢？ 可以采用将本地存储空间挂载到容器中的方法，这样即使容器被删除了，本地文件还是存在，以此来实现数据的持久保存。  二、使用数据持久化2.1 挂载数据卷 还是使用在上一篇文章中创建的haris&#x2F;nginx:v1镜像，  1、创建本地文件夹，并添加index.html文件 [root@">
+    <meta name="description" content="一、什么是容器数据持久化？当容器删除后，里面的数据也会被一起删除，这样非常容易丢失数据，怎么解决这个问题呢？ 可以采用将本地存储空间挂载到容器中的方法，这样即使容器被删除了，本地文件还是存在，以此来实现数据的持久保存。  二、使用数据持久化2.1 挂载数据卷 还是使用在上一篇文章中创建的haris&#x2F;nginx:v1镜像，  1、创建本地文件夹，并添加index.html文件 1234[r">
 <meta property="og:type" content="article">
 <meta property="og:title" content="05-Docker容器数据持久化">
 <meta property="og:url" content="https://gblog.github.io/2025/03/20/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/05-Docker%E5%AE%B9%E5%99%A8%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96/index.html">
 <meta property="og:site_name" content="Haris的小站">
-<meta property="og:description" content="一、什么是容器数据持久化？当容器删除后，里面的数据也会被一起删除，这样非常容易丢失数据，怎么解决这个问题呢？ 可以采用将本地存储空间挂载到容器中的方法，这样即使容器被删除了，本地文件还是存在，以此来实现数据的持久保存。  二、使用数据持久化2.1 挂载数据卷 还是使用在上一篇文章中创建的haris&#x2F;nginx:v1镜像，  1、创建本地文件夹，并添加index.html文件 [root@">
+<meta property="og:description" content="一、什么是容器数据持久化？当容器删除后，里面的数据也会被一起删除，这样非常容易丢失数据，怎么解决这个问题呢？ 可以采用将本地存储空间挂载到容器中的方法，这样即使容器被删除了，本地文件还是存在，以此来实现数据的持久保存。  二、使用数据持久化2.1 挂载数据卷 还是使用在上一篇文章中创建的haris&#x2F;nginx:v1镜像，  1、创建本地文件夹，并添加index.html文件 1234[r">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gblog.github.io/img/image-20250320161153636.png">
 <meta property="og:image" content="https://gblog.github.io/img/image-20250320161407695.png">
@@ -48,8 +48,6 @@
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
-
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
@@ -72,6 +70,10 @@
     <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
 
 
 
@@ -229,7 +231,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1k 字
+          941 字
         
       </span>
     
@@ -240,7 +242,7 @@
         
         
         
-          9 分钟
+          8 分钟
         
       </span>
     
@@ -302,20 +304,15 @@
 <p>还是使用在上一篇文章中创建的haris&#x2F;nginx:v1镜像，</p>
 </blockquote>
 <p>1、创建本地文件夹，并添加index.html文件</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@master1 ~&#x2F;Docker-Demo&#x2F;03-volume&#x2F;myvolume]#cat index.html 
-&lt;h1&gt;
-	this is share html page
-&lt;&#x2F;h1&gt;</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@master1 ~/Docker-Demo/03-volume/myvolume]#cat index.html <br>&lt;h1&gt;<br>	this is share html page<br>&lt;/h1&gt;<br></code></pre></td></tr></table></figure>
 
 <p>2、使用<code>docker run -v</code>选项挂载本地数据卷，用以替换容器中的index.html</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 运行容器mynginx1
-docker run -itd --name &quot;mynginx1&quot; -p 80 -v &#x2F;root&#x2F;Docker-Demo&#x2F;03-volume&#x2F;myvolume:&#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html haris&#x2F;nginx:v1</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">运行容器mynginx1</span><br>docker run -itd --name &quot;mynginx1&quot; -p 80 -v /root/Docker-Demo/03-volume/myvolume:/usr/share/nginx/html haris/nginx:v1<br></code></pre></td></tr></table></figure>
 
 <p>3、测试，可以看到容器运行成功，且index.html替换为本地文件夹中的文件，说明挂载生效</p>
 <p><img src="/./../../../img/image-20250320161153636.png" srcset="/img/loading.gif" lazyload alt="image-20250320161153636"></p>
 <p>4、挂载的数据卷是<strong>可以多个容器一起使用的</strong>，再运行一个容器看看</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 运行容器mynginx2
-docker run -itd --name &quot;mynginx2&quot; -p 80 -v &#x2F;root&#x2F;Docker-Demo&#x2F;03-volume&#x2F;myvolume:&#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html haris&#x2F;nginx:v1</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">运行容器mynginx2</span><br>docker run -itd --name &quot;mynginx2&quot; -p 80 -v /root/Docker-Demo/03-volume/myvolume:/usr/share/nginx/html haris/nginx:v1<br></code></pre></td></tr></table></figure>
 
 <p>5、测试两个都可以正常访问</p>
 <p><img src="/./../../../img/image-20250320161407695.png" srcset="/img/loading.gif" lazyload alt="image-20250320161407695"></p>
@@ -324,35 +321,20 @@ docker run -itd --name &quot;mynginx2&quot; -p 80 -v &#x2F;root&#x2F;Docker-Demo
 <p>既然用于挂载的数据卷每个容器都能访问，岂不是很危险，得想方法加个权限，比如只读？</p>
 </blockquote>
 <p>1、在挂载时，使用<code>ro</code>标签给数据卷添加只读权限</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker run -itd --name &quot;mynginx-ro&quot; -v &#x2F;root&#x2F;Docker-Demo&#x2F;03-volume&#x2F;myvolume:&#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html:ro -p 80 haris&#x2F;nginx:v1</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker run -itd --name &quot;mynginx-ro&quot; -v /root/Docker-Demo/03-volume/myvolume:/usr/share/nginx/html:ro -p 80 haris/nginx:v1<br></code></pre></td></tr></table></figure>
 
 <p>2、进入容器，在里面写数据是不允许的</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 进入容器内部
-[root@master1 ~&#x2F;Docker-Demo&#x2F;03-volume&#x2F;myvolume]#docker exec -it mynginx-ro &#x2F;bin&#x2F;bash         
-[root@e7c522293e5d &#x2F;]# cd &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html&#x2F;
-[root@e7c522293e5d html]# ls
-index.html
-# 文件夹可读
-[root@e7c522293e5d html]# cat index.html 
-&lt;h1&gt;
-	this is share html page
-&lt;&#x2F;h1&gt;
-# 但是不能写，只读文件系统
-[root@e7c522293e5d html]# echo &quot;destory you&quot; &gt; index.html 
-bash: index.html: Read-only file system</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">进入容器内部</span><br>[root@master1 ~/Docker-Demo/03-volume/myvolume]#docker exec -it mynginx-ro /bin/bash         <br>[root@e7c522293e5d /]# cd /usr/share/nginx/html/<br>[root@e7c522293e5d html]# ls<br>index.html<br><span class="hljs-meta prompt_"># </span><span class="language-bash">文件夹可读</span><br>[root@e7c522293e5d html]# cat index.html <br>&lt;h1&gt;<br>	this is share html page<br>&lt;/h1&gt;<br><span class="hljs-meta prompt_"># </span><span class="language-bash">但是不能写，只读文件系统</span><br>[root@e7c522293e5d html]# echo &quot;destory you&quot; &gt; index.html <br>bash: index.html: Read-only file system<br></code></pre></td></tr></table></figure>
 
 <hr>
 <h2 id="2-3-使用dockerfile构建包含数据卷的镜像"><a href="#2-3-使用dockerfile构建包含数据卷的镜像" class="headerlink" title="2.3 使用dockerfile构建包含数据卷的镜像"></a>2.3 使用dockerfile构建包含数据卷的镜像</h2><p>1、创建dockerfile文件</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-docker" data-language="docker"><code class="language-docker">[root@master1 ~&#x2F;Docker-Demo&#x2F;03-volume&#x2F;02-dockerfile-volume]#cat dockerfile 
-FROM centos
-VOLUME [&quot;&#x2F;virvol01&quot;, &quot;virvol02&quot;]
-CMD &#x2F;bin&#x2F;bash</code></pre></div></figure>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs dockerfile">[root@master1 ~/Docker-Demo/<span class="hljs-number">03</span>-<span class="hljs-keyword">volume</span><span class="language-bash">/02-dockerfile-volume]#<span class="hljs-built_in">cat</span> dockerfile </span><br><span class="hljs-keyword">FROM</span> centos<br><span class="hljs-keyword">VOLUME</span><span class="language-bash"> [<span class="hljs-string">&quot;/virvol01&quot;</span>, <span class="hljs-string">&quot;virvol02&quot;</span>]</span><br><span class="hljs-keyword">CMD</span><span class="language-bash"> /bin/bash</span><br></code></pre></td></tr></table></figure>
 
 <p>2、构建镜像</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker build -t&#x3D;&quot;volumetest&quot; .</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker build -t=&quot;volumetest&quot; .<br></code></pre></td></tr></table></figure>
 
 <p>3、使用镜像运行容器</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker run --name volume-double -it volumetest</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker run --name volume-double -it volumetest<br></code></pre></td></tr></table></figure>
 
 <p>可以看到创建的两个volume已经挂载到容器中</p>
 <p><img src="/./../../../img/image-20250325164425936.png" srcset="/img/loading.gif" lazyload alt="image-20250325164425936"></p>
@@ -363,12 +345,10 @@ CMD &#x2F;bin&#x2F;bash</code></pre></div></figure>
 </blockquote>
 <p>应用场景：新创建一个容器，挂载2.3节创建的容器（用作数据卷容器）</p>
 <p>1、确保2.3节创建的容器正在运行</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@master1 &#x2F;]#docker ps
-CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
-b52f34e73d91        volumetest          &quot;&#x2F;bin&#x2F;sh -c &#x2F;bin&#x2F;bash&quot;   13 seconds ago      Up 13 seconds                           volume-double</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@master1 /]#docker ps<br>CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES<br>b52f34e73d91        volumetest          &quot;/bin/sh -c /bin/bash&quot;   13 seconds ago      Up 13 seconds                           volume-double<br></code></pre></td></tr></table></figure>
 
 <p>2、创建新容器，挂载<code>volume-double</code>容器</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker run --name volume-double2 --volumes-from volume-double -itd centos &#x2F;bin&#x2F;bash</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker run --name volume-double2 --volumes-from volume-double -itd centos /bin/bash<br></code></pre></td></tr></table></figure>
 
 <p>3、进入容器内部，命令查看确实也有virvol01&#x2F;02两个文件夹</p>
 <p><img src="/./../../../img/image-20250325165803198.png" srcset="/img/loading.gif" lazyload alt="image-20250325165803198"></p>
@@ -378,38 +358,22 @@ b52f34e73d91        volumetest          &quot;&#x2F;bin&#x2F;sh -c &#x2F;bin&#x2
 <p>还原：将物理机里的备份文件还原到容器中</p>
 </blockquote>
 <h3 id="2-5-1-备份"><a href="#2-5-1-备份" class="headerlink" title="2.5.1 备份"></a>2.5.1 备份</h3><p>1、在2.3构建的数据卷容器中，创建重要文件<code>bigSecret </code></p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@27db0950f061 &#x2F;]# ls
-bin  dev  etc  home  lib  lib64  lost+found  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var  virvol01	virvol02
-[root@27db0950f061 &#x2F;]# ls virvol01&#x2F;ImportantFile&#x2F;bigSecret 
-virvol01&#x2F;ImportantFile&#x2F;bigSecret</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@27db0950f061 /]# ls<br>bin  dev  etc  home  lib  lib64  lost+found  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var  virvol01	virvol02<br>[root@27db0950f061 /]# ls virvol01/ImportantFile/bigSecret <br>virvol01/ImportantFile/bigSecret<br></code></pre></td></tr></table></figure>
 
 <p>2、新启动一个容器，将重要文件备份出来</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@master1 &#x2F;]#docker run --volumes-from volume-double -v &#x2F;root&#x2F;backup:&#x2F;backup --name volume-double-copy centos  tar zvcf &#x2F;backup&#x2F;virvol01bak.tar.gz &#x2F;virvol01
-tar: Removing leading &#96;&#x2F;&#39; from member names
-&#x2F;virvol01&#x2F;
-&#x2F;virvol01&#x2F;ImportantFile&#x2F;
-&#x2F;virvol01&#x2F;ImportantFile&#x2F;bigSecret</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@master1 /]#docker run --volumes-from volume-double -v /root/backup:/backup --name volume-double-copy centos  tar zvcf /backup/virvol01bak.tar.gz /virvol01<br>tar: Removing leading `/&#x27; from member names<br>/virvol01/<br>/virvol01/ImportantFile/<br>/virvol01/ImportantFile/bigSecret<br></code></pre></td></tr></table></figure>
 
 <p>3、查看备份成功</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@master1 &#x2F;]#ls &#x2F;root&#x2F;backup&#x2F;
-virvol01bak.tar.gz</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@master1 /]#ls /root/backup/<br>virvol01bak.tar.gz<br></code></pre></td></tr></table></figure>
 
 <h3 id="2-5-2-还原"><a href="#2-5-2-还原" class="headerlink" title="2.5.2 还原"></a>2.5.2 还原</h3><p>1、删除数据卷容器<code>27db</code>里的数据</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@27db0950f061 virvol01]# ls
-ImportantFile  virvol01
-[root@27db0950f061 virvol01]# rm .&#x2F;* -fr</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@27db0950f061 virvol01]# ls<br>ImportantFile  virvol01<br>[root@27db0950f061 virvol01]# rm ./* -fr<br></code></pre></td></tr></table></figure>
 
 <p>2、新启动一个容器，并将将物理机的<code>virvol01bak.tar.gz</code>文件还原进去</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker run --volumes-from volume-double -v &#x2F;root&#x2F;backup&#x2F;:&#x2F;backup --name &quot;volume-double-rebuild&quot; centos tar zvxf &#x2F;backup&#x2F;virvol01bak.tar.gz -C &#x2F;virvol01
-virvol01&#x2F;
-virvol01&#x2F;ImportantFile&#x2F;
-virvol01&#x2F;ImportantFile&#x2F;bigSecret</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker run --volumes-from volume-double -v /root/backup/:/backup --name &quot;volume-double-rebuild&quot; centos tar zvxf /backup/virvol01bak.tar.gz -C /virvol01<br>virvol01/<br>virvol01/ImportantFile/<br>virvol01/ImportantFile/bigSecret<br></code></pre></td></tr></table></figure>
 
 <p>3、重新查看<code>27db</code>容器的数据，文件又回来了，还原成功</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@27db0950f061 virvol01]# ls virvol01&#x2F;
-ImportantFile
-[root@27db0950f061 virvol01]# ls virvol01&#x2F;ImportantFile&#x2F;
-bigSecret</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@27db0950f061 virvol01]# ls virvol01/<br>ImportantFile<br>[root@27db0950f061 virvol01]# ls virvol01/ImportantFile/<br>bigSecret<br></code></pre></td></tr></table></figure>
 
 
                 
@@ -695,12 +659,6 @@ bigSecret</code></pre></div></figure>
   });
 </script>
 
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
 

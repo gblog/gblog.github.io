@@ -19,12 +19,12 @@
   <meta name="author" content="Haris">
   <meta name="keywords" content="">
   
-    <meta name="description" content="OpenVPN部署手册一、安装OpenVPN# 红帽系列 yum install easy-rsa openvpn -y # Ubuntu系 apt-get install easy-rsa openvpn -y  二、使用easy-rsa生成证书1、将easy-rsa工具拷贝到openvpn文件夹中 cp &#x2F;usr&#x2F;share&#x2F;easy-rsa&#x2F; &amp;#x2">
+    <meta name="description" content="OpenVPN部署手册一、安装OpenVPN1234# 红帽系列yum install easy-rsa openvpn -y# Ubuntu系apt-get install easy-rsa openvpn -y  二、使用easy-rsa生成证书1、将easy-rsa工具拷贝到openvpn文件夹中 1cp &#x2F;usr&#x2F;share&#x2F;easy-rsa&#x2F; &#x2F;etc&#x2F;openvpn&#x2F; -r  2、复制">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenVPN部署手册">
 <meta property="og:url" content="https://gblog.github.io/2022/07/11/06_%E6%9D%82%E8%AE%B0/OpenVPN%E9%83%A8%E7%BD%B2/index.html">
 <meta property="og:site_name" content="Haris的小站">
-<meta property="og:description" content="OpenVPN部署手册一、安装OpenVPN# 红帽系列 yum install easy-rsa openvpn -y # Ubuntu系 apt-get install easy-rsa openvpn -y  二、使用easy-rsa生成证书1、将easy-rsa工具拷贝到openvpn文件夹中 cp &#x2F;usr&#x2F;share&#x2F;easy-rsa&#x2F; &amp;#x2">
+<meta property="og:description" content="OpenVPN部署手册一、安装OpenVPN1234# 红帽系列yum install easy-rsa openvpn -y# Ubuntu系apt-get install easy-rsa openvpn -y  二、使用easy-rsa生成证书1、将easy-rsa工具拷贝到openvpn文件夹中 1cp &#x2F;usr&#x2F;share&#x2F;easy-rsa&#x2F; &#x2F;etc&#x2F;openvpn&#x2F; -r  2、复制">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-11T01:29:52.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.286Z">
@@ -42,8 +42,6 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -67,6 +65,10 @@
     <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
 
 
 
@@ -224,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k 字
+          1.1k 字
         
       </span>
     
@@ -235,7 +237,7 @@
         
         
         
-          11 分钟
+          10 分钟
         
       </span>
     
@@ -290,224 +292,41 @@
             
               <div class="markdown-body">
                 
-                <h1 id="OpenVPN部署手册"><a href="#OpenVPN部署手册" class="headerlink" title="OpenVPN部署手册"></a>OpenVPN部署手册</h1><h1 id="一、安装OpenVPN"><a href="#一、安装OpenVPN" class="headerlink" title="一、安装OpenVPN"></a>一、安装OpenVPN</h1><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 红帽系列
-yum install easy-rsa openvpn -y
-# Ubuntu系
-apt-get install easy-rsa openvpn -y</code></pre></div></figure>
+                <h1 id="OpenVPN部署手册"><a href="#OpenVPN部署手册" class="headerlink" title="OpenVPN部署手册"></a>OpenVPN部署手册</h1><h1 id="一、安装OpenVPN"><a href="#一、安装OpenVPN" class="headerlink" title="一、安装OpenVPN"></a>一、安装OpenVPN</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 红帽系列</span><br>yum install easy-rsa openvpn -y<br><span class="hljs-comment"># Ubuntu系</span><br>apt-get install easy-rsa openvpn -y<br></code></pre></td></tr></table></figure>
 
 <h1 id="二、使用easy-rsa生成证书"><a href="#二、使用easy-rsa生成证书" class="headerlink" title="二、使用easy-rsa生成证书"></a>二、使用easy-rsa生成证书</h1><p>1、将easy-rsa工具拷贝到openvpn文件夹中</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">cp &#x2F;usr&#x2F;share&#x2F;easy-rsa&#x2F; &#x2F;etc&#x2F;openvpn&#x2F; -r</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cp /usr/share/easy-rsa/ /etc/openvpn/ -r<br></code></pre></td></tr></table></figure>
 
 <p>2、复制变量文件<code>vars</code>，并修改参数</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">cd easy-rsa&#x2F;
-cp vars.example vars
-
-# 参数如下
-# grep -v &quot;^#\|^$&quot; vars
-if [ -z &quot;$EASYRSA_CALLER&quot; ]; then
-	echo &quot;You appear to be sourcing an Easy-RSA *vars* file. This is&quot; &gt;&amp;2
-	echo &quot;no longer necessary and is disallowed. See the section called&quot; &gt;&amp;2
-	echo &quot;*How to use this file* near the top comments for more details.&quot; &gt;&amp;2
-	return 1
-fi
-set_var EASYRSA_REQ_COUNTRY	&quot;CN&quot;
-set_var EASYRSA_REQ_PROVINCE	&quot;HuNan&quot;
-set_var EASYRSA_REQ_CITY	&quot;ChangSha&quot;
-set_var EASYRSA_REQ_ORG		&quot;Zst Corporation&quot;
-set_var EASYRSA_REQ_EMAIL	&quot;haris@zst.com.cn&quot;
-set_var EASYRSA_REQ_OU		&quot;Product Department&quot;</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd easy-rsa/<br>cp vars.example vars<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">参数如下</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">grep -v <span class="hljs-string">&quot;^#\|^$&quot;</span> vars</span><br>if [ -z &quot;$EASYRSA_CALLER&quot; ]; then<br>	echo &quot;You appear to be sourcing an Easy-RSA *vars* file. This is&quot; &gt;&amp;2<br>	echo &quot;no longer necessary and is disallowed. See the section called&quot; &gt;&amp;2<br>	echo &quot;*How to use this file* near the top comments for more details.&quot; &gt;&amp;2<br>	return 1<br>fi<br>set_var EASYRSA_REQ_COUNTRY	&quot;CN&quot;<br>set_var EASYRSA_REQ_PROVINCE	&quot;HuNan&quot;<br>set_var EASYRSA_REQ_CITY	&quot;ChangSha&quot;<br>set_var EASYRSA_REQ_ORG		&quot;Zst Corporation&quot;<br>set_var EASYRSA_REQ_EMAIL	&quot;haris@zst.com.cn&quot;<br>set_var EASYRSA_REQ_OU		&quot;Product Department&quot;<br></code></pre></td></tr></table></figure>
 
 <p>3、创建证书</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 初始化easy-esa
-.&#x2F;easyrsa init-pki
-# 生成CA证书，生成ca.crt
-.&#x2F;easyrsa build-ca nopass（回车）
-# 服务端证书，生成server.key
-.&#x2F;easyrsa gen-req server nopass (回车)
-# 签署服务端证书，生成server.crt
-.&#x2F;easyrsa sign server server（输入yes，回车）
-# 生成DH证书
-.&#x2F;easyrsa gen-dh
-# 生成HMAC密钥（防DDos攻击、UDP淹没等恶意攻击）
-openvpn --genkey secret ta.key</code></pre></div></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 初始化easy-esa</span><br>./easyrsa init-pki<br><span class="hljs-comment"># 生成CA证书，生成ca.crt</span><br>./easyrsa build-ca nopass（回车）<br><span class="hljs-comment"># 服务端证书，生成server.key</span><br>./easyrsa gen-req server nopass (回车)<br><span class="hljs-comment"># 签署服务端证书，生成server.crt</span><br>./easyrsa sign server server（输入<span class="hljs-built_in">yes</span>，回车）<br><span class="hljs-comment"># 生成DH证书</span><br>./easyrsa gen-dh<br><span class="hljs-comment"># 生成HMAC密钥（防DDos攻击、UDP淹没等恶意攻击）</span><br>openvpn --genkey secret ta.key<br></code></pre></td></tr></table></figure>
 
 <h1 id="三、配置OpenVPN服务端"><a href="#三、配置OpenVPN服务端" class="headerlink" title="三、配置OpenVPN服务端"></a>三、配置OpenVPN服务端</h1><p>1、创建文件<code>/etc/openvpn/server/server.conf</code>，内容如下：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">port 8890
-# 改成tcp，默认使用udp，如果使用HTTP Proxy，必须使用tcp协议
-proto tcp
-dev tun
-# 证书路径
-ca &#x2F;etc&#x2F;openvpn&#x2F;easy-rsa&#x2F;pki&#x2F;ca.crt
-cert &#x2F;etc&#x2F;openvpn&#x2F;easy-rsa&#x2F;pki&#x2F;issued&#x2F;server.crt
-key &#x2F;etc&#x2F;openvpn&#x2F;easy-rsa&#x2F;pki&#x2F;private&#x2F;server.key  # This file should be kept secret
-dh &#x2F;etc&#x2F;openvpn&#x2F;easy-rsa&#x2F;pki&#x2F;dh.pem
-
-# # 默认虚拟局域网网段，不要和实际的局域网冲突即可
-server 10.8.0.0 255.255.255.0
-ifconfig-pool-persist ipp.txt
-# # VPN服务器所在的内网的网段
-push &quot;route 15.1.10.0 255.255.255.0&quot;
-# # 让客户端所有的流量都通过VPN转发(全局模式)
-# push &quot;redirect-gateway def1 bypass-dhcp&quot;
-# # 可以让客户端之间相互访问直接通过openvpn程序转发
-# client-to-client
-# # 如果客户端都使用相同的证书和密钥连接VPN，一定要打开这个选项，否则每个证书只允许一个人连接VPN
-# duplicate-cn
-keepalive 10 120
-tls-auth &#x2F;etc&#x2F;openvpn&#x2F;easy-rsa&#x2F;ta.key 0
-comp-lzo
-persist-key
-persist-tun
-# # OpenVPN的状态日志，默认为&#x2F;etc&#x2F;openvpn&#x2F;openvpn-status.log
-status openvpn-status.log
-# # OpenVPN的运行日志，默认为&#x2F;etc&#x2F;openvpn&#x2F;openvpn.log 
-log-append openvpn.log
-# # 改成verb 5可以多查看一些调试信息
-verb 5</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs shell">port 8890<br><span class="hljs-meta prompt_"># </span><span class="language-bash">改成tcp，默认使用udp，如果使用HTTP Proxy，必须使用tcp协议</span><br>proto tcp<br>dev tun<br><span class="hljs-meta prompt_"># </span><span class="language-bash">证书路径</span><br>ca /etc/openvpn/easy-rsa/pki/ca.crt<br>cert /etc/openvpn/easy-rsa/pki/issued/server.crt<br>key /etc/openvpn/easy-rsa/pki/private/server.key  # This file should be kept secret<br>dh /etc/openvpn/easy-rsa/pki/dh.pem<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-comment"># 默认虚拟局域网网段，不要和实际的局域网冲突即可</span></span><br>server 10.8.0.0 255.255.255.0<br>ifconfig-pool-persist ipp.txt<br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-comment"># VPN服务器所在的内网的网段</span></span><br>push &quot;route 15.1.10.0 255.255.255.0&quot;<br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-comment"># 让客户端所有的流量都通过VPN转发(全局模式)</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">push <span class="hljs-string">&quot;redirect-gateway def1 bypass-dhcp&quot;</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-comment"># 可以让客户端之间相互访问直接通过openvpn程序转发</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">client-to-client</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-comment"># 如果客户端都使用相同的证书和密钥连接VPN，一定要打开这个选项，否则每个证书只允许一个人连接VPN</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">duplicate-cn</span><br>keepalive 10 120<br>tls-auth /etc/openvpn/easy-rsa/ta.key 0<br>comp-lzo<br>persist-key<br>persist-tun<br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-comment"># OpenVPN的状态日志，默认为/etc/openvpn/openvpn-status.log</span></span><br>status openvpn-status.log<br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-comment"># OpenVPN的运行日志，默认为/etc/openvpn/openvpn.log</span></span> <br>log-append openvpn.log<br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-comment"># 改成verb 5可以多查看一些调试信息</span></span><br>verb 5<br></code></pre></td></tr></table></figure>
 
 <p>2、启动 openvpn 服务</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 红帽系列
-systemctl enable openvpn@server.service
-systemctl start openvpn@server.service
-# Ubuntu系列
-systemctl enable openvpn-server@server
-systemctl start openvpn-server@server</code></pre></div></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 红帽系列</span><br>systemctl <span class="hljs-built_in">enable</span> openvpn@server.service<br>systemctl start openvpn@server.service<br><span class="hljs-comment"># Ubuntu系列</span><br>systemctl <span class="hljs-built_in">enable</span> openvpn-server@server<br>systemctl start openvpn-server@server<br></code></pre></td></tr></table></figure>
 
 <p>3、确保服务正常启用</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl status openvpn-server@server</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl status openvpn-server@server<br></code></pre></td></tr></table></figure>
 
 <h1 id="四、配置-iptables-规则"><a href="#四、配置-iptables-规则" class="headerlink" title="四、配置 iptables 规则"></a>四、配置 iptables 规则</h1><p>让客户端可以访问到服务器所在局域网的其它主机</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">iptables -t nat -A POSTROUTING -s 10.8.0.0&#x2F;24 -j MASQUERADE
-echo &quot;1&quot; &gt; &#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;ip_forward
-sysctl -p</code></pre></div></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -j MASQUERADE<br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;1&quot;</span> &gt; /proc/sys/net/ipv4/ip_forward<br>sysctl -p<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>如果VPN客户端只能通VPN服务端的服务器，而不能与内网其他网段互通，需要加上以下策略</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 比如VPN服务器出外网的网卡是enp103s0f0np0，而VPN虚拟网卡是tun0
-iptables -A FORWARD -i tun0 -o enp103s0f0np0 -j ACCEPT
-iptables -A FORWARD -i enp103s0f0np0 -o tun0 -j ACCEPT</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">比如VPN服务器出外网的网卡是enp103s0f0np0，而VPN虚拟网卡是tun0</span><br>iptables -A FORWARD -i tun0 -o enp103s0f0np0 -j ACCEPT<br>iptables -A FORWARD -i enp103s0f0np0 -o tun0 -j ACCEPT<br></code></pre></td></tr></table></figure>
 </blockquote>
 <p>iptables持久保存</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">apt-get install iptables-persistent
-netfilter-persistent save
-sudo systemctl status iptables</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">apt-get install iptables-persistent<br>netfilter-persistent save<br>sudo systemctl status iptables<br></code></pre></td></tr></table></figure>
 
-<h1 id="五、Windows客户端OpenVPN配置"><a href="#五、Windows客户端OpenVPN配置" class="headerlink" title="五、Windows客户端OpenVPN配置"></a>五、Windows客户端OpenVPN配置</h1><h3 id="7-1-生成客户端证书的脚本如下"><a href="#7-1-生成客户端证书的脚本如下" class="headerlink" title="7.1 生成客户端证书的脚本如下"></a>7.1 生成客户端证书的脚本如下</h3><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">(base) root@hr650-1:&#x2F;etc&#x2F;openvpn&#x2F;easy-rsa# cat &#x2F;usr&#x2F;local&#x2F;bin&#x2F;genovpnuser 
-if ! rpm -q expect; then
-    yum install expect -y
-    if ! [ $? &#x3D;&#x3D; 0 ]; then
-        echo &quot;Error: you must install expect manually!&quot;
-    fi
-fi
+<h1 id="五、Windows客户端OpenVPN配置"><a href="#五、Windows客户端OpenVPN配置" class="headerlink" title="五、Windows客户端OpenVPN配置"></a>五、Windows客户端OpenVPN配置</h1><h3 id="7-1-生成客户端证书的脚本如下"><a href="#7-1-生成客户端证书的脚本如下" class="headerlink" title="7.1 生成客户端证书的脚本如下"></a>7.1 生成客户端证书的脚本如下</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><code class="hljs bash">(base) root@hr650-1:/etc/openvpn/easy-rsa# <span class="hljs-built_in">cat</span> /usr/local/bin/genovpnuser <br><span class="hljs-keyword">if</span> ! rpm -q expect; <span class="hljs-keyword">then</span><br>    yum install expect -y<br>    <span class="hljs-keyword">if</span> ! [ $? == 0 ]; <span class="hljs-keyword">then</span><br>        <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Error: you must install expect manually!&quot;</span><br>    <span class="hljs-keyword">fi</span><br><span class="hljs-keyword">fi</span><br><br><span class="hljs-built_in">dir</span>=/etc/openvpn/easy-rsa<br><span class="hljs-keyword">if</span> [ <span class="hljs-variable">$#</span> -ne 1 ]; <span class="hljs-keyword">then</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Usage: <span class="hljs-variable">$0</span> USER_NAME&quot;</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;-1&quot;</span><br>    <span class="hljs-built_in">exit</span> -1<br><span class="hljs-keyword">fi</span><br><span class="hljs-keyword">if</span> ! [[ <span class="hljs-variable">$1</span> =~ ^[a-zA-Z0-9_]&#123;3,16&#125;$ ]];<span class="hljs-keyword">then</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;请使用字母数字或下划线开头的3到16个字符的名字&quot;</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;-1&quot;</span><br>    <span class="hljs-built_in">exit</span> -1<br><span class="hljs-keyword">fi</span><br><span class="hljs-built_in">cd</span> <span class="hljs-variable">$dir</span><br><span class="hljs-keyword">if</span> ./easyrsa show-cert <span class="hljs-variable">$1</span> &amp;&gt; /dev/null;<span class="hljs-keyword">then</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;此用户已存在，请重新输入&quot;</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;-1&quot;</span><br>    <span class="hljs-built_in">exit</span> -1<br><span class="hljs-keyword">fi</span><br>expect &lt;&lt;-<span class="hljs-string">EOF</span><br><span class="hljs-string">spawn ./easyrsa gen-req $1 nopass</span><br><span class="hljs-string">expect &#123;</span><br><span class="hljs-string">&quot;$1&quot; &#123; send &quot;\n&quot; &#125;&#125;</span><br><span class="hljs-string">expect eof</span><br><span class="hljs-string">EOF</span><br>./easyrsa import-req <span class="hljs-variable">$dir</span>/pki/reqs/<span class="hljs-variable">$&#123;1&#125;</span>.req <span class="hljs-variable">$1</span><br>expect &lt;&lt;-<span class="hljs-string">EOF</span><br><span class="hljs-string">spawn ./easyrsa sign client $1</span><br><span class="hljs-string">expect &#123;</span><br><span class="hljs-string">&quot;Confirm&quot; &#123; send &quot;yes\n&quot; &#125;</span><br><span class="hljs-string">&#125;</span><br><span class="hljs-string">expect eof</span><br><span class="hljs-string">EOF</span><br><br><span class="hljs-keyword">if</span> ! [ -d /client.certs/ ]; <span class="hljs-keyword">then</span><br>    <span class="hljs-built_in">mkdir</span> /client.certs/<br><span class="hljs-keyword">fi</span><br><br><span class="hljs-built_in">cat</span> &gt; /client.certs/clientsample.ovpn &lt;&lt; <span class="hljs-string">EOF</span><br><span class="hljs-string">client</span><br><span class="hljs-string">dev tun</span><br><span class="hljs-string">proto tcp</span><br><span class="hljs-string">remote 111.22.183.209 8890</span><br><span class="hljs-string">resolv-retry infinite</span><br><span class="hljs-string">persist-key</span><br><span class="hljs-string">persist-tun</span><br><span class="hljs-string">mute-replay-warnings</span><br><span class="hljs-string">ca ca.crt</span><br><span class="hljs-string">cert sample.crt</span><br><span class="hljs-string">key sample.key</span><br><span class="hljs-string">remote-cert-tls server</span><br><span class="hljs-string">tls-auth ta.key 1</span><br><span class="hljs-string">cipher AES-256-CBC</span><br><span class="hljs-string">comp-lzo</span><br><span class="hljs-string">verb 3</span><br><span class="hljs-string">mute 20</span><br><span class="hljs-string">reneg-sec 0</span><br><span class="hljs-string">EOF</span><br><br><span class="hljs-keyword">if</span> [ -d /client.certs/<span class="hljs-variable">$1</span> ]; <span class="hljs-keyword">then</span><br>    <span class="hljs-built_in">rm</span> -rf /client.certs/<span class="hljs-variable">$1</span><br>    <span class="hljs-built_in">mkdir</span> /client.certs/<span class="hljs-variable">$1</span><br><span class="hljs-keyword">else</span><br>    <span class="hljs-built_in">mkdir</span> /client.certs/<span class="hljs-variable">$1</span><br><span class="hljs-keyword">fi</span><br><span class="hljs-built_in">cp</span> <span class="hljs-variable">$dir</span>/pki/ca.crt /client.certs/<span class="hljs-variable">$1</span><br><span class="hljs-built_in">cp</span> <span class="hljs-variable">$dir</span>/ta.key /client.certs/<span class="hljs-variable">$1</span><br><span class="hljs-built_in">cp</span> <span class="hljs-variable">$dir</span>/pki/issued/<span class="hljs-variable">$&#123;1&#125;</span>.crt /client.certs/<span class="hljs-variable">$1</span><br><span class="hljs-built_in">cp</span> <span class="hljs-variable">$dir</span>/pki/private/<span class="hljs-variable">$&#123;1&#125;</span>.key /client.certs/<span class="hljs-variable">$1</span><br><span class="hljs-built_in">cd</span> /client.certs<br><span class="hljs-built_in">cp</span> clientsample.ovpn client.ovpn<br>sed -i s@sample.crt@<span class="hljs-variable">$&#123;1&#125;</span>.crt@g client.ovpn<br>sed -i s@sample.key@<span class="hljs-variable">$&#123;1&#125;</span>.key@g client.ovpn<br><span class="hljs-built_in">mv</span> client.ovpn <span class="hljs-variable">$1</span>/<br></code></pre></td></tr></table></figure>
 
-dir&#x3D;&#x2F;etc&#x2F;openvpn&#x2F;easy-rsa
-if [ $# -ne 1 ]; then
-    echo &quot;Usage: $0 USER_NAME&quot;
-    echo &quot;-1&quot;
-    exit -1
-fi
-if ! [[ $1 &#x3D;~ ^[a-zA-Z0-9_]&#123;3,16&#125;$ ]];then
-    echo &quot;请使用字母数字或下划线开头的3到16个字符的名字&quot;
-    echo &quot;-1&quot;
-    exit -1
-fi
-cd $dir
-if .&#x2F;easyrsa show-cert $1 &amp;&gt; &#x2F;dev&#x2F;null;then
-    echo &quot;此用户已存在，请重新输入&quot;
-    echo &quot;-1&quot;
-    exit -1
-fi
-expect &lt;&lt;-EOF
-spawn .&#x2F;easyrsa gen-req $1 nopass
-expect &#123;
-&quot;$1&quot; &#123; send &quot;\n&quot; &#125;&#125;
-expect eof
-EOF
-.&#x2F;easyrsa import-req $dir&#x2F;pki&#x2F;reqs&#x2F;$&#123;1&#125;.req $1
-expect &lt;&lt;-EOF
-spawn .&#x2F;easyrsa sign client $1
-expect &#123;
-&quot;Confirm&quot; &#123; send &quot;yes\n&quot; &#125;
-&#125;
-expect eof
-EOF
+<h3 id="7-3-吊销客户端证书的脚本如下"><a href="#7-3-吊销客户端证书的脚本如下" class="headerlink" title="7.3 吊销客户端证书的脚本如下"></a>7.3 吊销客户端证书的脚本如下</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs bash">(base) root@hr650-1:/etc# grep -vE <span class="hljs-string">&quot;^#|^$&quot;</span> /usr/local/bin/delovpnuser <br><span class="hljs-keyword">if</span> [ <span class="hljs-variable">$#</span> -ne 1 ]; <span class="hljs-keyword">then</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Usage: <span class="hljs-variable">$0</span> USER_NAME&quot;</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;-1&quot;</span><br>    <span class="hljs-built_in">exit</span> -1<br><span class="hljs-keyword">fi</span><br><span class="hljs-keyword">if</span> ! [[ <span class="hljs-variable">$1</span> =~ ^[a-zA-Z0-9_]&#123;3,16&#125;$ ]];<span class="hljs-keyword">then</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;请使用字母数字或下划线开头的3到16个字符的名字&quot;</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;-1&quot;</span><br>    <span class="hljs-built_in">exit</span> -1<br><span class="hljs-keyword">fi</span><br><span class="hljs-built_in">dir</span>=/etc/openvpn/easy-rsa<br><span class="hljs-built_in">cd</span> <span class="hljs-variable">$dir</span><br><span class="hljs-keyword">if</span> ! ./easyrsa show-cert <span class="hljs-variable">$1</span> &amp;&gt; /dev/null;<span class="hljs-keyword">then</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;没有这个用户,无法删除&quot;</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;-1&quot;</span><br>    <span class="hljs-built_in">exit</span> -1<br><span class="hljs-keyword">fi</span><br>expect &lt;&lt;-<span class="hljs-string">EOF</span><br><span class="hljs-string">spawn ./easyrsa revoke $1</span><br><span class="hljs-string">expect &#123;</span><br><span class="hljs-string">&quot;revocation&quot; &#123; send &quot;yes\n&quot; &#125;&#125;</span><br><span class="hljs-string">expect eof</span><br><span class="hljs-string">EOF</span><br>./easyrsa gen-crl<br><span class="hljs-built_in">rm</span> -rf /client.certs/<span class="hljs-variable">$1</span><br></code></pre></td></tr></table></figure>
 
-if ! [ -d &#x2F;client.certs&#x2F; ]; then
-    mkdir &#x2F;client.certs&#x2F;
-fi
-
-cat &gt; &#x2F;client.certs&#x2F;clientsample.ovpn &lt;&lt; EOF
-client
-dev tun
-proto tcp
-remote 111.22.183.209 8890
-resolv-retry infinite
-persist-key
-persist-tun
-mute-replay-warnings
-ca ca.crt
-cert sample.crt
-key sample.key
-remote-cert-tls server
-tls-auth ta.key 1
-cipher AES-256-CBC
-comp-lzo
-verb 3
-mute 20
-reneg-sec 0
-EOF
-
-if [ -d &#x2F;client.certs&#x2F;$1 ]; then
-    rm -rf &#x2F;client.certs&#x2F;$1
-    mkdir &#x2F;client.certs&#x2F;$1
-else
-    mkdir &#x2F;client.certs&#x2F;$1
-fi
-cp $dir&#x2F;pki&#x2F;ca.crt &#x2F;client.certs&#x2F;$1
-cp $dir&#x2F;ta.key &#x2F;client.certs&#x2F;$1
-cp $dir&#x2F;pki&#x2F;issued&#x2F;$&#123;1&#125;.crt &#x2F;client.certs&#x2F;$1
-cp $dir&#x2F;pki&#x2F;private&#x2F;$&#123;1&#125;.key &#x2F;client.certs&#x2F;$1
-cd &#x2F;client.certs
-cp clientsample.ovpn client.ovpn
-sed -i s@sample.crt@$&#123;1&#125;.crt@g client.ovpn
-sed -i s@sample.key@$&#123;1&#125;.key@g client.ovpn
-mv client.ovpn $1&#x2F;</code></pre></div></figure>
-
-<h3 id="7-3-吊销客户端证书的脚本如下"><a href="#7-3-吊销客户端证书的脚本如下" class="headerlink" title="7.3 吊销客户端证书的脚本如下"></a>7.3 吊销客户端证书的脚本如下</h3><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">(base) root@hr650-1:&#x2F;etc# grep -vE &quot;^#|^$&quot; &#x2F;usr&#x2F;local&#x2F;bin&#x2F;delovpnuser 
-if [ $# -ne 1 ]; then
-    echo &quot;Usage: $0 USER_NAME&quot;
-    echo &quot;-1&quot;
-    exit -1
-fi
-if ! [[ $1 &#x3D;~ ^[a-zA-Z0-9_]&#123;3,16&#125;$ ]];then
-    echo &quot;请使用字母数字或下划线开头的3到16个字符的名字&quot;
-    echo &quot;-1&quot;
-    exit -1
-fi
-dir&#x3D;&#x2F;etc&#x2F;openvpn&#x2F;easy-rsa
-cd $dir
-if ! .&#x2F;easyrsa show-cert $1 &amp;&gt; &#x2F;dev&#x2F;null;then
-    echo &quot;没有这个用户,无法删除&quot;
-    echo &quot;-1&quot;
-    exit -1
-fi
-expect &lt;&lt;-EOF
-spawn .&#x2F;easyrsa revoke $1
-expect &#123;
-&quot;revocation&quot; &#123; send &quot;yes\n&quot; &#125;&#125;
-expect eof
-EOF
-.&#x2F;easyrsa gen-crl
-rm -rf &#x2F;client.certs&#x2F;$1</code></pre></div></figure>
-
-<h3 id="7-4-创建客户端证书脚本的使用"><a href="#7-4-创建客户端证书脚本的使用" class="headerlink" title="7.4 创建客户端证书脚本的使用"></a>7.4 创建客户端证书脚本的使用</h3><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 创建客户端证书
-genovpnuser haris
-
-# 将生成如下文件夹
-&#x2F;client.certs&#x2F;haris
-
-# 将这个文件夹拷贝出来
-在wndows的openvpn上，将里面的ovpen文件上传上去，然后点击Connect即可</code></pre></div></figure>
+<h3 id="7-4-创建客户端证书脚本的使用"><a href="#7-4-创建客户端证书脚本的使用" class="headerlink" title="7.4 创建客户端证书脚本的使用"></a>7.4 创建客户端证书脚本的使用</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">创建客户端证书</span><br>genovpnuser haris<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">将生成如下文件夹</span><br>/client.certs/haris<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">将这个文件夹拷贝出来</span><br>在wndows的openvpn上，将里面的ovpen文件上传上去，然后点击Connect即可<br></code></pre></td></tr></table></figure>
 
 
 
@@ -792,12 +611,6 @@ genovpnuser haris
   });
 </script>
 
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
 

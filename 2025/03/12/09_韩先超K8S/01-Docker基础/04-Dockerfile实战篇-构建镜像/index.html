@@ -19,12 +19,12 @@
   <meta name="author" content="Haris">
   <meta name="keywords" content="">
   
-    <meta name="description" content="一、构建Nginx镜像1、创建dockerfile [root@master1 ~&#x2F;Docker-Demo&#x2F;02-dockerfile&#x2F;01-nginx-image]#cat dockerfile  from centos  MAINTAINER haris RUN rm &#x2F;etc&#x2F;yum.repos.d&#x2F;* -f  RUN curl -">
+    <meta name="description" content="一、构建Nginx镜像1、创建dockerfile 123456789101112[root@master1 ~&#x2F;Docker-Demo&#x2F;02-dockerfile&#x2F;01-nginx-image]#cat dockerfile from centos MAINTAINER harisRUN rm &#x2F;etc&#x2F;yum.repos.d&#x2F;* -f RUN curl -o &#x2F;etc&#x2F;yum.repos.d&#x2F;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="04-Dockerfile实战篇-构建镜像">
 <meta property="og:url" content="https://gblog.github.io/2025/03/12/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/04-Dockerfile%E5%AE%9E%E6%88%98%E7%AF%87-%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F/index.html">
 <meta property="og:site_name" content="Haris的小站">
-<meta property="og:description" content="一、构建Nginx镜像1、创建dockerfile [root@master1 ~&#x2F;Docker-Demo&#x2F;02-dockerfile&#x2F;01-nginx-image]#cat dockerfile  from centos  MAINTAINER haris RUN rm &#x2F;etc&#x2F;yum.repos.d&#x2F;* -f  RUN curl -">
+<meta property="og:description" content="一、构建Nginx镜像1、创建dockerfile 123456789101112[root@master1 ~&#x2F;Docker-Demo&#x2F;02-dockerfile&#x2F;01-nginx-image]#cat dockerfile from centos MAINTAINER harisRUN rm &#x2F;etc&#x2F;yum.repos.d&#x2F;* -f RUN curl -o &#x2F;etc&#x2F;yum.repos.d&#x2F;">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gblog.github.io/img/image-20250320132840599.png">
 <meta property="og:image" content="https://gblog.github.io/img/image-20250320151436246.png">
@@ -46,8 +46,6 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -71,6 +69,10 @@
     <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
 
 
 
@@ -228,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          400 字
+          330 字
         
       </span>
     
@@ -239,7 +241,7 @@
         
         
         
-          4 分钟
+          3 分钟
         
       </span>
     
@@ -295,68 +297,29 @@
               <div class="markdown-body">
                 
                 <h2 id="一、构建Nginx镜像"><a href="#一、构建Nginx镜像" class="headerlink" title="一、构建Nginx镜像"></a>一、构建Nginx镜像</h2><p>1、创建dockerfile</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@master1 ~&#x2F;Docker-Demo&#x2F;02-dockerfile&#x2F;01-nginx-image]#cat dockerfile 
-from centos 
-MAINTAINER haris
-RUN rm &#x2F;etc&#x2F;yum.repos.d&#x2F;* -f 
-RUN curl -o &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo https:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;repo&#x2F;Centos-8.repo
-RUN yum clean all
-RUN yum makecache
-RUN yum install wget -y
-RUN yum install nginx -y
-COPY index.html &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html&#x2F;
-EXPOSE 80
-ENTRYPOINT [&quot;&#x2F;usr&#x2F;sbin&#x2F;nginx&quot;,&quot;-g&quot;, &quot;daemon off;&quot;]</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@master1 ~/Docker-Demo/02-dockerfile/01-nginx-image]#cat dockerfile <br>from centos <br>MAINTAINER haris<br>RUN rm /etc/yum.repos.d/* -f <br>RUN curl -o /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-8.repo<br>RUN yum clean all<br>RUN yum makecache<br>RUN yum install wget -y<br>RUN yum install nginx -y<br>COPY index.html /usr/share/nginx/html/<br>EXPOSE 80<br>ENTRYPOINT [&quot;/usr/sbin/nginx&quot;,&quot;-g&quot;, &quot;daemon off;&quot;]<br></code></pre></td></tr></table></figure>
 
 <p>2、构建镜像，指定镜像名</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker build -t&#x3D;&quot;haris&#x2F;nginx:v1&quot; .</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker build -t=&quot;haris/nginx:v1&quot; .<br></code></pre></td></tr></table></figure>
 
 <p>可以看到镜像创建成功</p>
 <p><img src="/./../../../img/image-20250320132840599.png" srcset="/img/loading.gif" lazyload alt="image-20250320132840599"></p>
 <p>3、使用镜像运行容器</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker run -d -p 80 --name nginx-html haris&#x2F;nginx:v1</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker run -d -p 80 --name nginx-html haris/nginx:v1<br></code></pre></td></tr></table></figure>
 
 <p>4、测试访问</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 容器已经在运行
-[root@master1 ~&#x2F;Docker-Demo&#x2F;02-dockerfile&#x2F;01-nginx-image]#docker ps
-CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                                     NAMES
-f189d97cad5c        haris&#x2F;nginx:v1      &quot;&#x2F;usr&#x2F;sbin&#x2F;nginx -g …&quot;   5 minutes ago       Up 5 minutes        0.0.0.0:32768-&gt;80&#x2F;tcp, :::32768-&gt;80&#x2F;tcp   nginx-html
-
-# curl测试
-[root@master1 ~&#x2F;Docker-Demo&#x2F;02-dockerfile&#x2F;01-nginx-image]#curl 127.0.0.1:32768
-&lt;h1&gt;
-	This is my test page
-&lt;&#x2F;h1&gt;</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">容器已经在运行</span><br>[root@master1 ~/Docker-Demo/02-dockerfile/01-nginx-image]#docker ps<br>CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                                     NAMES<br>f189d97cad5c        haris/nginx:v1      &quot;/usr/sbin/nginx -g …&quot;   5 minutes ago       Up 5 minutes        0.0.0.0:32768-&gt;80/tcp, :::32768-&gt;80/tcp   nginx-html<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">curl测试</span><br>[root@master1 ~/Docker-Demo/02-dockerfile/01-nginx-image]#curl 127.0.0.1:32768<br>&lt;h1&gt;<br>	This is my test page<br>&lt;/h1&gt;<br></code></pre></td></tr></table></figure>
 
 
 
 <h2 id="二、构建Tomcat镜像"><a href="#二、构建Tomcat镜像" class="headerlink" title="二、构建Tomcat镜像"></a>二、构建Tomcat镜像</h2><p>1、下载并上传tomcat的文件</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># tomcat应用包
-apache-tomcat-8.0.26.tar.gz
-# JDK软件安装包
-jdk-8u45-linux-x64.rpm</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">tomcat应用包</span><br>apache-tomcat-8.0.26.tar.gz<br><span class="hljs-meta prompt_"># </span><span class="language-bash">JDK软件安装包</span><br>jdk-8u45-linux-x64.rpm<br></code></pre></td></tr></table></figure>
 
 <p>2、创建dockerfile</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">FROM centos
-MAINTAINER haris
-RUN rm &#x2F;etc&#x2F;yum.repos.d&#x2F;* -f 
-RUN curl -o &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo https:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;repo&#x2F;Centos-8.repo
-RUN yum clean all
-RUN yum makecache
-RUN yum install wget -y
-ADD jdk-8u45-linux-x64.rpm &#x2F;usr&#x2F;local
-ADD apache-tomcat-8.0.26.tar.gz &#x2F;usr&#x2F;local
-RUN cd &#x2F;usr&#x2F;local &amp;&amp; rpm -ivh jdk-8u45-linux-x64.rpm
-RUN mv &#x2F;usr&#x2F;local&#x2F;apache-tomcat-8.0.26 &#x2F;usr&#x2F;local&#x2F;tomcat8
-ENTRYPOINT &#x2F;usr&#x2F;local&#x2F;tomcat8&#x2F;bin&#x2F;startup.sh &amp;&amp; tail -F &#x2F;usr&#x2F;local&#x2F;tomcat8&#x2F;logs&#x2F;catalina.out
-EXPOSE 8080  </code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs shell">FROM centos<br>MAINTAINER haris<br>RUN rm /etc/yum.repos.d/* -f <br>RUN curl -o /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-8.repo<br>RUN yum clean all<br>RUN yum makecache<br>RUN yum install wget -y<br>ADD jdk-8u45-linux-x64.rpm /usr/local<br>ADD apache-tomcat-8.0.26.tar.gz /usr/local<br>RUN cd /usr/local &amp;&amp; rpm -ivh jdk-8u45-linux-x64.rpm<br>RUN mv /usr/local/apache-tomcat-8.0.26 /usr/local/tomcat8<br>ENTRYPOINT /usr/local/tomcat8/bin/startup.sh &amp;&amp; tail -F /usr/local/tomcat8/logs/catalina.out<br>EXPOSE 8080  <br></code></pre></td></tr></table></figure>
 
 <p>3、构建镜像并运行容器</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 构建镜像
-docker build -t&#x3D;&quot;haris&#x2F;mytomcat8:v1&quot; .
-
-# 运行容器
-docker run -itd -p 8080 --name &quot;mytomcat8&quot; haris&#x2F;mytomcat8:v1</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">构建镜像</span><br>docker build -t=&quot;haris/mytomcat8:v1&quot; .<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">运行容器</span><br>docker run -itd -p 8080 --name &quot;mytomcat8&quot; haris/mytomcat8:v1<br></code></pre></td></tr></table></figure>
 
 <p>可以看到镜像和容器都创建成功</p>
 <p><img src="/./../../../img/image-20250320151436246.png" srcset="/img/loading.gif" lazyload alt="image-20250320151436246"></p>
@@ -646,12 +609,6 @@ docker run -itd -p 8080 --name &quot;mytomcat8&quot; haris&#x2F;mytomcat8:v1</co
   });
 </script>
 
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
 

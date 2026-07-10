@@ -45,8 +45,6 @@
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
-
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
@@ -69,6 +67,10 @@
     <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
 
 
 
@@ -226,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          605 字
+          539 字
         
       </span>
     
@@ -237,7 +239,7 @@
         
         
         
-          6 分钟
+          5 分钟
         
       </span>
     
@@ -313,108 +315,13 @@
 </ul>
 <h3 id="1-2-3-实现栈的基本操作"><a href="#1-2-3-实现栈的基本操作" class="headerlink" title="1.2.3 实现栈的基本操作"></a>1.2.3 实现栈的基本操作</h3><p>栈可以用数组或者链表来实现</p>
 <h4 id="1-2-3-1-用链表实现"><a href="#1-2-3-1-用链表实现" class="headerlink" title="1.2.3.1 用链表实现"></a>1.2.3.1 用链表实现</h4><p>mystack.h</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">#include &lt;stdbool.h&gt;
-#include &lt;stdlib.h&gt;
-
-&#x2F;&#x2F; 定义结点结构
-typedef struct node_s &#123;
-	int val;
-	struct node_s* next;
-&#125;Node;
-
-&#x2F;&#x2F; 方法一：入栈
-void push(Node** ptr_top, int val);
-
-&#x2F;&#x2F; 方法二：判断是否为空
-bool isEmpty(Node** ptr_top);
-
-&#x2F;&#x2F; 方法三：出栈
-int pop(Node** ptr_top);
-
-&#x2F;&#x2F; 方法四：查找
-int peek(Node* top);</code></pre></div></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdbool.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><br><span class="hljs-comment">// 定义结点结构</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">node_s</span> &#123;</span><br>	<span class="hljs-type">int</span> val;<br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">node_s</span>* <span class="hljs-title">next</span>;</span><br>&#125;Node;<br><br><span class="hljs-comment">// 方法一：入栈</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">push</span><span class="hljs-params">(Node** ptr_top, <span class="hljs-type">int</span> val)</span>;<br><br><span class="hljs-comment">// 方法二：判断是否为空</span><br><span class="hljs-type">bool</span> <span class="hljs-title function_">isEmpty</span><span class="hljs-params">(Node** ptr_top)</span>;<br><br><span class="hljs-comment">// 方法三：出栈</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">pop</span><span class="hljs-params">(Node** ptr_top)</span>;<br><br><span class="hljs-comment">// 方法四：查找</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">peek</span><span class="hljs-params">(Node* top)</span>;<br></code></pre></td></tr></table></figure>
 
 <p>mystack.c</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">#include &quot;stack.h&quot;
-
-&#x2F;&#x2F; 方法一：入栈
-void push(Node** ptr_top, int val) &#123;
-	&#x2F;&#x2F; 创建结点，分配空间
-	Node* newnode &#x3D; (Node*)malloc(sizeof(Node));
-	&#x2F;&#x2F; 容错判断
-	if (newnode &#x3D;&#x3D; NULL) &#123;
-		printf(&quot;Error! malloc failed in push.&quot;);
-		exit(1);
-	&#125;
-	&#x2F;&#x2F; 给新结点赋值
-	newnode-&gt;val &#x3D; val;
-	&#x2F;&#x2F; 追加节点
-	newnode-&gt;next &#x3D; *ptr_top;
-	*(ptr_top) &#x3D; newnode;
-&#125;
-
-&#x2F;&#x2F; 方法二：判断是否为空
-bool isEmpty(Node* ptr_top) &#123;
-	return ptr_top &#x3D;&#x3D; NULL;
-&#125;
-
-
-&#x2F;&#x2F; 方法三：出栈
-int pop(Node** ptr_top) &#123;
-	&#x2F;&#x2F; 容错判断
-	if (isEmpty(*ptr_top)) &#123;
-		printf(&quot;Error! stack is empty!&quot;);
-		exit(1);
-	&#125;
-	&#x2F;&#x2F; 保留弹出结点
-	Node* old_top &#x3D; *ptr_top;
-	int result &#x3D; old_top-&gt;val;
-	&#x2F;&#x2F; 设置新的栈顶
-	*ptr_top &#x3D; (*ptr_top)-&gt;next;
-	&#x2F;&#x2F; 释放旧结点
-	free(old_top);
-	&#x2F;&#x2F; 返回值
-	return result;
-&#125;
-
-&#x2F;&#x2F; 方法四：查找
-int peek(Node* top) &#123;
-	if (isEmpty(top)) &#123;
-		printf(&quot;Error! stack is empty!&quot;);
-		exit(1);
-	&#125;
-	&#x2F;&#x2F; 返回查找的值
-	return top-&gt;val;
-&#125;</code></pre></div></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;stack.h&quot;</span></span><br><br><span class="hljs-comment">// 方法一：入栈</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">push</span><span class="hljs-params">(Node** ptr_top, <span class="hljs-type">int</span> val)</span> &#123;<br>	<span class="hljs-comment">// 创建结点，分配空间</span><br>	Node* newnode = (Node*)<span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(Node));<br>	<span class="hljs-comment">// 容错判断</span><br>	<span class="hljs-keyword">if</span> (newnode == <span class="hljs-literal">NULL</span>) &#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Error! malloc failed in push.&quot;</span>);<br>		<span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>	&#125;<br>	<span class="hljs-comment">// 给新结点赋值</span><br>	newnode-&gt;val = val;<br>	<span class="hljs-comment">// 追加节点</span><br>	newnode-&gt;next = *ptr_top;<br>	*(ptr_top) = newnode;<br>&#125;<br><br><span class="hljs-comment">// 方法二：判断是否为空</span><br><span class="hljs-type">bool</span> <span class="hljs-title function_">isEmpty</span><span class="hljs-params">(Node* ptr_top)</span> &#123;<br>	<span class="hljs-keyword">return</span> ptr_top == <span class="hljs-literal">NULL</span>;<br>&#125;<br><br><br><span class="hljs-comment">// 方法三：出栈</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">pop</span><span class="hljs-params">(Node** ptr_top)</span> &#123;<br>	<span class="hljs-comment">// 容错判断</span><br>	<span class="hljs-keyword">if</span> (isEmpty(*ptr_top)) &#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Error! stack is empty!&quot;</span>);<br>		<span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>	&#125;<br>	<span class="hljs-comment">// 保留弹出结点</span><br>	Node* old_top = *ptr_top;<br>	<span class="hljs-type">int</span> result = old_top-&gt;val;<br>	<span class="hljs-comment">// 设置新的栈顶</span><br>	*ptr_top = (*ptr_top)-&gt;next;<br>	<span class="hljs-comment">// 释放旧结点</span><br>	<span class="hljs-built_in">free</span>(old_top);<br>	<span class="hljs-comment">// 返回值</span><br>	<span class="hljs-keyword">return</span> result;<br>&#125;<br><br><span class="hljs-comment">// 方法四：查找</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">peek</span><span class="hljs-params">(Node* top)</span> &#123;<br>	<span class="hljs-keyword">if</span> (isEmpty(top)) &#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Error! stack is empty!&quot;</span>);<br>		<span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>	&#125;<br>	<span class="hljs-comment">// 返回查找的值</span><br>	<span class="hljs-keyword">return</span> top-&gt;val;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>main.c测试</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">#include &quot;stack.h&quot;
-#include &lt;stdio.h&gt;
-
-int main() &#123;
-
-	Node* top &#x3D; NULL;
-	push(&amp;top, 1);
-	push(&amp;top, 2);
-	push(&amp;top, 3);
-	push(&amp;top, 4);
-
-	printf(&quot;%d\n&quot;, peek(top));	&#x2F;&#x2F; 输出4
-
-	&#x2F;&#x2F; 出栈
-	printf(&quot;%d\n&quot;, pop(&amp;top));	&#x2F;&#x2F;	4
-	printf(&quot;%d\n&quot;, pop(&amp;top));	&#x2F;&#x2F; 3
-
-	&#x2F;&#x2F; 查找
-	printf(&quot;%d\n&quot;, peek(top));	&#x2F;&#x2F; 输出2
-
-	&#x2F;&#x2F; 查空
-	while (!isEmpty(top)) &#123;
-		printf(&quot;%d\n&quot;, pop(&amp;top));	&#x2F;&#x2F; 输出：2，1，停止
-	&#125;
-
-	return 0;
-&#125;</code></pre></div></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;stack.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br><br>	Node* top = <span class="hljs-literal">NULL</span>;<br>	push(&amp;top, <span class="hljs-number">1</span>);<br>	push(&amp;top, <span class="hljs-number">2</span>);<br>	push(&amp;top, <span class="hljs-number">3</span>);<br>	push(&amp;top, <span class="hljs-number">4</span>);<br><br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, peek(top));	<span class="hljs-comment">// 输出4</span><br><br>	<span class="hljs-comment">// 出栈</span><br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, pop(&amp;top));	<span class="hljs-comment">//	4</span><br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, pop(&amp;top));	<span class="hljs-comment">// 3</span><br><br>	<span class="hljs-comment">// 查找</span><br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, peek(top));	<span class="hljs-comment">// 输出2</span><br><br>	<span class="hljs-comment">// 查空</span><br>	<span class="hljs-keyword">while</span> (!isEmpty(top)) &#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, pop(&amp;top));	<span class="hljs-comment">// 输出：2，1，停止</span><br>	&#125;<br><br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 
 
@@ -509,9 +416,9 @@ int main() &#123;
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/03/20/04_C++/01_C%E8%AF%AD%E8%A8%80/day08/" title="C语言-Day08">
+                      <a href="/2024/04/24/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/01-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84%E8%A7%84%E5%88%92/" title="01-综合架构规划">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">C语言-Day08</span>
+                        <span class="hidden-mobile">01-综合架构规划</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -519,8 +426,8 @@ int main() &#123;
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/03/18/04_C++/01_C%E8%AF%AD%E8%A8%80/day07/" title="C语言-Day07">
-                        <span class="hidden-mobile">C语言-Day07</span>
+                      <a href="/2024/03/20/04_C++/01_C%E8%AF%AD%E8%A8%80/day08/" title="C语言-Day08">
+                        <span class="hidden-mobile">C语言-Day08</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -703,12 +610,6 @@ int main() &#123;
   });
 </script>
 
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
 

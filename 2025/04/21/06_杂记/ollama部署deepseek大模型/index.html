@@ -49,8 +49,6 @@
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
-
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
@@ -73,6 +71,10 @@
     <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
 
 
 
@@ -230,7 +232,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          605 字
+          540 字
         
       </span>
     
@@ -241,7 +243,7 @@
         
         
         
-          6 分钟
+          5 分钟
         
       </span>
     
@@ -330,42 +332,18 @@
 </tbody></table>
 <hr>
 <h1 id="二、安装ollama框架"><a href="#二、安装ollama框架" class="headerlink" title="二、安装ollama框架"></a>二、安装ollama框架</h1><p>1、通过官网脚本安装</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">curl -fsSL https:&#x2F;&#x2F;ollama.com&#x2F;install.sh | sh</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">curl -fsSL https://ollama.com/install.sh | sh<br></code></pre></td></tr></table></figure>
 
 <p>2、设置环境变量（写到ollama服务配置文件中）</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@A07-1 mydeepseek]# cat &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;ollama.service 
-[Unit]
-Description&#x3D;Ollama Service
-After&#x3D;network-online.target
-
-[Service]
-ExecStart&#x3D;&#x2F;usr&#x2F;local&#x2F;bin&#x2F;ollama serve
-User&#x3D;ollama
-Group&#x3D;ollama
-Restart&#x3D;always
-RestartSec&#x3D;3
-Environment&#x3D;&quot;PATH&#x3D;&#x2F;usr&#x2F;local&#x2F;cuda&#x2F;bin:&#x2F;usr&#x2F;local&#x2F;sbin:&#x2F;usr&#x2F;local&#x2F;bin:&#x2F;usr&#x2F;sbin:&#x2F;usr&#x2F;bin:&#x2F;root&#x2F;bin&quot;
-Environment&#x3D;&quot;LD_LIBRARY_PATH&#x3D;&#x2F;usr&#x2F;local&#x2F;cuda&#x2F;lib64&quot;
-Environment&#x3D;&quot;OLLAMA_MODELS&#x3D;&#x2F;nvme-data&#x2F;mydeepseek&#x2F;Models&quot;
-Environment&#x3D;&quot;OLLAMA_DEBUG&#x3D;1&quot;             
-Environment&#x3D;&quot;OLLAMA_LOAD_TIMEOUT&#x3D;120m&quot;   
-Environment&#x3D;&quot;OLLAMA_KEEP_ALIVE&#x3D;-1&quot;      
-Environment&#x3D;&quot;OLLAMA_SCHED_SPREAD&#x3D;1&quot; 
-Environment&#x3D;&quot;OLLAMA_NUM_PARALLEL&#x3D;8&quot;
-Environment&#x3D;&quot;OLLAMA_GPU_LAYER&#x3D;cuda&quot;</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@A07-1 mydeepseek]# cat /etc/systemd/system/ollama.service <br>[Unit]<br>Description=Ollama Service<br>After=network-online.target<br><br>[Service]<br>ExecStart=/usr/local/bin/ollama serve<br>User=ollama<br>Group=ollama<br>Restart=always<br>RestartSec=3<br>Environment=&quot;PATH=/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin&quot;<br>Environment=&quot;LD_LIBRARY_PATH=/usr/local/cuda/lib64&quot;<br>Environment=&quot;OLLAMA_MODELS=/nvme-data/mydeepseek/Models&quot;<br>Environment=&quot;OLLAMA_DEBUG=1&quot;             <br>Environment=&quot;OLLAMA_LOAD_TIMEOUT=120m&quot;   <br>Environment=&quot;OLLAMA_KEEP_ALIVE=-1&quot;      <br>Environment=&quot;OLLAMA_SCHED_SPREAD=1&quot; <br>Environment=&quot;OLLAMA_NUM_PARALLEL=8&quot;<br>Environment=&quot;OLLAMA_GPU_LAYER=cuda&quot;<br></code></pre></td></tr></table></figure>
 
 <p>3、启动ollama服务</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 重新加载配置文件
-systemctl daemon-reload
-# 启动服务
-systemctl start ollama
-systemctl enable ollama</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">重新加载配置文件</span><br>systemctl daemon-reload<br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动服务</span><br>systemctl start ollama<br>systemctl enable ollama<br></code></pre></td></tr></table></figure>
 
 <p>4、查看运行情况，确保运行正常</p>
 <p><img src="/./../../img/image-20250421143517643.png" srcset="/img/loading.gif" lazyload alt="image-20250421143517643"></p>
 <p>5、查看ollama版本</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@A07-1 mydeepseek]# ollama -v
-ollama version is 0.6.5</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@A07-1 mydeepseek]# ollama -v<br>ollama version is 0.6.5<br></code></pre></td></tr></table></figure>
 
 <hr>
 <h1 id="三、拉取deepseek模型并运行"><a href="#三、拉取deepseek模型并运行" class="headerlink" title="三、拉取deepseek模型并运行"></a>三、拉取deepseek模型并运行</h1><p>1、拉取模型</p>
@@ -373,23 +351,19 @@ ollama version is 0.6.5</code></pre></div></figure>
 <p>因为设置了环境变量，所以模型文件会拉取到对应的文件夹中。</p>
 <p><code>OLLAMA_MODELS=/nvme-data/mydeepseek/Models</code></p>
 </blockquote>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ollama pull deepseek-r1:671b</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ollama pull deepseek-r1:671b<br></code></pre></td></tr></table></figure>
 
 <p>2、拉取完，查看模型</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@A07-1 mydeepseek]# ollama list
-NAME                ID              SIZE      MODIFIED   
-deepseek-r1:671b    739e1b229ad7    404 GB    2 days ago   </code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@A07-1 mydeepseek]# ollama list<br>NAME                ID              SIZE      MODIFIED   <br>deepseek-r1:671b    739e1b229ad7    404 GB    2 days ago   <br></code></pre></td></tr></table></figure>
 
 <p>3、运行模型</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">nohup ollama run deepseek-r1:671b &gt; run.out 2&gt;&amp;1 &lt; &#x2F;dev&#x2F;null &amp;</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">nohup ollama run deepseek-r1:671b &gt; run.out 2&gt;&amp;1 &lt; /dev/null &amp;<br></code></pre></td></tr></table></figure>
 
 <p>4、查看正在运行的模型</p>
 <blockquote>
 <p>需要确认<code>PROCESSOR</code>是<code>100% GPU</code>，如果是<code>100% CPU</code>说明运行得有问题，需要查看对应日志排查。</p>
 </blockquote>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@A07-1 mydeepseek]# ollama ps
-NAME                ID              SIZE      PROCESSOR    UNTIL   
-deepseek-r1:671b    739e1b229ad7    552 GB    100% GPU     Forever  </code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@A07-1 mydeepseek]# ollama ps<br>NAME                ID              SIZE      PROCESSOR    UNTIL   <br>deepseek-r1:671b    739e1b229ad7    552 GB    100% GPU     Forever  <br></code></pre></td></tr></table></figure>
 
 <hr>
 <h1 id="四、访问deepseek模型"><a href="#四、访问deepseek模型" class="headerlink" title="四、访问deepseek模型"></a>四、访问deepseek模型</h1><p>1、方法一：交互式访问大模型</p>
@@ -397,32 +371,18 @@ deepseek-r1:671b    739e1b229ad7    552 GB    100% GPU     Forever  </code></pre
 <p><img src="/./../../img/image-20250421144132968.png" srcset="/img/loading.gif" lazyload alt="image-20250421144132968"></p>
 <p>2、方法二：API接口调用</p>
 <p>ollama服务运行后会监听 <code>127.0.0.1:11434</code>，我们可以通过API接口访问运行后的模型实例。ollama的对话接口兼容openai接口，可以执行以下命令调用模型接口：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">curl --request POST \
-  --url http:&#x2F;&#x2F;127.0.0.1:11434&#x2F;v1&#x2F;chat&#x2F;completions \
-  --header &#39;Content-Type: application&#x2F;json;charset&#x3D;utf-8&#39; \
-  --data &#39;&#123;
-  &quot;model&quot;: &quot;deepseek-r1:671b&quot;,
-  &quot;messages&quot;: [
-    &#123;
-      &quot;role&quot;: &quot;user&quot;,
-      &quot;content&quot;: &quot;长沙是什么地方？&quot;
-    &#125;
-  ]
-&#125;&#39;</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell">curl --request POST \<br>  --url http://127.0.0.1:11434/v1/chat/completions \<br>  --header &#x27;Content-Type: application/json;charset=utf-8&#x27; \<br>  --data &#x27;&#123;<br>  &quot;model&quot;: &quot;deepseek-r1:671b&quot;,<br>  &quot;messages&quot;: [<br>    &#123;<br>      &quot;role&quot;: &quot;user&quot;,<br>      &quot;content&quot;: &quot;长沙是什么地方？&quot;<br>    &#125;<br>  ]<br>&#125;&#x27;<br></code></pre></td></tr></table></figure>
 
 <p>效果如下：</p>
 <p><img src="/./../../img/image-20250421144447707.png" srcset="/img/loading.gif" lazyload alt="image-20250421144447707"></p>
 <hr>
 <h1 id="五、压测大模型"><a href="#五、压测大模型" class="headerlink" title="五、压测大模型"></a>五、压测大模型</h1><p>1、下载脚本：<a target="_blank" rel="noopener" href="https://github.com/zhayujie/llm-eval-suite/blob/main/model_stress_test.py">https://github.com/zhayujie/llm-eval-suite/blob/main/model_stress_test.py</a> </p>
 <p>2、运行压测脚本</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">python3 model_stress_test.py</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">python3 model_stress_test.py<br></code></pre></td></tr></table></figure>
 
 <p><img src="/./../../img/image-20250421145118917.png" srcset="/img/loading.gif" lazyload alt="image-20250421145118917"></p>
 <p>3、压测过程中可以使用<code>nvitop</code>查看GPU的使用情况</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 安装nvitop
-pip install nvitop
-# 执行
-nvitop</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">安装nvitop</span><br>pip install nvitop<br><span class="hljs-meta prompt_"># </span><span class="language-bash">执行</span><br>nvitop<br></code></pre></td></tr></table></figure>
 
 <p><img src="/./../../img/image-20250421144820230.png" srcset="/img/loading.gif" lazyload alt="image-20250421144820230"></p>
 
@@ -702,12 +662,6 @@ nvitop</code></pre></div></figure>
   });
 </script>
 
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
 

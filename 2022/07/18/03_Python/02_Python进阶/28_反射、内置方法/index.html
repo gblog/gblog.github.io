@@ -49,8 +49,6 @@
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
-
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
@@ -73,6 +71,10 @@
     <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
 
 
 
@@ -303,80 +305,23 @@
 <p>对于任意一个对象，都能够调用他的任意方法和属性。</p>
 <p>这种动态获取程序信息以及动态调用对象的功能称为反射机制。</p>
 <p>在python中实现反射非常简单，在程序运行过程中，如果我们获取一个不知道存有何种属性的对象，若想操作其内部属性，可以先通过内置函数dir来获取任意一个类或者对象的属性列表，列表中全为字符串格式</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">&gt;&gt;&gt; class People:
-...     def __init__(self,name,age,gender):
-...         self.name&#x3D;name
-...         self.age&#x3D;age
-...         self.gender&#x3D;gender
-... 
-&gt;&gt;&gt; obj&#x3D;People(&#39;egon&#39;,18,&#39;male&#39;)
-&gt;&gt;&gt; dir(obj) # 列表中查看到的属性全为字符串
-[......,&#39;age&#39;, &#39;gender&#39;, &#39;name&#39;]</code></pre></div></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">class</span> <span class="hljs-title class_">People</span>:<br><span class="hljs-meta">... </span>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,name,age,gender</span>):<br><span class="hljs-meta">... </span>        <span class="hljs-variable language_">self</span>.name=name<br><span class="hljs-meta">... </span>        <span class="hljs-variable language_">self</span>.age=age<br><span class="hljs-meta">... </span>        <span class="hljs-variable language_">self</span>.gender=gender<br><span class="hljs-meta">... </span><br><span class="hljs-meta">&gt;&gt;&gt; </span>obj=People(<span class="hljs-string">&#x27;egon&#x27;</span>,<span class="hljs-number">18</span>,<span class="hljs-string">&#x27;male&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">dir</span>(obj) <span class="hljs-comment"># 列表中查看到的属性全为字符串</span><br>[......,<span class="hljs-string">&#x27;age&#x27;</span>, <span class="hljs-string">&#x27;gender&#x27;</span>, <span class="hljs-string">&#x27;name&#x27;</span>]<br></code></pre></td></tr></table></figure>
 
 <p>接下来就是想办法通过字符串来操作对象的属性了，这就涉及到内置函数hasattr、getattr、setattr、delattr的使用了（Python中一切皆对象，类和对象都可以被这四个函数操作，用法一样）</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">class Teacher:
-    def __init__(self,full_name):
-        self.full_name &#x3D;full_name
-
-t&#x3D;Teacher(&#39;Egon Lin&#39;)
-
-# hasattr(object,&#39;name&#39;)
-hasattr(t,&#39;full_name&#39;) # 按字符串&#39;full_name&#39;判断有无属性t.full_name
-
-# getattr(object, &#39;name&#39;, default&#x3D;None)
-getattr(t,&#39;full_name&#39;,None) # 等同于t.full_name,不存在该属性则返回默认值None
-
-# setattr(x, &#39;y&#39;, v)
-setattr(t,&#39;age&#39;,18) # 等同于t.age&#x3D;18
-
-# delattr(x, &#39;y&#39;)
-delattr(t,&#39;age&#39;) # 等同于del t.age</code></pre></div></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Teacher</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,full_name</span>):<br>        <span class="hljs-variable language_">self</span>.full_name =full_name<br><br>t=Teacher(<span class="hljs-string">&#x27;Egon Lin&#x27;</span>)<br><br><span class="hljs-comment"># hasattr(object,&#x27;name&#x27;)</span><br><span class="hljs-built_in">hasattr</span>(t,<span class="hljs-string">&#x27;full_name&#x27;</span>) <span class="hljs-comment"># 按字符串&#x27;full_name&#x27;判断有无属性t.full_name</span><br><br><span class="hljs-comment"># getattr(object, &#x27;name&#x27;, default=None)</span><br><span class="hljs-built_in">getattr</span>(t,<span class="hljs-string">&#x27;full_name&#x27;</span>,<span class="hljs-literal">None</span>) <span class="hljs-comment"># 等同于t.full_name,不存在该属性则返回默认值None</span><br><br><span class="hljs-comment"># setattr(x, &#x27;y&#x27;, v)</span><br><span class="hljs-built_in">setattr</span>(t,<span class="hljs-string">&#x27;age&#x27;</span>,<span class="hljs-number">18</span>) <span class="hljs-comment"># 等同于t.age=18</span><br><br><span class="hljs-comment"># delattr(x, &#x27;y&#x27;)</span><br><span class="hljs-built_in">delattr</span>(t,<span class="hljs-string">&#x27;age&#x27;</span>) <span class="hljs-comment"># 等同于del t.age</span><br></code></pre></td></tr></table></figure>
 
 <p><img src="https://pic3.zhimg.com/80/v2-9bc82da339b0bf1fab4fa4c5da110592_720w.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
 <p>基于反射可以十分灵活地操作对象的属性，比如将用户交互的结果反射到具体的功能执行</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">&gt;&gt;&gt; class FtpServer:
-...     def serve_forever(self):
-...         while True:
-...             inp&#x3D;input(&#39;input your cmd&gt;&gt;: &#39;).strip()
-...             cmd,file&#x3D;inp.split()
-...             if hasattr(self,cmd): # 根据用户输入的cmd，判断对象self有无对应的方法属性
-...                 func&#x3D;getattr(self,cmd) # 根据字符串cmd，获取对象self对应的方法属性
-...                 func(file)
-...     def get(self,file):
-...         print(&#39;Downloading %s...&#39; %file)
-...     def put(self,file):
-...         print(&#39;Uploading %s...&#39; %file)
-... 
-&gt;&gt;&gt; server&#x3D;FtpServer()
-&gt;&gt;&gt; server.serve_forever()
-input your cmd&gt;&gt;: get a.txt
-Downloading a.txt...
-input your cmd&gt;&gt;: put a.txt
-Uploading a.txt...</code></pre></div></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">class</span> <span class="hljs-title class_">FtpServer</span>:<br><span class="hljs-meta">... </span>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">serve_forever</span>(<span class="hljs-params">self</span>):<br><span class="hljs-meta">... </span>        <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br><span class="hljs-meta">... </span>            inp=<span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;input your cmd&gt;&gt;: &#x27;</span>).strip()<br><span class="hljs-meta">... </span>            cmd,file=inp.split()<br><span class="hljs-meta">... </span>            <span class="hljs-keyword">if</span> <span class="hljs-built_in">hasattr</span>(<span class="hljs-variable language_">self</span>,cmd): <span class="hljs-comment"># 根据用户输入的cmd，判断对象self有无对应的方法属性</span><br><span class="hljs-meta">... </span>                func=<span class="hljs-built_in">getattr</span>(<span class="hljs-variable language_">self</span>,cmd) <span class="hljs-comment"># 根据字符串cmd，获取对象self对应的方法属性</span><br><span class="hljs-meta">... </span>                func(file)<br><span class="hljs-meta">... </span>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get</span>(<span class="hljs-params">self,file</span>):<br><span class="hljs-meta">... </span>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Downloading %s...&#x27;</span> %file)<br><span class="hljs-meta">... </span>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">put</span>(<span class="hljs-params">self,file</span>):<br><span class="hljs-meta">... </span>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Uploading %s...&#x27;</span> %file)<br><span class="hljs-meta">... </span><br><span class="hljs-meta">&gt;&gt;&gt; </span>server=FtpServer()<br><span class="hljs-meta">&gt;&gt;&gt; </span>server.serve_forever()<br><span class="hljs-built_in">input</span> your cmd&gt;&gt;: get a.txt<br>Downloading a.txt...<br><span class="hljs-built_in">input</span> your cmd&gt;&gt;: put a.txt<br>Uploading a.txt...<br></code></pre></td></tr></table></figure>
 
 <p><img src="https://pic1.zhimg.com/80/v2-97d87ec7c2fe74480aad298b224565a0_720w.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
 <h2 id="二-内置方法"><a href="#二-内置方法" class="headerlink" title="二 内置方法"></a>二 内置方法</h2><p>Python的Class机制内置了很多特殊的方法来帮助使用者高度定制自己的类，这些内置方法都是以双下划线开头和结尾的，会在满足某种条件时自动触发，我们以常用的__str__和__del__为例来简单介绍它们的使用。</p>
 <p><img src="https://pic4.zhimg.com/80/v2-6e4601a804f239a1f7f9a2aa14d8879f_720w.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
 <p>__str__方法会在对象被打印时自动触发，print功能打印的就是它的返回值，我们通常基于方法来定制对象的打印信息，该方法必须返回字符串类型</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">&gt;&gt;&gt; class People:
-...     def __init__(self,name,age):
-...         self.name&#x3D;name
-...         self.age&#x3D;age
-...     def __str__(self):
-...         return &#39;&lt;Name:%s Age:%s&gt;&#39; %(self.name,self.age) #返回类型必须是字符串
-... 
-&gt;&gt;&gt; p&#x3D;People(&#39;lili&#39;,18)
-&gt;&gt;&gt; print(p) #触发p.__str__()，拿到返回值后进行打印
-&lt;Name:lili Age:18&gt;</code></pre></div></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">class</span> <span class="hljs-title class_">People</span>:<br><span class="hljs-meta">... </span>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,name,age</span>):<br><span class="hljs-meta">... </span>        <span class="hljs-variable language_">self</span>.name=name<br><span class="hljs-meta">... </span>        <span class="hljs-variable language_">self</span>.age=age<br><span class="hljs-meta">... </span>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__str__</span>(<span class="hljs-params">self</span>):<br><span class="hljs-meta">... </span>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;&lt;Name:%s Age:%s&gt;&#x27;</span> %(<span class="hljs-variable language_">self</span>.name,<span class="hljs-variable language_">self</span>.age) <span class="hljs-comment">#返回类型必须是字符串</span><br><span class="hljs-meta">... </span><br><span class="hljs-meta">&gt;&gt;&gt; </span>p=People(<span class="hljs-string">&#x27;lili&#x27;</span>,<span class="hljs-number">18</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(p) <span class="hljs-comment">#触发p.__str__()，拿到返回值后进行打印</span><br>&lt;Name:lili Age:<span class="hljs-number">18</span>&gt;<br></code></pre></td></tr></table></figure>
 
 <p>__del__会在对象被删除时自动触发。由于Python自带的垃圾回收机制会自动清理Python程序的资源，所以当一个对象只占用应用程序级资源时，完全没必要为对象定制__del__方法，但在产生一个对象的同时涉及到申请系统资源（比如系统打开的文件、网络连接等）的情况下，关于系统资源的回收，Python的垃圾回收机制便派不上用场了，需要我们为对象定制该方法，用来在对象被删除时自动触发回收系统资源的操作</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">class MySQL:
-    def __init__(self,ip,port):
-        self.conn&#x3D;connect(ip,port) # 伪代码，发起网络连接，需要占用系统资源
-    def __del__(self):
-        self.conn.close() # 关闭网络连接，回收系统资源
-
-obj&#x3D;MySQL(&#39;127.0.0.1&#39;,3306) # 在对象obj被删除时，自动触发obj.__del__()</code></pre></div></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MySQL</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,ip,port</span>):<br>        <span class="hljs-variable language_">self</span>.conn=connect(ip,port) <span class="hljs-comment"># 伪代码，发起网络连接，需要占用系统资源</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__del__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-variable language_">self</span>.conn.close() <span class="hljs-comment"># 关闭网络连接，回收系统资源</span><br><br>obj=MySQL(<span class="hljs-string">&#x27;127.0.0.1&#x27;</span>,<span class="hljs-number">3306</span>) <span class="hljs-comment"># 在对象obj被删除时，自动触发obj.__del__()</span><br></code></pre></td></tr></table></figure>
 
 <p><img src="https://pic3.zhimg.com/80/v2-d760c34985ac2f1797ea5c3e718e28be_720w.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
 
@@ -663,12 +608,6 @@ obj&#x3D;MySQL(&#39;127.0.0.1&#39;,3306) # 在对象obj被删除时，自动触�
   });
 </script>
 
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
 

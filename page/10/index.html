@@ -57,6 +57,10 @@
 
 
 
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
@@ -289,7 +293,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/07/28/03_Python/04_%E5%89%8D%E7%AB%AF/01_HTML/" target="_self">
         <div>
-          “Python的进阶方向之一：Web开发，在这之前需要了解常用的前端知识，这篇文章主要介绍HTML的简单使用” 1 创建表格 作用：table标签用于展示数据  1.1 使用场景一组数据需要以表格方式展示，例如：    Name Age Height    Tank 18 172   Jodan 20 190   Timi 8 200   1.2 数据表格化&lt;table&gt;     &l
+          “Python的进阶方向之一：Web开发，在这之前需要了解常用的前端知识，这篇文章主要介绍HTML的简单使用” 1 创建表格 作用：table标签用于展示数据  1.1 使用场景一组数据需要以表格方式展示，例如：    Name Age Height    Tank 18 172   Jodan 20 190   Timi 8 200   1.2 数据表格化12345678910111213141
         </div>
       </a>
 
@@ -350,7 +354,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/07/22/06_%E6%9D%82%E8%AE%B0/Linux%E7%B3%BB%E7%BB%9F%E8%87%AA%E5%90%AF%E5%8A%A8%E5%BA%94%E7%94%A8/" target="_self">
         <div>
-          “前言：工作上有这方面的需求，特记录下来，方便之后参考” 1 创建rc-local服务文件🌞创建文件 sudo vim &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;rc-local.service  内容： [Unit] Description&#x3D;&#x2F;etc&#x2F;rc.local Compatibility ConditionPathEx
+          “前言：工作上有这方面的需求，特记录下来，方便之后参考” 1 创建rc-local服务文件🌞创建文件 1sudo vim /etc/systemd/system/rc-local.service  内容： 123456789101112[Unit]Description=/etc/rc.local CompatibilityConditionPathExists=/etc/rc.local[Se
         </div>
       </a>
 
@@ -404,7 +408,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/07/20/06_%E6%9D%82%E8%AE%B0/Githubio%E5%A6%82%E4%BD%95%E7%BB%91%E5%AE%9A%E5%9F%9F%E5%90%8D/" target="_self">
         <div>
-          “如何将自己的域名绑定到Github IO”  1 获取原地址IP通过ping获取 [root@3yserver ~]# ping gsproj.github.io PING gsproj.github.io (185.199.110.153) 56(84) bytes of data. 64 bytes from cdn-185-199-110-153.github.com (185.199.
+          “如何将自己的域名绑定到Github IO”  1 获取原地址IP通过ping获取 12345678[root@3yserver ~]# ping gsproj.github.ioPING gsproj.github.io (185.199.110.153) 56(84) bytes of data.64 bytes from cdn-185-199-110-153.github.com (18
         </div>
       </a>
 
@@ -458,7 +462,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/07/19/03_Python/03_MySQL/day48-%E6%95%B0%E6%8D%AE%E5%BA%93(%E4%BA%94)/" target="_self">
         <div>
-          知识点补充# 查询平均年龄在25岁以上的部门名称 &quot;&quot;&quot;只要是多表查询 就有两种思路    联表    子查询&quot;&quot;&quot; # 联表操作 	1 先拿到部门和员工表 拼接之后的结果 	2 分析语义 得出需要进行分组     select dep.name from emp inner join dep     	on emp.dep_id &#x
+          知识点补充1234567891011121314151617181920212223242526# 查询平均年龄在25岁以上的部门名称&quot;&quot;&quot;只要是多表查询 就有两种思路    联表    子查询&quot;&quot;&quot;# 联表操作	1 先拿到部门和员工表 拼接之后的结果	2 分析语义 得出需要进行分组    select dep.name from emp
         </div>
       </a>
 
@@ -519,7 +523,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/07/18/03_Python/08-%E9%99%84%E5%BD%95%E8%A1%A5%E5%85%85/54_%E9%99%84%E5%BD%95%E4%B9%9D%EF%BC%9ATypeHinting/" target="_self">
         <div>
-          类型提示 Type hinting（最低Python版本为3.5） python3新增类型提示功能，例如我们可以为函数增加类型提示信息，而不影响函数本身的执行： 注释的一般规则是参数名后跟一个冒号（：），然后再跟一个expression，这个expression可以是任何形式。 def func(a: &#39;spam&#39;, b: (1, 10), c: float) -&gt; int:
+          类型提示 Type hinting（最低Python版本为3.5） python3新增类型提示功能，例如我们可以为函数增加类型提示信息，而不影响函数本身的执行： 注释的一般规则是参数名后跟一个冒号（：），然后再跟一个expression，这个expression可以是任何形式。 12345def func(a: &#x27;spam&#x27;, b: (1, 10), c: float) -&g
         </div>
       </a>
 
@@ -580,7 +584,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/07/18/03_Python/03_MySQL/day47-%E6%95%B0%E6%8D%AE%E5%BA%93(%E5%9B%9B)/" target="_self">
         <div>
-          “Day47-数据库(四)学习笔记” 一、单表查询1.1 前期表准备create table emp(   id int not null unique auto_increment,   name varchar(20) not null,   sex enum(&#39;male&#39;,&#39;female&#39;) not null default &#39;male&#39;, #
+          “Day47-数据库(四)学习笔记” 一、单表查询1.1 前期表准备123456789101112131415161718192021222324252627282930313233343536create table emp(  id int not null unique auto_increment,  name varchar(20) not null,  sex enum(&#x27;m
         </div>
       </a>
 
@@ -702,7 +706,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/07/18/03_Python/03_MySQL/day46-%E6%95%B0%E6%8D%AE%E5%BA%93(%E4%B8%89)/" target="_self">
         <div>
-          “Day46-数据库(三)学习笔记” 一、约束条件补充我们已学习了三个约束条件，分别是：null&#x2F;not null、unsigned、zerofill, 接下来将补充学习4个常用的约束条件。 它们分别是：default、unique、primary key、auto_increment 1.1 default(默认值)# 创建表t1 create table t1( 	id int,
+          “Day46-数据库(三)学习笔记” 一、约束条件补充我们已学习了三个约束条件，分别是：null&#x2F;not null、unsigned、zerofill, 接下来将补充学习4个常用的约束条件。 它们分别是：default、unique、primary key、auto_increment 1.1 default(默认值)1234567891011121314151617181920# 创建
         </div>
       </a>
 
@@ -763,7 +767,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/07/18/03_Python/08-%E9%99%84%E5%BD%95%E8%A1%A5%E5%85%85/52_%E9%99%84%E5%BD%95%E4%B8%83%EF%BC%9Acollections%E4%B9%8BOrderedDict/" target="_self">
         <div>
-          collections之OrderedDict😀 如果想让字典有序，可以使用collections.OrderedDict，它现在在C中实现，这使其快4到100倍。 ##1、collections.OrderedDict的基本使用  将类OrderedDict实例化会得到一个dict子类的实例，支持通常的dict方法。 from collections import OrderedDict  o
+          collections之OrderedDict😀 如果想让字典有序，可以使用collections.OrderedDict，它现在在C中实现，这使其快4到100倍。 ##1、collections.OrderedDict的基本使用  将类OrderedDict实例化会得到一个dict子类的实例，支持通常的dict方法。 12345from collections import OrderedDi
         </div>
       </a>
 

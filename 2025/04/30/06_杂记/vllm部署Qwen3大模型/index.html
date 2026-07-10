@@ -48,8 +48,6 @@
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
-
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
@@ -72,6 +70,10 @@
     <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
 
 
 
@@ -229,7 +231,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          733 字
+          670 字
         
       </span>
     
@@ -240,7 +242,7 @@
         
         
         
-          7 分钟
+          6 分钟
         
       </span>
     
@@ -329,20 +331,13 @@
 </tbody></table>
 <h1 id="二、下载Qwen3大模型"><a href="#二、下载Qwen3大模型" class="headerlink" title="二、下载Qwen3大模型"></a>二、下载Qwen3大模型</h1><p>使用魔塔社区下载，4月29日发布的最新Qwen3。</p>
 <p>测试部署235B和32B的模型。</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 使用pip安装modelscope
-pip install modelscope
-# 下载235B模型
-modelscope download --model Qwen&#x2F;Qwen3-235B-A22B --local_dir &#x2F;nvme-data&#x2F;Models&#x2F;Qwen3-235B-A22B&#x2F;
-# 下载32B模型
-modelscope download --model Qwen&#x2F;Qwen3-32B --local_dir &#x2F;nvme-data&#x2F;Models&#x2F;Qwen3-32B&#x2F;</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">使用pip安装modelscope</span><br>pip install modelscope<br><span class="hljs-meta prompt_"># </span><span class="language-bash">下载235B模型</span><br>modelscope download --model Qwen/Qwen3-235B-A22B --local_dir /nvme-data/Models/Qwen3-235B-A22B/<br><span class="hljs-meta prompt_"># </span><span class="language-bash">下载32B模型</span><br>modelscope download --model Qwen/Qwen3-32B --local_dir /nvme-data/Models/Qwen3-32B/<br></code></pre></td></tr></table></figure>
 
 <h1 id="三、安装VLLM"><a href="#三、安装VLLM" class="headerlink" title="三、安装VLLM"></a>三、安装VLLM</h1><p>1、安装VLLM</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pip install --upgrade pip
-pip install &quot;vllm&gt;&#x3D;0.8.5&quot; </code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">pip install --upgrade pip<br>pip install &quot;vllm&gt;=0.8.5&quot; <br></code></pre></td></tr></table></figure>
 
 <p>2、切换到VLLM环境中</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">python3 -m venv vllm-env
-source vllm-env&#x2F;bin&#x2F;activate</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">python3 -m venv vllm-env<br>source vllm-env/bin/activate<br></code></pre></td></tr></table></figure>
 
 <p>切换成功能看到命令行前面出现（vllm-env）</p>
 <p><img src="/./../../img/image-20250429140414749.png" srcset="/img/loading.gif" lazyload alt="image-20250429140414749"></p>
@@ -350,73 +345,36 @@ source vllm-env&#x2F;bin&#x2F;activate</code></pre></div></figure>
 <p>使用7张A800-80G</p>
 </blockquote>
 <p>1、在vllm-env中设置环境变量</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">export VLLM_USE_MODELSCOPE&#x3D;true
-export VLLM_CACHE_ROOT&#x3D;&quot;&#x2F;nvme-data&#x2F;Models&quot;
-export NCCL_CUMEM_ENABLE&#x3D;0
-export VLLM_HOST_IP&#x3D;10.3.3.41
-export NCCL_SOCKET_IFNAME&#x3D;bond1    # 10.3.3.41的网卡名
-export GLOO_SOCKET_IFNAME&#x3D;bond1
-export PYTORCH_CUDA_ALLOC_CONF&#x3D;expandable_segments:True</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">export VLLM_USE_MODELSCOPE=true<br>export VLLM_CACHE_ROOT=&quot;/nvme-data/Models&quot;<br>export NCCL_CUMEM_ENABLE=0<br>export VLLM_HOST_IP=10.3.3.41<br>export NCCL_SOCKET_IFNAME=bond1    # 10.3.3.41的网卡名<br>export GLOO_SOCKET_IFNAME=bond1<br>export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True<br></code></pre></td></tr></table></figure>
 
 <p>2、运行Qwen3-235B-A22B大模型</p>
 <p>因为服务器有1张卡坏了，用7张卡运行</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">CUDA_VISIBLE_DEVICES&#x3D;0,1,2,3,4,5,6 vllm serve &#x2F;nvme-data&#x2F;Models&#x2F;Qwen3-235B-A22B \
---host 0.0.0.0 \
---port 8000 \
---tensor-parallel-size 1 \
---pipeline-parallel-size 7 \
---gpu-memory-utilization 0.96 \
---block-size 16 \
---enforce-eager</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell">CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6 vllm serve /nvme-data/Models/Qwen3-235B-A22B \<br>--host 0.0.0.0 \<br>--port 8000 \<br>--tensor-parallel-size 1 \<br>--pipeline-parallel-size 7 \<br>--gpu-memory-utilization 0.96 \<br>--block-size 16 \<br>--enforce-eager<br></code></pre></td></tr></table></figure>
 
 <p>运行成功的输出如下：</p>
 <p><img src="/./../../img/image-20250429140938435.png" srcset="/img/loading.gif" lazyload alt="image-20250429140938435"></p>
 <p>7张A800的显存占用情况</p>
 <p><img src="/./../../img/image-20250429140958704.png" srcset="/img/loading.gif" lazyload alt="image-20250429140958704"></p>
 <h2 id="4-2-测试Qwen3-235B-A22B"><a href="#4-2-测试Qwen3-235B-A22B" class="headerlink" title="4.2 测试Qwen3-235B-A22B"></a>4.2 测试Qwen3-235B-A22B</h2><p>1、使用<code>curl</code>命令测试</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">curl http:&#x2F;&#x2F;localhost:8000&#x2F;v1&#x2F;chat&#x2F;completions   \
-	-H &quot;Content-Type: application&#x2F;json&quot;   \
-	-d &#39;&#123;
-    &quot;model&quot;: &quot;&#x2F;nvme-data&#x2F;Models&#x2F;Qwen3-235B-A22B&quot;,
-    &quot;messages&quot;:[&#123;&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:&quot;介绍一下大语言模型。&quot;&#125;],
-    &quot;max_tokens&quot;:1024
-   &#125;&#39;</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">curl http://localhost:8000/v1/chat/completions   \<br>	-H &quot;Content-Type: application/json&quot;   \<br>	-d &#x27;&#123;<br>    &quot;model&quot;: &quot;/nvme-data/Models/Qwen3-235B-A22B&quot;,<br>    &quot;messages&quot;:[&#123;&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:&quot;介绍一下大语言模型。&quot;&#125;],<br>    &quot;max_tokens&quot;:1024<br>   &#125;&#x27;<br></code></pre></td></tr></table></figure>
 
 <p>2、查看生成速度，只有10token&#x2F;s，很低啊</p>
 <p><img src="/./../../img/image-20250429141140924.png" srcset="/img/loading.gif" lazyload alt="image-20250429141140924"></p>
 <blockquote>
 <p>也尝试了6张卡运行，勉强能跑，但输出只有7.1 tokens&#x2F;s，更差</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">export VLLM_ALLOW_LONG_MAX_MODEL_LEN&#x3D;1
-CUDA_VISIBLE_DEVICES&#x3D;0,1,2,3,4,5,6 vllm serve &#x2F;nvme-data&#x2F;Models&#x2F;Qwen3-235B-A22B   --host 0.0.0.0 --port 8000   --tensor-parallel-size 2   --pipeline-parallel-size 3 --gpu-memory-utilization 0.98   --block-size 16 --max-model-len 4096  --enforce-eager</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">export VLLM_ALLOW_LONG_MAX_MODEL_LEN=1<br>CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6 vllm serve /nvme-data/Models/Qwen3-235B-A22B   --host 0.0.0.0 --port 8000   --tensor-parallel-size 2   --pipeline-parallel-size 3 --gpu-memory-utilization 0.98   --block-size 16 --max-model-len 4096  --enforce-eager<br></code></pre></td></tr></table></figure>
 </blockquote>
 <h2 id="4-3-部署Qwen3-32B"><a href="#4-3-部署Qwen3-32B" class="headerlink" title="4.3 部署Qwen3-32B"></a>4.3 部署Qwen3-32B</h2><blockquote>
 <p>使用4张A800-80G</p>
 </blockquote>
 <p>VLLM运行命令</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">(vllm-env) [root@A07-1 Models]# CUDA_VISIBLE_DEVICES&#x3D;0,1,2,3 vllm serve &#x2F;nvme-data&#x2F;Models&#x2F;Qwen3-32B \
-&gt;   --host 0.0.0.0 \
-&gt;   --port 8000 \
-&gt;   --tensor-parallel-size 4 \
-&gt;   --dtype float16 \
-&gt;   --max-model-len 8192 \
-&gt;   --gpu-memory-utilization 0.90 \
-&gt;   --swap-space 8GiB \
-&gt;   --disable-custom-all-reduce \
-&gt;   --disable-log-requests</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell">(vllm-env) [root@A07-1 Models]# CUDA_VISIBLE_DEVICES=0,1,2,3 vllm serve /nvme-data/Models/Qwen3-32B \<br><span class="hljs-meta prompt_">&gt; </span><span class="language-bash">  --host 0.0.0.0 \</span><br><span class="language-bash">&gt;   --port 8000 \</span><br><span class="language-bash">&gt;   --tensor-parallel-size 4 \</span><br><span class="language-bash">&gt;   --dtype float16 \</span><br><span class="language-bash">&gt;   --max-model-len 8192 \</span><br><span class="language-bash">&gt;   --gpu-memory-utilization 0.90 \</span><br><span class="language-bash">&gt;   --swap-space 8GiB \</span><br><span class="language-bash">&gt;   --disable-custom-all-reduce \</span><br><span class="language-bash">&gt;   --disable-log-requests</span><br></code></pre></td></tr></table></figure>
 
 <h2 id="4-4-测试Qwen3-32B"><a href="#4-4-测试Qwen3-32B" class="headerlink" title="4.4 测试Qwen3-32B"></a>4.4 测试Qwen3-32B</h2><p>还是使用curl命令测试</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">curl http:&#x2F;&#x2F;localhost:8000&#x2F;v1&#x2F;chat&#x2F;completions   -H &quot;Content-Type: application&#x2F;json&quot;   -d &#39;&#123;
-    &quot;model&quot;: &quot;&#x2F;nvme-data&#x2F;Models&#x2F;Qwen3-32B&quot;,
-    &quot;messages&quot;:[&#123;&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:&quot;三国演示第三回讲了那些事？说重点描述给我&quot;&#125;],
-    &quot;max_tokens&quot;:1024
-   &#125;&#39;</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">curl http://localhost:8000/v1/chat/completions   -H &quot;Content-Type: application/json&quot;   -d &#x27;&#123;<br>    &quot;model&quot;: &quot;/nvme-data/Models/Qwen3-32B&quot;,<br>    &quot;messages&quot;:[&#123;&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:&quot;三国演示第三回讲了那些事？说重点描述给我&quot;&#125;],<br>    &quot;max_tokens&quot;:1024<br>   &#125;&#x27;<br></code></pre></td></tr></table></figure>
 
 <p>这个生成速度还可以</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">INFO 04-30 15:12:19 [loggers.py:87] Engine 000: Avg prompt throughput: 2.1 tokens&#x2F;s, Avg generation throughput: 12.2 tokens&#x2F;s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 25.0%
-INFO 04-30 15:12:29 [loggers.py:87] Engine 000: Avg prompt throughput: 0.0 tokens&#x2F;s, Avg generation throughput: 56.2 tokens&#x2F;s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.1%, Prefix cache hit rate: 25.0%
-INFO:     127.0.0.1:31562 - &quot;POST &#x2F;v1&#x2F;chat&#x2F;completions HTTP&#x2F;1.1&quot; 200 OK
-INFO 04-30 15:12:39 [loggers.py:87] Engine 000: Avg prompt throughput: 0.0 tokens&#x2F;s, Avg generation throughput: 34.0 tokens&#x2F;s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 25.0%
-INFO 04-30 15:12:49 [loggers.py:87] Engine 000: Avg prompt throughput: 0.0 tokens&#x2F;s, Avg generation thr</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">INFO 04-30 15:12:19 [loggers.py:87] Engine 000: Avg prompt throughput: 2.1 tokens/s, Avg generation throughput: 12.2 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 25.0%<br>INFO 04-30 15:12:29 [loggers.py:87] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 56.2 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.1%, Prefix cache hit rate: 25.0%<br>INFO:     127.0.0.1:31562 - &quot;POST /v1/chat/completions HTTP/1.1&quot; 200 OK<br>INFO 04-30 15:12:39 [loggers.py:87] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 34.0 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 25.0%<br>INFO 04-30 15:12:49 [loggers.py:87] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation thr<br></code></pre></td></tr></table></figure>
 
 
                 
@@ -695,12 +653,6 @@ INFO 04-30 15:12:49 [loggers.py:87] Engine 000: Avg prompt throughput: 0.0 token
   });
 </script>
 
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
 

@@ -90,8 +90,6 @@
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
-
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
@@ -114,6 +112,10 @@
     <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
 
 
 
@@ -376,35 +378,16 @@
 <p>在mn03操作</p>
 </blockquote>
 <p>上传安装包并安装</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 安装包
-grafana-9.3.6-1.x86_64.rpm	# grafana安装包
-grafana-9.3.6-alexanderzobnin-zabbix-app-v4.1.10.tar.gz	# grafana连zbx的插件
-
-# 安装
-yum install -y .&#x2F;grafana-9.3.6-1.x86_64.rpm</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">安装包</span><br>grafana-9.3.6-1.x86_64.rpm	# grafana安装包<br>grafana-9.3.6-alexanderzobnin-zabbix-app-v4.1.10.tar.gz	# grafana连zbx的插件<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">安装</span><br>yum install -y ./grafana-9.3.6-1.x86_64.rpm<br></code></pre></td></tr></table></figure>
 
 <p>启动服务</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl enable --now grafana-server</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl enable --now grafana-server<br></code></pre></td></tr></table></figure>
 
 <p>查看端口信息</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@mn03 &#x2F;app&#x2F;rpms]#ss -lntup | grep grafana
-tcp    LISTEN     0      128    [::]:3000               [::]:*                   users:((&quot;grafana-server&quot;,pid&#x3D;3875,fd&#x3D;11))</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn03 /app/rpms]#ss -lntup | grep grafana<br>tcp    LISTEN     0      128    [::]:3000               [::]:*                   users:((&quot;grafana-server&quot;,pid=3875,fd=11))<br></code></pre></td></tr></table></figure>
 
 <p>安装连接zabbix的插件（默认不支持连接zbx）</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 创建插件目录
-mkdir &#x2F;var&#x2F;lib&#x2F;grafana&#x2F;plugins
-
-# 解压插件包
-tar -vxf grafana-9.3.6-alexanderzobnin-zabbix-app-v4.1.10.tar.gz
-
-# 把解压的文件夹放到目录中
-mv alexanderzobnin-zabbix-app&#x2F; &#x2F;var&#x2F;lib&#x2F;grafana&#x2F;plugins&#x2F;
-
-# 查看是否安装成功
-[root@mn03 &#x2F;app&#x2F;rpms]#grafana-cli plugins ls
-installed plugins:
-alexanderzobnin-zabbix-app @ 4.1.10
-Please restart Grafana after installing plugins. Refer to Grafana documentation for instructions if necessary.</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">创建插件目录</span><br>mkdir /var/lib/grafana/plugins<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">解压插件包</span><br>tar -vxf grafana-9.3.6-alexanderzobnin-zabbix-app-v4.1.10.tar.gz<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">把解压的文件夹放到目录中</span><br>mv alexanderzobnin-zabbix-app/ /var/lib/grafana/plugins/<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">查看是否安装成功</span><br>[root@mn03 /app/rpms]#grafana-cli plugins ls<br>installed plugins:<br>alexanderzobnin-zabbix-app @ 4.1.10<br>Please restart Grafana after installing plugins. Refer to Grafana documentation for instructions if necessary.<br></code></pre></td></tr></table></figure>
 
 <p>测试访问</p>
 <p><a target="_blank" rel="noopener" href="http://10.0.0.63:3000/">http://10.0.0.63:3000</a></p>
@@ -458,7 +441,7 @@ Please restart Grafana after installing plugins. Refer to Grafana documentation 
 <p>首页效果</p>
 <p><img src="/../../../img/image-20240702113358353.png" srcset="/img/loading.gif" lazyload alt="image-20240702113358353"></p>
 <h3 id="1-4-4-自定义监控获取zbx服务端的每秒新值"><a href="#1-4-4-自定义监控获取zbx服务端的每秒新值" class="headerlink" title="1.4.4 自定义监控获取zbx服务端的每秒新值"></a>1.4.4 自定义监控获取zbx服务端的每秒新值</h3><p>就是展示这句命令获取的值，取其中的<code>requiredperformance</code>项</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">zabbix_get -s 127.0.0.1 -k zabbix.stats</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">zabbix_get -s 127.0.0.1 -k zabbix.stats<br></code></pre></td></tr></table></figure>
 
 <p><img src="/../../../img/image-20240702113659068.png" srcset="/img/loading.gif" lazyload alt="image-20240702113659068"></p>
 <p>怎么实现？</p>
@@ -485,15 +468,7 @@ Please restart Grafana after installing plugins. Refer to Grafana documentation 
 <p><img src="/../../../img/image-20240702115936841.png" srcset="/img/loading.gif" lazyload alt="image-20240702115936842"></p>
 <h4 id="d）监控其他指标"><a href="#d）监控其他指标" class="headerlink" title="d）监控其他指标"></a>d）监控其他指标</h4><p>未来只需要根据对应的stats值来修改正则，即可以实现</p>
 <p>比如：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F; 案例01
-&quot;poller&quot;:&#123;&quot;busy&quot;:&#123;&quot;avg&quot;:0.992678
-&#x2F;&#x2F; 改写正则表达式
-&quot;poller&quot;:\&#123;&quot;busy&quot;:\&#123;&quot;avg&quot;:([0-9.]+) &#x2F;&#x2F; 我们想要的内容是\1
-
-&#x2F;&#x2F; 案例02
-&quot;history poller&quot;:&#123;&quot;busy&quot;:&#123;&quot;avg&quot;:0.003381
-&#x2F;&#x2F; 改写正则
-history poller&quot;:\&#123;&quot;busy&quot;:\&#123;&quot;avg&quot;:([0-9.]+) &#x2F;&#x2F; 我们想要的内容是\1</code></pre></div></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 案例01</span><br><span class="hljs-string">&quot;poller&quot;</span>:&#123;<span class="hljs-string">&quot;busy&quot;</span>:&#123;<span class="hljs-string">&quot;avg&quot;</span>:<span class="hljs-number">0.992678</span><br><span class="hljs-comment">// 改写正则表达式</span><br><span class="hljs-string">&quot;poller&quot;</span>:\&#123;<span class="hljs-string">&quot;busy&quot;</span>:\&#123;<span class="hljs-string">&quot;avg&quot;</span>:([<span class="hljs-number">0</span><span class="hljs-number">-9.</span>]+) <span class="hljs-comment">// 我们想要的内容是\1</span><br><br><span class="hljs-comment">// 案例02</span><br><span class="hljs-string">&quot;history poller&quot;</span>:&#123;<span class="hljs-string">&quot;busy&quot;</span>:&#123;<span class="hljs-string">&quot;avg&quot;</span>:<span class="hljs-number">0.003381</span><br><span class="hljs-comment">// 改写正则</span><br>history poller<span class="hljs-string">&quot;:\&#123;&quot;</span>busy<span class="hljs-string">&quot;:\&#123;&quot;</span>avg<span class="hljs-string">&quot;:([0-9.]+) // 我们想要的内容是\1</span><br></code></pre></td></tr></table></figure>
 
 
 
@@ -503,10 +478,7 @@ history poller&quot;:\&#123;&quot;busy&quot;:\&#123;&quot;avg&quot;:([0-9.]+) &#
 <p><img src="/../../../img/image-20240702120840104.png" srcset="/img/loading.gif" lazyload alt="image-20240702120840104"></p>
 <h3 id="1-4-6-展示主机负载信息"><a href="#1-4-6-展示主机负载信息" class="headerlink" title="1.4.6 展示主机负载信息"></a>1.4.6 展示主机负载信息</h3><p>编辑“Zabbix Template Linux Sever”模板</p>
 <p>system load界面修改</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">&#x2F;Linux: Load average (.*m avg)&#x2F;
-
-# 普通是Linux: Load average (1m avg)
-# .*代表所有，像图中的三条线1m、5m、15m</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">/Linux: Load average (.*m avg)/<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">普通是Linux: Load average (1m avg)</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">.*代表所有，像图中的三条线1m、5m、15m</span><br></code></pre></td></tr></table></figure>
 
 <p><img src="/../../../img/image-20240702121312863.png" srcset="/img/loading.gif" lazyload alt="image-20240702121312863"></p>
 <p>system cpu界面修改</p>
@@ -832,12 +804,6 @@ history poller&quot;:\&#123;&quot;busy&quot;:\&#123;&quot;avg&quot;:([0-9.]+) &#
   });
 </script>
 
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
 

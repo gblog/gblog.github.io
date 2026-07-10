@@ -57,6 +57,10 @@
 
 
 
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
@@ -357,7 +361,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/07/18/03_Python/02_Python%E8%BF%9B%E9%98%B6/30_%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" target="_self">
         <div>
-          一 什么是异常异常是程序发生错误的信号。程序一旦出现错误，便会产生一个异常，若程序中没有处理它，就会抛出该异常，程序的运行也随之终止。在Python中,错误触发的异常如下  而错误分成两种，一种是语法上的错误SyntaxError，这种错误应该在程序运行前就修改正确 &gt;&gt;&gt; if     File &quot;&lt;stdin&gt;&quot;, line 1     if
+          一 什么是异常异常是程序发生错误的信号。程序一旦出现错误，便会产生一个异常，若程序中没有处理它，就会抛出该异常，程序的运行也随之终止。在Python中,错误触发的异常如下  而错误分成两种，一种是语法上的错误SyntaxError，这种错误应该在程序运行前就修改正确 12345&gt;&gt;&gt; if    File &quot;&lt;stdin&gt;&quot;, line 1
         </div>
       </a>
 
@@ -418,7 +422,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/07/18/03_Python/02_Python%E8%BF%9B%E9%98%B6/29_%E5%85%83%E7%B1%BB/" target="_self">
         <div>
-          一 元类介绍 什么是元类呢？一切源自于一句话：python中一切皆为对象。让我们先定义一个类，然后逐步分析 class StanfordTeacher(object):     school&#x3D;&#39;Stanford&#39;      def __init__(self,name,age):         self.name&#x3D;name         self.age&#
+          一 元类介绍 什么是元类呢？一切源自于一句话：python中一切皆为对象。让我们先定义一个类，然后逐步分析 123456789class StanfordTeacher(object):    school=&#x27;Stanford&#x27;    def __init__(self,name,age):        self.name=name        self.age=age
         </div>
       </a>
 
@@ -540,7 +544,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/07/18/03_Python/02_Python%E8%BF%9B%E9%98%B6/27_%E7%BB%91%E5%AE%9A%E6%96%B9%E6%B3%95%E4%B8%8E%E9%9D%9E%E7%BB%91%E5%AE%9A%E6%96%B9%E6%B3%95/" target="_self">
         <div>
-          一 绑定方法与非绑定方法 类中定义的函数分为两大类：绑定方法和非绑定方法  其中绑定方法又分为绑定到对象的对象方法和绑定到类的类方法。  在类中正常定义的函数默认是绑定到对象的，而为某个函数加上装饰器@classmethod后，该函数就绑定到了类。   我们在之前的章节中已经介绍过对象方法了，本节我们主要介绍类方法。类方法通常用来在__init__的基础上提供额外的初始化实例的方式 # 配置文件s
+          一 绑定方法与非绑定方法 类中定义的函数分为两大类：绑定方法和非绑定方法  其中绑定方法又分为绑定到对象的对象方法和绑定到类的类方法。  在类中正常定义的函数默认是绑定到对象的，而为某个函数加上装饰器@classmethod后，该函数就绑定到了类。   我们在之前的章节中已经介绍过对象方法了，本节我们主要介绍类方法。类方法通常用来在__init__的基础上提供额外的初始化实例的方式 1234567
         </div>
       </a>
 
@@ -601,7 +605,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/07/18/03_Python/02_Python%E8%BF%9B%E9%98%B6/26_%E5%A4%9A%E6%80%81%E6%80%A7%E4%B8%8E%E9%B8%AD%E5%AD%90%E7%B1%BB%E5%9E%8B/" target="_self">
         <div>
-          多态与多态性多态指的是一类事物有多种形态，比如动物有多种形态：猫、狗、猪 class Animal: #同一类事物:动物     def talk(self):         pass class Cat(Animal): #动物的形态之一:猫     def talk(self):         print(&#39;喵喵喵&#39;) class Dog(Animal): #动物的形态之二
+          多态与多态性多态指的是一类事物有多种形态，比如动物有多种形态：猫、狗、猪 1234567891011121314151617class Animal: #同一类事物:动物    def talk(self):        passclass Cat(Animal): #动物的形态之一:猫    def talk(self):        print(&#x27;喵喵喵&#x27;)class
         </div>
       </a>
 
@@ -662,7 +666,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/07/18/03_Python/02_Python%E8%BF%9B%E9%98%B6/23_%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/" target="_self">
         <div>
-          一 对象的概念 ”面向对象“的核心是“对象”二字，而对象的精髓在于“整合“，什么意思？  所有的程序都是由”数据”与“功能“组成，因而编写程序的本质就是定义出一系列的数据，然后定义出一系列的功能来对数据进行操作。在学习”对象“之前，程序中的数据与功能是分离开的，如下 # 数据：name、age、sex name&#x3D;&#39;lili&#39; age&#x3D;18 sex&#x3D;&#
+          一 对象的概念 ”面向对象“的核心是“对象”二字，而对象的精髓在于“整合“，什么意思？  所有的程序都是由”数据”与“功能“组成，因而编写程序的本质就是定义出一系列的数据，然后定义出一系列的功能来对数据进行操作。在学习”对象“之前，程序中的数据与功能是分离开的，如下 1234567891011# 数据：name、age、sexname=&#x27;lili&#x27;age=18sex=&#x27
         </div>
       </a>
 
@@ -723,7 +727,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/07/18/03_Python/02_Python%E8%BF%9B%E9%98%B6/25_%E7%BB%A7%E6%89%BF%E4%B8%8E%E6%B4%BE%E7%94%9F/" target="_self">
         <div>
-          一 继承介绍 继承是一种创建新类的方式，在Python中，新建的类可以继承一个或多个父类，新建的类可称为子类或派生类，父类又可称为基类或超类 class ParentClass1: #定义父类     pass  class ParentClass2: #定义父类     pass  class SubClass1(ParentClass1): #单继承     pass  class SubCl
+          一 继承介绍 继承是一种创建新类的方式，在Python中，新建的类可以继承一个或多个父类，新建的类可称为子类或派生类，父类又可称为基类或超类 1234567891011class ParentClass1: #定义父类    passclass ParentClass2: #定义父类    passclass SubClass1(ParentClass1): #单继承    passclass S
         </div>
       </a>
 
@@ -845,7 +849,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/07/18/03_Python/02_Python%E8%BF%9B%E9%98%B6/22_%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E7%9A%84%E7%9B%AE%E5%BD%95%E8%A7%84%E8%8C%83/" target="_self">
         <div>
-          软件开发目录规范 强烈推荐配套资料：egon新书来袭干货满满 - linhaifeng 为了提高程序的可读性与可维护性，我们应该为软件设计良好的目录结构，这与规范的编码风格同等重要。软件的目录规范并无硬性标准，只要清晰可读即可，假设你的软件名为foo，笔者推荐目录结构如下 Foo&#x2F; |-- core&#x2F; |   |-- core.py | |-- api&#x2F; |   |-
+          软件开发目录规范 强烈推荐配套资料：egon新书来袭干货满满 - linhaifeng 为了提高程序的可读性与可维护性，我们应该为软件设计良好的目录结构，这与规范的编码风格同等重要。软件的目录规范并无硬性标准，只要清晰可读即可，假设你的软件名为foo，笔者推荐目录结构如下 1234567891011121314151617181920Foo/|-- core/|   |-- core.py||--
         </div>
       </a>
 
@@ -906,7 +910,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/07/18/03_Python/02_Python%E8%BF%9B%E9%98%B6/21_%E5%8C%85/" target="_self">
         <div>
-          一 包介绍随着模块数目的增多，把所有模块不加区分地放到一起也是极不合理的，于是Python为我们提供了一种把模块组织到一起的方法，即创建一个包。包就是一个含有__init__.py文件的文件夹，文件夹内可以组织子模块或子包，例如 pool&#x2F;                #顶级包 ├── __init__.py      ├── futures          #子包 │   ├──
+          一 包介绍随着模块数目的增多，把所有模块不加区分地放到一起也是极不合理的，于是Python为我们提供了一种把模块组织到一起的方法，即创建一个包。包就是一个含有__init__.py文件的文件夹，文件夹内可以组织子模块或子包，例如 1234567pool/                #顶级包├── __init__.py     ├── futures          #子包│   ├── _
         </div>
       </a>
 

@@ -46,8 +46,6 @@
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
-
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
@@ -70,6 +68,10 @@
     <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
 
 
 
@@ -227,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          268 字
+          269 字
         
       </span>
     
@@ -306,35 +308,13 @@
 <li>Separate方式，隔离型VLAN，只能和母VLAN互通，与其他的都隔离</li>
 </ul>
 </blockquote>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 创建vlan
-&lt;CE6865E&gt;sy
-[~CE6865E]vlan 101
-[~CE6865E]vlan 102
-
-# 将新建的vlan划到母vlan中，采用互通型VLAN
-vlan 3          
- mux-vlan       
- subordinate group 101 to 102</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">创建vlan</span><br>&lt;CE6865E&gt;sy<br>[~CE6865E]vlan 101<br>[~CE6865E]vlan 102<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">将新建的vlan划到母vlan中，采用互通型VLAN</span><br>vlan 3          <br> mux-vlan       <br> subordinate group 101 to 102<br></code></pre></td></tr></table></figure>
 
 <p>2、将对应接口划到子VLAN中</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 服务器1连接的对端网口
-port default vlan 3
-port mux-vlan enable vlan 3   # 其他子VLAN要与母VLAN互通，必须加上这一条
-
-# 服务器2连接的对端网口
-port default vlan 101
-port mux-vlan enable vlan 101
-
-# 服务器3连接的对端网口
-port default vlan 101
-port mux-vlan enable vlan 101
-
-# 服务器4连接的对端网口
-port default vlan 102
-port mux-vlan enable vlan 102</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">服务器1连接的对端网口</span><br>port default vlan 3<br>port mux-vlan enable vlan 3   # 其他子VLAN要与母VLAN互通，必须加上这一条<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">服务器2连接的对端网口</span><br>port default vlan 101<br>port mux-vlan enable vlan 101<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">服务器3连接的对端网口</span><br>port default vlan 101<br>port mux-vlan enable vlan 101<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">服务器4连接的对端网口</span><br>port default vlan 102<br>port mux-vlan enable vlan 102<br></code></pre></td></tr></table></figure>
 
 <p>3、提交并保存</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">commit、save</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">commit、save<br></code></pre></td></tr></table></figure>
 
 
                 
@@ -613,12 +593,6 @@ port mux-vlan enable vlan 102</code></pre></div></figure>
   });
 </script>
 
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
 

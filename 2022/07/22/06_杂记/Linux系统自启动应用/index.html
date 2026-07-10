@@ -19,12 +19,12 @@
   <meta name="author" content="Haris">
   <meta name="keywords" content="">
   
-    <meta name="description" content="“前言：工作上有这方面的需求，特记录下来，方便之后参考” 1 创建rc-local服务文件🌞创建文件 sudo vim &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;rc-local.service  内容： [Unit] Description&#x3D;&#x2F;etc&#x2F;rc.local Compatibility ConditionPathEx">
+    <meta name="description" content="“前言：工作上有这方面的需求，特记录下来，方便之后参考” 1 创建rc-local服务文件🌞创建文件 1sudo vim &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;rc-local.service  内容： 123456789101112[Unit]Description&#x3D;&#x2F;etc&#x2F;rc.local CompatibilityConditionPathExists&#x3D;&#x2F;etc&#x2F;rc.local[Se">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux系统自启动应用">
 <meta property="og:url" content="https://gblog.github.io/2022/07/22/06_%E6%9D%82%E8%AE%B0/Linux%E7%B3%BB%E7%BB%9F%E8%87%AA%E5%90%AF%E5%8A%A8%E5%BA%94%E7%94%A8/index.html">
 <meta property="og:site_name" content="Haris的小站">
-<meta property="og:description" content="“前言：工作上有这方面的需求，特记录下来，方便之后参考” 1 创建rc-local服务文件🌞创建文件 sudo vim &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;rc-local.service  内容： [Unit] Description&#x3D;&#x2F;etc&#x2F;rc.local Compatibility ConditionPathEx">
+<meta property="og:description" content="“前言：工作上有这方面的需求，特记录下来，方便之后参考” 1 创建rc-local服务文件🌞创建文件 1sudo vim &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;rc-local.service  内容： 123456789101112[Unit]Description&#x3D;&#x2F;etc&#x2F;rc.local CompatibilityConditionPathExists&#x3D;&#x2F;etc&#x2F;rc.local[Se">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-22T03:02:52.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.283Z">
@@ -42,8 +42,6 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -67,6 +65,10 @@
     <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
 
 
 
@@ -224,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          266 字
+          215 字
         
       </span>
     
@@ -235,7 +237,7 @@
         
         
         
-          3 分钟
+          2 分钟
         
       </span>
     
@@ -292,56 +294,24 @@
                 
                 <p>“前言：工作上有这方面的需求，特记录下来，方便之后参考”</p>
 <h3 id="1-创建rc-local服务文件🌞"><a href="#1-创建rc-local服务文件🌞" class="headerlink" title="1 创建rc-local服务文件🌞"></a>1 创建rc-local服务文件🌞</h3><p>创建文件</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">sudo vim &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;rc-local.service</code></pre></div></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">sudo vim /etc/systemd/system/rc-local.service<br></code></pre></td></tr></table></figure>
 
 <p>内容：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[Unit]
-Description&#x3D;&#x2F;etc&#x2F;rc.local Compatibility
-ConditionPathExists&#x3D;&#x2F;etc&#x2F;rc.local
-[Service]
-Type&#x3D;forking
-ExecStart&#x3D;&#x2F;etc&#x2F;rc.local start
-TimeoutSec&#x3D;0
-StandardOutput&#x3D;tty
-RemainAfterExit&#x3D;yes
-SysVStartPriority&#x3D;99
-[Install]
-WantedBy&#x3D;multi-user.target</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell">[Unit]<br>Description=/etc/rc.local Compatibility<br>ConditionPathExists=/etc/rc.local<br>[Service]<br>Type=forking<br>ExecStart=/etc/rc.local start<br>TimeoutSec=0<br>StandardOutput=tty<br>RemainAfterExit=yes<br>SysVStartPriority=99<br>[Install]<br>WantedBy=multi-user.target<br></code></pre></td></tr></table></figure>
 
-<h3 id="2-激活rc-local服务🌞"><a href="#2-激活rc-local服务🌞" class="headerlink" title="2 激活rc-local服务🌞"></a>2 激活rc-local服务🌞</h3><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">sudo systemctl enable rc-local.service	</code></pre></div></figure>
+<h3 id="2-激活rc-local服务🌞"><a href="#2-激活rc-local服务🌞" class="headerlink" title="2 激活rc-local服务🌞"></a>2 激活rc-local服务🌞</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo systemctl enable rc-local.service	<br></code></pre></td></tr></table></figure>
 
-<h3 id="3-添加服务文件🌞"><a href="#3-添加服务文件🌞" class="headerlink" title="3 添加服务文件🌞"></a>3 添加服务文件🌞</h3><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">sudo vim &#x2F;etc&#x2F;rc.local</code></pre></div></figure>
+<h3 id="3-添加服务文件🌞"><a href="#3-添加服务文件🌞" class="headerlink" title="3 添加服务文件🌞"></a>3 添加服务文件🌞</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo vim /etc/rc.local<br></code></pre></td></tr></table></figure>
 
 <p>内容</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">#!&#x2F;bin&#x2F;sh -e
-# #
-rc.local
-# #
-This script is executed at the end of each multiuser runlevel.
-# Make sure that the script will &quot;exit 0&quot; on success or any other
-# value on error.
-# #
-In order to enable or disable this script just change the execution
-# bits.
-# #
-By default this script does nothing.
-
-# 下面是要开机启动的命令
-# 启动nginx
-&#x2F;usr&#x2F;local&#x2F;nginx&#x2F;sbin&#x2F;nginx -c &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;conf&#x2F;nginx.conf
-# 启动redis
-&#x2F;home&#x2F;sofware&#x2F;redis&#x2F;redis-4.8.0&#x2F;src&#x2F;redis-server &#x2F;home&#x2F;sofware&#x2F;redis&#x2F;redis-4.8.0&#x2F;redis.conf
-# 启动nacos
-&#x2F;bin&#x2F;bash -f &#x2F;home&#x2F;Software&#x2F;nacos&#x2F;startup.sh -m standalone
-exit 0</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/sh -e</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-comment">#</span></span><br>rc.local<br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-comment">#</span></span><br>This script is executed at the end of each multiuser runlevel.<br><span class="hljs-meta prompt_"># </span><span class="language-bash">Make sure that the script will <span class="hljs-string">&quot;exit 0&quot;</span> on success or any other</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">value on error.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-comment">#</span></span><br>In order to enable or disable this script just change the execution<br><span class="hljs-meta prompt_"># </span><span class="language-bash">bits.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-comment">#</span></span><br>By default this script does nothing.<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">下面是要开机启动的命令</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动nginx</span><br>/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf<br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动redis</span><br>/home/sofware/redis/redis-4.8.0/src/redis-server /home/sofware/redis/redis-4.8.0/redis.conf<br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动nacos</span><br>/bin/bash -f /home/Software/nacos/startup.sh -m standalone<br>exit 0<br></code></pre></td></tr></table></figure>
 
 <p>给脚本文件添加执行权限  </p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">#给予脚本执行权限
-sudo chmod +x &#x2F;etc&#x2F;rc.local</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">给予脚本执行权限</span><br>sudo chmod +x /etc/rc.local<br></code></pre></td></tr></table></figure>
 
-<h3 id="4-启动rc-local服务🌞"><a href="#4-启动rc-local服务🌞" class="headerlink" title="4 启动rc-local服务🌞"></a>4 启动rc-local服务🌞</h3><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemc start rc-local.service</code></pre></div></figure>
+<h3 id="4-启动rc-local服务🌞"><a href="#4-启动rc-local服务🌞" class="headerlink" title="4 启动rc-local服务🌞"></a>4 启动rc-local服务🌞</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemc start rc-local.service<br></code></pre></td></tr></table></figure>
 
-<h3 id="5-查看服务启动情况🌞"><a href="#5-查看服务启动情况🌞" class="headerlink" title="5 查看服务启动情况🌞"></a>5 查看服务启动情况🌞</h3><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl status rc-local</code></pre></div></figure>
+<h3 id="5-查看服务启动情况🌞"><a href="#5-查看服务启动情况🌞" class="headerlink" title="5 查看服务启动情况🌞"></a>5 查看服务启动情况🌞</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl status rc-local<br></code></pre></td></tr></table></figure>
 
 <p>正常情况下<code>Active</code>状态显示<code>active(exited)</code>  </p>
 
@@ -621,12 +591,6 @@ sudo chmod +x &#x2F;etc&#x2F;rc.local</code></pre></div></figure>
   });
 </script>
 
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
 

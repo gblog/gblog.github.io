@@ -1,141 +1,105 @@
-/**
- * prism.js default theme for JavaScript, CSS and HTML
- * Based on dabblet (http://dabblet.com)
- * @author Lea Verou
- */
-
-code[class*="language-"],
-pre[class*="language-"] {
-	color: black;
-	background: none;
-	text-shadow: 0 1px white;
-	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-	font-size: 1em;
-	text-align: left;
-	white-space: pre;
-	word-spacing: normal;
-	word-break: normal;
-	word-wrap: normal;
-	line-height: 1.5;
-
-	-moz-tab-size: 4;
-	-o-tab-size: 4;
-	tab-size: 4;
-
-	-webkit-hyphens: none;
-	-moz-hyphens: none;
-	-ms-hyphens: none;
-	hyphens: none;
+pre code.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1em
 }
-
-pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
-code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
-	text-shadow: none;
-	background: #b3d4fc;
+code.hljs {
+  padding: 3px 5px
 }
+/*
 
-pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
-code[class*="language-"]::selection, code[class*="language-"] ::selection {
-	text-shadow: none;
-	background: #b3d4fc;
-}
+Atom One Dark With support for ReasonML by Gidi Morris, based off work by Daniel Gamage
 
-@media print {
-	code[class*="language-"],
-	pre[class*="language-"] {
-		text-shadow: none;
-	}
-}
+Original One Dark Syntax theme from https://github.com/atom/one-dark-syntax
 
-/* Code blocks */
-pre[class*="language-"] {
-	padding: 1em;
-	margin: .5em 0;
-	overflow: auto;
+*/
+.hljs {
+  color: #abb2bf;
+  background: #282c34
 }
-
-:not(pre) > code[class*="language-"],
-pre[class*="language-"] {
-	background: #f5f2f0;
+.hljs-keyword,
+.hljs-operator {
+  color: #F92672
 }
-
-/* Inline code */
-:not(pre) > code[class*="language-"] {
-	padding: .1em;
-	border-radius: .3em;
-	white-space: normal;
+.hljs-pattern-match {
+  color: #F92672
 }
-
-.token.comment,
-.token.prolog,
-.token.doctype,
-.token.cdata {
-	color: slategray;
+.hljs-pattern-match .hljs-constructor {
+  color: #61aeee
 }
-
-.token.punctuation {
-	color: #999;
+.hljs-function {
+  color: #61aeee
 }
-
-.token.namespace {
-	opacity: .7;
+.hljs-function .hljs-params {
+  color: #A6E22E
 }
-
-.token.property,
-.token.tag,
-.token.boolean,
-.token.number,
-.token.constant,
-.token.symbol,
-.token.deleted {
-	color: #905;
+.hljs-function .hljs-params .hljs-typing {
+  color: #FD971F
 }
-
-.token.selector,
-.token.attr-name,
-.token.string,
-.token.char,
-.token.builtin,
-.token.inserted {
-	color: #690;
+.hljs-module-access .hljs-module {
+  color: #7e57c2
 }
-
-.token.operator,
-.token.entity,
-.token.url,
-.language-css .token.string,
-.style .token.string {
-	color: #9a6e3a;
-	/* This background color was intended by the author of this theme. */
-	background: hsla(0, 0%, 100%, .5);
+.hljs-constructor {
+  color: #e2b93d
 }
-
-.token.atrule,
-.token.attr-value,
-.token.keyword {
-	color: #07a;
+.hljs-constructor .hljs-string {
+  color: #9CCC65
 }
-
-.token.function,
-.token.class-name {
-	color: #DD4A68;
+.hljs-comment,
+.hljs-quote {
+  color: #b18eb1;
+  font-style: italic
 }
-
-.token.regex,
-.token.important,
-.token.variable {
-	color: #e90;
+.hljs-doctag,
+.hljs-formula {
+  color: #c678dd
 }
-
-.token.important,
-.token.bold {
-	font-weight: bold;
+.hljs-section,
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+  color: #e06c75
 }
-.token.italic {
-	font-style: italic;
+.hljs-literal {
+  color: #56b6c2
 }
-
-.token.entity {
-	cursor: help;
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta .hljs-string {
+  color: #98c379
 }
-
+.hljs-built_in,
+.hljs-title.class_,
+.hljs-class .hljs-title {
+  color: #e6c07b
+}
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+  color: #d19a66
+}
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+  color: #61aeee
+}
+.hljs-emphasis {
+  font-style: italic
+}
+.hljs-strong {
+  font-weight: bold
+}
+.hljs-link {
+  text-decoration: underline
+}

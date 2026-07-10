@@ -19,12 +19,12 @@
   <meta name="author" content="Haris">
   <meta name="keywords" content="">
   
-    <meta name="description" content="一、Docker容器操作1.1 交互式容器1、创建交互式Docker容器 # 以交互式方式运行容器，并进入容器 docker run  --name&#x3D;hello -it centos &#x2F;bin&#x2F;bash   2、查看正在运行的容器 docker ps   3、以守护进程方式运行容器  在1.1中创建的hello容器比较脆弱，只要exit退出，容器也会停止，需要设置守护">
+    <meta name="description" content="一、Docker容器操作1.1 交互式容器1、创建交互式Docker容器 12# 以交互式方式运行容器，并进入容器docker run  --name&#x3D;hello -it centos &#x2F;bin&#x2F;bash   2、查看正在运行的容器 1docker ps   3、以守护进程方式运行容器  在1.1中创建的hello容器比较脆弱，只要exit退出，容器也会停止，需要设置守护进程让容器一直运行。  以">
 <meta property="og:type" content="article">
 <meta property="og:title" content="02-运行Docker容器">
 <meta property="og:url" content="https://gblog.github.io/2025/03/03/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/02-%E8%BF%90%E8%A1%8CDocker%E5%AE%B9%E5%99%A8/index.html">
 <meta property="og:site_name" content="Haris的小站">
-<meta property="og:description" content="一、Docker容器操作1.1 交互式容器1、创建交互式Docker容器 # 以交互式方式运行容器，并进入容器 docker run  --name&#x3D;hello -it centos &#x2F;bin&#x2F;bash   2、查看正在运行的容器 docker ps   3、以守护进程方式运行容器  在1.1中创建的hello容器比较脆弱，只要exit退出，容器也会停止，需要设置守护">
+<meta property="og:description" content="一、Docker容器操作1.1 交互式容器1、创建交互式Docker容器 12# 以交互式方式运行容器，并进入容器docker run  --name&#x3D;hello -it centos &#x2F;bin&#x2F;bash   2、查看正在运行的容器 1docker ps   3、以守护进程方式运行容器  在1.1中创建的hello容器比较脆弱，只要exit退出，容器也会停止，需要设置守护进程让容器一直运行。  以">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gblog.github.io/img/image-20250303151500931.png">
 <meta property="og:image" content="https://gblog.github.io/img/image-20250303151630396.png">
@@ -46,8 +46,6 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -71,6 +69,10 @@
     <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
 
 
 
@@ -228,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          455 字
+          420 字
         
       </span>
     
@@ -295,12 +297,11 @@
               <div class="markdown-body">
                 
                 <h1 id="一、Docker容器操作"><a href="#一、Docker容器操作" class="headerlink" title="一、Docker容器操作"></a>一、Docker容器操作</h1><h2 id="1-1-交互式容器"><a href="#1-1-交互式容器" class="headerlink" title="1.1 交互式容器"></a>1.1 交互式容器</h2><p>1、创建交互式Docker容器</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 以交互式方式运行容器，并进入容器
-docker run  --name&#x3D;hello -it centos &#x2F;bin&#x2F;bash</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">以交互式方式运行容器，并进入容器</span><br>docker run  --name=hello -it centos /bin/bash<br></code></pre></td></tr></table></figure>
 
 <p><img src="/./../../../img/image-20250303151500931.png" srcset="/img/loading.gif" lazyload alt="image-20250303151500931"></p>
 <p>2、查看正在运行的容器</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker ps</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker ps<br></code></pre></td></tr></table></figure>
 
 <p><img src="/./../../../img/image-20250303151630396.png" srcset="/img/loading.gif" lazyload alt="image-20250303151630396"></p>
 <p>3、以守护进程方式运行容器</p>
@@ -308,33 +309,22 @@ docker run  --name&#x3D;hello -it centos &#x2F;bin&#x2F;bash</code></pre></div><
 <p>在1.1中创建的hello容器比较脆弱，只要exit退出，容器也会停止，需要设置守护进程让容器一直运行。</p>
 </blockquote>
 <p>以后台守护进程方式运行容器</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker run --name&#x3D;hello -td centos &#x2F;bin&#x2F;bash</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker run --name=hello -td centos /bin/bash<br></code></pre></td></tr></table></figure>
 
 <p>交互式进入容器</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker exec -it hello &#x2F;bin&#x2F;bash</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker exec -it hello /bin/bash<br></code></pre></td></tr></table></figure>
 
 <h2 id="1-2-查找容器"><a href="#1-2-查找容器" class="headerlink" title="1.2 查找容器"></a>1.2 查找容器</h2><p>查看容器（包括已经停止删除的容器）</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker ps -a</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker ps -a<br></code></pre></td></tr></table></figure>
 
 <h2 id="1-3-停止-启动容器"><a href="#1-3-停止-启动容器" class="headerlink" title="1.3 停止&#x2F;启动容器"></a>1.3 停止&#x2F;启动容器</h2><p>1、停止容器</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker stop 【容器名 或者 容器ID】
-# 实践
-docker stop hello
-# 或者
-docker stop 926b</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker stop 【容器名 或者 容器ID】<br><span class="hljs-meta prompt_"># </span><span class="language-bash">实践</span><br>docker stop hello<br><span class="hljs-meta prompt_"># </span><span class="language-bash">或者</span><br>docker stop 926b<br></code></pre></td></tr></table></figure>
 
 <p>2、启动容器</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker stop 【容器名 或者 容器ID】
-# 实践
-docker start hello
-# 或者
-docker start 926b</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker stop 【容器名 或者 容器ID】<br><span class="hljs-meta prompt_"># </span><span class="language-bash">实践</span><br>docker start hello<br><span class="hljs-meta prompt_"># </span><span class="language-bash">或者</span><br>docker start 926b<br></code></pre></td></tr></table></figure>
 
 <h2 id="1-4-删除容器"><a href="#1-4-删除容器" class="headerlink" title="1.4 删除容器"></a>1.4 删除容器</h2><p>删除hello(926b)容器</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 正常删除
-docker rm 926b
-# 强制删除
-docker rm 926b --force</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">正常删除</span><br>docker rm 926b<br><span class="hljs-meta prompt_"># </span><span class="language-bash">强制删除</span><br>docker rm 926b --force<br></code></pre></td></tr></table></figure>
 
 
 
@@ -342,40 +332,25 @@ docker rm 926b --force</code></pre></div></figure>
 <p>使用centos容器，在里面安装nginx</p>
 </blockquote>
 <p>1、创建并运行centos容器</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@master1 ~]#docker run --name nginx -p 80 -itd centos
-4a6ec9d7ca97815fd0c0946a20c7d2373065108839fbd7e1ad46379736cb4cb3</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@master1 ~]#docker run --name nginx -p 80 -itd centos<br>4a6ec9d7ca97815fd0c0946a20c7d2373065108839fbd7e1ad46379736cb4cb3<br></code></pre></td></tr></table></figure>
 
 <p>2、进入容器</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@master1 ~]#docker exec -it 4a6e &#x2F;bin&#x2F;bash
-[root@4a6ec9d7ca97 &#x2F;]# </code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@master1 ~]#docker exec -it 4a6e /bin/bash<br>[root@4a6ec9d7ca97 /]# <br></code></pre></td></tr></table></figure>
 
 <p>3、设置yum源</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 下载阿里镜像源
-curl -o &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;repo&#x2F;Centos-8.repo
-# 更新缓存
-yum makecache</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">下载阿里镜像源</span><br>curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-8.repo<br><span class="hljs-meta prompt_"># </span><span class="language-bash">更新缓存</span><br>yum makecache<br></code></pre></td></tr></table></figure>
 
 <p>4、安装nginx</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum install nginx -y</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">yum install nginx -y<br></code></pre></td></tr></table></figure>
 
 <p>5、准备Nginx的站点页面</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 创建文件夹
-curl -o &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;repo&#x2F;Centos-8.repo
-# 站点文件
-[root@4a6ec9d7ca97 html]# cat index.html 
-This is Test Nginx Page for Docker</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">创建文件夹</span><br>curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-8.repo<br><span class="hljs-meta prompt_"># </span><span class="language-bash">站点文件</span><br>[root@4a6ec9d7ca97 html]# cat index.html <br>This is Test Nginx Page for Docker<br></code></pre></td></tr></table></figure>
 
 <p>6、修改nginx配置文件</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># vim &#x2F;etc&#x2F;nginx&#x2F;nginx.conf
-# 将站点路径指向&#x2F;var&#x2F;www&#x2F;html
-server &#123;
-        listen       80 default_server;
-        listen       [::]:80 default_server;
-        server_name  _;
-        root         &#x2F;var&#x2F;www&#x2F;html;  # 改这里</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">vim /etc/nginx/nginx.conf</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">将站点路径指向/var/www/html</span><br>server &#123;<br>        listen       80 default_server;<br>        listen       [::]:80 default_server;<br>        server_name  _;<br>        root         /var/www/html;  # 改这里<br></code></pre></td></tr></table></figure>
 
 <p>7、启动nginx服务</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">&#x2F;usr&#x2F;sbin&#x2F;nginx</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">/usr/sbin/nginx<br></code></pre></td></tr></table></figure>
 
 <p>8、宿主机测试</p>
 <p>查看容器信息可以看到容器的80端口映射到物理机的32768端口，通过curl访问成功</p>
@@ -664,12 +639,6 @@ server &#123;
   });
 </script>
 
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
 
