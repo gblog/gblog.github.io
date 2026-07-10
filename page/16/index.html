@@ -73,6 +73,371 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-01_运维/02-综合架构/10-Nginx(四)LNMP架构拆分" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/10-Nginx(%E5%9B%9B)LNMP%E6%9E%B6%E6%9E%84%E6%8B%86%E5%88%86/" class="article-date">
+  <time class="dt-published" datetime="2022-07-06T03:19:52.000Z" itemprop="datePublished">2022-07-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a>►<a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/">（二）综合架构</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/10-Nginx(%E5%9B%9B)LNMP%E6%9E%B6%E6%9E%84%E6%8B%86%E5%88%86/">运维之综合架构--07--Nginx(四)LNMP架构拆分</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="一、拆分数据库"><a href="#一、拆分数据库" class="headerlink" title="一、拆分数据库"></a>一、拆分数据库</h2><blockquote>
+<p>为什么要拆分数据库?</p>
+<p>mysql内存占用大，容易引起网页访问速度变慢，甚至oom(out of memory)被系统自动kill掉，不安全</p>
+</blockquote>
+<h3 id="1-2-环境准备"><a href="#1-2-环境准备" class="headerlink" title="1.2 环境准备"></a>1.2 环境准备</h3><table>
+<thead>
+<tr>
+<th>主机名称</th>
+<th>应用环境</th>
+<th>外网地址</th>
+<th>内网地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>web01</td>
+<td>nginx+php</td>
+<td>10.0.0.7</td>
+<td>172.16.1.7</td>
+</tr>
+<tr>
+<td>db01</td>
+<td>mysql</td>
+<td></td>
+<td>172.16.1.51</td>
+</tr>
+</tbody></table>
+<h3 id="1-2-拆分过程"><a href="#1-2-拆分过程" class="headerlink" title="1.2 拆分过程"></a>1.2 拆分过程</h3><p>1、备份172.16.1.7服务器上mysql的数据</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@web01 ~]# mysqldump -uroot -p&#x27;Bgx123.com&#x27; --all-databases --single-transaction &gt; mysql-all.sql</span><br></pre></td></tr></table></figure>
+
+<p>2、传输172.16.1.7的备份数据至172.16.1.51的服务器上</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@web01 ~]# scp mysql-all.sql root@172.16.1.51:/tmp</span><br></pre></td></tr></table></figure>
+
+<p>3、需要先在172.16.1.51服务器上安装mysql服务，然后使用mysql命令进行还原。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@db01 ~]# yum install mariadb-server mariadb -y</span><br><span class="line">[root@db01 ~]# systemctl enable mariadb</span><br><span class="line">[root@db01 ~]# systemctl start mariadb</span><br><span class="line">[root@db01 ~]# mysql &lt;/tmp/mysql-all.sql</span><br><span class="line">[root@db01 ~]# systemctl restart mariadb</span><br><span class="line">[root@db01 ~]# mysql -uroot -pBgx123.com</span><br><span class="line">MariaDB [(none)]&gt; show databases;</span><br><span class="line">+--------------------+</span><br><span class="line">| Database           |</span><br><span class="line">+--------------------+</span><br><span class="line">| information_schema |</span><br><span class="line">| edusoho            |</span><br><span class="line">| mysql              |</span><br><span class="line">| performance_schema |</span><br><span class="line">| test               |</span><br><span class="line">| wordpress          |</span><br><span class="line">| zh                 |</span><br><span class="line">+--------------------+</span><br><span class="line">7 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p>4、将web程序连接的本地数据库修改到远程数据库上。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">1）先在本地172.16.1.7服务器上停止本地的数据库</span><br><span class="line">[root@web01 ~]# systemctl disable mariadb</span><br><span class="line">[root@web01 ~]# systemctl stop mariadb</span><br><span class="line"></span><br><span class="line">2）在172.16.1.51的服务器上授权远程主机能够能连接mysql数据库</span><br><span class="line">[root@db01 ~]# mysql -uroot -pBgx123.com</span><br><span class="line">MariaDB [(none)]&gt; grant all privileges on *.* to oldboy@&#x27;%&#x27; identified by &#x27;Bgx123.com&#x27;;</span><br><span class="line">解释：</span><br><span class="line">*.*: 所有数据库下的所有表</span><br><span class="line">oldboy@&#x27;%&#x27;: 允许所有网段的oldboy用户访问</span><br><span class="line">identify: 设置密码</span><br><span class="line"></span><br><span class="line">3）在172.16.1.7服务器上测试远程账户能否连接172.16.1.51的数据库</span><br><span class="line">[root@web01 wordpress]# yum install mariadb -y</span><br><span class="line">[root@web01 wordpress]# mysql -h 172.16.1.51 -uoldboy -pBgx123.com</span><br><span class="line">MariaDB [(none)]&gt; </span><br><span class="line"></span><br><span class="line">4）在172.16.1.7服务器上修改web程序连接数据库的配置文件</span><br><span class="line">[root@web01 wordpress]# vim /code/wordpress/wp-config.php</span><br><span class="line">// ** MySQL 设置 - 具体信息来自您正在使用的主机 ** //</span><br><span class="line">/** WordPress数据库的名称 */</span><br><span class="line">define(&#x27;DB_NAME&#x27;, &#x27;wordpress&#x27;);</span><br><span class="line"></span><br><span class="line">/** MySQL数据库用户名 */</span><br><span class="line">define(&#x27;DB_USER&#x27;, &#x27;oldboy&#x27;);</span><br><span class="line"></span><br><span class="line">/** MySQL数据库密码 */</span><br><span class="line">define(&#x27;DB_PASSWORD&#x27;, &#x27;Bgx123.com&#x27;);</span><br><span class="line"></span><br><span class="line">/** MySQL主机 */</span><br><span class="line">define(&#x27;DB_HOST&#x27;, &#x27;172.16.1.51&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>5、拆分172.16.1.7wecenter连接远程172.16.1.51数据库信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@web01 zh]# grep -R &quot;Bgx123.com&quot; *</span><br><span class="line">	system/config/database.php:  &#x27;password&#x27; =&gt; &#x27;Bgx123.com&#x27;,</span><br><span class="line">[root@web01 zh]# vim /code/zh/system/config/database.php </span><br><span class="line"><span class="meta prompt_">	$</span><span class="language-bash">config[<span class="string">&#x27;driver&#x27;</span>] = <span class="string">&#x27;MySQLi&#x27;</span>;^M</span></span><br><span class="line"><span class="meta prompt_">	$</span><span class="language-bash">config[<span class="string">&#x27;master&#x27;</span>] = array (</span></span><br><span class="line">	  &#x27;charset&#x27; =&gt; &#x27;utf8&#x27;,</span><br><span class="line">	  &#x27;host&#x27; =&gt; &#x27;172.16.1.51&#x27;,</span><br><span class="line">	  &#x27;username&#x27; =&gt; &#x27;oldboy&#x27;,</span><br><span class="line">	  &#x27;password&#x27; =&gt; &#x27;Bgx123.com&#x27;,</span><br><span class="line">	  &#x27;dbname&#x27; =&gt; &#x27;zh&#x27;,</span><br><span class="line">	);^M</span><br></pre></td></tr></table></figure>
+
+<p>6、拆分172.16.1.7 edusoho连接远程172.16.1.51数据库信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@web01 edusoho]# vim /code/edusoho/app/config/parameters.yml</span><br><span class="line">database_driver: pdo_mysql</span><br><span class="line">database_host: 172.16.1.51</span><br><span class="line">database_port: 3306</span><br><span class="line">database_name: edusoho</span><br><span class="line">database_user: oldboy</span><br><span class="line">database_password: &#x27;Bgx123.com&#x27;</span><br><span class="line"></span><br><span class="line">必须清理缓存</span><br><span class="line">[root@web01 edusoho]# rm -rf /code/edusoho/app/cache/*</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、扩展多台web服务器"><a href="#二、扩展多台web服务器" class="headerlink" title="二、扩展多台web服务器"></a>二、扩展多台web服务器</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">1.统一环境</span><br><span class="line">    0）准备对应的www用户</span><br><span class="line">    [root@web02 ~]# groupadd -g666 www</span><br><span class="line">    [root@web02 ~]# useradd -u666 -g666 www</span><br><span class="line"></span><br><span class="line">    1）拷贝web01上面的yum仓库</span><br><span class="line">    [root@web02 ~]# scp root@172.16.1.7:/etc/yum.repos.d/*.repo /etc/yum.repos.d/</span><br><span class="line"></span><br><span class="line">    2）安装nginx和php</span><br><span class="line">    [root@web02 ~]# yum -y install nginx php71w php71w-cli php71w-common php71w-devel php71w-embedded php71w-gd php71w-mcrypt php71w-mbstring php71w-pdo php71w-xml php71w-fpm php71w-mysqlnd php71w-opcache php71w-pecl-memcached php71w-pecl-redis php71w-pecl-mongodb</span><br><span class="line"></span><br><span class="line">2.统一配置（同步web01上面的配置到web02）</span><br><span class="line">    1）同步nginx</span><br><span class="line">    [root@web02 ~]# rsync  -avz --delete root@172.16.1.7:/etc/nginx/ /etc/nginx/</span><br><span class="line">    [root@web02 ~]# nginx -t</span><br><span class="line">    [root@web02 ~]# systemctl enable nginx</span><br><span class="line">    [root@web02 ~]# systemctl start nginx</span><br><span class="line"></span><br><span class="line">    2）同步php（/etc/php-fpm.conf /etc/php-fpm.d  /etc/php.ini）</span><br><span class="line">    [root@web02 ~]# rsync  -avz --delete root@172.16.1.7:/etc/php* /etc/</span><br><span class="line">    [root@web02 ~]# systemctl enable php-fpm</span><br><span class="line">    [root@web02 ~]# systemctl start php-fpm</span><br><span class="line"></span><br><span class="line">3.统一代码</span><br><span class="line">    [root@web01 ~]# tar czf code.tar.gz /code				#在web01上打包站点</span><br><span class="line">    [root@web01 ~]# scp code.tar.gz root@172.16.1.8:/tmp	#在web01上将打包好的代码发送给web02</span><br><span class="line">    [root@web02 ~]# tar xf /tmp/code.tar.gz -C /			#在web02上进行解压，并解压到/目录下</span><br><span class="line"></span><br><span class="line">4.配置解析，进行访问</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、NFS共享多台web的静态资源"><a href="#三、NFS共享多台web的静态资源" class="headerlink" title="三、NFS共享多台web的静态资源"></a>三、NFS共享多台web的静态资源</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">1.准备172.16.1.31共享存储服务器，规划目录，配置好权限</span><br><span class="line">    0）创建用户</span><br><span class="line">    [root@nfs ~]# groupadd -g666 www</span><br><span class="line">    [root@nfs ~]# useradd -u666 -g666 www	</span><br><span class="line"></span><br><span class="line">    1）安装</span><br><span class="line">    [root@nfs ~]# yum install nfs-utils -y</span><br><span class="line"></span><br><span class="line">    2）配置</span><br><span class="line">    [root@nfs ~]# cat /etc/exports</span><br><span class="line">    /data/blog 172.16.1.0/24(rw,sync,all_squash,anonuid=666,anongid=666)</span><br><span class="line">    /data/zh 172.16.1.0/24(rw,sync,all_squash,anonuid=666,anongid=666)</span><br><span class="line">    /data/edu 172.16.1.0/24(rw,sync,all_squash,anonuid=666,anongid=666)</span><br><span class="line"></span><br><span class="line">    3）根据配置，创建目录，准备用户，授权等等</span><br><span class="line">    [root@nfs ~]# rm -rf /data/</span><br><span class="line">    [root@nfs ~]# mkdir /data/&#123;blog,zh,edu&#125; -p</span><br><span class="line">    [root@nfs ~]# chown -R www.www /data/</span><br><span class="line"></span><br><span class="line">    4）启动</span><br><span class="line">    [root@nfs ~]# systemctl enable nfs-utils </span><br><span class="line">    [root@nfs ~]# systemctl restart nfs-utils</span><br><span class="line"></span><br><span class="line">2.将图片较多的web02服务器，推送到nfs共享存储上</span><br><span class="line">    http://blog.oldboy.com/wp-content/uploads/2019/01/timg.jpg</span><br><span class="line"></span><br><span class="line">    [root@web02 ~]# cd /code/wordpress/wp-content</span><br><span class="line">    [root@web02 wp-content]# scp -r uploads/* root@172.16.1.31:/data/blog/</span><br><span class="line"></span><br><span class="line">    注意：需要上nfs服务器上进行重新的递归授权，否则会出现无法上传文件的错误</span><br><span class="line">    [root@nfs ~]# chown -R www.www /data/</span><br><span class="line"></span><br><span class="line">3.web01和web02分别都进行挂载，此时图片进行实现了共享</span><br><span class="line">    mount -t nfs 172.16.1.31:/data/blog  /code/wordpress/wp-content/uploads/</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://gblog.github.io/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/10-Nginx(%E5%9B%9B)LNMP%E6%9E%B6%E6%9E%84%E6%8B%86%E5%88%86/" data-id="cmrenk1ei002xmgiec5wdh791" data-title="运维之综合架构--07--Nginx(四)LNMP架构拆分" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-01_运维/02-综合架构/11-Nginx(五)Nginx代理" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/11-Nginx(%E4%BA%94)Nginx%E4%BB%A3%E7%90%86/" class="article-date">
+  <time class="dt-published" datetime="2022-07-06T03:19:52.000Z" itemprop="datePublished">2022-07-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a>►<a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/">（二）综合架构</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/11-Nginx(%E4%BA%94)Nginx%E4%BB%A3%E7%90%86/">运维之综合架构--07--Nginx(五)代理介绍</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="一、什么是代理"><a href="#一、什么是代理" class="headerlink" title="一、什么是代理"></a>一、什么是代理</h2><h3 id="1-1-正向代理和反向代理的区别"><a href="#1-1-正向代理和反向代理的区别" class="headerlink" title="1.1 正向代理和反向代理的区别"></a>1.1 正向代理和反向代理的区别</h3><p>区别在于形式上服务的”对象”不一样<br>    正向代理代理的对象是客户端，为客户端服务   PC电脑<br>    反向代理代理的对象是服务端，为服务端服务	服务器</p>
+<h3 id="1-2-Nginx反向代理模式配置模块"><a href="#1-2-Nginx反向代理模式配置模块" class="headerlink" title="1.2 Nginx反向代理模式配置模块"></a>1.2 Nginx反向代理模式配置模块</h3><p>反向代理模式				Nginx配置模块<br>http、websocket、https		ngx_http_proxy_module<br>fastcgi						ngx_http_fastcgi_module<br>uwsgi						ngx_http_uwsgi_module<br>grpc						ngx_http_v2_module</p>
+<h2 id="二、Nginx代理配置"><a href="#二、Nginx代理配置" class="headerlink" title="二、Nginx代理配置"></a>二、Nginx代理配置</h2><h3 id="2-1-测试环境准备"><a href="#2-1-测试环境准备" class="headerlink" title="2.1 测试环境准备"></a>2.1 测试环境准备</h3><table>
+<thead>
+<tr>
+<th>主机名称</th>
+<th>应用环境</th>
+<th>外网地址</th>
+<th>内网地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>web01</td>
+<td>nginx + php（提供网页服务）</td>
+<td>10.0.0.7</td>
+<td>172.16.1.7</td>
+</tr>
+<tr>
+<td>lb01</td>
+<td>nginx（提供代理服务）</td>
+<td>10.0.0.5</td>
+<td>172.16.1.5</td>
+</tr>
+<tr>
+<td>db01</td>
+<td>mysql</td>
+<td>10.0.0.51</td>
+<td>172.16.1.51</td>
+</tr>
+</tbody></table>
+<h3 id="2-2-Nginx代理配置步骤"><a href="#2-2-Nginx代理配置步骤" class="headerlink" title="2.2 Nginx代理配置步骤"></a>2.2 Nginx代理配置步骤</h3><p>1、<code>web01</code>-配置后端的web</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@web01 conf.d]# cat web.oldboy.com.conf </span><br><span class="line">server &#123;</span><br><span class="line">	listen 80;</span><br><span class="line">	server_name web.oldboy.com;</span><br><span class="line">	root /web;</span><br><span class="line"></span><br><span class="line">	location / &#123;</span><br><span class="line">		index index.php index.html;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2、创建文件夹和网页文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@web01 conf.d]# mkdir /web</span><br><span class="line">[root@web01 conf.d]# echo &quot;Web01.....&quot; &gt; /web/index.html</span><br></pre></td></tr></table></figure>
+
+<p>3、重启nginx服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@web01 conf.d]# nginx -t</span><br><span class="line">sysnginx: the configuration file /etc/nginx/nginx.conf syntax is ok</span><br><span class="line">nginx: configuration file /etc/nginx/nginx.conf test is successful</span><br><span class="line">t[root@web01 conf.d]# systemctl restart nginx</span><br></pre></td></tr></table></figure>
+
+<p>4、<code>lb01</code>-nginx代理配置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@lb01 conf.d]# cat proxy_web.conf</span><br><span class="line">server &#123;</span><br><span class="line">	listen 80;</span><br><span class="line">	server_name web.oldboy.com;</span><br><span class="line">	location / &#123;</span><br><span class="line">		proxy_pass http://10.0.0.7:80;</span><br><span class="line"><span class="meta prompt_">		# </span><span class="language-bash">设置header将域名传过去</span></span><br><span class="line">		proxy_set_header Host $http_host; </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>5、重启Nginx服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart nginx</span><br></pre></td></tr></table></figure>
+
+<p>6、客户机设置hosts，并测试访问网页，可以正常显示web01页面</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10.0.0.5 web.oldboy.com</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../../../img/image-20210820101740471.png" alt="image-20210820101740471"></p>
+<h2 id="三、代理流程分析"><a href="#三、代理流程分析" class="headerlink" title="三、代理流程分析"></a>三、代理流程分析</h2><p>1、走10网关，wireshark的抓包截图如下</p>
+<p><img src="/../../../img/image-20210820102735419.png" alt="image-20210820102735419"></p>
+<p>2、流程图</p>
+<p><img src="/../../../img/image-20210820103041679.png" alt="image-20210820103041679"></p>
+<p>3、测试，关掉web01的公网ip网口(10.0.0.7)，再尝试访问，也可以正常访问到web01的网页</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@lb01 conf.d]# cat /etc/nginx/conf.d/proxy_web.conf</span><br><span class="line">server &#123;</span><br><span class="line">        listen 80;</span><br><span class="line">        server_name  web.oldboy.com;</span><br><span class="line">        location / &#123;</span><br><span class="line">                proxy_pass http://172.16.1.7:80;</span><br><span class="line">                include /etc/nginx/proxy_params;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>4、抓包分析</p>
+<p>因为172网段走的虚拟机内部网络，抓不到</p>
+<p><img src="/../../../img/image-20210820111454152.png" alt="image-20210820111454152"></p>
+<h2 id="三、Nginx代理常用参数"><a href="#三、Nginx代理常用参数" class="headerlink" title="三、Nginx代理常用参数"></a>三、Nginx代理常用参数</h2><h3 id="3-1-常用参数解释"><a href="#3-1-常用参数解释" class="headerlink" title="3.1 常用参数解释"></a>3.1 常用参数解释</h3><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>proxy_pass <a target="_blank" rel="noopener" href="http://10.0.0.7/">http://10.0.0.7:80</a>;</td>
+<td></td>
+</tr>
+<tr>
+<td>proxy_http_version 1.1;</td>
+<td>代理向后端请求使用的版本</td>
+</tr>
+<tr>
+<td>proxy_set_header Host $http_host;</td>
+<td>代理向后端请求携带的域名</td>
+</tr>
+<tr>
+<td>proxy_set_header X-Real-IP $remote_addr;</td>
+<td><font color="blue">用于获取客户端真实IP（不如x-forward）</font></td>
+</tr>
+<tr>
+<td>proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</td>
+<td><font color="blue">获取客户端真实IP及全链路IP</font></td>
+</tr>
+<tr>
+<td>proxy_connect_timeout 30;</td>
+<td>代理接连后端超时时间</td>
+</tr>
+<tr>
+<td>proxy_send_timeout 60;</td>
+<td>后端传递数据至代理的超时时间</td>
+</tr>
+<tr>
+<td>proxy_read_timeout 60;</td>
+<td>后端相应代理的超时时间</td>
+</tr>
+<tr>
+<td>proxy_buffering on;</td>
+<td>是否开启proxy的buffer功能</td>
+</tr>
+<tr>
+<td>proxy_buffer_size 32k;</td>
+<td>设置buffer大小</td>
+</tr>
+<tr>
+<td>proxy_buffers 4 128k;</td>
+<td>设置存储被代理服务器上的数据所占用的buffer的个数和每个buffer的大小</td>
+</tr>
+</tbody></table>
+<p>X-Forwarded-For可以nginx的日志查看到</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail -f /var/log/nginx/access.log</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-参数多的时候如何配置"><a href="#3-2-参数多的时候如何配置" class="headerlink" title="3.2 参数多的时候如何配置"></a>3.2 参数多的时候如何配置</h3><blockquote>
+<p>可将参数写到一个文件中，然后在nginx配置文件里include包含进去</p>
+</blockquote>
+<p>1、创建包含参数的文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@lb01 conf.d]# cat /etc/nginx/proxy_params</span><br><span class="line">proxy_set_header Host $http_host;</span><br><span class="line">proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line"></span><br><span class="line">proxy_connect_timeout 30;</span><br><span class="line">proxy_send_timeout 60;</span><br><span class="line">proxy_read_timeout 60;</span><br><span class="line"></span><br><span class="line">proxy_buffering on;</span><br><span class="line">proxy_buffer_size 32k;</span><br><span class="line">proxy_buffers 4 128k;</span><br></pre></td></tr></table></figure>
+
+<p>2、在配置文件中导入，方便后续多个location使用</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">    proxy_pass http://127.0.0.1:8080;</span><br><span class="line">    include proxy_params;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://gblog.github.io/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/11-Nginx(%E4%BA%94)Nginx%E4%BB%A3%E7%90%86/" data-id="cmrenk1ej0030mgieg6g0bo9o" data-title="运维之综合架构--07--Nginx(五)代理介绍" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-01_运维/02-综合架构/12-Nginx(六)Nginx七层负载均衡" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/12-Nginx(%E5%85%AD)Nginx%E4%B8%83%E5%B1%82%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/" class="article-date">
+  <time class="dt-published" datetime="2022-07-06T03:19:52.000Z" itemprop="datePublished">2022-07-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a>►<a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/">（二）综合架构</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/12-Nginx(%E5%85%AD)Nginx%E4%B8%83%E5%B1%82%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/">运维之综合架构--07--Nginx(六)七层负载均衡</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="一、七层负载均衡简介-需补充"><a href="#一、七层负载均衡简介-需补充" class="headerlink" title="一、七层负载均衡简介(需补充)"></a>一、七层负载均衡简介(需补充)</h2><h3 id="1-1-nginx代理的局限性"><a href="#1-1-nginx代理的局限性" class="headerlink" title="1.1 nginx代理的局限性"></a>1.1 nginx代理的局限性</h3><p>​	一个location仅能代理后端一台主机</p>
+<h3 id="1-2-七层负载均衡"><a href="#1-2-七层负载均衡" class="headerlink" title="1.2 七层负载均衡"></a>1.2 七层负载均衡</h3><p>Nginx负载均衡<br>    负载<br>    负载均衡<br>    调度<br>    load balance<br>    LB<br>公有云<br>    SLB		阿里云负载均衡<br>    QLB		青云负载均衡<br>    CLB		腾讯负载均衡<br>    ULB		ucloud的负载均衡</p>
+<h3 id="1-3-四层负载均衡和七层负载均衡的区别"><a href="#1-3-四层负载均衡和七层负载均衡的区别" class="headerlink" title="1.3 四层负载均衡和七层负载均衡的区别"></a>1.3 四层负载均衡和七层负载均衡的区别</h3><p>四层负载均衡数据包在底层就进行了分发，而七层负载均衡数据包则是在最顶层进行分发、由此可以看出，七层负载均衡效率没有四负载均衡高。<br>但七层负载均衡更贴近于服务，如:http协议就是七层协议，我们可以用Nginx可以作会话保持，URL路径规则匹配、head头改写等等，这些是四层负载均衡无法实现的。</p>
+<h2 id="二、配置实例"><a href="#二、配置实例" class="headerlink" title="二、配置实例"></a>二、配置实例</h2><h3 id="2-1-测试环境准备"><a href="#2-1-测试环境准备" class="headerlink" title="2.1 测试环境准备"></a>2.1 测试环境准备</h3><table>
+<thead>
+<tr>
+<th>主机名称</th>
+<th>应用环境</th>
+<th>外网地址</th>
+<th>内网地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>web01</td>
+<td>nginx + php（提供网页服务）</td>
+<td>10.0.0.7</td>
+<td>172.16.1.7</td>
+</tr>
+<tr>
+<td>web01</td>
+<td>nginx + php（提供网页服务）</td>
+<td>10.0.0.8</td>
+<td>172.16.1.8</td>
+</tr>
+<tr>
+<td>lb01</td>
+<td>nginx（提供代理服务）</td>
+<td>10.0.0.5</td>
+<td>172.16.1.5</td>
+</tr>
+<tr>
+<td>db01</td>
+<td>mysql</td>
+<td>10.0.0.51</td>
+<td>172.16.1.51</td>
+</tr>
+</tbody></table>
+<h3 id="2-2-配置步骤"><a href="#2-2-配置步骤" class="headerlink" title="2.2 配置步骤"></a>2.2 配置步骤</h3><p>1、web01&#x2F;02的网页服务搭建</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@web01 ~]# cd /etc/nginx/conf.d/</span><br><span class="line">[root@web01 conf.d]# cat node.conf </span><br><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name node.oldboy.com;</span><br><span class="line">    location / &#123;</span><br><span class="line">        root /node;</span><br><span class="line">        index index.html;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">[root@web01 conf.d]# mkdir /node</span><br><span class="line">[root@web01 conf.d]# echo &quot;Web01...&quot; &gt; /node/index.html</span><br><span class="line">[root@web01 conf.d]# systemctl restart nginx</span><br></pre></td></tr></table></figure>
+
+<p>2、配置nginx负载均衡</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@lb01 ~]# cd /etc/nginx/conf.d/</span><br><span class="line">[root@lb01 conf.d]# cat node_proxy.conf </span><br><span class="line">upstream node &#123;</span><br><span class="line">    server 172.16.1.7:80;</span><br><span class="line">    server 172.16.1.8:80;</span><br><span class="line">&#125;</span><br><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name node.oldboy.com;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass http://node;</span><br><span class="line">        include proxy_params;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">[root@lb01 conf.d]# systemctl restart nginx</span><br></pre></td></tr></table></figure>
+
+<p>3、客户端网页测试访问，F5刷新，可见web01&#x2F;web02在循环</p>
+<p><img src="/img/image-20210820132420586.png" alt="image-20210820132420586"></p>
+<p><img src="/img/image-20210820132431971.png" alt="image-20210820132431971"></p>
+<h3 id="2-3-负载均衡也可以使用代理参数"><a href="#2-3-负载均衡也可以使用代理参数" class="headerlink" title="2.3 负载均衡也可以使用代理参数"></a>2.3 负载均衡也可以使用代理参数</h3><blockquote>
+<p>与之前部署的知乎wencenter、博客mywordpress结合</p>
+</blockquote>
+<p>1、准备Nginx负载均衡调度使用的proxy_params</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@Nginx ~]# vim /etc/nginx/proxy_params</span><br><span class="line">proxy_set_header Host $http_host;</span><br><span class="line">proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line"></span><br><span class="line">proxy_connect_timeout 30;</span><br><span class="line">proxy_send_timeout 60;</span><br><span class="line">proxy_read_timeout 60;</span><br><span class="line"></span><br><span class="line">proxy_buffering on;</span><br><span class="line">proxy_buffer_size 32k;</span><br><span class="line">proxy_buffers 4 128k;</span><br></pre></td></tr></table></figure>
+
+<p>2、负载均衡配置：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@lb01 conf.d]# vim proxy_oldboy.com.conf</span><br><span class="line">upstream node &#123;</span><br><span class="line">        server 172.16.1.7:80;</span><br><span class="line">        server 172.16.1.8:80;</span><br><span class="line">&#125;</span><br><span class="line">server &#123;</span><br><span class="line">        listen 80;</span><br><span class="line">        server_name blog.oldboy.com;</span><br><span class="line">        location / &#123;</span><br><span class="line">                proxy_pass http://node;</span><br><span class="line">                include proxy_params;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">        listen 80;</span><br><span class="line">        server_name zh.oldboy.com;</span><br><span class="line">        location / &#123;</span><br><span class="line">                proxy_pass http://node;</span><br><span class="line">                include proxy_params;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-负载均衡测试"><a href="#2-4-负载均衡测试" class="headerlink" title="2.4 负载均衡测试"></a>2.4 负载均衡测试</h3><p>正常情况下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1、两台web服务器的nginx服务均打开（模拟流量分摊）</span><br><span class="line">	可以负载均衡，轮流访问</span><br><span class="line">2、关掉一台web服务器的nginx服务（模拟容灾）</span><br><span class="line">	网页仍可以正常打开</span><br><span class="line">3、两台web服务器的Nginx服务均关闭</span><br><span class="line">	网页无法打开，502</span><br></pre></td></tr></table></figure>
+
+<p>存在一种情况，两个web的nginx服务都没挂，但是其中一台的php-fpm服务挂了，模拟这种场景</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@web02 ~]# systemctl stop php-fpm</span><br></pre></td></tr></table></figure>
+
+<p>此时F5刷新wordpress的页面，将一会502，一会正常，体验不好，可通过添加nginx代理参数解决</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@lb01 conf.d]# cat /etc/nginx/proxy_params</span><br><span class="line">proxy_set_header Host $http_host;</span><br><span class="line">proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">proxy_next_upstream error timeout http_500 http_502 http_503 http_504; # 解决问题</span><br><span class="line"></span><br><span class="line">proxy_connect_timeout 30;</span><br><span class="line">proxy_send_timeout 60;</span><br><span class="line">proxy_read_timeout 60;</span><br><span class="line"></span><br><span class="line">proxy_buffering on;</span><br><span class="line">proxy_buffer_size 32k;</span><br><span class="line">proxy_buffers 4 128k;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>PS：问题原因</p>
+<p>使用nginx负载均衡时，如何将后端请求超时的服务器流量平滑的切换到另一台上。<br>Nginx是本身是有机制的，如果出现一个节点down掉的时候，Nginx会更据你具体负载均衡的设置，将请求转移到其他的节点上，但是，如果后台服务连接没有down掉，并且返回错误异常码了如：504、502、500，Nginx就会直接返回从后端获取的异常代码。</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://gblog.github.io/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/12-Nginx(%E5%85%AD)Nginx%E4%B8%83%E5%B1%82%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/" data-id="cmrenk1ej0031mgie1zc04071" data-title="运维之综合架构--07--Nginx(六)七层负载均衡" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-01_运维/02-综合架构/08-Nginx(二)常用官方模块" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/08-Nginx(%E4%BA%8C)%E5%B8%B8%E7%94%A8%E5%AE%98%E6%96%B9%E6%A8%A1%E5%9D%97/" class="article-date">
@@ -260,262 +625,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://gblog.github.io/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/08-Nginx(%E4%BA%8C)%E5%B8%B8%E7%94%A8%E5%AE%98%E6%96%B9%E6%A8%A1%E5%9D%97/" data-id="cmrendt94003qdsiee7zd0m7n" data-title="运维之综合架构--07--Nginx(二)常用官方模块" class="article-share-link"><span class="fa fa-share">分享</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-01_运维/02-综合架构/11-Nginx(五)Nginx代理" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/11-Nginx(%E4%BA%94)Nginx%E4%BB%A3%E7%90%86/" class="article-date">
-  <time class="dt-published" datetime="2022-07-06T03:19:52.000Z" itemprop="datePublished">2022-07-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a>►<a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/">（二）综合架构</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/11-Nginx(%E4%BA%94)Nginx%E4%BB%A3%E7%90%86/">运维之综合架构--07--Nginx(五)代理介绍</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="一、什么是代理"><a href="#一、什么是代理" class="headerlink" title="一、什么是代理"></a>一、什么是代理</h2><h3 id="1-1-正向代理和反向代理的区别"><a href="#1-1-正向代理和反向代理的区别" class="headerlink" title="1.1 正向代理和反向代理的区别"></a>1.1 正向代理和反向代理的区别</h3><p>区别在于形式上服务的”对象”不一样<br>    正向代理代理的对象是客户端，为客户端服务   PC电脑<br>    反向代理代理的对象是服务端，为服务端服务	服务器</p>
-<h3 id="1-2-Nginx反向代理模式配置模块"><a href="#1-2-Nginx反向代理模式配置模块" class="headerlink" title="1.2 Nginx反向代理模式配置模块"></a>1.2 Nginx反向代理模式配置模块</h3><p>反向代理模式				Nginx配置模块<br>http、websocket、https		ngx_http_proxy_module<br>fastcgi						ngx_http_fastcgi_module<br>uwsgi						ngx_http_uwsgi_module<br>grpc						ngx_http_v2_module</p>
-<h2 id="二、Nginx代理配置"><a href="#二、Nginx代理配置" class="headerlink" title="二、Nginx代理配置"></a>二、Nginx代理配置</h2><h3 id="2-1-测试环境准备"><a href="#2-1-测试环境准备" class="headerlink" title="2.1 测试环境准备"></a>2.1 测试环境准备</h3><table>
-<thead>
-<tr>
-<th>主机名称</th>
-<th>应用环境</th>
-<th>外网地址</th>
-<th>内网地址</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>web01</td>
-<td>nginx + php（提供网页服务）</td>
-<td>10.0.0.7</td>
-<td>172.16.1.7</td>
-</tr>
-<tr>
-<td>lb01</td>
-<td>nginx（提供代理服务）</td>
-<td>10.0.0.5</td>
-<td>172.16.1.5</td>
-</tr>
-<tr>
-<td>db01</td>
-<td>mysql</td>
-<td>10.0.0.51</td>
-<td>172.16.1.51</td>
-</tr>
-</tbody></table>
-<h3 id="2-2-Nginx代理配置步骤"><a href="#2-2-Nginx代理配置步骤" class="headerlink" title="2.2 Nginx代理配置步骤"></a>2.2 Nginx代理配置步骤</h3><p>1、<code>web01</code>-配置后端的web</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@web01 conf.d]# cat web.oldboy.com.conf </span><br><span class="line">server &#123;</span><br><span class="line">	listen 80;</span><br><span class="line">	server_name web.oldboy.com;</span><br><span class="line">	root /web;</span><br><span class="line"></span><br><span class="line">	location / &#123;</span><br><span class="line">		index index.php index.html;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>2、创建文件夹和网页文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@web01 conf.d]# mkdir /web</span><br><span class="line">[root@web01 conf.d]# echo &quot;Web01.....&quot; &gt; /web/index.html</span><br></pre></td></tr></table></figure>
-
-<p>3、重启nginx服务</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@web01 conf.d]# nginx -t</span><br><span class="line">sysnginx: the configuration file /etc/nginx/nginx.conf syntax is ok</span><br><span class="line">nginx: configuration file /etc/nginx/nginx.conf test is successful</span><br><span class="line">t[root@web01 conf.d]# systemctl restart nginx</span><br></pre></td></tr></table></figure>
-
-<p>4、<code>lb01</code>-nginx代理配置</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@lb01 conf.d]# cat proxy_web.conf</span><br><span class="line">server &#123;</span><br><span class="line">	listen 80;</span><br><span class="line">	server_name web.oldboy.com;</span><br><span class="line">	location / &#123;</span><br><span class="line">		proxy_pass http://10.0.0.7:80;</span><br><span class="line"><span class="meta prompt_">		# </span><span class="language-bash">设置header将域名传过去</span></span><br><span class="line">		proxy_set_header Host $http_host; </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>5、重启Nginx服务</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart nginx</span><br></pre></td></tr></table></figure>
-
-<p>6、客户机设置hosts，并测试访问网页，可以正常显示web01页面</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10.0.0.5 web.oldboy.com</span><br></pre></td></tr></table></figure>
-
-<p><img src="/../../../img/image-20210820101740471.png" alt="image-20210820101740471"></p>
-<h2 id="三、代理流程分析"><a href="#三、代理流程分析" class="headerlink" title="三、代理流程分析"></a>三、代理流程分析</h2><p>1、走10网关，wireshark的抓包截图如下</p>
-<p><img src="/../../../img/image-20210820102735419.png" alt="image-20210820102735419"></p>
-<p>2、流程图</p>
-<p><img src="/../../../img/image-20210820103041679.png" alt="image-20210820103041679"></p>
-<p>3、测试，关掉web01的公网ip网口(10.0.0.7)，再尝试访问，也可以正常访问到web01的网页</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@lb01 conf.d]# cat /etc/nginx/conf.d/proxy_web.conf</span><br><span class="line">server &#123;</span><br><span class="line">        listen 80;</span><br><span class="line">        server_name  web.oldboy.com;</span><br><span class="line">        location / &#123;</span><br><span class="line">                proxy_pass http://172.16.1.7:80;</span><br><span class="line">                include /etc/nginx/proxy_params;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>4、抓包分析</p>
-<p>因为172网段走的虚拟机内部网络，抓不到</p>
-<p><img src="/../../../img/image-20210820111454152.png" alt="image-20210820111454152"></p>
-<h2 id="三、Nginx代理常用参数"><a href="#三、Nginx代理常用参数" class="headerlink" title="三、Nginx代理常用参数"></a>三、Nginx代理常用参数</h2><h3 id="3-1-常用参数解释"><a href="#3-1-常用参数解释" class="headerlink" title="3.1 常用参数解释"></a>3.1 常用参数解释</h3><table>
-<thead>
-<tr>
-<th>参数</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>proxy_pass <a target="_blank" rel="noopener" href="http://10.0.0.7/">http://10.0.0.7:80</a>;</td>
-<td></td>
-</tr>
-<tr>
-<td>proxy_http_version 1.1;</td>
-<td>代理向后端请求使用的版本</td>
-</tr>
-<tr>
-<td>proxy_set_header Host $http_host;</td>
-<td>代理向后端请求携带的域名</td>
-</tr>
-<tr>
-<td>proxy_set_header X-Real-IP $remote_addr;</td>
-<td><font color="blue">用于获取客户端真实IP（不如x-forward）</font></td>
-</tr>
-<tr>
-<td>proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</td>
-<td><font color="blue">获取客户端真实IP及全链路IP</font></td>
-</tr>
-<tr>
-<td>proxy_connect_timeout 30;</td>
-<td>代理接连后端超时时间</td>
-</tr>
-<tr>
-<td>proxy_send_timeout 60;</td>
-<td>后端传递数据至代理的超时时间</td>
-</tr>
-<tr>
-<td>proxy_read_timeout 60;</td>
-<td>后端相应代理的超时时间</td>
-</tr>
-<tr>
-<td>proxy_buffering on;</td>
-<td>是否开启proxy的buffer功能</td>
-</tr>
-<tr>
-<td>proxy_buffer_size 32k;</td>
-<td>设置buffer大小</td>
-</tr>
-<tr>
-<td>proxy_buffers 4 128k;</td>
-<td>设置存储被代理服务器上的数据所占用的buffer的个数和每个buffer的大小</td>
-</tr>
-</tbody></table>
-<p>X-Forwarded-For可以nginx的日志查看到</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail -f /var/log/nginx/access.log</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-2-参数多的时候如何配置"><a href="#3-2-参数多的时候如何配置" class="headerlink" title="3.2 参数多的时候如何配置"></a>3.2 参数多的时候如何配置</h3><blockquote>
-<p>可将参数写到一个文件中，然后在nginx配置文件里include包含进去</p>
-</blockquote>
-<p>1、创建包含参数的文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@lb01 conf.d]# cat /etc/nginx/proxy_params</span><br><span class="line">proxy_set_header Host $http_host;</span><br><span class="line">proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line"></span><br><span class="line">proxy_connect_timeout 30;</span><br><span class="line">proxy_send_timeout 60;</span><br><span class="line">proxy_read_timeout 60;</span><br><span class="line"></span><br><span class="line">proxy_buffering on;</span><br><span class="line">proxy_buffer_size 32k;</span><br><span class="line">proxy_buffers 4 128k;</span><br></pre></td></tr></table></figure>
-
-<p>2、在配置文件中导入，方便后续多个location使用</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">    proxy_pass http://127.0.0.1:8080;</span><br><span class="line">    include proxy_params;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://gblog.github.io/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/11-Nginx(%E4%BA%94)Nginx%E4%BB%A3%E7%90%86/" data-id="cmrendt95003tdsie3ruugqo0" data-title="运维之综合架构--07--Nginx(五)代理介绍" class="article-share-link"><span class="fa fa-share">分享</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-01_运维/02-综合架构/10-Nginx(四)LNMP架构拆分" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/10-Nginx(%E5%9B%9B)LNMP%E6%9E%B6%E6%9E%84%E6%8B%86%E5%88%86/" class="article-date">
-  <time class="dt-published" datetime="2022-07-06T03:19:52.000Z" itemprop="datePublished">2022-07-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a>►<a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/">（二）综合架构</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/10-Nginx(%E5%9B%9B)LNMP%E6%9E%B6%E6%9E%84%E6%8B%86%E5%88%86/">运维之综合架构--07--Nginx(四)LNMP架构拆分</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="一、拆分数据库"><a href="#一、拆分数据库" class="headerlink" title="一、拆分数据库"></a>一、拆分数据库</h2><blockquote>
-<p>为什么要拆分数据库?</p>
-<p>mysql内存占用大，容易引起网页访问速度变慢，甚至oom(out of memory)被系统自动kill掉，不安全</p>
-</blockquote>
-<h3 id="1-2-环境准备"><a href="#1-2-环境准备" class="headerlink" title="1.2 环境准备"></a>1.2 环境准备</h3><table>
-<thead>
-<tr>
-<th>主机名称</th>
-<th>应用环境</th>
-<th>外网地址</th>
-<th>内网地址</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>web01</td>
-<td>nginx+php</td>
-<td>10.0.0.7</td>
-<td>172.16.1.7</td>
-</tr>
-<tr>
-<td>db01</td>
-<td>mysql</td>
-<td></td>
-<td>172.16.1.51</td>
-</tr>
-</tbody></table>
-<h3 id="1-2-拆分过程"><a href="#1-2-拆分过程" class="headerlink" title="1.2 拆分过程"></a>1.2 拆分过程</h3><p>1、备份172.16.1.7服务器上mysql的数据</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@web01 ~]# mysqldump -uroot -p&#x27;Bgx123.com&#x27; --all-databases --single-transaction &gt; mysql-all.sql</span><br></pre></td></tr></table></figure>
-
-<p>2、传输172.16.1.7的备份数据至172.16.1.51的服务器上</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@web01 ~]# scp mysql-all.sql root@172.16.1.51:/tmp</span><br></pre></td></tr></table></figure>
-
-<p>3、需要先在172.16.1.51服务器上安装mysql服务，然后使用mysql命令进行还原。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@db01 ~]# yum install mariadb-server mariadb -y</span><br><span class="line">[root@db01 ~]# systemctl enable mariadb</span><br><span class="line">[root@db01 ~]# systemctl start mariadb</span><br><span class="line">[root@db01 ~]# mysql &lt;/tmp/mysql-all.sql</span><br><span class="line">[root@db01 ~]# systemctl restart mariadb</span><br><span class="line">[root@db01 ~]# mysql -uroot -pBgx123.com</span><br><span class="line">MariaDB [(none)]&gt; show databases;</span><br><span class="line">+--------------------+</span><br><span class="line">| Database           |</span><br><span class="line">+--------------------+</span><br><span class="line">| information_schema |</span><br><span class="line">| edusoho            |</span><br><span class="line">| mysql              |</span><br><span class="line">| performance_schema |</span><br><span class="line">| test               |</span><br><span class="line">| wordpress          |</span><br><span class="line">| zh                 |</span><br><span class="line">+--------------------+</span><br><span class="line">7 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
-
-<p>4、将web程序连接的本地数据库修改到远程数据库上。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">1）先在本地172.16.1.7服务器上停止本地的数据库</span><br><span class="line">[root@web01 ~]# systemctl disable mariadb</span><br><span class="line">[root@web01 ~]# systemctl stop mariadb</span><br><span class="line"></span><br><span class="line">2）在172.16.1.51的服务器上授权远程主机能够能连接mysql数据库</span><br><span class="line">[root@db01 ~]# mysql -uroot -pBgx123.com</span><br><span class="line">MariaDB [(none)]&gt; grant all privileges on *.* to oldboy@&#x27;%&#x27; identified by &#x27;Bgx123.com&#x27;;</span><br><span class="line">解释：</span><br><span class="line">*.*: 所有数据库下的所有表</span><br><span class="line">oldboy@&#x27;%&#x27;: 允许所有网段的oldboy用户访问</span><br><span class="line">identify: 设置密码</span><br><span class="line"></span><br><span class="line">3）在172.16.1.7服务器上测试远程账户能否连接172.16.1.51的数据库</span><br><span class="line">[root@web01 wordpress]# yum install mariadb -y</span><br><span class="line">[root@web01 wordpress]# mysql -h 172.16.1.51 -uoldboy -pBgx123.com</span><br><span class="line">MariaDB [(none)]&gt; </span><br><span class="line"></span><br><span class="line">4）在172.16.1.7服务器上修改web程序连接数据库的配置文件</span><br><span class="line">[root@web01 wordpress]# vim /code/wordpress/wp-config.php</span><br><span class="line">// ** MySQL 设置 - 具体信息来自您正在使用的主机 ** //</span><br><span class="line">/** WordPress数据库的名称 */</span><br><span class="line">define(&#x27;DB_NAME&#x27;, &#x27;wordpress&#x27;);</span><br><span class="line"></span><br><span class="line">/** MySQL数据库用户名 */</span><br><span class="line">define(&#x27;DB_USER&#x27;, &#x27;oldboy&#x27;);</span><br><span class="line"></span><br><span class="line">/** MySQL数据库密码 */</span><br><span class="line">define(&#x27;DB_PASSWORD&#x27;, &#x27;Bgx123.com&#x27;);</span><br><span class="line"></span><br><span class="line">/** MySQL主机 */</span><br><span class="line">define(&#x27;DB_HOST&#x27;, &#x27;172.16.1.51&#x27;);</span><br></pre></td></tr></table></figure>
-
-<p>5、拆分172.16.1.7wecenter连接远程172.16.1.51数据库信息</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@web01 zh]# grep -R &quot;Bgx123.com&quot; *</span><br><span class="line">	system/config/database.php:  &#x27;password&#x27; =&gt; &#x27;Bgx123.com&#x27;,</span><br><span class="line">[root@web01 zh]# vim /code/zh/system/config/database.php </span><br><span class="line"><span class="meta prompt_">	$</span><span class="language-bash">config[<span class="string">&#x27;driver&#x27;</span>] = <span class="string">&#x27;MySQLi&#x27;</span>;^M</span></span><br><span class="line"><span class="meta prompt_">	$</span><span class="language-bash">config[<span class="string">&#x27;master&#x27;</span>] = array (</span></span><br><span class="line">	  &#x27;charset&#x27; =&gt; &#x27;utf8&#x27;,</span><br><span class="line">	  &#x27;host&#x27; =&gt; &#x27;172.16.1.51&#x27;,</span><br><span class="line">	  &#x27;username&#x27; =&gt; &#x27;oldboy&#x27;,</span><br><span class="line">	  &#x27;password&#x27; =&gt; &#x27;Bgx123.com&#x27;,</span><br><span class="line">	  &#x27;dbname&#x27; =&gt; &#x27;zh&#x27;,</span><br><span class="line">	);^M</span><br></pre></td></tr></table></figure>
-
-<p>6、拆分172.16.1.7 edusoho连接远程172.16.1.51数据库信息</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@web01 edusoho]# vim /code/edusoho/app/config/parameters.yml</span><br><span class="line">database_driver: pdo_mysql</span><br><span class="line">database_host: 172.16.1.51</span><br><span class="line">database_port: 3306</span><br><span class="line">database_name: edusoho</span><br><span class="line">database_user: oldboy</span><br><span class="line">database_password: &#x27;Bgx123.com&#x27;</span><br><span class="line"></span><br><span class="line">必须清理缓存</span><br><span class="line">[root@web01 edusoho]# rm -rf /code/edusoho/app/cache/*</span><br></pre></td></tr></table></figure>
-
-<h2 id="二、扩展多台web服务器"><a href="#二、扩展多台web服务器" class="headerlink" title="二、扩展多台web服务器"></a>二、扩展多台web服务器</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">1.统一环境</span><br><span class="line">    0）准备对应的www用户</span><br><span class="line">    [root@web02 ~]# groupadd -g666 www</span><br><span class="line">    [root@web02 ~]# useradd -u666 -g666 www</span><br><span class="line"></span><br><span class="line">    1）拷贝web01上面的yum仓库</span><br><span class="line">    [root@web02 ~]# scp root@172.16.1.7:/etc/yum.repos.d/*.repo /etc/yum.repos.d/</span><br><span class="line"></span><br><span class="line">    2）安装nginx和php</span><br><span class="line">    [root@web02 ~]# yum -y install nginx php71w php71w-cli php71w-common php71w-devel php71w-embedded php71w-gd php71w-mcrypt php71w-mbstring php71w-pdo php71w-xml php71w-fpm php71w-mysqlnd php71w-opcache php71w-pecl-memcached php71w-pecl-redis php71w-pecl-mongodb</span><br><span class="line"></span><br><span class="line">2.统一配置（同步web01上面的配置到web02）</span><br><span class="line">    1）同步nginx</span><br><span class="line">    [root@web02 ~]# rsync  -avz --delete root@172.16.1.7:/etc/nginx/ /etc/nginx/</span><br><span class="line">    [root@web02 ~]# nginx -t</span><br><span class="line">    [root@web02 ~]# systemctl enable nginx</span><br><span class="line">    [root@web02 ~]# systemctl start nginx</span><br><span class="line"></span><br><span class="line">    2）同步php（/etc/php-fpm.conf /etc/php-fpm.d  /etc/php.ini）</span><br><span class="line">    [root@web02 ~]# rsync  -avz --delete root@172.16.1.7:/etc/php* /etc/</span><br><span class="line">    [root@web02 ~]# systemctl enable php-fpm</span><br><span class="line">    [root@web02 ~]# systemctl start php-fpm</span><br><span class="line"></span><br><span class="line">3.统一代码</span><br><span class="line">    [root@web01 ~]# tar czf code.tar.gz /code				#在web01上打包站点</span><br><span class="line">    [root@web01 ~]# scp code.tar.gz root@172.16.1.8:/tmp	#在web01上将打包好的代码发送给web02</span><br><span class="line">    [root@web02 ~]# tar xf /tmp/code.tar.gz -C /			#在web02上进行解压，并解压到/目录下</span><br><span class="line"></span><br><span class="line">4.配置解析，进行访问</span><br></pre></td></tr></table></figure>
-
-<h2 id="三、NFS共享多台web的静态资源"><a href="#三、NFS共享多台web的静态资源" class="headerlink" title="三、NFS共享多台web的静态资源"></a>三、NFS共享多台web的静态资源</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">1.准备172.16.1.31共享存储服务器，规划目录，配置好权限</span><br><span class="line">    0）创建用户</span><br><span class="line">    [root@nfs ~]# groupadd -g666 www</span><br><span class="line">    [root@nfs ~]# useradd -u666 -g666 www	</span><br><span class="line"></span><br><span class="line">    1）安装</span><br><span class="line">    [root@nfs ~]# yum install nfs-utils -y</span><br><span class="line"></span><br><span class="line">    2）配置</span><br><span class="line">    [root@nfs ~]# cat /etc/exports</span><br><span class="line">    /data/blog 172.16.1.0/24(rw,sync,all_squash,anonuid=666,anongid=666)</span><br><span class="line">    /data/zh 172.16.1.0/24(rw,sync,all_squash,anonuid=666,anongid=666)</span><br><span class="line">    /data/edu 172.16.1.0/24(rw,sync,all_squash,anonuid=666,anongid=666)</span><br><span class="line"></span><br><span class="line">    3）根据配置，创建目录，准备用户，授权等等</span><br><span class="line">    [root@nfs ~]# rm -rf /data/</span><br><span class="line">    [root@nfs ~]# mkdir /data/&#123;blog,zh,edu&#125; -p</span><br><span class="line">    [root@nfs ~]# chown -R www.www /data/</span><br><span class="line"></span><br><span class="line">    4）启动</span><br><span class="line">    [root@nfs ~]# systemctl enable nfs-utils </span><br><span class="line">    [root@nfs ~]# systemctl restart nfs-utils</span><br><span class="line"></span><br><span class="line">2.将图片较多的web02服务器，推送到nfs共享存储上</span><br><span class="line">    http://blog.oldboy.com/wp-content/uploads/2019/01/timg.jpg</span><br><span class="line"></span><br><span class="line">    [root@web02 ~]# cd /code/wordpress/wp-content</span><br><span class="line">    [root@web02 wp-content]# scp -r uploads/* root@172.16.1.31:/data/blog/</span><br><span class="line"></span><br><span class="line">    注意：需要上nfs服务器上进行重新的递归授权，否则会出现无法上传文件的错误</span><br><span class="line">    [root@nfs ~]# chown -R www.www /data/</span><br><span class="line"></span><br><span class="line">3.web01和web02分别都进行挂载，此时图片进行实现了共享</span><br><span class="line">    mount -t nfs 172.16.1.31:/data/blog  /code/wordpress/wp-content/uploads/</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://gblog.github.io/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/10-Nginx(%E5%9B%9B)LNMP%E6%9E%B6%E6%9E%84%E6%8B%86%E5%88%86/" data-id="cmrendt95003udsie2o1jf58o" data-title="运维之综合架构--07--Nginx(四)LNMP架构拆分" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://gblog.github.io/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/08-Nginx(%E4%BA%8C)%E5%B8%B8%E7%94%A8%E5%AE%98%E6%96%B9%E6%A8%A1%E5%9D%97/" data-id="cmrenk1ek0034mgie49axgl65" data-title="运维之综合架构--07--Nginx(二)常用官方模块" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -750,7 +860,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://gblog.github.io/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/13-Nginx(%E4%B8%83)Nginx%E4%B8%83%E5%B1%82%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E8%B0%83%E5%BA%A6%E4%B8%8E%E5%81%A5%E5%BA%B7%E6%A3%80%E6%9F%A5/" data-id="cmrendt96003xdsie1cv94kph" data-title="运维之综合架构--07--Nginx(七)均衡调度" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://gblog.github.io/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/13-Nginx(%E4%B8%83)Nginx%E4%B8%83%E5%B1%82%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E8%B0%83%E5%BA%A6%E4%B8%8E%E5%81%A5%E5%BA%B7%E6%A3%80%E6%9F%A5/" data-id="cmrenk1ek0035mgieh29dcycx" data-title="运维之综合架构--07--Nginx(七)均衡调度" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -895,117 +1005,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://gblog.github.io/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/14-Nginx(%E5%85%AB)Nginx%E5%9B%9B%E5%B1%82%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/" data-id="cmrendt97003ydsie9g7j0t5v" data-title="运维之综合架构--07--Nginx(八)四层负载均衡" class="article-share-link"><span class="fa fa-share">分享</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-01_运维/02-综合架构/12-Nginx(六)Nginx七层负载均衡" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/12-Nginx(%E5%85%AD)Nginx%E4%B8%83%E5%B1%82%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/" class="article-date">
-  <time class="dt-published" datetime="2022-07-06T03:19:52.000Z" itemprop="datePublished">2022-07-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a>►<a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/">（二）综合架构</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/12-Nginx(%E5%85%AD)Nginx%E4%B8%83%E5%B1%82%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/">运维之综合架构--07--Nginx(六)七层负载均衡</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="一、七层负载均衡简介-需补充"><a href="#一、七层负载均衡简介-需补充" class="headerlink" title="一、七层负载均衡简介(需补充)"></a>一、七层负载均衡简介(需补充)</h2><h3 id="1-1-nginx代理的局限性"><a href="#1-1-nginx代理的局限性" class="headerlink" title="1.1 nginx代理的局限性"></a>1.1 nginx代理的局限性</h3><p>​	一个location仅能代理后端一台主机</p>
-<h3 id="1-2-七层负载均衡"><a href="#1-2-七层负载均衡" class="headerlink" title="1.2 七层负载均衡"></a>1.2 七层负载均衡</h3><p>Nginx负载均衡<br>    负载<br>    负载均衡<br>    调度<br>    load balance<br>    LB<br>公有云<br>    SLB		阿里云负载均衡<br>    QLB		青云负载均衡<br>    CLB		腾讯负载均衡<br>    ULB		ucloud的负载均衡</p>
-<h3 id="1-3-四层负载均衡和七层负载均衡的区别"><a href="#1-3-四层负载均衡和七层负载均衡的区别" class="headerlink" title="1.3 四层负载均衡和七层负载均衡的区别"></a>1.3 四层负载均衡和七层负载均衡的区别</h3><p>四层负载均衡数据包在底层就进行了分发，而七层负载均衡数据包则是在最顶层进行分发、由此可以看出，七层负载均衡效率没有四负载均衡高。<br>但七层负载均衡更贴近于服务，如:http协议就是七层协议，我们可以用Nginx可以作会话保持，URL路径规则匹配、head头改写等等，这些是四层负载均衡无法实现的。</p>
-<h2 id="二、配置实例"><a href="#二、配置实例" class="headerlink" title="二、配置实例"></a>二、配置实例</h2><h3 id="2-1-测试环境准备"><a href="#2-1-测试环境准备" class="headerlink" title="2.1 测试环境准备"></a>2.1 测试环境准备</h3><table>
-<thead>
-<tr>
-<th>主机名称</th>
-<th>应用环境</th>
-<th>外网地址</th>
-<th>内网地址</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>web01</td>
-<td>nginx + php（提供网页服务）</td>
-<td>10.0.0.7</td>
-<td>172.16.1.7</td>
-</tr>
-<tr>
-<td>web01</td>
-<td>nginx + php（提供网页服务）</td>
-<td>10.0.0.8</td>
-<td>172.16.1.8</td>
-</tr>
-<tr>
-<td>lb01</td>
-<td>nginx（提供代理服务）</td>
-<td>10.0.0.5</td>
-<td>172.16.1.5</td>
-</tr>
-<tr>
-<td>db01</td>
-<td>mysql</td>
-<td>10.0.0.51</td>
-<td>172.16.1.51</td>
-</tr>
-</tbody></table>
-<h3 id="2-2-配置步骤"><a href="#2-2-配置步骤" class="headerlink" title="2.2 配置步骤"></a>2.2 配置步骤</h3><p>1、web01&#x2F;02的网页服务搭建</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@web01 ~]# cd /etc/nginx/conf.d/</span><br><span class="line">[root@web01 conf.d]# cat node.conf </span><br><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name node.oldboy.com;</span><br><span class="line">    location / &#123;</span><br><span class="line">        root /node;</span><br><span class="line">        index index.html;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">[root@web01 conf.d]# mkdir /node</span><br><span class="line">[root@web01 conf.d]# echo &quot;Web01...&quot; &gt; /node/index.html</span><br><span class="line">[root@web01 conf.d]# systemctl restart nginx</span><br></pre></td></tr></table></figure>
-
-<p>2、配置nginx负载均衡</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@lb01 ~]# cd /etc/nginx/conf.d/</span><br><span class="line">[root@lb01 conf.d]# cat node_proxy.conf </span><br><span class="line">upstream node &#123;</span><br><span class="line">    server 172.16.1.7:80;</span><br><span class="line">    server 172.16.1.8:80;</span><br><span class="line">&#125;</span><br><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name node.oldboy.com;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass http://node;</span><br><span class="line">        include proxy_params;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">[root@lb01 conf.d]# systemctl restart nginx</span><br></pre></td></tr></table></figure>
-
-<p>3、客户端网页测试访问，F5刷新，可见web01&#x2F;web02在循环</p>
-<p><img src="/img/image-20210820132420586.png" alt="image-20210820132420586"></p>
-<p><img src="/img/image-20210820132431971.png" alt="image-20210820132431971"></p>
-<h3 id="2-3-负载均衡也可以使用代理参数"><a href="#2-3-负载均衡也可以使用代理参数" class="headerlink" title="2.3 负载均衡也可以使用代理参数"></a>2.3 负载均衡也可以使用代理参数</h3><blockquote>
-<p>与之前部署的知乎wencenter、博客mywordpress结合</p>
-</blockquote>
-<p>1、准备Nginx负载均衡调度使用的proxy_params</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@Nginx ~]# vim /etc/nginx/proxy_params</span><br><span class="line">proxy_set_header Host $http_host;</span><br><span class="line">proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line"></span><br><span class="line">proxy_connect_timeout 30;</span><br><span class="line">proxy_send_timeout 60;</span><br><span class="line">proxy_read_timeout 60;</span><br><span class="line"></span><br><span class="line">proxy_buffering on;</span><br><span class="line">proxy_buffer_size 32k;</span><br><span class="line">proxy_buffers 4 128k;</span><br></pre></td></tr></table></figure>
-
-<p>2、负载均衡配置：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@lb01 conf.d]# vim proxy_oldboy.com.conf</span><br><span class="line">upstream node &#123;</span><br><span class="line">        server 172.16.1.7:80;</span><br><span class="line">        server 172.16.1.8:80;</span><br><span class="line">&#125;</span><br><span class="line">server &#123;</span><br><span class="line">        listen 80;</span><br><span class="line">        server_name blog.oldboy.com;</span><br><span class="line">        location / &#123;</span><br><span class="line">                proxy_pass http://node;</span><br><span class="line">                include proxy_params;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">        listen 80;</span><br><span class="line">        server_name zh.oldboy.com;</span><br><span class="line">        location / &#123;</span><br><span class="line">                proxy_pass http://node;</span><br><span class="line">                include proxy_params;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-4-负载均衡测试"><a href="#2-4-负载均衡测试" class="headerlink" title="2.4 负载均衡测试"></a>2.4 负载均衡测试</h3><p>正常情况下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1、两台web服务器的nginx服务均打开（模拟流量分摊）</span><br><span class="line">	可以负载均衡，轮流访问</span><br><span class="line">2、关掉一台web服务器的nginx服务（模拟容灾）</span><br><span class="line">	网页仍可以正常打开</span><br><span class="line">3、两台web服务器的Nginx服务均关闭</span><br><span class="line">	网页无法打开，502</span><br></pre></td></tr></table></figure>
-
-<p>存在一种情况，两个web的nginx服务都没挂，但是其中一台的php-fpm服务挂了，模拟这种场景</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@web02 ~]# systemctl stop php-fpm</span><br></pre></td></tr></table></figure>
-
-<p>此时F5刷新wordpress的页面，将一会502，一会正常，体验不好，可通过添加nginx代理参数解决</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@lb01 conf.d]# cat /etc/nginx/proxy_params</span><br><span class="line">proxy_set_header Host $http_host;</span><br><span class="line">proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">proxy_next_upstream error timeout http_500 http_502 http_503 http_504; # 解决问题</span><br><span class="line"></span><br><span class="line">proxy_connect_timeout 30;</span><br><span class="line">proxy_send_timeout 60;</span><br><span class="line">proxy_read_timeout 60;</span><br><span class="line"></span><br><span class="line">proxy_buffering on;</span><br><span class="line">proxy_buffer_size 32k;</span><br><span class="line">proxy_buffers 4 128k;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>PS：问题原因</p>
-<p>使用nginx负载均衡时，如何将后端请求超时的服务器流量平滑的切换到另一台上。<br>Nginx是本身是有机制的，如果出现一个节点down掉的时候，Nginx会更据你具体负载均衡的设置，将请求转移到其他的节点上，但是，如果后台服务连接没有down掉，并且返回错误异常码了如：504、502、500，Nginx就会直接返回从后端获取的异常代码。</p>
-</blockquote>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://gblog.github.io/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/12-Nginx(%E5%85%AD)Nginx%E4%B8%83%E5%B1%82%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/" data-id="cmrendt970040dsiedv95000t" data-title="运维之综合架构--07--Nginx(六)七层负载均衡" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://gblog.github.io/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/14-Nginx(%E5%85%AB)Nginx%E5%9B%9B%E5%B1%82%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/" data-id="cmrenk1el0038mgiefqq1fu02" data-title="运维之综合架构--07--Nginx(八)四层负载均衡" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -1151,7 +1151,60 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://gblog.github.io/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/15-Nginx(%E4%B9%9D)%E5%8A%A8%E9%9D%99%E5%88%86%E7%A6%BB%E5%92%8Crewrite/" data-id="cmrendt990043dsieht63cqmv" data-title="运维之综合架构--07--Nginx(九)动静分离" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://gblog.github.io/2022/07/06/01_%E8%BF%90%E7%BB%B4/02-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/15-Nginx(%E4%B9%9D)%E5%8A%A8%E9%9D%99%E5%88%86%E7%A6%BB%E5%92%8Crewrite/" data-id="cmrenk1en003cmgie53jm7kqg" data-title="运维之综合架构--07--Nginx(九)动静分离" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-01_运维/01-基础命令/day09-用户组管理/笔记" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day09-%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86/%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time class="dt-published" datetime="2022-07-06T03:19:52.000Z" itemprop="datePublished">2022-07-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a>►<a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/">（一）基础命令</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day09-%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86/%E7%AC%94%E8%AE%B0/">运维之基础命令--用户组管理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h1><h2 id="linux中用户介绍"><a href="#linux中用户介绍" class="headerlink" title="linux中用户介绍"></a>linux中用户介绍</h2><p>什么是用户？</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">用户其实就是相当于权限的化身，</span><br><span class="line">处于安全考虑</span><br><span class="line">所以，我们在进入系统之前都需要登录，根据用户给相应权限</span><br></pre></td></tr></table></figure>
+
+<p>Linux系统中用户角色</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">uid : Linux系统当中用户ID（相当于身份证号）</span><br><span class="line">gid : ANTA20163307</span><br><span class="line"></span><br><span class="line">用户组其实是统一某一类用户权限</span><br><span class="line"></span><br><span class="line">需求：</span><br><span class="line">	大项目 ： </span><br><span class="line">		开发者：a b c d</span><br><span class="line">		运维 ： e f</span><br><span class="line">		测试：g</span><br><span class="line">	共同的权限：</span><br></pre></td></tr></table></figure>
+
+<p>超级用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">linux当中的老大（皇帝）: root</span><br><span class="line">Windows当中的老大：administrator</span><br></pre></td></tr></table></figure>
+
+<h2 id="用户与组相关的文件"><a href="#用户与组相关的文件" class="headerlink" title="用户与组相关的文件"></a>用户与组相关的文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# <span class="built_in">cat</span> /etc/passwd</span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">用户名称   是否存在密码   uid  gid  组名称/注释信息 家目录  默认解析器 </span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://gblog.github.io/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day09-%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86/%E7%AC%94%E8%AE%B0/" data-id="cmrenk1j200n6mgie4f73ecb4" data-title="运维之基础命令--用户组管理" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -1293,7 +1346,67 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://gblog.github.io/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day08-%E6%89%93%E5%8C%85%E4%B8%8E%E5%8E%8B%E7%BC%A9/%E6%89%93%E5%8C%85%E4%B8%8E%E5%8E%8B%E7%BC%A9%E7%AC%94%E8%AE%B0/" data-id="cmrendtde00kbdsiecw4h3au7" data-title="运维之基础命令--打包与压缩" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://gblog.github.io/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day08-%E6%89%93%E5%8C%85%E4%B8%8E%E5%8E%8B%E7%BC%A9/%E6%89%93%E5%8C%85%E4%B8%8E%E5%8E%8B%E7%BC%A9%E7%AC%94%E8%AE%B0/" data-id="cmrenk1j400nbmgiedga1enr5" data-title="运维之基础命令--打包与压缩" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-01_运维/01-基础命令/day11-sudo与su/sudo and su" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day11-sudo%E4%B8%8Esu/sudo%20and%20su/" class="article-date">
+  <time class="dt-published" datetime="2022-07-06T03:19:52.000Z" itemprop="datePublished">2022-07-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a>►<a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/">（一）基础命令</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day11-sudo%E4%B8%8Esu/sudo%20and%20su/">运维之基础命令--sudo和su</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="sudo"><a href="#sudo" class="headerlink" title="sudo"></a>sudo</h1><blockquote>
+<p>用于普通用提升权限的。</p>
+</blockquote>
+<ul>
+<li><p>相关的文件：<code>/etc/sudoers</code></p>
+</li>
+<li><p>检查<code>/etc/sudoers</code>是否修改正确：visudo -c</p>
+</li>
+<li><p>sudoers文件格式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tom       ALL=           (ALL)          ALL</span><br><span class="line">用户名称   所有机器可登陆    所有IP或主机名   所有的指令</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>指令编写格式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 必须写全路径：which查看命令全路径</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 只支持vim命令提权</span></span><br><span class="line">xianchen ALL=(ALL)  /usr/bin/vim</span><br><span class="line"></span><br><span class="line"><span class="comment">## 支持所有的命令提权</span></span><br><span class="line">tom ALL=(ALL)  ALL</span><br><span class="line"></span><br><span class="line"><span class="comment">## 不支持某个命令提权</span></span><br><span class="line">tom ALL=(ALL) ALL, !/usr/bin/vim</span><br><span class="line"></span><br><span class="line"><span class="comment">## 不支持某个命令的部分功能</span></span><br><span class="line">xiaochen ALL=(ALL)   ALL, !/usr/bin/vim /root/123.txt</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="su"><a href="#su" class="headerlink" title="su"></a>su</h1><ul>
+<li><p>su - xxx  和 su xxx之间区别</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1、su - xxx ：相当于切换一个窗口，su xxx 仅仅切换了用户</span><br><span class="line"></span><br><span class="line">2、su - xxx ： 切换用户执行的系统文件要多于 su xxx</span><br><span class="line"></span><br><span class="line">3、su - xxx 是登录</span><br><span class="line">   su  xxx  切换用户</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://gblog.github.io/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day11-sudo%E4%B8%8Esu/sudo%20and%20su/" data-id="cmrenk1j500ngmgie704tekng" data-title="运维之基础命令--sudo和su" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -1357,7 +1470,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://gblog.github.io/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day01-%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/" data-id="cmrendtde00kddsie7leq0tq1" data-title="运维之基础命令--虚拟机安装" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://gblog.github.io/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day01-%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/" data-id="cmrenk1j600nimgiefpc5d3z1" data-title="运维之基础命令--虚拟机安装" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -1369,9 +1482,9 @@
 
 
   
-    <article id="post-01_运维/01-基础命令/day09-用户组管理/笔记" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-01_运维/01-基础命令/day12-软件包管理/软件包" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day09-%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86/%E7%AC%94%E8%AE%B0/" class="article-date">
+    <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day12-%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86/%E8%BD%AF%E4%BB%B6%E5%8C%85/" class="article-date">
   <time class="dt-published" datetime="2022-07-06T03:19:52.000Z" itemprop="datePublished">2022-07-06</time>
 </a>
     
@@ -1387,7 +1500,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day09-%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86/%E7%AC%94%E8%AE%B0/">运维之基础命令--用户组管理</a>
+      <a class="p-name article-title" href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day12-%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86/%E8%BD%AF%E4%BB%B6%E5%8C%85/">运维之基础命令--软件包管理</a>
     </h1>
   
 
@@ -1395,247 +1508,48 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h1><h2 id="linux中用户介绍"><a href="#linux中用户介绍" class="headerlink" title="linux中用户介绍"></a>linux中用户介绍</h2><p>什么是用户？</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">用户其实就是相当于权限的化身，</span><br><span class="line">处于安全考虑</span><br><span class="line">所以，我们在进入系统之前都需要登录，根据用户给相应权限</span><br></pre></td></tr></table></figure>
+        <h1 id="软件包"><a href="#软件包" class="headerlink" title="软件包"></a>软件包</h1><ul>
+<li><p>rpm包来源</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1、来源网络下载</span><br><span class="line">2、来源本地：自己的镜像自带的rpm包</span><br></pre></td></tr></table></figure>
 
-<p>Linux系统中用户角色</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">uid : Linux系统当中用户ID（相当于身份证号）</span><br><span class="line">gid : ANTA20163307</span><br><span class="line"></span><br><span class="line">用户组其实是统一某一类用户权限</span><br><span class="line"></span><br><span class="line">需求：</span><br><span class="line">	大项目 ： </span><br><span class="line">		开发者：a b c d</span><br><span class="line">		运维 ： e f</span><br><span class="line">		测试：g</span><br><span class="line">	共同的权限：</span><br></pre></td></tr></table></figure>
 
-<p>超级用户</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">linux当中的老大（皇帝）: root</span><br><span class="line">Windows当中的老大：administrator</span><br></pre></td></tr></table></figure>
 
-<h2 id="用户与组相关的文件"><a href="#用户与组相关的文件" class="headerlink" title="用户与组相关的文件"></a>用户与组相关的文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# <span class="built_in">cat</span> /etc/passwd</span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">用户名称   是否存在密码   uid  gid  组名称/注释信息 家目录  默认解析器 </span><br></pre></td></tr></table></figure>
 
+</li>
+<li><p>rpm命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装</span></span><br><span class="line"></span><br><span class="line">rpm -ivh xxx.rpm</span><br><span class="line"></span><br><span class="line"><span class="comment"># http://nginx.org/packages/centos/7/x86_64/RPMS/</span></span><br><span class="line"></span><br><span class="line">-v : 显示安装过程</span><br><span class="line">-i ：显示安装包的详细信息</span><br><span class="line">-h : 安装包哈希标记</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载Nginx rpm安装包的全名</span></span><br><span class="line">[root@localhost ~]# wget http://nginx.org/packages/centos/7/x86_64/RPMS/nginx-1.18.0-1.el7.ngx.x86_64.rpm</span><br><span class="line">--2021-03-17 12:16:47--  http://nginx.org/packages/centos/7/x86_64/RPMS/nginx-1.18.0-1.el7.ngx.x86_64.rpm</span><br><span class="line">Resolving nginx.org (nginx.org)... 52.58.199.22, 3.125.197.172, 2a05:d014:edb:5702::6, ...</span><br><span class="line">Connecting to nginx.org (nginx.org)|52.58.199.22|:80... connected.</span><br><span class="line">HTTP request sent, awaiting response... 200 OK</span><br><span class="line">Length: 790284 (772K) [application/x-redhat-package-manager]</span><br><span class="line">Saving to: ‘nginx-1.18.0-1.el7.ngx.x86_64.rpm’</span><br><span class="line"></span><br><span class="line">100%[====================================================&gt;] 790,284      339KB/s   <span class="keyword">in</span> 2.3s   </span><br><span class="line"></span><br><span class="line">2021-03-17 12:16:51 (339 KB/s) - ‘nginx-1.18.0-1.el7.ngx.x86_64.rpm’ saved [790284/790284]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装rpm安装包</span></span><br><span class="line">[root@localhost ~]# rpm -ivh nginx-1.18.0-1.el7.ngx.x86_64.rpm </span><br><span class="line">warning: nginx-1.18.0-1.el7.ngx.x86_64.rpm: Header V4 RSA/SHA1 Signature, key ID 7bd9bf62: NOKEY</span><br><span class="line">Preparing...                          <span class="comment">################################# [100%]</span></span><br><span class="line">Updating / installing...</span><br><span class="line">   1:nginx-1:1.18.0-1.el7.ngx         <span class="comment">################################# [100%]</span></span><br><span class="line">----------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">Thanks <span class="keyword">for</span> using nginx!</span><br><span class="line"></span><br><span class="line">Please find the official documentation <span class="keyword">for</span> nginx here:</span><br><span class="line">* http://nginx.org/en/docs/</span><br><span class="line"></span><br><span class="line">Please subscribe to nginx-announce mailing list to get</span><br><span class="line">the most important news about nginx:</span><br><span class="line">* http://nginx.org/en/support.html</span><br><span class="line"></span><br><span class="line">Commercial subscriptions <span class="keyword">for</span> nginx are available on:</span><br><span class="line">* http://nginx.com/products/</span><br><span class="line"></span><br><span class="line">----------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证nginx是否安装成功</span></span><br><span class="line">[root@localhost ~]# nginx -v</span><br><span class="line">nginx version: nginx/1.18.0</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载</span></span><br><span class="line">[root@localhost ~]# rpm -e nginx (软件包名称)</span><br><span class="line">[root@localhost ~]# nginx -v</span><br><span class="line">-bash: /usr/sbin/nginx: No such file or directory</span><br><span class="line">[root@localhost ~]# </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看系统当中安装了哪些rpm软件包</span></span><br><span class="line">rpm -qa</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看系统当中是否安装了某个rpm软件包</span></span><br><span class="line">[root@localhost ~]# rpm -q nginx（软件包名）</span><br><span class="line">nginx-1.18.0-1.el7.ngx.x86_64</span><br><span class="line">[root@localhost ~]# rpm -q safsdgsfdgfd</span><br><span class="line">package safsdgsfdgfd is not installed</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示已经安装过的rpm包详细信息。</span></span><br><span class="line">[root@localhost ~]# rpm -qi nginx</span><br><span class="line">Name        : nginx</span><br><span class="line">Epoch       : 1</span><br><span class="line">Version     : 1.18.0</span><br><span class="line">Release     : 1.el7.ngx</span><br><span class="line">Architecture: x86_64</span><br><span class="line">Install Date: Wed 17 Mar 2021 04:18:55 PM CST</span><br><span class="line">Group       : System Environment/Daemons</span><br><span class="line">Size        : 2830028</span><br><span class="line">License     : 2-clause BSD-like license</span><br><span class="line">Signature   : RSA/SHA1, Tue 21 Apr 2020 11:19:18 PM CST, Key ID abf5bd827bd9bf62</span><br><span class="line">Source RPM  : nginx-1.18.0-1.el7.ngx.src.rpm</span><br><span class="line">Build Date  : Tue 21 Apr 2020 11:07:33 PM CST</span><br><span class="line">Build Host  : ip-10-1-17-101.eu-central-1.compute.internal</span><br><span class="line">Relocations : (not relocatable)</span><br><span class="line">Vendor      : Nginx, Inc.</span><br><span class="line">URL         : http://nginx.org/</span><br><span class="line">Summary     : High performance web server</span><br><span class="line">Description :</span><br><span class="line">nginx [engine x] is an HTTP and reverse proxy server, as well as</span><br><span class="line">a mail proxy server.</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看安装包的内容</span></span><br><span class="line">[root@localhost nginx]# rpm -ql nginx</span><br><span class="line">/etc/logrotate.d/nginx</span><br><span class="line">/etc/nginx</span><br><span class="line">/etc/nginx/conf.d</span><br><span class="line">/etc/nginx/conf.d/default.conf</span><br><span class="line">/etc/nginx/fastcgi_params</span><br><span class="line">/etc/nginx/koi-utf</span><br><span class="line">/etc/nginx/koi-win</span><br><span class="line">/etc/nginx/mime.types</span><br><span class="line">/etc/nginx/modules</span><br><span class="line">/etc/nginx/nginx.conf</span><br><span class="line">/etc/nginx/scgi_params</span><br><span class="line">/etc/nginx/uwsgi_params</span><br><span class="line">/etc/nginx/win-utf</span><br><span class="line">/etc/sysconfig/nginx</span><br><span class="line">/etc/sysconfig/nginx-debug</span><br><span class="line">/usr/lib/systemd/system/nginx-debug.service</span><br><span class="line">/usr/lib/systemd/system/nginx.service</span><br><span class="line">/usr/lib64/nginx</span><br><span class="line">/usr/lib64/nginx/modules</span><br><span class="line">/usr/libexec/initscripts/legacy-actions/nginx</span><br><span class="line">/usr/libexec/initscripts/legacy-actions/nginx/check-reload</span><br><span class="line">/usr/libexec/initscripts/legacy-actions/nginx/upgrade</span><br><span class="line">/usr/sbin/nginx</span><br><span class="line">/usr/sbin/nginx-debug</span><br><span class="line">/usr/share/doc/nginx-1.18.0</span><br><span class="line">/usr/share/doc/nginx-1.18.0/COPYRIGHT</span><br><span class="line">/usr/share/man/man8/nginx.8.gz</span><br><span class="line">/usr/share/nginx</span><br><span class="line">/usr/share/nginx/html</span><br><span class="line">/usr/share/nginx/html/50x.html</span><br><span class="line">/usr/share/nginx/html/index.html</span><br><span class="line">/var/cache/nginx</span><br><span class="line">/var/log/nginx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看配置信息</span></span><br><span class="line">[root@localhost nginx]# rpm -qc nginx</span><br><span class="line">/etc/logrotate.d/nginx</span><br><span class="line">/etc/nginx/conf.d/default.conf</span><br><span class="line">/etc/nginx/fastcgi_params</span><br><span class="line">/etc/nginx/koi-utf</span><br><span class="line">/etc/nginx/koi-win</span><br><span class="line">/etc/nginx/mime.types</span><br><span class="line">/etc/nginx/nginx.conf</span><br><span class="line">/etc/nginx/scgi_params</span><br><span class="line">/etc/nginx/uwsgi_params</span><br><span class="line">/etc/nginx/win-utf</span><br><span class="line">/etc/sysconfig/nginx</span><br><span class="line">/etc/sysconfig/nginx-debug</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看文件帮助信息</span></span><br><span class="line">[root@localhost nginx]# rpm -qd zlib</span><br><span class="line">/usr/share/doc/zlib-1.2.7/ChangeLog</span><br><span class="line">/usr/share/doc/zlib-1.2.7/FAQ</span><br><span class="line">/usr/share/doc/zlib-1.2.7/README</span><br><span class="line"></span><br><span class="line"><span class="comment"># </span></span><br><span class="line">[root@localhost ~]# rpm -qf /usr/sbin/nginx</span><br><span class="line">nginx-1.18.0-1.el7.ngx.x86_64</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用 -p 可以查看未安装软件包的详细信息</span></span><br><span class="line">[root@localhost ~]# rpm -qip nginx-1.18.0-1.el7.ngx.x86_64.rpm </span><br><span class="line">warning: nginx-1.18.0-1.el7.ngx.x86_64.rpm: Header V4 RSA/SHA1 Signature, key ID 7bd9bf62: NOKEY</span><br><span class="line">Name        : nginx</span><br><span class="line">Epoch       : 1</span><br><span class="line">Version     : 1.18.0</span><br><span class="line">Release     : 1.el7.ngx</span><br><span class="line">Architecture: x86_64</span><br><span class="line">Install Date: (not installed)</span><br><span class="line">Group       : System Environment/Daemons</span><br><span class="line">Size        : 2830028</span><br><span class="line">License     : 2-clause BSD-like license</span><br><span class="line">Signature   : RSA/SHA1, Tue 21 Apr 2020 11:19:18 PM CST, Key ID abf5bd827bd9bf62</span><br><span class="line">Source RPM  : nginx-1.18.0-1.el7.ngx.src.rpm</span><br><span class="line">Build Date  : Tue 21 Apr 2020 11:07:33 PM CST</span><br><span class="line">Build Host  : ip-10-1-17-101.eu-central-1.compute.internal</span><br><span class="line">Relocations : (not relocatable)</span><br><span class="line">Vendor      : Nginx, Inc.</span><br><span class="line">URL         : http://nginx.org/</span><br><span class="line">Summary     : High performance web server</span><br><span class="line">Description :</span><br><span class="line">nginx [engine x] is an HTTP and reverse proxy server, as well as</span><br><span class="line">a mail proxy server.</span><br><span class="line"></span><br><span class="line"><span class="comment"># 升级软件包</span></span><br><span class="line">[root@localhost ~]# rpm -Uvh nginx-1.18.0-1.el7.ngx.x86_64.rpm </span><br><span class="line">warning: nginx-1.18.0-1.el7.ngx.x86_64.rpm: Header V4 RSA/SHA1 Signature, key ID 7bd9bf62: NOKEY</span><br><span class="line">Preparing...                          <span class="comment">################################# [100%]</span></span><br><span class="line">Updating / installing...</span><br><span class="line">   1:nginx-1:1.18.0-1.el7.ngx         <span class="comment">################################# [ 50%]</span></span><br><span class="line">Cleaning up / removing...</span><br><span class="line">   2:nginx-1:1.14.0-1.el7_4.ngx       <span class="comment">################################# [100%]</span></span><br><span class="line">[root@localhost ~]# nginx -v</span><br><span class="line">nginx version: nginx/1.18.0</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 强制删除软件包--nodeps</span></span><br><span class="line">[root@localhost ~]# rpm -e zlib --nodeps</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="yum"><a href="#yum" class="headerlink" title="yum"></a>yum</h2><blockquote>
+<p>yum是CentOS的软件包管理工具，自动为我们解决软件依赖问题。yum包管理工具必须使用yum源指定软件下载地址去下载需要安装的软件包。配置的路径是：&#x2F;etc&#x2F;yum.repos.d</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 清空本机所有的yum源</span></span><br><span class="line">[root@www yum.repos.d]# <span class="built_in">rm</span> -rf /etc/yum.repos.d/*</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>yum源命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看当前系统的yum源列表</span></span><br><span class="line">[root@www yum.repos.d]# yum repolist </span><br><span class="line">Loaded plugins: fastestmirror</span><br><span class="line">Loading mirror speeds from cached hostfile</span><br><span class="line">repo <span class="built_in">id</span>                   repo name                                           status</span><br><span class="line">base                      <span class="string">&quot;This is local repo, and 非常屌&quot;</span>                    10,072</span><br><span class="line">repolist: 10,072</span><br><span class="line"></span><br><span class="line"><span class="comment"># yum清空缓存</span></span><br><span class="line">[root@www yum.repos.d]# yum clean all</span><br><span class="line">Loaded plugins: fastestmirror</span><br><span class="line">Cleaning repos: base</span><br><span class="line">Cleaning up list of fastest mirrors</span><br><span class="line">Other repos take up 76 M of disk space (use --verbose <span class="keyword">for</span> details)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 建立yum缓存</span></span><br><span class="line">[root@www yum.repos.d]# yum makecache</span><br><span class="line">Loaded plugins: fastestmirror</span><br><span class="line">Loading mirror speeds from cached hostfile</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>yum源的执行原理</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1、需要在/etc/yum.repos.d目录下配置yum源地址</span><br><span class="line">2、清空缓存建立新的缓存</span><br><span class="line">3、安装软件（自动解决依赖关系）</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>yum常用的基础命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装软件包的命令</span></span><br><span class="line">yum install 软件包名称</span><br><span class="line">	-y : 免交互安装</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载软件（直接将软件的依赖包一起删除）</span></span><br><span class="line">yum remove 软件包名称</span><br><span class="line">[root@www yum.repos.d]# yum remove httpd</span><br><span class="line">	-y : 免交互移除</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前系统需要更新软件</span></span><br><span class="line">yum check-update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新所有的需要更新的软件</span></span><br><span class="line">yum update </span><br><span class="line">	-y ： 免交互</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新某一个软件</span></span><br><span class="line">yum update (软件包名称)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重装软件</span></span><br><span class="line">yum reinstall (软件包名称)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 搜索软件包</span></span><br><span class="line">[root@www httpd]# yum search （软件包名称）</span><br><span class="line">-------------------------------------------------------</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看yum执行历史</span></span><br><span class="line">yum <span class="built_in">history</span></span><br><span class="line">[root@www httpd]# yum <span class="built_in">history</span> info (历史ID号)</span><br><span class="line">[root@www httpd]# yum <span class="built_in">history</span> undo (历史ID号)</span><br><span class="line"><span class="comment"># 查看当前系统当中可更新的软件包</span></span><br><span class="line">[root@www yum.repos.d]# yum check-update </span><br><span class="line">Loaded plugins: fastestmirror</span><br><span class="line">Loading mirror speeds from cached hostfile</span><br><span class="line"></span><br><span class="line">postfix.x86_64                                        2:2.10.1-9.0.1.el7.centos.plus                                      centosplus</span><br><span class="line">python-perf.x86_64                                    3.10.0-1160.15.2.el7.centos.plus                                    centosplus</span><br><span class="line">[root@www yum.repos.d]# </span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看系统中有哪些仓库地址</span></span><br><span class="line">yum repolist    <span class="comment"># 正在启用的yum仓库</span></span><br><span class="line">[root@www yum.repos.d]# yum repolist</span><br><span class="line">Loaded plugins: fastestmirror</span><br><span class="line">Loading mirror speeds from cached hostfile</span><br><span class="line">repo <span class="built_in">id</span>                   repo name                                           status</span><br><span class="line">base/7/x86_64             CentOS-7 - Base - repo.huaweicloud.com              10,072</span><br><span class="line">extras/7/x86_64           CentOS-7 - Extras - repo.huaweicloud.com               453</span><br><span class="line">updates/7/x86_64          CentOS-7 - Updates - repo.huaweicloud.com            1,729</span><br><span class="line"></span><br><span class="line">yum repolist all <span class="comment"># 查看系统中所有的yum仓库</span></span><br><span class="line">[root@www yum.repos.d]# yum repolist all</span><br><span class="line">Loaded plugins: fastestmirror</span><br><span class="line">Loading mirror speeds from cached hostfile</span><br><span class="line">repo <span class="built_in">id</span>                                        repo name                                                             status</span><br><span class="line">base/7/x86_64                                  CentOS-7 - Base - repo.huaweicloud.com                                enabled: 10,072</span><br><span class="line">centosplus/7/x86_64                            CentOS-7 - Plus - repo.huaweicloud.com                                disabled</span><br><span class="line">extras/7/x86_64                                CentOS-7 - Extras - repo.huaweicloud.com                              enabled:    453</span><br><span class="line">updates/7/x86_64                               CentOS-7 - Updates - repo.huaweicloud.com                             enabled:  1,72</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启用repo仓库</span></span><br><span class="line">yum install yum-utils -y</span><br><span class="line"></span><br><span class="line">启用一个yum仓库：yum-config-manager --<span class="built_in">enable</span> (仓库名称)</span><br><span class="line">关闭一个yum仓库：yum-config-manager --<span class="built_in">disable</span> (仓库名称)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看一个仓库中的软件包列表</span></span><br><span class="line">[root@www yum.repos.d]# yum list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看软件包组</span></span><br><span class="line">[root@www yum.repos.d]# yum grouplist</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装软件包组</span></span><br><span class="line">[root@www yum.repos.d]# yum groupinstall <span class="string">&quot;Development Tools&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>本地yum源配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">1、备份/etc/yum.repos.d/下的所文件</span><br><span class="line">	<span class="built_in">rm</span> -rf /etc/yum.repos.d/*</span><br><span class="line"></span><br><span class="line">2、编写本地yum源</span><br><span class="line">[root@www yum.repos.d]# <span class="built_in">cat</span> test.repo </span><br><span class="line">[base] <span class="comment"># yum源名称</span></span><br><span class="line">name=<span class="string">&quot;This is repo infomation&quot;</span> <span class="comment">#yum源的简介</span></span><br><span class="line">baseurl=file:///opt    <span class="comment"># 指定yum源地址</span></span><br><span class="line">enabled=1				<span class="comment"># 是否启用yum源</span></span><br><span class="line">gpgcheck=0				<span class="comment"># 是否检查gpg秘钥</span></span><br><span class="line"></span><br><span class="line">3、更新缓存</span><br><span class="line">yum makecache</span><br><span class="line"></span><br><span class="line">4、安装软件</span><br><span class="line">yum install dos2unix</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>共享yum源配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">1、安装ftp</span><br><span class="line">yum install vsftpd -y</span><br><span class="line"></span><br><span class="line">2、启动vsftpd</span><br><span class="line">systemctl <span class="built_in">enable</span> --now vsftpd <span class="comment"># 设置开机自启动并且立即启动</span></span><br><span class="line"></span><br><span class="line">3、创建yum源共享文件夹</span><br><span class="line">[root@www ftp]# <span class="built_in">mkdir</span> /var/ftp/centos</span><br><span class="line"></span><br><span class="line">4、将映像中的软件复制到/var/ftp/centos</span><br><span class="line"><span class="built_in">cp</span> -rp /opt/* /var/ftp/centos</span><br><span class="line"></span><br><span class="line">5、编辑本地yum源，接入ftp</span><br><span class="line">[root@localhost yum.repos.d]# <span class="built_in">cat</span> local.repo </span><br><span class="line">[base]</span><br><span class="line">baseurl=ftp://192.168.15.100/centos</span><br><span class="line">name=<span class="string">&quot;This is ftp repo&quot;</span></span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=0</span><br><span class="line"></span><br><span class="line">6、测试安装</span><br><span class="line">yum install dos2unix -y</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>yum的配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum仓库的机器上执行</span></span><br><span class="line">1、修改/etc/yum.conf</span><br><span class="line">    cachedir=/var/ftp/centos/Packages   <span class="comment"># 指定yum缓存目录</span></span><br><span class="line">    keepcache=1							<span class="comment"># 下载的缓存软件不立即删除， 0为立即删除</span></span><br><span class="line"></span><br><span class="line">2、安装ftp</span><br><span class="line">yum install vsftpd -y</span><br><span class="line"></span><br><span class="line">3、启动vsftpd</span><br><span class="line">systemctl <span class="built_in">enable</span> --now vsftpd <span class="comment"># 设置开机自启动并且立即启动</span></span><br><span class="line"></span><br><span class="line">4、创建yum源共享文件夹</span><br><span class="line">[root@www ftp]# <span class="built_in">mkdir</span> /var/ftp/centos</span><br><span class="line"></span><br><span class="line">5、更新yum仓库</span><br><span class="line">[root@www ftp]# yum clean all</span><br><span class="line">[root@www ftp]# yum makecache</span><br><span class="line"></span><br><span class="line">6、建立一个快捷方式</span><br><span class="line"><span class="built_in">cd</span> /var/ftp/centos/Packages/base</span><br><span class="line"><span class="built_in">ln</span> -s packages Packages</span><br><span class="line"></span><br><span class="line">7、安装mariadb</span><br><span class="line">yum install mariadb -y</span><br><span class="line"></span><br><span class="line">8、建立/var/ftp/centos/Packages/base/repodata</span><br><span class="line"><span class="built_in">mkdir</span> /var/ftp/centos/Packages/base/repodata</span><br><span class="line"></span><br><span class="line">9、把/var/ftp/centos/Packages/base下面的自动生成的压缩文件复制到/var/ftp/centos/Packages/base/repodata用做认证。</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用yum仓库的机器上执行</span></span><br><span class="line">1、建立yum配置文件</span><br><span class="line">[root@localhost ~]# <span class="built_in">cat</span> /etc/yum.repos.d/local.repo </span><br><span class="line">[base]</span><br><span class="line">baseurl=ftp://192.168.15.100/centos/Packages/base</span><br><span class="line">name=<span class="string">&quot;This is ftp repo&quot;</span></span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=0</span><br><span class="line"></span><br><span class="line">2、更新yum仓库</span><br><span class="line">[root@www ftp]# yum clean all</span><br><span class="line">[root@www ftp]# yum makecache</span><br><span class="line"></span><br><span class="line">3、测试安装mariadb</span><br><span class="line">yum install mariadb -y</span><br></pre></td></tr></table></figure></li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://gblog.github.io/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day09-%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86/%E7%AC%94%E8%AE%B0/" data-id="cmrendtdf00kfdsie182n87ji" data-title="运维之基础命令--用户组管理" class="article-share-link"><span class="fa fa-share">分享</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-01_运维/01-基础命令/day10-Linux文件权限/笔记" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day10-Linux%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90/%E7%AC%94%E8%AE%B0/" class="article-date">
-  <time class="dt-published" datetime="2022-07-06T03:19:52.000Z" itemprop="datePublished">2022-07-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a>►<a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/">（一）基础命令</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day10-Linux%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90/%E7%AC%94%E8%AE%B0/">运维之基础命令--用户权限</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="修改用户信息-usermod"><a href="#修改用户信息-usermod" class="headerlink" title="修改用户信息(usermod)"></a>修改用户信息(usermod)</h1><blockquote>
-<p>修改用户信息最主要的命令是usermod命令，其参数跟useradd基本一致。</p>
-</blockquote>
-<ul>
-<li><p>修改UID</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# <span class="built_in">tail</span> -1 /etc/passwd</span><br><span class="line">xiaoyu:x:2002:2002::/home/xiaoyu:/bin/bash</span><br><span class="line">[root@localhost ~]# usermod -u 2302 xiaoyu</span><br><span class="line">[root@localhost ~]# <span class="built_in">tail</span> -1 /etc/passwd</span><br><span class="line">xiaoyu:x:2302:2002::/home/xiaoyu:/bin/bash</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改基本组及附加组</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 基本组 : 一个用户必须拥有的哪个组</span></span><br><span class="line">[root@localhost ~]# <span class="built_in">tail</span> -1 /etc/passwd</span><br><span class="line">xiaoyu:x:2302:2002::/home/xiaoyu:/bin/bash</span><br><span class="line">[root@localhost ~]# <span class="built_in">id</span> xiaoyu</span><br><span class="line">uid=2302(xiaoyu) gid=2002(xiaoyu) <span class="built_in">groups</span>=2002(xiaoyu)</span><br><span class="line">[root@localhost ~]# usermod -g group1 xiaoyu</span><br><span class="line">[root@localhost ~]# <span class="built_in">id</span> xiaoyu</span><br><span class="line">uid=2302(xiaoyu) gid=2003(group1) <span class="built_in">groups</span>=2003(group1)</span><br><span class="line">[root@localhost ~]# <span class="built_in">tail</span> -1 /etc/passwd</span><br><span class="line">xiaoyu:x:2302:2003::/home/xiaoyu:/bin/bash</span><br><span class="line">[root@localhost ~]# </span><br><span class="line"></span><br><span class="line"><span class="comment"># 附加组 ： 用户加入的其他用户组</span></span><br><span class="line">[root@localhost ~]# groupadd group1</span><br><span class="line">[root@localhost ~]# <span class="built_in">id</span></span><br><span class="line">uid=0(root) gid=0(root) <span class="built_in">groups</span>=0(root),1000(oldboy),1001(sssssssssssssssssssssss),1002(<span class="built_in">test</span>)</span><br><span class="line">[root@localhost ~]# usermod -G group1 root</span><br><span class="line">[root@localhost ~]# vim /etc/group</span><br><span class="line">[root@localhost ~]# <span class="built_in">tail</span> -1 /etc/group</span><br><span class="line">group1:x:2003:root</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改家目录</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# usermod  -d /home/xiaoyu123 xiaoyu</span><br><span class="line"></span><br><span class="line"><span class="comment"># 注：修改家目录仅仅修改了配置，而原来的家目录文件没有迁移</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改用户描述信息</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# <span class="built_in">tail</span> -1 /etc/passwd</span><br><span class="line">xiaoyu:x:2302:2003::/home/xiaoyu123:/bin/bash</span><br><span class="line">[root@localhost ~]# usermod -c <span class="string">&quot;这是一个甩锅&quot;</span> xiaoyu</span><br><span class="line">[root@localhost ~]# <span class="built_in">tail</span> -1 /etc/passwd</span><br><span class="line">xiaoyu:x:2302:2003:这是一个甩锅:/home/xiaoyu123:/bin/bash</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改用户默认解析器</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# usermod -s /bin/sh xiaoyu</span><br><span class="line">[root@localhost ~]# <span class="built_in">tail</span> -1 /etc/passwd</span><br><span class="line">xiaoyu:x:2302:2003:这是一个甩锅:/home/xiaoyu123:/bin/sh</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>锁定与解锁</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost home]# usermod -L xiaoyu</span><br><span class="line">[root@localhost home]# usermod -U xiaoyu</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改登录名称</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost home]# usermod -l dayu xiaoyu</span><br><span class="line">[root@localhost home]# <span class="built_in">tail</span> -1 /etc/passwd</span><br><span class="line">dayu:x:2302:2003:这是一个甩锅:/home/xiaoyu123:/bin/bash</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>追加</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost home]# <span class="built_in">id</span> dayu</span><br><span class="line">uid=2302(dayu) gid=2003(group1) <span class="built_in">groups</span>=2003(group1),1000(oldboy)</span><br><span class="line">[root@localhost home]# usermod -G root dayu</span><br><span class="line">[root@localhost home]# <span class="built_in">id</span> dayu</span><br><span class="line">uid=2302(dayu) gid=2003(group1) <span class="built_in">groups</span>=2003(group1),0(root)</span><br><span class="line">[root@localhost home]# usermod -G oldboy dayu</span><br><span class="line">[root@localhost home]# <span class="built_in">id</span> dayu</span><br><span class="line">uid=2302(dayu) gid=2003(group1) <span class="built_in">groups</span>=2003(group1),1000(oldboy)</span><br><span class="line">[root@localhost home]# usermod -a -G root dayu</span><br><span class="line">[root@localhost home]# <span class="built_in">id</span> dayu</span><br><span class="line">uid=2302(dayu) gid=2003(group1) <span class="built_in">groups</span>=2003(group1),0(root),1000(oldboy)</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h1 id="密码（passwd）"><a href="#密码（passwd）" class="headerlink" title="密码（passwd）"></a>密码（passwd）</h1><blockquote>
-<p>修改或添加Linux普通用户的密码。直接影响的文件是&#x2F;etc&#x2F;shadow</p>
-</blockquote>
-<ul>
-<li><p>增加或修改密码</p>
-<p>当用户密码不存在的时候即为增加密码，当用户密码存在时即为修改密码。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost home]# useradd password</span><br><span class="line">[root@localhost home]# <span class="built_in">tail</span> -1 /etc/passwd</span><br><span class="line">password:x:2303:2303::/home/password:/bin/bash</span><br><span class="line">[root@localhost home]# <span class="built_in">tail</span> -1 /etc/shadow</span><br><span class="line">password:!!:18701:0:99999:7:::</span><br><span class="line">[root@localhost home]# passwd password</span><br><span class="line">Changing password <span class="keyword">for</span> user password.</span><br><span class="line">New password: </span><br><span class="line">BAD PASSWORD: The password is a palindrome</span><br><span class="line">Retype new password: </span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br><span class="line">[root@localhost home]# <span class="built_in">tail</span> -1 /etc/passwd</span><br><span class="line">password:x:2303:2303::/home/password:/bin/bash</span><br><span class="line">[root@localhost home]# <span class="built_in">tail</span> -1 /etc/shadow</span><br><span class="line">password:$6$.EmM.4Bl<span class="variable">$f</span>.LimfvMsxxFZq6yFklfyk08JKQORdQovlk2a2dtrpkP31lAMLQpezFqLheBYOTm4Sur9aAqZlC/6MN6wHFBM1:18701:0:99999:7:::</span><br><span class="line">[root@localhost home]# </span><br></pre></td></tr></table></figure>
-</li>
-<li><p>免交互修改密码</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost home]# <span class="built_in">echo</span> <span class="string">&quot;123&quot;</span> | passwd --stdin dayu</span><br><span class="line">Changing password <span class="keyword">for</span> user dayu.</span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h1 id="用户组"><a href="#用户组" class="headerlink" title="用户组"></a>用户组</h1><blockquote>
-<p>就类似于班级，是某个同权限用户的集合。</p>
-</blockquote>
-<h2 id="创建组"><a href="#创建组" class="headerlink" title="创建组"></a>创建组</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost home]# groupadd group2</span><br><span class="line">[root@localhost home]# <span class="built_in">tail</span> -1 /etc/group</span><br><span class="line">group2:x:2304:</span><br><span class="line">[root@localhost home]# </span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>指定gid</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost home]# groupadd -g 2204 group3</span><br><span class="line">[root@localhost home]# <span class="built_in">tail</span> -1 /etc/group</span><br><span class="line">group3:x:2204:</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>创建系统组</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost home]# groupadd -r group4</span><br><span class="line">[root@localhost home]# <span class="built_in">tail</span> -1 /etc/group</span><br><span class="line">group4:x:996:</span><br></pre></td></tr></table></figure>
-
-<h2 id="修改组"><a href="#修改组" class="headerlink" title="修改组"></a>修改组</h2><ul>
-<li><p>修改名称</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost home]# <span class="built_in">tail</span> -8 /etc/group</span><br><span class="line">girl:x:2001:</span><br><span class="line">[root@localhost home]# groupmod -n boy girl</span><br><span class="line">[root@localhost home]# <span class="built_in">tail</span> -8 /etc/group</span><br><span class="line">boy:x:2001:</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改gid</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost home]# groupmod -g 2021 boy</span><br><span class="line">[root@localhost home]# <span class="built_in">tail</span> -8 /etc/group</span><br><span class="line">boy:x:2021:</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="删除组"><a href="#删除组" class="headerlink" title="删除组"></a>删除组</h2><blockquote>
-<p>用户组在系统中删除，如果一个组被用户占用则不能删除。</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost home]# groupdel group4</span><br><span class="line">[root@localhost home]# <span class="built_in">tail</span> -8 /etc/group</span><br><span class="line">dajige:x:1003:</span><br><span class="line">abc:x:2000:</span><br><span class="line">xiaoyu:x:2002:</span><br><span class="line">group1:x:2003:root</span><br><span class="line">password:x:2303:</span><br><span class="line">group2:x:2304:</span><br><span class="line">group3:x:2204:</span><br><span class="line">boy:x:2021:</span><br><span class="line">[root@localhost home]# </span><br><span class="line"></span><br><span class="line"><span class="comment"># 注：用户被删除，用户基本组也会被删除</span></span><br><span class="line">[root@localhost home]# useradd test-group-del</span><br><span class="line">[root@localhost home]# <span class="built_in">tail</span> -1 /etc/passwd</span><br><span class="line">test-group-del:x:2304:2305::/home/test-group-del:/bin/bash</span><br><span class="line">[root@localhost home]# <span class="built_in">tail</span> -1 /etc/group</span><br><span class="line">test-group-del:x:2305:</span><br><span class="line">[root@localhost home]# userdel -r test-group-del</span><br><span class="line">[root@localhost home]# <span class="built_in">tail</span> -1 /etc/passwd</span><br><span class="line">password:x:2303:2303::/home/password:/bin/bash</span><br><span class="line">[root@localhost home]# <span class="built_in">tail</span> -1 /etc/group</span><br><span class="line">boy:x:2021:</span><br><span class="line">[root@localhost home]# </span><br></pre></td></tr></table></figure>
-
-<h2 id="组成员管理"><a href="#组成员管理" class="headerlink" title="组成员管理"></a>组成员管理</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加一个组到用户</span></span><br><span class="line">[root@localhost home]# useradd gtest</span><br><span class="line">[root@localhost home]# vim /etc/group</span><br><span class="line">[root@localhost home]# <span class="built_in">id</span> gtest</span><br><span class="line">uid=2304(gtest) gid=2305(gtest) <span class="built_in">groups</span>=2305(gtest),2204(group3)</span><br><span class="line">[root@localhost home]# gpasswd -a gtest group2</span><br><span class="line">Adding user gtest to group group2</span><br><span class="line">[root@localhost home]# <span class="built_in">id</span> gtest</span><br><span class="line">uid=2304(gtest) gid=2305(gtest) <span class="built_in">groups</span>=2305(gtest),2304(group2),2204(group3)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加多个组到用户</span></span><br><span class="line">[root@localhost home]# gpasswd -M gtest,root,dayu group</span><br><span class="line">gpasswd: group <span class="string">&#x27;group&#x27;</span> does not exist <span class="keyword">in</span> /etc/group</span><br><span class="line">[root@localhost home]# gpasswd -M gtest,root,dayu group3</span><br><span class="line">[root@localhost home]# <span class="built_in">id</span> root</span><br><span class="line">uid=0(root) gid=0(root) <span class="built_in">groups</span>=0(root),2000(abc),2003(group1),2204(group3)</span><br><span class="line">[root@localhost home]# <span class="built_in">id</span> dayu</span><br><span class="line">uid=2302(dayu) gid=2003(group1) <span class="built_in">groups</span>=2003(group1),0(root),1000(oldboy),2204(group3)</span><br><span class="line">[root@localhost home]# <span class="built_in">id</span> gtest</span><br><span class="line">uid=2304(gtest) gid=2305(gtest) <span class="built_in">groups</span>=2305(gtest),2304(group2),2204(group3)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 为一个组添加组长(组长有权限向组内添加用户，其他用户[除root外]没有权限添加用户到该组)</span></span><br><span class="line">[root@localhost ~]# gpasswd -A dayu group3</span><br><span class="line">[root@localhost ~]# <span class="built_in">cat</span> /etc/gshadow</span><br><span class="line">group3:!:dayu:gtest,dayu,oldboy</span><br><span class="line"></span><br><span class="line"><span class="comment"># 组权限</span></span><br><span class="line">[root@localhost ~]# <span class="built_in">id</span> dayu</span><br><span class="line">uid=2302(dayu) gid=2003(group1) <span class="built_in">groups</span>=2003(group1),1000(oldboy),2204(group3)</span><br><span class="line">[root@localhost ~]# <span class="built_in">chown</span> .group3 /tmp/12.txt </span><br><span class="line">[root@localhost ~]# <span class="built_in">ls</span> -l /tmp/12.txt</span><br><span class="line">-rw-r--r-- 1 root group3 4 Mar 15 11:35 /tmp/12.txt</span><br><span class="line">[root@localhost ~]# <span class="built_in">chmod</span> g+w /tmp/12.txt</span><br><span class="line">[root@localhost ~]# <span class="built_in">ls</span> -l /tmp/12.txt</span><br><span class="line">-rw-rw-r-- 1 root group3 4 Mar 15 11:35 /tmp/12.txt</span><br><span class="line">[root@localhost ~]# su - dayu</span><br><span class="line">Last login: Mon Mar 15 11:37:05 CST 2021 on pts/3</span><br><span class="line">[dayu@localhost ~]$ <span class="built_in">echo</span> <span class="string">&quot;456&quot;</span> &gt; /tmp/12.txt </span><br><span class="line">[dayu@localhost ~]$ <span class="built_in">cat</span> /tmp/12.txt</span><br><span class="line">456</span><br><span class="line">[dayu@localhost ~]$ </span><br></pre></td></tr></table></figure>
-
-
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://gblog.github.io/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day10-Linux%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90/%E7%AC%94%E8%AE%B0/" data-id="cmrendtdg00kidsie0o0abtwz" data-title="运维之基础命令--用户权限" class="article-share-link"><span class="fa fa-share">分享</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-01_运维/01-基础命令/day11-sudo与su/facl" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day11-sudo%E4%B8%8Esu/facl/" class="article-date">
-  <time class="dt-published" datetime="2022-07-06T03:19:52.000Z" itemprop="datePublished">2022-07-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a>►<a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/">（一）基础命令</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day11-sudo%E4%B8%8Esu/facl/">运维之基础命令--文件ACL</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="笔记"><a href="#笔记" class="headerlink" title="笔记"></a>笔记</h1><blockquote>
-<p>补充：</p>
-<p>​	权限的归属</p>
-<p>​		a : 属组、属主以及其他人的权限一起设置。</p>
-<p>​		o : 其他人</p>
-<p>​		g : 属组</p>
-<p>​		u : 属主</p>
-</blockquote>
-<h2 id="umask"><a href="#umask" class="headerlink" title="umask"></a>umask</h2><blockquote>
-<p>就是解决目录及文件的默认权限。</p>
-</blockquote>
-<ul>
-<li>文件的最高权限是多少     777</li>
-<li>文件夹的最高权限是多少  777</li>
-</ul>
-<h2 id="ACL"><a href="#ACL" class="headerlink" title="ACL"></a>ACL</h2><blockquote>
-<p>ACL是为了解决某种特殊环境下的，用户权限需求。</p>
-</blockquote>
-<ul>
-<li>setfacl ： 设置acl权限</li>
-<li>getfacl ：查看ACL权限</li>
-</ul>
-<h3 id="acl权限归属"><a href="#acl权限归属" class="headerlink" title="acl权限归属"></a>acl权限归属</h3><ul>
-<li>u : 指定用户</li>
-<li>g : 指定组</li>
-<li>o : 修改其他用户权限</li>
-<li>m : 指定mask权限</li>
-</ul>
-<p>注：默认情况下，ACL权限跟普通权限保持一致。</p>
-<h2 id="ACL-的流程"><a href="#ACL-的流程" class="headerlink" title="ACL 的流程"></a>ACL 的流程</h2><ul>
-<li><p>1、创建文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> o+x /root</span><br><span class="line"><span class="built_in">chmod</span> o+x /root/xiaochen</span><br><span class="line"><span class="built_in">cd</span> xiaochen</span><br><span class="line"></span><br><span class="line">[root@localhost xiaochen]# <span class="built_in">touch</span> abc.txt</span><br><span class="line">[root@localhost xiaochen]# <span class="built_in">chmod</span> 000 abc.txt </span><br><span class="line">[root@localhost xiaochen]# ll</span><br><span class="line">total 0</span><br><span class="line">---------- 1 root root 0 Mar 16 11:39 abc.txt</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>编写文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost xiaochen]# <span class="built_in">echo</span> 111 &gt; abc.txt </span><br><span class="line">[root@localhost xiaochen]# <span class="built_in">cat</span> abc.txt </span><br><span class="line">111</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>设置ACL权限</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost xiaochen]# useradd xiaozhang</span><br><span class="line">[root@localhost xiaochen]# setfacl -m u:xiaozhang:r abc.txt </span><br><span class="line">[root@localhost xiaochen]# getfacl abc.txt </span><br><span class="line"><span class="comment"># file: abc.txt</span></span><br><span class="line"><span class="comment"># owner: root</span></span><br><span class="line"><span class="comment"># group: root</span></span><br><span class="line">user::---</span><br><span class="line">user:xiaozhang:r--</span><br><span class="line">group::---</span><br><span class="line">mask::r--</span><br><span class="line">other::---</span><br><span class="line"></span><br><span class="line"><span class="comment"># 注：</span></span><br><span class="line">setfacl -m u:用户名称:权限(rwx) 文件名称</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>查看文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# su - xiaozhang</span><br><span class="line">[xiaozhang@localhost ~]$ <span class="built_in">cat</span> /root/xiaochen/abc.txt</span><br><span class="line">111</span><br></pre></td></tr></table></figure></li>
-</ul>
-<p>mask :  rw-</p>
-<p>xxxx :   -w-</p>
-<p>-w-</p>
-<h2 id="ACL权限的删除"><a href="#ACL权限的删除" class="headerlink" title="ACL权限的删除"></a>ACL权限的删除</h2><ul>
-<li><p>删除某个权限</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost xiaochen]# getfacl abc.txt </span><br><span class="line"><span class="comment"># file: abc.txt</span></span><br><span class="line"><span class="comment"># owner: root</span></span><br><span class="line"><span class="comment"># group: root</span></span><br><span class="line">user::---</span><br><span class="line">user:xiaozhang:r--</span><br><span class="line">group::---</span><br><span class="line">group:xiaochen:r-x		<span class="comment">#effective:r--</span></span><br><span class="line">mask::rw-</span><br><span class="line">other::r--</span><br><span class="line"></span><br><span class="line">[root@localhost xiaochen]# setfacl -x u:xiaozhang abc.txt</span><br><span class="line"></span><br><span class="line">[root@localhost xiaochen]# getfacl abc.txt </span><br><span class="line"><span class="comment"># file: abc.txt</span></span><br><span class="line"><span class="comment"># owner: root</span></span><br><span class="line"><span class="comment"># group: root</span></span><br><span class="line">user::---</span><br><span class="line">group::---</span><br><span class="line">group:xiaochen:r-x</span><br><span class="line">mask::r-x</span><br><span class="line">other::r--</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@localhost xiaochen]# getfacl abc.txt </span><br><span class="line"><span class="comment"># file: abc.txt</span></span><br><span class="line"><span class="comment"># owner: root</span></span><br><span class="line"><span class="comment"># group: root</span></span><br><span class="line">user::---</span><br><span class="line">group::---</span><br><span class="line">group:xiaochen:r-x</span><br><span class="line">mask::r-x</span><br><span class="line">other::r--</span><br><span class="line"></span><br><span class="line">[root@localhost xiaochen]# setfacl -x g:xiaochen abc.txt </span><br><span class="line">[root@localhost xiaochen]# getfacl abc.txt </span><br><span class="line"><span class="comment"># file: abc.txt</span></span><br><span class="line"><span class="comment"># owner: root</span></span><br><span class="line"><span class="comment"># group: root</span></span><br><span class="line">user::---</span><br><span class="line">group::---</span><br><span class="line">mask::---</span><br><span class="line">other::r--</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-</li>
-<li><p>清空acl权限</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost xiaochen]# getfacl abc.txt </span><br><span class="line"><span class="comment"># file: abc.txt</span></span><br><span class="line"><span class="comment"># owner: root</span></span><br><span class="line"><span class="comment"># group: root</span></span><br><span class="line">user::---</span><br><span class="line">user:xiaochen:rw-</span><br><span class="line">user:xiaocao:rw-</span><br><span class="line">group::---</span><br><span class="line">group:xiaochen:rw-</span><br><span class="line">group:xiaocao:rw-</span><br><span class="line">mask::rw-</span><br><span class="line">other::r--</span><br><span class="line"></span><br><span class="line">[root@localhost xiaochen]# setfacl -b abc.txt </span><br><span class="line">[root@localhost xiaochen]# getfacl abc.txt </span><br><span class="line"><span class="comment"># file: abc.txt</span></span><br><span class="line"><span class="comment"># owner: root</span></span><br><span class="line"><span class="comment"># group: root</span></span><br><span class="line">user::---</span><br><span class="line">group::---</span><br><span class="line">other::r--</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="ACL继承"><a href="#ACL继承" class="headerlink" title="ACL继承"></a>ACL继承</h2><blockquote>
-<p>默认情况下，ACL是不会继承上层目录的权限的。只有目录设置可继承子集文件才可以继承ACL权限。</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost linux12]# setfacl -m d:u:xiaochen:w ../linux12</span><br><span class="line">[root@localhost linux12]# <span class="built_in">touch</span> bcd.txt</span><br><span class="line">[root@localhost linux12]# <span class="built_in">ls</span> -l</span><br><span class="line">total 0</span><br><span class="line">-rw-r--r--  1 root root 0 Mar 16 15:40 abc.txt</span><br><span class="line">-rw-rw-r--+ 1 root root 0 Mar 16 15:43 bcd.txt</span><br><span class="line">[root@localhost linux12]# getfacl bcd.txt </span><br><span class="line"><span class="comment"># file: bcd.txt</span></span><br><span class="line"><span class="comment"># owner: root</span></span><br><span class="line"><span class="comment"># group: root</span></span><br><span class="line">user::rw-</span><br><span class="line">user:xiaochen:-w-</span><br><span class="line">group::r-x			<span class="comment">#effective:r--</span></span><br><span class="line">mask::rw-</span><br><span class="line">other::r--</span><br><span class="line"></span><br><span class="line">[root@localhost linux12]# </span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://gblog.github.io/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day11-sudo%E4%B8%8Esu/facl/" data-id="cmrendtdg00kkdsie6m4aaaha" data-title="运维之基础命令--文件ACL" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://gblog.github.io/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day12-%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86/%E8%BD%AF%E4%BB%B6%E5%8C%85/" data-id="cmrenk1j700nlmgie584t556c" data-title="运维之基础命令--软件包管理" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
