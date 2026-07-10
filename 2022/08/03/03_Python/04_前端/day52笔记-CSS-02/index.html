@@ -1,30 +1,17 @@
-
-
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
-
-
-
+<html>
 <head>
-  <meta charset="UTF-8">
-
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <meta charset="utf-8">
   
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="Haris">
-  <meta name="keywords" content="">
-  
-    <meta name="description" content="“第52天CSS02学习笔记” 1 分组与嵌套1.1 分组选择器在样式表中有很多具有相同样式的元素 div &#123;     color: darkorange; &#125;  p &#123;     color: darkorange; &#125; span &#123;     color: darkorange; &#125;  为减少代码， 可以使用分组选择器，多个选择器之间使用">
+  <title>Day52-CSS-02 | Haris的小站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="“第52天CSS02学习笔记” 1 分组与嵌套1.1 分组选择器在样式表中有很多具有相同样式的元素 12345678910div &#123;    color: darkorange;&#125;p &#123;    color: darkorange;&#125;span &#123;    color: darkorange;&#125;  为减少代码， 可以使用分组选择器，多个选择器之间">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Day52-CSS-02">
 <meta property="og:url" content="https://gblog.github.io/2022/08/03/03_Python/04_%E5%89%8D%E7%AB%AF/day52%E7%AC%94%E8%AE%B0-CSS-02/index.html">
 <meta property="og:site_name" content="Haris的小站">
-<meta property="og:description" content="“第52天CSS02学习笔记” 1 分组与嵌套1.1 分组选择器在样式表中有很多具有相同样式的元素 div &#123;     color: darkorange; &#125;  p &#123;     color: darkorange; &#125; span &#123;     color: darkorange; &#125;  为减少代码， 可以使用分组选择器，多个选择器之间使用">
+<meta property="og:description" content="“第52天CSS02学习笔记” 1 分组与嵌套1.1 分组选择器在样式表中有很多具有相同样式的元素 12345678910div &#123;    color: darkorange;&#125;p &#123;    color: darkorange;&#125;span &#123;    color: darkorange;&#125;  为减少代码， 可以使用分组选择器，多个选择器之间">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gblog.github.io/img/image-20220803163319946.png">
 <meta property="og:image" content="https://gblog.github.io/img/image-20220803164759050.png">
@@ -32,299 +19,98 @@
 <meta property="article:published_time" content="2022-08-03T07:44:22.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.244Z">
 <meta property="article:author" content="Haris">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gblog.github.io/img/image-20220803163319946.png">
   
+    <link rel="alternate" href="/atom.xml" title="Haris的小站" type="application/atom+xml">
   
   
-  <title>Day52-CSS-02 - Haris的小站</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.png">
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
 
-
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"gblog.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
   
+  
+<link rel="stylesheet" href="/css/style.css">
 
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
+  
   
 <meta name="generator" content="Hexo 7.3.0"></head>
 
-
 <body>
-  
-
-  <header>
-    
-
-<div class="header-inner" style="height: 70vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>Haris的博客</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>首页</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>归档</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>分类</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
-          </li>
-        
-      </ul>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Haris的小站</a>
+      </h1>
+      
     </div>
-  </div>
-</nav>
-
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="Day52-CSS-02"></span>
-          
-        </div>
-
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
         
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-08-03 15:44" pubdate>
-          2022年8月3日 下午
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
+          <a class="main-nav-link" href="/">Home</a>
         
-          3k 字
+          <a class="main-nav-link" href="/archives">Archives</a>
         
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
+      </nav>
+      <nav id="sub-nav">
         
         
+          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
         
-          25 分钟
-        
-      </span>
-    
-
-    
-    
-  </div>
-
-
-        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://gblog.github.io"></form>
       </div>
-
-      
     </div>
   </div>
-</div>
+</header>
 
-</div>
-
-  </header>
-
-  <main>
+      <div class="outer">
+        <section id="main"><article id="post-03_Python/04_前端/day52笔记-CSS-02" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/08/03/03_Python/04_%E5%89%8D%E7%AB%AF/day52%E7%AC%94%E8%AE%B0-CSS-02/" class="article-date">
+  <time class="dt-published" datetime="2022-08-03T07:44:22.000Z" itemprop="datePublished">2022-08-03</time>
+</a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Python/">Python</a>►<a class="article-category-link" href="/categories/Python/05-CSS/">05_CSS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Day52-CSS-02
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
       
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
-
-    </div>
-
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">Day52-CSS-02</h1>
-            
-            
-              <div class="markdown-body">
-                
-                <p>“第52天CSS02学习笔记”</p>
+        <p>“第52天CSS02学习笔记”</p>
 <h1 id="1-分组与嵌套"><a href="#1-分组与嵌套" class="headerlink" title="1 分组与嵌套"></a>1 分组与嵌套</h1><h2 id="1-1-分组选择器"><a href="#1-1-分组选择器" class="headerlink" title="1.1 分组选择器"></a>1.1 分组选择器</h2><p>在样式表中有很多具有相同样式的元素</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-css" data-language="css"><code class="language-css">div &#123;
-    color: darkorange;
-&#125;
-
-p &#123;
-    color: darkorange;
-&#125;
-span &#123;
-    color: darkorange;
-&#125;</code></pre></div></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: darkorange;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">p</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: darkorange;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">span</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: darkorange;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>为减少代码， 可以使用分组选择器，多个选择器之间使用<code>逗号</code>分隔</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-css" data-language="css"><code class="language-css">&lt;!doctype html&gt;
-&lt;html lang&#x3D;&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;
-    &lt;style&gt;
-        &#x2F;*使用分组选择器*&#x2F;
-        div, p, span &#123;
-            color: darkorange;
-        &#125;
-    &lt;&#x2F;style&gt;
-&lt;&#x2F;head&gt;
-&lt;body&gt;
-    &lt;div&gt;DIV&lt;&#x2F;div&gt;
-    &lt;p&gt;PPP&lt;&#x2F;p&gt;
-    &lt;span&gt;SPAN&lt;&#x2F;span&gt;
-&lt;&#x2F;body&gt;
-&lt;&#x2F;html&gt;</code></pre></div></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!doctype <span class="selector-tag">html</span>&gt;</span><br><span class="line">&lt;<span class="selector-tag">html</span> lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-<span class="number">8</span>&quot;&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        <span class="comment">/*使用分组选择器*/</span></span><br><span class="line">        <span class="selector-tag">div</span>, <span class="selector-tag">p</span>, <span class="selector-tag">span</span> &#123;</span><br><span class="line">            <span class="attribute">color</span>: darkorange;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;<span class="selector-tag">body</span>&gt;</span><br><span class="line">    &lt;<span class="selector-tag">div</span>&gt;<span class="selector-tag">DIV</span>&lt;/<span class="selector-tag">div</span>&gt;</span><br><span class="line">    &lt;<span class="selector-tag">p</span>&gt;PPP&lt;/<span class="selector-tag">p</span>&gt;</span><br><span class="line">    &lt;<span class="selector-tag">span</span>&gt;<span class="selector-tag">SPAN</span>&lt;/<span class="selector-tag">span</span>&gt;</span><br><span class="line">&lt;/<span class="selector-tag">body</span>&gt;</span><br><span class="line">&lt;/<span class="selector-tag">html</span>&gt;</span><br></pre></td></tr></table></figure>
 
 <h2 id="1-2-嵌套选择器"><a href="#1-2-嵌套选择器" class="headerlink" title="1.2 嵌套选择器"></a>1.2 嵌套选择器</h2><p>它可能适用于选择器内部的选择器的样式。</p>
 <p>在下面的例子设置了四个样式：</p>
@@ -335,111 +121,22 @@ span &#123;
 <li><strong>p.marked{ }</strong>: 为所有 <strong>class&#x3D;”marked”</strong> 的 <strong>p</strong> 元素指定一个样式。</li>
 </ul>
 <p>案例代码：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-css" data-language="css"><code class="language-css">p
-&#123;
-    color:blue;
-    text-align:center;
-&#125;
-.marked
-&#123;
-    background-color:red;
-&#125;
-.marked p
-&#123;
-    color:white;
-&#125;
-p.marked&#123;
-    text-decoration:underline;
-&#125;</code></pre></div></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="attribute">color</span>:blue;</span><br><span class="line">    <span class="attribute">text-align</span>:center;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.marked</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="attribute">background-color</span>:red;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.marked</span> <span class="selector-tag">p</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="attribute">color</span>:white;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">p</span><span class="selector-class">.marked</span>&#123;</span><br><span class="line">    <span class="attribute">text-decoration</span>:underline;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
 <h1 id="2-伪类选择器"><a href="#2-伪类选择器" class="headerlink" title="2 伪类选择器"></a>2 伪类选择器</h1><p>伪类选择器以<code>标签:状态</code>的方式使用</p>
 <p>案例代码:</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup">&lt;!doctype html&gt;
-&lt;html lang&#x3D;&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;
-    &lt;style&gt;
-        body &#123;
-            background-color: darkseagreen;
-        &#125;
-
-        &#x2F;*链接未点击的样式*&#x2F;
-        a:link &#123;
-            color: red;
-        &#125;
-
-        &#x2F;*鼠标放在链接上的样式*&#x2F;
-        a:hover &#123;
-            color: aqua;
-        &#125;
-
-        &#x2F;*鼠标按住不放的样式*&#x2F;
-        a:active &#123;
-            color: black;
-        &#125;
-
-        &#x2F;*鼠标点击松开后的样式*&#x2F;
-        a:visited &#123;
-            color: blue;
-        &#125;
-
-        &#x2F;*鼠标放在标签上的样式*&#x2F;
-        p:hover &#123;
-            background-color: white;
-        &#125;
-
-        &#x2F;*鼠标聚焦到输入框的样式（鼠标点了input框）*&#x2F;
-        input:focus &#123;
-            background-color: deeppink;
-        &#125;
-    &lt;&#x2F;style&gt;
-&lt;&#x2F;head&gt;
-&lt;body&gt;
-    &lt;a href&#x3D;&quot;https:&#x2F;&#x2F;gsproj.github.io&quot;&gt;我的博客&lt;&#x2F;a&gt;
-    &lt;a href&#x3D;&quot;https:&#x2F;&#x2F;gsproj.github.io&quot;&gt;JUMP&lt;&#x2F;a&gt;
-    &lt;p&gt;点我进去康康&lt;&#x2F;p&gt;
-    &lt;input type&#x3D;&quot;text&quot;&gt;
-&lt;&#x2F;body&gt;
-&lt;&#x2F;html&gt;</code></pre></div></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="selector-tag">body</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">background-color</span>: darkseagreen;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*链接未点击的样式*/</span></span></span><br><span class="line"><span class="language-css">        <span class="selector-tag">a</span><span class="selector-pseudo">:link</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">color</span>: red;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*鼠标放在链接上的样式*/</span></span></span><br><span class="line"><span class="language-css">        <span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">color</span>: aqua;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*鼠标按住不放的样式*/</span></span></span><br><span class="line"><span class="language-css">        <span class="selector-tag">a</span><span class="selector-pseudo">:active</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">color</span>: black;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*鼠标点击松开后的样式*/</span></span></span><br><span class="line"><span class="language-css">        <span class="selector-tag">a</span><span class="selector-pseudo">:visited</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">color</span>: blue;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*鼠标放在标签上的样式*/</span></span></span><br><span class="line"><span class="language-css">        <span class="selector-tag">p</span><span class="selector-pseudo">:hover</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">background-color</span>: white;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*鼠标聚焦到输入框的样式（鼠标点了input框）*/</span></span></span><br><span class="line"><span class="language-css">        <span class="selector-tag">input</span><span class="selector-pseudo">:focus</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">background-color</span>: deeppink;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://gsproj.github.io&quot;</span>&gt;</span>我的博客<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://gsproj.github.io&quot;</span>&gt;</span>JUMP<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>点我进去康康<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 
 
 <h1 id="3-伪元素选择器"><a href="#3-伪元素选择器" class="headerlink" title="3 伪元素选择器"></a>3 伪元素选择器</h1><p>伪元素通常用来实现””首字母大写””和清除浮动带来的“父标签塌陷”的的问题</p>
 <p>案例代码：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup">&lt;!doctype html&gt;
-&lt;html lang&#x3D;&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;
-    &lt;title&gt;Document&lt;&#x2F;title&gt;
-    &lt;style&gt;
-        &#x2F;*伪元素实现首字母大写*&#x2F;
-        p:first-letter &#123;
-            font-size: 48px;
-            color: orange;
-        &#125;
-
-        &#x2F;*段前添加文字*&#x2F;
-        p:before &#123;
-            content: &#39;加在前面&#39;;
-            color: palevioletred;
-        &#125;
-
-        &#x2F;*段后添加文字*&#x2F;
-        p:after &#123;
-            content: &#39;加在后面&#39;;
-            color: palevioletred;
-        &#125;
-    &lt;&#x2F;style&gt;
-&lt;&#x2F;head&gt;
-&lt;body&gt;
-    &lt;p&gt;这是一段不起眼的文字&lt;&#x2F;p&gt;
-&lt;&#x2F;body&gt;
-&lt;&#x2F;html&gt;</code></pre></div></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*伪元素实现首字母大写*/</span></span></span><br><span class="line"><span class="language-css">        <span class="selector-tag">p</span><span class="selector-pseudo">:first</span>-letter &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">font-size</span>: <span class="number">48px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">color</span>: orange;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*段前添加文字*/</span></span></span><br><span class="line"><span class="language-css">        <span class="selector-tag">p</span><span class="selector-pseudo">:before</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">content</span>: <span class="string">&#x27;加在前面&#x27;</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">color</span>: palevioletred;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*段后添加文字*/</span></span></span><br><span class="line"><span class="language-css">        <span class="selector-tag">p</span><span class="selector-pseudo">:after</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">content</span>: <span class="string">&#x27;加在后面&#x27;</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">color</span>: palevioletred;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>这是一段不起眼的文字<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>before和after加的文字是不能被鼠标选择的，效果如下：</p>
-<p><img src="/../../../img/image-20220803163319946.png" srcset="/img/loading.gif" lazyload alt="image-20220803163319946"></p>
+<p><img src="/../../../img/image-20220803163319946.png" alt="image-20220803163319946"></p>
 <h1 id="4-选择器的优先级"><a href="#4-选择器的优先级" class="headerlink" title="4 选择器的优先级"></a>4 选择器的优先级</h1><p>选择器相同，书写顺序不同：</p>
 <p>​	就近原则：谁离标签<strong>更近</strong>，谁的优先级<strong>越高</strong></p>
 <p>选择器不同：</p>
@@ -491,211 +188,31 @@ p.marked&#123;
 <p><strong>行内标签(inline)</strong></p>
 <p>​	多个标签在一行，设置长宽无效</p>
 <p>案例代码：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup">&lt;!doctype html&gt;
-&lt;html lang&#x3D;&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;
-    &lt;style&gt;
-        &#x2F;*块标签设置高宽有效*&#x2F;
-        p &#123;
-            background-color: deeppink;
-            border: 2px;
-            height: 200px;
-            width: 400px;
-        &#125;
-
-        &#x2F;*行内标签设置高宽无效*&#x2F;
-        span &#123;
-            background-color: deepskyblue;
-            border: 2px;
-            height: 200px;
-            width: 400px;
-        &#125;
-    &lt;&#x2F;style&gt;
-&lt;&#x2F;head&gt;
-&lt;body&gt;
-    &lt;p&gt;块标签01&lt;&#x2F;p&gt;
-    &lt;p&gt;块标签02&lt;&#x2F;p&gt;
-    &lt;span&gt;行内标签01&lt;&#x2F;span&gt;
-    &lt;span&gt;行内标签02&lt;&#x2F;span&gt;
-&lt;&#x2F;body&gt;
-&lt;&#x2F;html&gt;</code></pre></div></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*块标签设置高宽有效*/</span></span></span><br><span class="line"><span class="language-css">        <span class="selector-tag">p</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">background-color</span>: deeppink;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">border</span>: <span class="number">2px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">height</span>: <span class="number">200px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">width</span>: <span class="number">400px</span>;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*行内标签设置高宽无效*/</span></span></span><br><span class="line"><span class="language-css">        <span class="selector-tag">span</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">background-color</span>: deepskyblue;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">border</span>: <span class="number">2px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">height</span>: <span class="number">200px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">width</span>: <span class="number">400px</span>;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>块标签01<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>块标签02<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span>&gt;</span>行内标签01<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span>&gt;</span>行内标签02<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>效果：</p>
-<p><img src="/../../../img/image-20220803164759050.png" srcset="/img/loading.gif" lazyload alt="image-20220803164759050"></p>
+<p><img src="/../../../img/image-20220803164759050.png" alt="image-20220803164759050"></p>
 <h1 id="6-字体属性"><a href="#6-字体属性" class="headerlink" title="6 字体属性"></a>6 字体属性</h1><p>修改字体样式，案例代码如下：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-css" data-language="css"><code class="language-css">p &#123;
-    &#x2F;*font-family: &quot;Arial Black&quot;,&quot;微软雅黑&quot;,&quot;...&quot;;  !*第一个不生效就用后面的 写多个备用*!*&#x2F;
-
-    &#x2F;*font-size: 24px;  !*字体大小*!*&#x2F;
-
-    &#x2F;*font-weight: inherit;  !*bolder lighter 100~900 inherit继承父元素的粗细值*!*&#x2F;
-
-    &#x2F;*color: red;  !*直接写颜色英文*!*&#x2F;
-    &#x2F;*color: #ee762e;  !*颜色编号*!*&#x2F;
-    &#x2F;*color: rgb(128,23,45);  !*三基色 数字  范围0-255*!*&#x2F;
-    &#x2F;*color: rgba(23, 128, 91, 0.9);  !*第四个参数是颜色的透明度 范围是0-1*!*&#x2F;
-&#125;</code></pre></div></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span> &#123;</span><br><span class="line">    <span class="comment">/*font-family: &quot;Arial Black&quot;,&quot;微软雅黑&quot;,&quot;...&quot;;  !*第一个不生效就用后面的 写多个备用*!*/</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/*font-size: 24px;  !*字体大小*!*/</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/*font-weight: inherit;  !*bolder lighter 100~900 inherit继承父元素的粗细值*!*/</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/*color: red;  !*直接写颜色英文*!*/</span></span><br><span class="line">    <span class="comment">/*color: #ee762e;  !*颜色编号*!*/</span></span><br><span class="line">    <span class="comment">/*color: rgb(128,23,45);  !*三基色 数字  范围0-255*!*/</span></span><br><span class="line">    <span class="comment">/*color: rgba(23, 128, 91, 0.9);  !*第四个参数是颜色的透明度 范围是0-1*!*/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h1 id="7-文字属性"><a href="#7-文字属性" class="headerlink" title="7 文字属性"></a>7 文字属性</h1><p>修改文字居中、下划线等显示样式，案例代码如下：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-css" data-language="css"><code class="language-css">p &#123;
-            &#x2F;*text-align: center;  !*居中*!*&#x2F;
-            &#x2F;*text-align: right;*&#x2F;
-            &#x2F;*text-align: left;*&#x2F;
-            &#x2F;*text-align: justify;  !*两端对齐*!*&#x2F;
-
-            &#x2F;*text-decoration: underline;*&#x2F;
-            &#x2F;*text-decoration: overline;*&#x2F;
-            &#x2F;*text-decoration: line-through;*&#x2F;
-            &#x2F;*text-decoration: none;*&#x2F;
-            &#x2F;*在html中 有很多标签渲染出来的样式效果是一样的*&#x2F;
-            font-size: 16px;
-            text-indent: 32px;   &#x2F;*缩进32px*&#x2F;
-        &#125;
-        a &#123;
-            text-decoration: none;  &#x2F;*主要用于给a标签去掉自带的下划线  需要掌握*&#x2F;
-        &#125;</code></pre></div></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span> &#123;</span><br><span class="line">            <span class="comment">/*text-align: center;  !*居中*!*/</span></span><br><span class="line">            <span class="comment">/*text-align: right;*/</span></span><br><span class="line">            <span class="comment">/*text-align: left;*/</span></span><br><span class="line">            <span class="comment">/*text-align: justify;  !*两端对齐*!*/</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">/*text-decoration: underline;*/</span></span><br><span class="line">            <span class="comment">/*text-decoration: overline;*/</span></span><br><span class="line">            <span class="comment">/*text-decoration: line-through;*/</span></span><br><span class="line">            <span class="comment">/*text-decoration: none;*/</span></span><br><span class="line">            <span class="comment">/*在html中 有很多标签渲染出来的样式效果是一样的*/</span></span><br><span class="line">            <span class="attribute">font-size</span>: <span class="number">16px</span>;</span><br><span class="line">            <span class="attribute">text-indent</span>: <span class="number">32px</span>;   <span class="comment">/*缩进32px*/</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="selector-tag">a</span> &#123;</span><br><span class="line">            <span class="attribute">text-decoration</span>: none;  <span class="comment">/*主要用于给a标签去掉自带的下划线  需要掌握*/</span></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
 
 <h1 id="8-背景图片"><a href="#8-背景图片" class="headerlink" title="8 背景图片"></a>8 背景图片</h1><p>给标签添加背景色&#x2F;背景图片, 案例如下：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-css" data-language="css"><code class="language-css">&lt;!DOCTYPE html&gt;
-&lt;html lang&#x3D;&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;
-    &lt;title&gt;Title&lt;&#x2F;title&gt;
-    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1&quot;&gt;
-    &lt;style&gt;
-        #d1 &#123;
-            height: 500px;
-            background-color: red;
-        &#125;
-        #d2 &#123;
-            height: 500px;
-            background-color: green;
-        &#125;
-        #d3 &#123;
-            height: 500px;
-            background-image: url(&quot;222.png&quot;);	&#x2F;*添加背景图片*&#x2F;
-            background-attachment: fixed;	&#x2F;*背景保持不动*&#x2F;
-            background-repeat: no-repeat;   &#x2F;*背景图不平铺*&#x2F;
-        &#125;
-        #d4 &#123;
-            height: 500px;
-            background-color: aqua;
-        &#125;
-    &lt;&#x2F;style&gt;
-&lt;&#x2F;head&gt;
-&lt;body&gt;
-&lt;div id&#x3D;&quot;d1&quot;&gt;&lt;&#x2F;div&gt;
-&lt;div id&#x3D;&quot;d2&quot;&gt;&lt;&#x2F;div&gt;
-&lt;div id&#x3D;&quot;d3&quot;&gt;&lt;&#x2F;div&gt;
-&lt;div id&#x3D;&quot;d4&quot;&gt;&lt;&#x2F;div&gt;
-&lt;&#x2F;body&gt;
-&lt;&#x2F;html&gt;</code></pre></div></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE <span class="selector-tag">html</span>&gt;</span><br><span class="line">&lt;<span class="selector-tag">html</span> lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-<span class="number">8</span>&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">    &lt;meta name=&quot;viewport&quot; <span class="attribute">content</span>=&quot;<span class="attribute">width</span>=device-<span class="attribute">width</span>, initial-<span class="attribute">scale</span>=<span class="number">1</span>&quot;&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        <span class="selector-id">#d1</span> &#123;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">500px</span>;</span><br><span class="line">            <span class="attribute">background-color</span>: red;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="selector-id">#d2</span> &#123;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">500px</span>;</span><br><span class="line">            <span class="attribute">background-color</span>: green;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="selector-id">#d3</span> &#123;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">500px</span>;</span><br><span class="line">            <span class="attribute">background-image</span>: <span class="built_in">url</span>(<span class="string">&quot;222.png&quot;</span>);	<span class="comment">/*添加背景图片*/</span></span><br><span class="line">            <span class="attribute">background-attachment</span>: fixed;	<span class="comment">/*背景保持不动*/</span></span><br><span class="line">            <span class="attribute">background-repeat</span>: no-repeat;   <span class="comment">/*背景图不平铺*/</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="selector-id">#d4</span> &#123;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">500px</span>;</span><br><span class="line">            <span class="attribute">background-color</span>: aqua;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;<span class="selector-tag">body</span>&gt;</span><br><span class="line">&lt;<span class="selector-tag">div</span> id=&quot;d1&quot;&gt;&lt;/<span class="selector-tag">div</span>&gt;</span><br><span class="line">&lt;<span class="selector-tag">div</span> id=&quot;d2&quot;&gt;&lt;/<span class="selector-tag">div</span>&gt;</span><br><span class="line">&lt;<span class="selector-tag">div</span> id=&quot;d3&quot;&gt;&lt;/<span class="selector-tag">div</span>&gt;</span><br><span class="line">&lt;<span class="selector-tag">div</span> id=&quot;d4&quot;&gt;&lt;/<span class="selector-tag">div</span>&gt;</span><br><span class="line">&lt;/<span class="selector-tag">body</span>&gt;</span><br><span class="line">&lt;/<span class="selector-tag">html</span>&gt;</span><br></pre></td></tr></table></figure>
 
 <h1 id="9-边框"><a href="#9-边框" class="headerlink" title="9 边框"></a>9 边框</h1><p>设置元素的边框样式，案例代码</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup">&lt;!DOCTYPE html&gt;
-&lt;html lang&#x3D;&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;
-    &lt;title&gt;Title&lt;&#x2F;title&gt;
-    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1&quot;&gt;
-    &lt;style&gt;
-
-        p &#123;
-            background-color: red;
-
-            border-width: 5px;
-            border-style: solid;
-            border-color: green;
-
-        &#125;
-        div &#123;
-            &#x2F;*border-left-width: 5px;*&#x2F;
-            &#x2F;*border-left-color: red;*&#x2F;
-            &#x2F;*border-left-style: dotted;*&#x2F;
-
-            &#x2F;*border-right-width: 10px;*&#x2F;
-            &#x2F;*border-right-color: greenyellow;*&#x2F;
-            &#x2F;*border-right-style: solid;*&#x2F;
-
-            &#x2F;*border-top-width: 15px;*&#x2F;
-            &#x2F;*border-top-color: deeppink;*&#x2F;
-            &#x2F;*border-top-style: dashed;*&#x2F;
-
-            &#x2F;*border-bottom-width: 10px;*&#x2F;
-            &#x2F;*border-bottom-color: tomato;*&#x2F;
-            &#x2F;*border-bottom-style: solid;*&#x2F;
-            border: 3px solid red;  &#x2F;*三者位置可以随意写*&#x2F;
-
-        &#125;
-        #d1 &#123;
-            background-color: greenyellow;
-            height: 400px;
-            width: 400px;
-            border-radius: 50%;  &#x2F;*设置边框椭圆：直接写50%即可 长宽一样就是圆 不一样就是椭圆*&#x2F;
-        &#125;
-    &lt;&#x2F;style&gt;
-&lt;&#x2F;head&gt;
-&lt;body&gt;
-    &lt;p&gt;这是一个有趣的故事&lt;&#x2F;p&gt;
-&lt;div&gt;乌拉阿拉蕾&lt;&#x2F;div&gt;
-&lt;div id&#x3D;&quot;d1&quot;&gt;&lt;&#x2F;div&gt;
-&lt;&#x2F;body&gt;
-&lt;&#x2F;html&gt;</code></pre></div></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="selector-tag">p</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">background-color</span>: red;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">            <span class="attribute">border-width</span>: <span class="number">5px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">border-style</span>: solid;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">border-color</span>: green;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css">        <span class="selector-tag">div</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="comment">/*border-left-width: 5px;*/</span></span></span><br><span class="line"><span class="language-css">            <span class="comment">/*border-left-color: red;*/</span></span></span><br><span class="line"><span class="language-css">            <span class="comment">/*border-left-style: dotted;*/</span></span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">            <span class="comment">/*border-right-width: 10px;*/</span></span></span><br><span class="line"><span class="language-css">            <span class="comment">/*border-right-color: greenyellow;*/</span></span></span><br><span class="line"><span class="language-css">            <span class="comment">/*border-right-style: solid;*/</span></span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">            <span class="comment">/*border-top-width: 15px;*/</span></span></span><br><span class="line"><span class="language-css">            <span class="comment">/*border-top-color: deeppink;*/</span></span></span><br><span class="line"><span class="language-css">            <span class="comment">/*border-top-style: dashed;*/</span></span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">            <span class="comment">/*border-bottom-width: 10px;*/</span></span></span><br><span class="line"><span class="language-css">            <span class="comment">/*border-bottom-color: tomato;*/</span></span></span><br><span class="line"><span class="language-css">            <span class="comment">/*border-bottom-style: solid;*/</span></span></span><br><span class="line"><span class="language-css">            <span class="attribute">border</span>: <span class="number">3px</span> solid red;  <span class="comment">/*三者位置可以随意写*/</span></span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css">        <span class="selector-id">#d1</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">background-color</span>: greenyellow;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">height</span>: <span class="number">400px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">width</span>: <span class="number">400px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">border-radius</span>: <span class="number">50%</span>;  <span class="comment">/*设置边框椭圆：直接写50%即可 长宽一样就是圆 不一样就是椭圆*/</span></span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>这是一个有趣的故事<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>乌拉阿拉蕾<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;d1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <h1 id="10-display属性"><a href="#10-display属性" class="headerlink" title="10 display属性"></a>10 display属性</h1><p>display属性常用方法：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-css" data-language="css"><code class="language-css">display:none	隐藏元素，位置不占用
-display:block	转换为块元素（独占一行，可调节高宽）
-display:inline	转换为行内元素（非独占一行，不可调节高宽）
-display:inline-block	转换为行内块元素（非独占一行，可调节高宽）</code></pre></div></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">display</span>:none	隐藏元素，位置不占用</span><br><span class="line">display:block	转换为块元素（独占一行，可调节高宽）</span><br><span class="line">display:inline	转换为行内元素（非独占一行，不可调节高宽）</span><br><span class="line">display:inline-block	转换为行内块元素（非独占一行，可调节高宽）</span><br></pre></td></tr></table></figure>
 
 <p>另一个隐藏属性的方法：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-css" data-language="css"><code class="language-css">visibility: hidden</code></pre></div></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">visibility</span>: hidden</span><br></pre></td></tr></table></figure>
 
 <p>与<code>display:none</code>的区别：隐藏的属性**<font color='red'>仍然占用位置</font>**</p>
 <p>案例代码如下：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup">&lt;!DOCTYPE html&gt;
-&lt;html lang&#x3D;&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;
-    &lt;title&gt;Title&lt;&#x2F;title&gt;
-    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1&quot;&gt;
-    &lt;style&gt;
-        &#x2F;*#d1 &#123;*&#x2F;
-        &#x2F;*    !*display: none;  !*隐藏标签不展示到前端页面并且原来的位置也不再占有了 但是还存在于文档上*!*!*&#x2F;
-        &#x2F;*    display: inline;  !*将标签设置为行内标签的特点*!*&#x2F;
-        &#x2F;*&#125;*&#x2F;
-        &#x2F;*#d2 &#123;*&#x2F;
-        &#x2F;*    display: inline;*&#x2F;
-        &#x2F;*&#125;*&#x2F;
-        &#x2F;*#d1 &#123;*&#x2F;
-        &#x2F;*    display: block;  !*将标签设置成块儿级标签的特点*!*&#x2F;
-        &#x2F;*&#125;*&#x2F;
-        &#x2F;*#d2 &#123;*&#x2F;
-        &#x2F;*    display: block;*&#x2F;
-        &#x2F;*&#125;*&#x2F;
-        &#x2F;*#d1 &#123;*&#x2F;
-        &#x2F;*    display: inline-block;*&#x2F;
-        &#x2F;*&#125;*&#x2F;
-        &#x2F;*#d2 &#123;*&#x2F;
-        &#x2F;*    display: inline-block;  !*标签即可以在一行显示又可以设置长宽*!*&#x2F;
-        &#x2F;*&#125;*&#x2F;
-    &lt;&#x2F;style&gt;
-&lt;&#x2F;head&gt;
-&lt;body&gt;
-&lt;div style&#x3D;&quot;display: none&quot;&gt;div1&lt;&#x2F;div&gt;
-&lt;div&gt;div2&lt;&#x2F;div&gt;
-&lt;div style&#x3D;&quot;visibility: hidden&quot;&gt;单纯的隐藏 位置还在&lt;&#x2F;div&gt;  
-&lt;div&gt;div4&lt;&#x2F;div&gt;
-&lt;!--&lt;div id&#x3D;&quot;d1&quot; style&#x3D;&quot;height: 100px;width: 100px;background-color: red&quot;&gt;01&lt;&#x2F;div&gt;--&gt;
-&lt;!--&lt;div id&#x3D;&quot;d2&quot; style&#x3D;&quot;height: 100px;width: 100px;background-color: greenyellow&quot;&gt;02&lt;&#x2F;div&gt;--&gt;
-&lt;!--&lt;span id&#x3D;&quot;d1&quot; style&#x3D;&quot;height: 100px;width: 100px;background-color: red&quot;&gt;span&lt;&#x2F;span&gt;--&gt;
-&lt;!--&lt;span id&#x3D;&quot;d2&quot; style&#x3D;&quot;height: 100px;width: 100px;background-color: greenyellow&quot;&gt;span&lt;&#x2F;span&gt;--&gt;
-
-&lt;!--&lt;div id&#x3D;&quot;d1&quot; style&#x3D;&quot;height: 100px;width: 100px;background-color: red&quot;&gt;01&lt;&#x2F;div&gt;--&gt;
-&lt;!--&lt;div id&#x3D;&quot;d2&quot; style&#x3D;&quot;height: 100px;width: 100px;background-color: greenyellow&quot;&gt;02&lt;&#x2F;div&gt;--&gt;
-&lt;&#x2F;body&gt;
-&lt;&#x2F;html&gt;</code></pre></div></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*#d1 &#123;*/</span></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*    !*display: none;  !*隐藏标签不展示到前端页面并且原来的位置也不再占有了 但是还存在于文档上*!*!*/</span></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*    display: inline;  !*将标签设置为行内标签的特点*!*/</span></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*&#125;*/</span></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*#d2 &#123;*/</span></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*    display: inline;*/</span></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*&#125;*/</span></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*#d1 &#123;*/</span></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*    display: block;  !*将标签设置成块儿级标签的特点*!*/</span></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*&#125;*/</span></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*#d2 &#123;*/</span></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*    display: block;*/</span></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*&#125;*/</span></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*#d1 &#123;*/</span></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*    display: inline-block;*/</span></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*&#125;*/</span></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*#d2 &#123;*/</span></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*    display: inline-block;  !*标签即可以在一行显示又可以设置长宽*!*/</span></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*&#125;*/</span></span></span><br><span class="line"><span class="language-css">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;display: none&quot;</span>&gt;</span>div1<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>div2<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;visibility: hidden&quot;</span>&gt;</span>单纯的隐藏 位置还在<span class="tag">&lt;/<span class="name">div</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>div4<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--&lt;div id=&quot;d1&quot; style=&quot;height: 100px;width: 100px;background-color: red&quot;&gt;01&lt;/div&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--&lt;div id=&quot;d2&quot; style=&quot;height: 100px;width: 100px;background-color: greenyellow&quot;&gt;02&lt;/div&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--&lt;span id=&quot;d1&quot; style=&quot;height: 100px;width: 100px;background-color: red&quot;&gt;span&lt;/span&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--&lt;span id=&quot;d2&quot; style=&quot;height: 100px;width: 100px;background-color: greenyellow&quot;&gt;span&lt;/span&gt;--&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--&lt;div id=&quot;d1&quot; style=&quot;height: 100px;width: 100px;background-color: red&quot;&gt;01&lt;/div&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--&lt;div id=&quot;d2&quot; style=&quot;height: 100px;width: 100px;background-color: greenyellow&quot;&gt;02&lt;/div&gt;--&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <h1 id="11-盒子模型"><a href="#11-盒子模型" class="headerlink" title="11 盒子模型"></a>11 盒子模型</h1><p>什么是盒子模型？</p>
 <ul>
@@ -709,448 +226,166 @@ display:inline-block	转换为行内块元素（非独占一行，可调节高�
 <blockquote>
 <p>补充：浏览器会自带8px的margin，一般情况下我们在写页面的时候，上来就会先将body的margin去除</p>
 </blockquote>
-<p><img src="/../../../img/image-20220804084912153.png" srcset="/img/loading.gif" lazyload alt="image-20220804084912153"></p>
+<p><img src="/../../../img/image-20220804084912153.png" alt="image-20220804084912153"></p>
 <p>案例代码如下：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup">&lt;!DOCTYPE html&gt;
-&lt;html lang&#x3D;&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;
-    &lt;title&gt;Title&lt;&#x2F;title&gt;
-    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1&quot;&gt;
-    &lt;style&gt;
-        body &#123;
-            margin: 0;  &#x2F;*上下左右全是0
-            &#x2F;*margin: 10px 20px;  !* 第一个上下 第二个左右*!*&#x2F;
-            &#x2F;*margin: 10px 20px 30px;  !*第一个上  第二个左右  第三个下*!*&#x2F;
-            &#x2F;*margin: 10px 20px 30px 40px;  !*上 右 下 左*!*&#x2F;
-        &#125;
-        &#x2F;*p &#123;*&#x2F;
-        &#x2F;*    margin-left: 0;*&#x2F;
-        &#x2F;*    margin-top: 0;*&#x2F;
-        &#x2F;*    margin-right: 0;*&#x2F;
-        &#x2F;*    margin-bottom: 0;*&#x2F;
-        &#x2F;*&#125;*&#x2F;
-
-        #d1 &#123;
-            margin-bottom: 50px;
-        &#125;
-
-
-        #d2 &#123;
-            margin-top: 20px;  &#x2F;*不叠加 只取大的*&#x2F;
-        &#125;
-
-        #dd &#123;
-            margin: 0 auto;  &#x2F;*只能做到标签的水平居中*&#x2F;
-        &#125;
-        p &#123;
-            border: 3px solid red;
-            &#x2F;*padding-left: 10px;*&#x2F;
-            &#x2F;*padding-top: 20px;*&#x2F;
-            &#x2F;*padding-right: 20px;*&#x2F;
-            &#x2F;*padding-bottom: 50px;*&#x2F;
-
-            &#x2F;*padding: 10px;*&#x2F;
-            &#x2F;*padding: 10px 20px;*&#x2F;
-            &#x2F;*padding: 10px 20px 30px;*&#x2F;
-            &#x2F;*padding: 10px 20px 30px 40px;*&#x2F;  &#x2F;*规律和margin一模一样*&#x2F;
-        &#125;
-    &lt;&#x2F;style&gt;
-&lt;&#x2F;head&gt;
-&lt;body&gt;
-&lt;!--    &lt;p style&#x3D;&quot;border: 1px solid red;&quot; id&#x3D;&quot;d1&quot;&gt;ppp&lt;&#x2F;p&gt;--&gt;
-&lt;!--    &lt;p style&#x3D;&quot;border: 1px solid orange;&quot; id&#x3D;&quot;d2&quot;&gt;ppp&lt;&#x2F;p&gt;--&gt;
-&lt;!--&lt;div style&#x3D;&quot;border: 3px solid red;height: 400px;width: 400px&quot;&gt;--&gt;
-&lt;!--    &lt;div id&#x3D;&#39;dd&#39; style&#x3D;&quot;border: 1px solid orange;height: 50px;width: 50px;background-color: blue;&quot;&gt;&lt;&#x2F;div&gt;--&gt;
-&lt;!--&lt;&#x2F;div&gt;--&gt;
-
-&lt;p&gt;ppp&lt;&#x2F;p&gt;
-
-&lt;&#x2F;body&gt;
-&lt;&#x2F;html&gt;</code></pre></div></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="selector-tag">body</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">margin</span>: <span class="number">0</span>;  <span class="comment">/*上下左右全是0</span></span></span><br><span class="line"><span class="comment"><span class="language-css">            /*margin: 10px 20px;  !* 第一个上下 第二个左右*!*/</span></span></span><br><span class="line"><span class="language-css">            <span class="comment">/*margin: 10px 20px 30px;  !*第一个上  第二个左右  第三个下*!*/</span></span></span><br><span class="line"><span class="language-css">            <span class="comment">/*margin: 10px 20px 30px 40px;  !*上 右 下 左*!*/</span></span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css">        <span class="comment">/*p &#123;*/</span></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*    margin-left: 0;*/</span></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*    margin-top: 0;*/</span></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*    margin-right: 0;*/</span></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*    margin-bottom: 0;*/</span></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*&#125;*/</span></span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="selector-id">#d1</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">margin-bottom</span>: <span class="number">50px</span>;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="selector-id">#d2</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">margin-top</span>: <span class="number">20px</span>;  <span class="comment">/*不叠加 只取大的*/</span></span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="selector-id">#dd</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">margin</span>: <span class="number">0</span> auto;  <span class="comment">/*只能做到标签的水平居中*/</span></span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css">        <span class="selector-tag">p</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">border</span>: <span class="number">3px</span> solid red;</span></span><br><span class="line"><span class="language-css">            <span class="comment">/*padding-left: 10px;*/</span></span></span><br><span class="line"><span class="language-css">            <span class="comment">/*padding-top: 20px;*/</span></span></span><br><span class="line"><span class="language-css">            <span class="comment">/*padding-right: 20px;*/</span></span></span><br><span class="line"><span class="language-css">            <span class="comment">/*padding-bottom: 50px;*/</span></span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">            <span class="comment">/*padding: 10px;*/</span></span></span><br><span class="line"><span class="language-css">            <span class="comment">/*padding: 10px 20px;*/</span></span></span><br><span class="line"><span class="language-css">            <span class="comment">/*padding: 10px 20px 30px;*/</span></span></span><br><span class="line"><span class="language-css">            <span class="comment">/*padding: 10px 20px 30px 40px;*/</span>  <span class="comment">/*规律和margin一模一样*/</span></span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--    &lt;p style=&quot;border: 1px solid red;&quot; id=&quot;d1&quot;&gt;ppp&lt;/p&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--    &lt;p style=&quot;border: 1px solid orange;&quot; id=&quot;d2&quot;&gt;ppp&lt;/p&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--&lt;div style=&quot;border: 3px solid red;height: 400px;width: 400px&quot;&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--    &lt;div id=&#x27;dd&#x27; style=&quot;border: 1px solid orange;height: 50px;width: 50px;background-color: blue;&quot;&gt;&lt;/div&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--&lt;/div&gt;--&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>ppp<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <h1 id="12-浮动"><a href="#12-浮动" class="headerlink" title="12 浮动"></a>12 浮动</h1><p>浮动的元素，没有块级和行内一说，本身多大浮起来之后就占多大</p>
 <p>案例代码如下：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup">只要是设计到页面的布局一般都是用浮动来提前规划好
-&lt;style&gt;
-        body &#123;
-            margin: 0;
-        &#125;
-        #d1 &#123;
-            height: 200px;
-            width: 200px;
-            background-color: red;
-            float: left;  &#x2F;*浮动  浮到空中往左飘*&#x2F;
-        &#125;
-        #d2 &#123;
-            height: 200px;
-            width: 200px;
-            background-color: greenyellow;
-            float: right;   &#x2F;*浮动 浮到空中往右飘*&#x2F;
-        &#125;
-&lt;&#x2F;style&gt;</code></pre></div></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">只要是设计到页面的布局一般都是用浮动来提前规划好</span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="selector-tag">body</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">margin</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css">        <span class="selector-id">#d1</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">height</span>: <span class="number">200px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">width</span>: <span class="number">200px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">background-color</span>: red;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">float</span>: left;  <span class="comment">/*浮动  浮到空中往左飘*/</span></span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css">        <span class="selector-id">#d2</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">height</span>: <span class="number">200px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">width</span>: <span class="number">200px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">background-color</span>: greenyellow;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">float</span>: right;   <span class="comment">/*浮动 浮到空中往右飘*/</span></span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p><code>overflow:hidden</code>超出部分隐藏，用来解决外边距塌陷问题：</p>
 <p>父级元素内部有子元素，如果给子元素添加margin-top样式，那么父级元素也会跟着下来，造成外边距塌陷。</p>
 <h1 id="13-浮动带来的影响"><a href="#13-浮动带来的影响" class="headerlink" title="13 浮动带来的影响"></a>13 浮动带来的影响</h1>
-                
-              </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
       
-
-<span class="category-chains">
-  
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://gblog.github.io/2022/08/03/03_Python/04_%E5%89%8D%E7%AB%AF/day52%E7%AC%94%E8%AE%B0-CSS-02/" data-id="cmrendtad006ndsiedj6bcfho" data-title="Day52-CSS-02" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
   
     
-      <span class="category-chain">
+<nav id="article-nav">
+  
+    <a href="/2022/08/08/03_Python/04_%E5%89%8D%E7%AB%AF/day53%E7%AC%94%E8%AE%B0-CSS-03/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
         
-  <a href="/categories/Python/" class="category-chain-item">Python</a>
+          Day53-CSS-03
+        
+      </div>
+    </a>
   
   
-    <span>></span>
+    <a href="/2022/08/02/03_Python/04_%E5%89%8D%E7%AB%AF/day51%E7%AC%94%E8%AE%B0-CSS-01/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">Day51-CSS-01</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
     
-  <a href="/categories/Python/05-CSS/" class="category-chain-item">05_CSS</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C/01-C%E8%AF%AD%E8%A8%80/">01_C语言</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/01-Python%E5%85%A5%E9%97%A8/">01_Python入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/02-Python%E8%BF%9B%E9%98%B6/">02_Python进阶</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/03-MySQL/">03_MySQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/04-HTML/">04_HTML</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/05-CSS/">05_CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/06-JavaScript/">06_JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/07-JQuery/">07_JQuery</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/08-BootStrap/">08_BootStrap</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/09-Django/">09_Django</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/12-%E9%99%84%E5%BD%95%E8%A1%A5%E5%85%85/">12_附录补充</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E7%A5%9EK8S/">学神K8S</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E7%A5%9EK8S/%EF%BC%88%E4%B8%80%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E5%85%A5%E9%97%A8/">（一）Docker容器入门</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9D%82%E8%AE%B0/">杂记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8B%E8%AF%95/%E4%BF%A1%E5%88%9BPOC%E6%B5%8B%E8%AF%95/">信创POC测试</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/1%E3%80%81%E7%BD%91%E5%B7%A5%E5%85%A5%E9%97%A8/">1、网工入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/2%E3%80%81HCIA%E8%AF%BE%E7%A8%8B/">2、HCIA课程</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/">超哥K8S</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/%EF%BC%88%E4%B8%80%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E5%85%A5%E9%97%A8/">（一）Docker容器入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/%EF%BC%88%E4%BA%8C%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E8%BF%9B%E9%98%B6/">（二）Docker容器进阶</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/">（一）基础命令</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%89%EF%BC%89Docker/">（三）Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/">（二）综合架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%94%EF%BC%89K8S/">（五）K8S</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E5%85%AD%EF%BC%89%E6%99%BA%E7%AE%97%E4%B8%AD%E5%BF%83/">（六）智算中心</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E5%9B%9B%EF%BC%89%E8%99%9A%E6%8B%9F%E5%8C%96%E4%B9%8BOpenStack/">（四）虚拟化之OpenStack</a></li></ul></li></ul>
     </div>
-  
-  
-</div>
-
-
-              
-  
-
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>Day52-CSS-02</div>
-      <div>https://gblog.github.io/2022/08/03/03_Python/04_前端/day52笔记-CSS-02/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>作者</div>
-          <div>Haris</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>发布于</div>
-          <div>2022年8月3日</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>许可协议</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
-          </div>
-        </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
   </div>
 
 
-
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2022/08/08/03_Python/04_%E5%89%8D%E7%AB%AF/day53%E7%AC%94%E8%AE%B0-CSS-03/" title="Day53-CSS-03">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Day53-CSS-03</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2022/08/02/03_Python/04_%E5%89%8D%E7%AB%AF/day51%E7%AC%94%E8%AE%B0-CSS-01/" title="Day51-CSS-01">
-                        <span class="hidden-mobile">Day51-CSS-01</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-
-            
-          </article>
-        </div>
-      </div>
-    </div>
-
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E4%BD%9C/" rel="tag">工作</a></li></ul>
     </div>
   </div>
-</div>
-
-
-
 
 
   
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-
-
-
-
     
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E5%B7%A5%E4%BD%9C/" style="font-size: 10px;">工作</a>
     </div>
   </div>
-</div>
 
-    
-
-    
-  </main>
-
-  <footer>
-    <div class="footer-inner">
   
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/07/">七月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/05/">五月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/04/">四月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">三月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/02/">二月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">一月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">十一月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">十月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">九月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">八月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">七月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">六月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">五月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">四月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">三月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">一月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a></li></ul>
     </div>
+  </div>
+
+
   
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/07/10/06_%E6%9D%82%E8%AE%B0/%E7%BA%A2%E5%B8%BD%E7%B3%BB%E5%AE%89%E8%A3%85%E7%B3%BB%E7%BB%9F%E6%A0%BC%E5%BC%8F%E5%8C%96/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2025/05/14/06_%E6%9D%82%E8%AE%B0/%E5%8D%8E%E4%B8%BAUSG6615F%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AESSL%20VPN/">华为USG6615F防火墙配置SSLVPN</a>
+          </li>
+        
+          <li>
+            <a href="/2025/05/06/10_%E5%AD%A6%E7%A5%9EK8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%9F%BA%E7%A1%80/">01-Docker基础</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/30/06_%E6%9D%82%E8%AE%B0/vllm%E9%83%A8%E7%BD%B2Qwen3%E5%A4%A7%E6%A8%A1%E5%9E%8B/">VLLM部署Qwen3大模型</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/21/06_%E6%9D%82%E8%AE%B0/%E5%8D%8E%E4%B8%BA%E4%BA%A4%E6%8D%A2%E6%9C%BA%E9%85%8D%E7%BD%AEmux-vlan/">华为交换机配置mux-vlan</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
   
+</aside>
+        
+      </div>
+      <footer id="footer">
   
-</div>
-
-  </footer>
-
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
+  <div class="outer">
+    <div id="footer-info" class="inner">
       
-        typing(text);
-      
-    })(window, document);
-  </script>
+      &copy; 2026 Haris<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
 
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
 
 
 
   
-    <script  src="/js/img-lazyload.js" ></script>
-  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
 
 
 
 
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
-    }
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
-</script>
-
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
-
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
-
-  <script>Fluid.plugins.codeWidget();</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
-    };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
-        }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
-      }
-    });
-  });
-</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
-  });
-</script>
-
-
-  <script>Fluid.plugins.imageCaption();</script>
-
-  <script  src="/js/local-search.js" ></script>
+<script src="/js/script.js"></script>
 
 
 
 
 
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
-
-
-  
-
-  <noscript>
-    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
-  </noscript>
+  </div>
 </body>
 </html>

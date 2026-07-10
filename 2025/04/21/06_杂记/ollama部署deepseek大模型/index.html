@@ -1,25 +1,12 @@
-
-
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
-
-
-
+<html>
 <head>
-  <meta charset="UTF-8">
-
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <meta charset="utf-8">
   
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="Haris">
-  <meta name="keywords" content="">
-  
-    <meta name="description" content="一、环境   配置项 配置    系统 Red Hat Enterprise Linux release 8.6 (Ootpa)   内存 1024G   GPU NVIDIA A800-SXM4-80GB  * 8   CPU Intel(R) Xeon(R) Platinum 8468 * 2   CUDA版本 12.4   GPU驱动版本 550.54.15    二、安装ollama框架1">
+  <title>8卡A800运行DeepseekR1-671B大模型 | Haris的小站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="一、环境   配置项 配置    系统 Red Hat Enterprise Linux release 8.6 (Ootpa)   内存 1024G   GPU NVIDIA A800-SXM4-80GB  * 8   CPU Intel(R) Xeon(R) Platinum 8468 * 2   CUDA版本 12.4   GPU驱动版本 550.54.15    二、安装ollama框架1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="8卡A800运行DeepseekR1-671B大模型">
 <meta property="og:url" content="https://gblog.github.io/2025/04/21/06_%E6%9D%82%E8%AE%B0/ollama%E9%83%A8%E7%BD%B2deepseek%E5%A4%A7%E6%A8%A1%E5%9E%8B/index.html">
@@ -34,269 +21,93 @@
 <meta property="article:published_time" content="2025-04-21T06:29:52.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.293Z">
 <meta property="article:author" content="Haris">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gblog.github.io/img/image-20250421143517643.png">
   
+    <link rel="alternate" href="/atom.xml" title="Haris的小站" type="application/atom+xml">
   
   
-  <title>8卡A800运行DeepseekR1-671B大模型 - Haris的小站</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.png">
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
 
-
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"gblog.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
   
+  
+<link rel="stylesheet" href="/css/style.css">
 
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
+  
   
 <meta name="generator" content="Hexo 7.3.0"></head>
 
-
 <body>
-  
-
-  <header>
-    
-
-<div class="header-inner" style="height: 70vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>Haris的博客</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>首页</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>归档</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>分类</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
-          </li>
-        
-      </ul>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Haris的小站</a>
+      </h1>
+      
     </div>
-  </div>
-</nav>
-
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="8卡A800运行DeepseekR1-671B大模型"></span>
-          
-        </div>
-
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
         
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-04-21 14:29" pubdate>
-          2025年4月21日 下午
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
+          <a class="main-nav-link" href="/">Home</a>
         
-          605 字
+          <a class="main-nav-link" href="/archives">Archives</a>
         
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
+      </nav>
+      <nav id="sub-nav">
         
         
+          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
         
-          6 分钟
-        
-      </span>
-    
-
-    
-    
-  </div>
-
-
-        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://gblog.github.io"></form>
       </div>
-
-      
     </div>
   </div>
-</div>
+</header>
 
-</div>
-
-  </header>
-
-  <main>
+      <div class="outer">
+        <section id="main"><article id="post-06_杂记/ollama部署deepseek大模型" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/04/21/06_%E6%9D%82%E8%AE%B0/ollama%E9%83%A8%E7%BD%B2deepseek%E5%A4%A7%E6%A8%A1%E5%9E%8B/" class="article-date">
+  <time class="dt-published" datetime="2025-04-21T06:29:52.000Z" itemprop="datePublished">2025-04-21</time>
+</a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%9D%82%E8%AE%B0/">杂记</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      8卡A800运行DeepseekR1-671B大模型
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
       
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
-
-    </div>
-
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">8卡A800运行DeepseekR1-671B大模型</h1>
-            
-            
-              <div class="markdown-body">
-                
-                <h1 id="一、环境"><a href="#一、环境" class="headerlink" title="一、环境"></a>一、环境</h1><table>
+        <h1 id="一、环境"><a href="#一、环境" class="headerlink" title="一、环境"></a>一、环境</h1><table>
 <thead>
 <tr>
 <th>配置项</th>
@@ -330,42 +141,18 @@
 </tbody></table>
 <hr>
 <h1 id="二、安装ollama框架"><a href="#二、安装ollama框架" class="headerlink" title="二、安装ollama框架"></a>二、安装ollama框架</h1><p>1、通过官网脚本安装</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">curl -fsSL https:&#x2F;&#x2F;ollama.com&#x2F;install.sh | sh</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://ollama.com/install.sh | sh</span><br></pre></td></tr></table></figure>
 
 <p>2、设置环境变量（写到ollama服务配置文件中）</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@A07-1 mydeepseek]# cat &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;ollama.service 
-[Unit]
-Description&#x3D;Ollama Service
-After&#x3D;network-online.target
-
-[Service]
-ExecStart&#x3D;&#x2F;usr&#x2F;local&#x2F;bin&#x2F;ollama serve
-User&#x3D;ollama
-Group&#x3D;ollama
-Restart&#x3D;always
-RestartSec&#x3D;3
-Environment&#x3D;&quot;PATH&#x3D;&#x2F;usr&#x2F;local&#x2F;cuda&#x2F;bin:&#x2F;usr&#x2F;local&#x2F;sbin:&#x2F;usr&#x2F;local&#x2F;bin:&#x2F;usr&#x2F;sbin:&#x2F;usr&#x2F;bin:&#x2F;root&#x2F;bin&quot;
-Environment&#x3D;&quot;LD_LIBRARY_PATH&#x3D;&#x2F;usr&#x2F;local&#x2F;cuda&#x2F;lib64&quot;
-Environment&#x3D;&quot;OLLAMA_MODELS&#x3D;&#x2F;nvme-data&#x2F;mydeepseek&#x2F;Models&quot;
-Environment&#x3D;&quot;OLLAMA_DEBUG&#x3D;1&quot;             
-Environment&#x3D;&quot;OLLAMA_LOAD_TIMEOUT&#x3D;120m&quot;   
-Environment&#x3D;&quot;OLLAMA_KEEP_ALIVE&#x3D;-1&quot;      
-Environment&#x3D;&quot;OLLAMA_SCHED_SPREAD&#x3D;1&quot; 
-Environment&#x3D;&quot;OLLAMA_NUM_PARALLEL&#x3D;8&quot;
-Environment&#x3D;&quot;OLLAMA_GPU_LAYER&#x3D;cuda&quot;</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@A07-1 mydeepseek]# cat /etc/systemd/system/ollama.service </span><br><span class="line">[Unit]</span><br><span class="line">Description=Ollama Service</span><br><span class="line">After=network-online.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">ExecStart=/usr/local/bin/ollama serve</span><br><span class="line">User=ollama</span><br><span class="line">Group=ollama</span><br><span class="line">Restart=always</span><br><span class="line">RestartSec=3</span><br><span class="line">Environment=&quot;PATH=/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin&quot;</span><br><span class="line">Environment=&quot;LD_LIBRARY_PATH=/usr/local/cuda/lib64&quot;</span><br><span class="line">Environment=&quot;OLLAMA_MODELS=/nvme-data/mydeepseek/Models&quot;</span><br><span class="line">Environment=&quot;OLLAMA_DEBUG=1&quot;             </span><br><span class="line">Environment=&quot;OLLAMA_LOAD_TIMEOUT=120m&quot;   </span><br><span class="line">Environment=&quot;OLLAMA_KEEP_ALIVE=-1&quot;      </span><br><span class="line">Environment=&quot;OLLAMA_SCHED_SPREAD=1&quot; </span><br><span class="line">Environment=&quot;OLLAMA_NUM_PARALLEL=8&quot;</span><br><span class="line">Environment=&quot;OLLAMA_GPU_LAYER=cuda&quot;</span><br></pre></td></tr></table></figure>
 
 <p>3、启动ollama服务</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 重新加载配置文件
-systemctl daemon-reload
-# 启动服务
-systemctl start ollama
-systemctl enable ollama</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">重新加载配置文件</span></span><br><span class="line">systemctl daemon-reload</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动服务</span></span><br><span class="line">systemctl start ollama</span><br><span class="line">systemctl enable ollama</span><br></pre></td></tr></table></figure>
 
 <p>4、查看运行情况，确保运行正常</p>
-<p><img src="/./../../img/image-20250421143517643.png" srcset="/img/loading.gif" lazyload alt="image-20250421143517643"></p>
+<p><img src="/./../../img/image-20250421143517643.png" alt="image-20250421143517643"></p>
 <p>5、查看ollama版本</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@A07-1 mydeepseek]# ollama -v
-ollama version is 0.6.5</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@A07-1 mydeepseek]# ollama -v</span><br><span class="line">ollama version is 0.6.5</span><br></pre></td></tr></table></figure>
 
 <hr>
 <h1 id="三、拉取deepseek模型并运行"><a href="#三、拉取deepseek模型并运行" class="headerlink" title="三、拉取deepseek模型并运行"></a>三、拉取deepseek模型并运行</h1><p>1、拉取模型</p>
@@ -373,410 +160,190 @@ ollama version is 0.6.5</code></pre></div></figure>
 <p>因为设置了环境变量，所以模型文件会拉取到对应的文件夹中。</p>
 <p><code>OLLAMA_MODELS=/nvme-data/mydeepseek/Models</code></p>
 </blockquote>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ollama pull deepseek-r1:671b</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ollama pull deepseek-r1:671b</span><br></pre></td></tr></table></figure>
 
 <p>2、拉取完，查看模型</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@A07-1 mydeepseek]# ollama list
-NAME                ID              SIZE      MODIFIED   
-deepseek-r1:671b    739e1b229ad7    404 GB    2 days ago   </code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@A07-1 mydeepseek]# ollama list</span><br><span class="line">NAME                ID              SIZE      MODIFIED   </span><br><span class="line">deepseek-r1:671b    739e1b229ad7    404 GB    2 days ago   </span><br></pre></td></tr></table></figure>
 
 <p>3、运行模型</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">nohup ollama run deepseek-r1:671b &gt; run.out 2&gt;&amp;1 &lt; &#x2F;dev&#x2F;null &amp;</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup ollama run deepseek-r1:671b &gt; run.out 2&gt;&amp;1 &lt; /dev/null &amp;</span><br></pre></td></tr></table></figure>
 
 <p>4、查看正在运行的模型</p>
 <blockquote>
 <p>需要确认<code>PROCESSOR</code>是<code>100% GPU</code>，如果是<code>100% CPU</code>说明运行得有问题，需要查看对应日志排查。</p>
 </blockquote>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@A07-1 mydeepseek]# ollama ps
-NAME                ID              SIZE      PROCESSOR    UNTIL   
-deepseek-r1:671b    739e1b229ad7    552 GB    100% GPU     Forever  </code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@A07-1 mydeepseek]# ollama ps</span><br><span class="line">NAME                ID              SIZE      PROCESSOR    UNTIL   </span><br><span class="line">deepseek-r1:671b    739e1b229ad7    552 GB    100% GPU     Forever  </span><br></pre></td></tr></table></figure>
 
 <hr>
 <h1 id="四、访问deepseek模型"><a href="#四、访问deepseek模型" class="headerlink" title="四、访问deepseek模型"></a>四、访问deepseek模型</h1><p>1、方法一：交互式访问大模型</p>
 <p>再次<code>ollama run</code>模型，将进入交互式界面</p>
-<p><img src="/./../../img/image-20250421144132968.png" srcset="/img/loading.gif" lazyload alt="image-20250421144132968"></p>
+<p><img src="/./../../img/image-20250421144132968.png" alt="image-20250421144132968"></p>
 <p>2、方法二：API接口调用</p>
 <p>ollama服务运行后会监听 <code>127.0.0.1:11434</code>，我们可以通过API接口访问运行后的模型实例。ollama的对话接口兼容openai接口，可以执行以下命令调用模型接口：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">curl --request POST \
-  --url http:&#x2F;&#x2F;127.0.0.1:11434&#x2F;v1&#x2F;chat&#x2F;completions \
-  --header &#39;Content-Type: application&#x2F;json;charset&#x3D;utf-8&#39; \
-  --data &#39;&#123;
-  &quot;model&quot;: &quot;deepseek-r1:671b&quot;,
-  &quot;messages&quot;: [
-    &#123;
-      &quot;role&quot;: &quot;user&quot;,
-      &quot;content&quot;: &quot;长沙是什么地方？&quot;
-    &#125;
-  ]
-&#125;&#39;</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">curl --request POST \</span><br><span class="line">  --url http://127.0.0.1:11434/v1/chat/completions \</span><br><span class="line">  --header &#x27;Content-Type: application/json;charset=utf-8&#x27; \</span><br><span class="line">  --data &#x27;&#123;</span><br><span class="line">  &quot;model&quot;: &quot;deepseek-r1:671b&quot;,</span><br><span class="line">  &quot;messages&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;role&quot;: &quot;user&quot;,</span><br><span class="line">      &quot;content&quot;: &quot;长沙是什么地方？&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;&#x27;</span><br></pre></td></tr></table></figure>
 
 <p>效果如下：</p>
-<p><img src="/./../../img/image-20250421144447707.png" srcset="/img/loading.gif" lazyload alt="image-20250421144447707"></p>
+<p><img src="/./../../img/image-20250421144447707.png" alt="image-20250421144447707"></p>
 <hr>
 <h1 id="五、压测大模型"><a href="#五、压测大模型" class="headerlink" title="五、压测大模型"></a>五、压测大模型</h1><p>1、下载脚本：<a target="_blank" rel="noopener" href="https://github.com/zhayujie/llm-eval-suite/blob/main/model_stress_test.py">https://github.com/zhayujie/llm-eval-suite/blob/main/model_stress_test.py</a> </p>
 <p>2、运行压测脚本</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">python3 model_stress_test.py</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 model_stress_test.py</span><br></pre></td></tr></table></figure>
 
-<p><img src="/./../../img/image-20250421145118917.png" srcset="/img/loading.gif" lazyload alt="image-20250421145118917"></p>
+<p><img src="/./../../img/image-20250421145118917.png" alt="image-20250421145118917"></p>
 <p>3、压测过程中可以使用<code>nvitop</code>查看GPU的使用情况</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 安装nvitop
-pip install nvitop
-# 执行
-nvitop</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装nvitop</span></span><br><span class="line">pip install nvitop</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">执行</span></span><br><span class="line">nvitop</span><br></pre></td></tr></table></figure>
 
-<p><img src="/./../../img/image-20250421144820230.png" srcset="/img/loading.gif" lazyload alt="image-20250421144820230"></p>
+<p><img src="/./../../img/image-20250421144820230.png" alt="image-20250421144820230"></p>
 
-                
-              </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
       
-
-<span class="category-chains">
-  
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://gblog.github.io/2025/04/21/06_%E6%9D%82%E8%AE%B0/ollama%E9%83%A8%E7%BD%B2deepseek%E5%A4%A7%E6%A8%A1%E5%9E%8B/" data-id="cmrendt8k001hdsie9jb3fto4" data-title="8卡A800运行DeepseekR1-671B大模型" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
   
     
-      <span class="category-chain">
+<nav id="article-nav">
+  
+    <a href="/2025/04/21/06_%E6%9D%82%E8%AE%B0/%E5%8D%8E%E4%B8%BA%E4%BA%A4%E6%8D%A2%E6%9C%BA%E9%85%8D%E7%BD%AEmux-vlan/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
         
-  <a href="/categories/%E6%9D%82%E8%AE%B0/" class="category-chain-item">杂记</a>
+          华为交换机配置mux-vlan
+        
+      </div>
+    </a>
   
   
+    <a href="/2025/03/26/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/06-Docker%E8%B5%84%E6%BA%90%E9%85%8D%E9%A2%9D/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">06-Docker资源配额</div>
+    </a>
+  
+</nav>
 
-      </span>
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
     
-  
-</span>
-
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C/01-C%E8%AF%AD%E8%A8%80/">01_C语言</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/01-Python%E5%85%A5%E9%97%A8/">01_Python入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/02-Python%E8%BF%9B%E9%98%B6/">02_Python进阶</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/03-MySQL/">03_MySQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/04-HTML/">04_HTML</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/05-CSS/">05_CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/06-JavaScript/">06_JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/07-JQuery/">07_JQuery</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/08-BootStrap/">08_BootStrap</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/09-Django/">09_Django</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/12-%E9%99%84%E5%BD%95%E8%A1%A5%E5%85%85/">12_附录补充</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E7%A5%9EK8S/">学神K8S</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E7%A5%9EK8S/%EF%BC%88%E4%B8%80%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E5%85%A5%E9%97%A8/">（一）Docker容器入门</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9D%82%E8%AE%B0/">杂记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8B%E8%AF%95/%E4%BF%A1%E5%88%9BPOC%E6%B5%8B%E8%AF%95/">信创POC测试</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/1%E3%80%81%E7%BD%91%E5%B7%A5%E5%85%A5%E9%97%A8/">1、网工入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/2%E3%80%81HCIA%E8%AF%BE%E7%A8%8B/">2、HCIA课程</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/">超哥K8S</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/%EF%BC%88%E4%B8%80%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E5%85%A5%E9%97%A8/">（一）Docker容器入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/%EF%BC%88%E4%BA%8C%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E8%BF%9B%E9%98%B6/">（二）Docker容器进阶</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/">（一）基础命令</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%89%EF%BC%89Docker/">（三）Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/">（二）综合架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%94%EF%BC%89K8S/">（五）K8S</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E5%85%AD%EF%BC%89%E6%99%BA%E7%AE%97%E4%B8%AD%E5%BF%83/">（六）智算中心</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E5%9B%9B%EF%BC%89%E8%99%9A%E6%8B%9F%E5%8C%96%E4%B9%8BOpenStack/">（四）虚拟化之OpenStack</a></li></ul></li></ul>
     </div>
-  
-  
-</div>
-
-
-              
-  
-
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>8卡A800运行DeepseekR1-671B大模型</div>
-      <div>https://gblog.github.io/2025/04/21/06_杂记/ollama部署deepseek大模型/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>作者</div>
-          <div>Haris</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>发布于</div>
-          <div>2025年4月21日</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>许可协议</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
-          </div>
-        </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
   </div>
 
 
-
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2025/04/21/06_%E6%9D%82%E8%AE%B0/%E5%8D%8E%E4%B8%BA%E4%BA%A4%E6%8D%A2%E6%9C%BA%E9%85%8D%E7%BD%AEmux-vlan/" title="华为交换机配置mux-vlan">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">华为交换机配置mux-vlan</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2025/03/26/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/06-Docker%E8%B5%84%E6%BA%90%E9%85%8D%E9%A2%9D/" title="06-Docker资源配额">
-                        <span class="hidden-mobile">06-Docker资源配额</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-
-            
-          </article>
-        </div>
-      </div>
-    </div>
-
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E4%BD%9C/" rel="tag">工作</a></li></ul>
     </div>
   </div>
-</div>
-
-
-
 
 
   
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-
-
-
-
     
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E5%B7%A5%E4%BD%9C/" style="font-size: 10px;">工作</a>
     </div>
   </div>
-</div>
 
-    
-
-    
-  </main>
-
-  <footer>
-    <div class="footer-inner">
   
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/07/">七月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/05/">五月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/04/">四月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">三月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/02/">二月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">一月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">十一月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">十月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">九月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">八月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">七月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">六月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">五月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">四月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">三月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">一月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a></li></ul>
     </div>
+  </div>
+
+
   
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/07/10/06_%E6%9D%82%E8%AE%B0/%E7%BA%A2%E5%B8%BD%E7%B3%BB%E5%AE%89%E8%A3%85%E7%B3%BB%E7%BB%9F%E6%A0%BC%E5%BC%8F%E5%8C%96/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2025/05/14/06_%E6%9D%82%E8%AE%B0/%E5%8D%8E%E4%B8%BAUSG6615F%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AESSL%20VPN/">华为USG6615F防火墙配置SSLVPN</a>
+          </li>
+        
+          <li>
+            <a href="/2025/05/06/10_%E5%AD%A6%E7%A5%9EK8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%9F%BA%E7%A1%80/">01-Docker基础</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/30/06_%E6%9D%82%E8%AE%B0/vllm%E9%83%A8%E7%BD%B2Qwen3%E5%A4%A7%E6%A8%A1%E5%9E%8B/">VLLM部署Qwen3大模型</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/21/06_%E6%9D%82%E8%AE%B0/%E5%8D%8E%E4%B8%BA%E4%BA%A4%E6%8D%A2%E6%9C%BA%E9%85%8D%E7%BD%AEmux-vlan/">华为交换机配置mux-vlan</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
   
+</aside>
+        
+      </div>
+      <footer id="footer">
   
-</div>
-
-  </footer>
-
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
+  <div class="outer">
+    <div id="footer-info" class="inner">
       
-        typing(text);
-      
-    })(window, document);
-  </script>
+      &copy; 2026 Haris<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
 
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
 
 
 
   
-    <script  src="/js/img-lazyload.js" ></script>
-  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
 
 
 
 
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
-    }
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
-</script>
-
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
-
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
-
-  <script>Fluid.plugins.codeWidget();</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
-    };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
-        }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
-      }
-    });
-  });
-</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
-  });
-</script>
-
-
-  <script>Fluid.plugins.imageCaption();</script>
-
-  <script  src="/js/local-search.js" ></script>
+<script src="/js/script.js"></script>
 
 
 
 
 
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
-
-
-  
-
-  <noscript>
-    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
-  </noscript>
+  </div>
 </body>
 </html>

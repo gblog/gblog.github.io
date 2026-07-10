@@ -1,25 +1,12 @@
-
-
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
-
-
-
+<html>
 <head>
-  <meta charset="UTF-8">
-
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <meta charset="utf-8">
   
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="Haris">
-  <meta name="keywords" content="">
-  
-    <meta name="description" content="24、封装 Egon林海峰 Egon的知识星球：https:&#x2F;&#x2F;egonlin.com 关注他 65 人赞同了该文章 目录：  引入  隐藏属性  开放接口   隐藏数据接口 隐藏函数接口   property  视频链接   强烈推荐配套资料：egon新书来袭干货满满 - linhaifeng 一 引入 面向对象编程有三大特性：封装、继承、多态，其中最重要的一个特性就是封装。封装指的就是把数据与">
+  <title>24-封装 | Haris的小站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="24、封装 Egon林海峰 Egon的知识星球：https:&#x2F;&#x2F;egonlin.com 关注他 65 人赞同了该文章 目录：  引入  隐藏属性  开放接口   隐藏数据接口 隐藏函数接口   property  视频链接   强烈推荐配套资料：egon新书来袭干货满满 - linhaifeng 一 引入 面向对象编程有三大特性：封装、继承、多态，其中最重要的一个特性就是封装。封装指的就是把数据与">
 <meta property="og:type" content="article">
 <meta property="og:title" content="24-封装">
 <meta property="og:url" content="https://gblog.github.io/2022/07/18/03_Python/02_Python%E8%BF%9B%E9%98%B6/24_%E5%B0%81%E8%A3%85/index.html">
@@ -40,269 +27,93 @@
 <meta property="article:published_time" content="2022-07-18T01:38:22.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.221Z">
 <meta property="article:author" content="Haris">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://pic3.zhimg.com/v2-c71f12bc82a46fa2c0ad1268aa249d7e_xs.jpg?source=172ae18b">
   
+    <link rel="alternate" href="/atom.xml" title="Haris的小站" type="application/atom+xml">
   
   
-  <title>24-封装 - Haris的小站</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.png">
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
 
-
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"gblog.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
   
+  
+<link rel="stylesheet" href="/css/style.css">
 
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
+  
   
 <meta name="generator" content="Hexo 7.3.0"></head>
 
-
 <body>
-  
-
-  <header>
-    
-
-<div class="header-inner" style="height: 70vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>Haris的博客</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>首页</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>归档</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>分类</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
-          </li>
-        
-      </ul>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Haris的小站</a>
+      </h1>
+      
     </div>
-  </div>
-</nav>
-
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="24-封装"></span>
-          
-        </div>
-
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
         
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-07-18 09:38" pubdate>
-          2022年7月18日 上午
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
+          <a class="main-nav-link" href="/">Home</a>
         
-          1.9k 字
+          <a class="main-nav-link" href="/archives">Archives</a>
         
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
+      </nav>
+      <nav id="sub-nav">
         
         
+          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
         
-          16 分钟
-        
-      </span>
-    
-
-    
-    
-  </div>
-
-
-        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://gblog.github.io"></form>
       </div>
-
-      
     </div>
   </div>
-</div>
+</header>
 
-</div>
-
-  </header>
-
-  <main>
+      <div class="outer">
+        <section id="main"><article id="post-03_Python/02_Python进阶/24_封装" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/07/18/03_Python/02_Python%E8%BF%9B%E9%98%B6/24_%E5%B0%81%E8%A3%85/" class="article-date">
+  <time class="dt-published" datetime="2022-07-18T01:38:22.000Z" itemprop="datePublished">2022-07-18</time>
+</a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Python/">Python</a>►<a class="article-category-link" href="/categories/Python/02-Python%E8%BF%9B%E9%98%B6/">02_Python进阶</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      24-封装
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
       
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
-
-    </div>
-
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">24-封装</h1>
-            
-            
-              <div class="markdown-body">
-                
-                <h1 id="24、封装"><a href="#24、封装" class="headerlink" title="24、封装"></a>24、封装</h1><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/people/xiaoyuanqujing"><img src="https://pic3.zhimg.com/v2-c71f12bc82a46fa2c0ad1268aa249d7e_xs.jpg?source=172ae18b" srcset="/img/loading.gif" lazyload alt="Egon林海峰"></a></p>
+        <h1 id="24、封装"><a href="#24、封装" class="headerlink" title="24、封装"></a>24、封装</h1><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/people/xiaoyuanqujing"><img src="https://pic3.zhimg.com/v2-c71f12bc82a46fa2c0ad1268aa249d7e_xs.jpg?source=172ae18b" alt="Egon林海峰"></a></p>
 <p><a target="_blank" rel="noopener" href="https://www.zhihu.com/people/xiaoyuanqujing">Egon林海峰</a></p>
 <p>Egon的知识星球：<a target="_blank" rel="noopener" href="https://egonlin.com/">https://egonlin.com</a></p>
 <p>关注他</p>
@@ -327,519 +138,199 @@
 </ul>
 <p>强烈推荐配套资料：<a href="https://link.zhihu.com/?target=https://egonlin.com/book.html">egon新书来袭干货满满 - linhaifeng</a></p>
 <h2 id="一-引入"><a href="#一-引入" class="headerlink" title="一 引入"></a>一 引入</h2><p> 面向对象编程有三大特性：封装、继承、多态，其中最重要的一个特性就是封装。封装指的就是把数据与功能都整合到一起，听起来是不是很熟悉，没错，我们之前所说的”整合“二字其实就是封装的通俗说法。除此之外，针对封装到对象或者类中的属性，我们还可以严格控制对它们的访问，分两步实现：隐藏与开放接口</p>
-<p><img src="https://pic4.zhimg.com/80/v2-6a32e315fdeb5e7de1452455ee287933_720w.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://pic4.zhimg.com/80/v2-6a32e315fdeb5e7de1452455ee287933_720w.jpg" alt="img"></p>
 <h2 id="二-隐藏属性"><a href="#二-隐藏属性" class="headerlink" title="二 隐藏属性"></a>二 隐藏属性</h2><p>Python的Class机制采用双下划线开头的方式将属性隐藏起来（设置成私有的），但其实这仅仅只是一种变形操作，类中所有双下滑线开头的属性都会在类定义阶段、检测语法时自动变成“_类名__属性名”的形式：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">class Foo:
-    __N&#x3D;0 # 变形为_Foo__N
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Foo</span>:</span><br><span class="line">    __N=<span class="number">0</span> <span class="comment"># 变形为_Foo__N</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>): <span class="comment"># 定义函数时，会检测函数语法，所以__开头的属性也会变形</span></span><br><span class="line">        <span class="variable language_">self</span>.__x=<span class="number">10</span> <span class="comment"># 变形为self._Foo__x</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__f1</span>(<span class="params">self</span>): <span class="comment"># 变形为_Foo__f1</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;__f1 run&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">f2</span>(<span class="params">self</span>):  <span class="comment"># 定义函数时，会检测函数语法，所以__开头的属性也会变形</span></span><br><span class="line">        <span class="variable language_">self</span>.__f1() <span class="comment">#变形为self._Foo__f1()</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(Foo.__N) <span class="comment"># 报错AttributeError:类Foo没有属性__N</span></span><br><span class="line"></span><br><span class="line">obj = Foo()</span><br><span class="line"><span class="built_in">print</span>(obbj.__x) <span class="comment"># 报错AttributeError:对象obj没有属性__x</span></span><br></pre></td></tr></table></figure>
 
-    def __init__(self): # 定义函数时，会检测函数语法，所以__开头的属性也会变形
-        self.__x&#x3D;10 # 变形为self._Foo__x
-
-    def __f1(self): # 变形为_Foo__f1
-        print(&#39;__f1 run&#39;)
-
-    def f2(self):  # 定义函数时，会检测函数语法，所以__开头的属性也会变形
-        self.__f1() #变形为self._Foo__f1()
-
-print(Foo.__N) # 报错AttributeError:类Foo没有属性__N
-
-obj &#x3D; Foo()
-print(obbj.__x) # 报错AttributeError:对象obj没有属性__x</code></pre></div></figure>
-
-<p><img src="https://pic3.zhimg.com/80/v2-805e04f3fd093604e61c6fa286d1658a_720w.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://pic3.zhimg.com/80/v2-805e04f3fd093604e61c6fa286d1658a_720w.jpg" alt="img"></p>
 <p>这种变形需要注意的问题是：</p>
 <p>1、在类外部无法直接访问双下滑线开头的属性，但知道了类名和属性名就可以拼出名字：_类名__属性，然后就可以访问了，如Foo._A__N，所以说这种操作并没有严格意义上地限制外部访问，仅仅只是一种语法意义上的变形。</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">&gt;&gt;&gt; Foo.__dict__
-mappingproxy(&#123;..., &#39;_Foo__N&#39;: 0, ...&#125;)
-
-&gt;&gt;&gt; obj.__dict__
-&#123;&#39;_Foo__x&#39;: 10&#125;
-
-&gt;&gt;&gt; Foo._Foo__N
-0
-&gt;&gt;&gt; obj._Foo__x
-10
-&gt;&gt;&gt; obj._Foo__N
-0</code></pre></div></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>Foo.__dict__</span><br><span class="line">mappingproxy(&#123;..., <span class="string">&#x27;_Foo__N&#x27;</span>: <span class="number">0</span>, ...&#125;)</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>obj.__dict__</span><br><span class="line">&#123;<span class="string">&#x27;_Foo__x&#x27;</span>: <span class="number">10</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>Foo._Foo__N</span><br><span class="line"><span class="number">0</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>obj._Foo__x</span><br><span class="line"><span class="number">10</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>obj._Foo__N</span><br><span class="line"><span class="number">0</span></span><br></pre></td></tr></table></figure>
 
 <p>2、在类内部是可以直接访问双下滑线开头的属性的，比如self.__f1()，因为在类定义阶段类内部双下滑线开头的属性统一发生了变形。</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">&gt;&gt;&gt; obj.f2()
-__f1 run</code></pre></div></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>obj.f2()</span><br><span class="line">__f1 run</span><br></pre></td></tr></table></figure>
 
 <p>3、变形操作只在类定义阶段发生一次,在类定义之后的赋值操作，不会变形。</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">&gt;&gt;&gt; Foo.__M&#x3D;100
-&gt;&gt;&gt; Foo.__dict__
-mappingproxy(&#123;..., &#39;__M&#39;: 100,...&#125;)
-&gt;&gt;&gt; Foo.__M
-100
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>Foo.__M=<span class="number">100</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>Foo.__dict__</span><br><span class="line">mappingproxy(&#123;..., <span class="string">&#x27;__M&#x27;</span>: <span class="number">100</span>,...&#125;)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>Foo.__M</span><br><span class="line"><span class="number">100</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>obj.__y=<span class="number">20</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>obj.__dict__</span><br><span class="line">&#123;<span class="string">&#x27;__y&#x27;</span>: <span class="number">20</span>, <span class="string">&#x27;_Foo__x&#x27;</span>: <span class="number">10</span>&#125;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>obj.__y</span><br><span class="line"><span class="number">20</span></span><br></pre></td></tr></table></figure>
 
-&gt;&gt;&gt; obj.__y&#x3D;20
-&gt;&gt;&gt; obj.__dict__
-&#123;&#39;__y&#39;: 20, &#39;_Foo__x&#39;: 10&#125;
-&gt;&gt;&gt; obj.__y
-20</code></pre></div></figure>
-
-<p><img src="https://pic4.zhimg.com/80/v2-8832156adebe2467bff885f22728411f_720w.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://pic4.zhimg.com/80/v2-8832156adebe2467bff885f22728411f_720w.jpg" alt="img"></p>
 <h2 id="三-开放接口"><a href="#三-开放接口" class="headerlink" title="三 开放接口"></a>三 开放接口</h2><p>定义属性就是为了使用，所以隐藏并不是目的</p>
 <h2 id="3-1-隐藏数据属性"><a href="#3-1-隐藏数据属性" class="headerlink" title="3.1 隐藏数据属性"></a>3.1 隐藏数据属性</h2><p>将数据隐藏起来就限制了类外部对数据的直接操作，然后类内应该提供相应的接口来允许类外部间接地操作数据，接口之上可以附加额外的逻辑来对数据的操作进行严格地控制</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">&gt;&gt;&gt; class Teacher:
-...     def __init__(self,name,age): #将名字和年纪都隐藏起来
-...         self.__name&#x3D;name
-...         self.__age&#x3D;age
-...     def tell_info(self): #对外提供访问老师信息的接口
-...         print(&#39;姓名:%s,年龄:%s&#39; %(self.__name,self.__age))
-...     def set_info(self,name,age): #对外提供设置老师信息的接口，并附加类型检查的逻辑
-...         if not isinstance(name,str):
-...             raise TypeError(&#39;姓名必须是字符串类型&#39;)
-...         if not isinstance(age,int):
-...             raise TypeError(&#39;年龄必须是整型&#39;)
-...         self.__name&#x3D;name
-...         self.__age&#x3D;age
-... 
-&gt;&gt;&gt;
-&gt;&gt;&gt; t&#x3D;Teacher(&#39;lili&#39;,18)
-&gt;&gt;&gt; t.set_info(‘LiLi&#39;,&#39;19&#39;) # 年龄不为整型，抛出异常
-Traceback (most recent call last):
-  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
-  File &quot;&lt;stdin&gt;&quot;, line 11, in set_info
-TypeError: 年龄必须是整型
-&gt;&gt;&gt; t.set_info(&#39;LiLi&#39;,19) # 名字为字符串类型，年龄为整形，可以正常设置
-&gt;&gt;&gt; t.tell_info() # 查看老师的信息
-姓名:LiLi,年龄:19</code></pre></div></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">class</span> <span class="title class_">Teacher</span>:</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name,age</span>): <span class="comment">#将名字和年纪都隐藏起来</span></span><br><span class="line"><span class="meta">... </span>        <span class="variable language_">self</span>.__name=name</span><br><span class="line"><span class="meta">... </span>        <span class="variable language_">self</span>.__age=age</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">def</span> <span class="title function_">tell_info</span>(<span class="params">self</span>): <span class="comment">#对外提供访问老师信息的接口</span></span><br><span class="line"><span class="meta">... </span>        <span class="built_in">print</span>(<span class="string">&#x27;姓名:%s,年龄:%s&#x27;</span> %(<span class="variable language_">self</span>.__name,<span class="variable language_">self</span>.__age))</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">def</span> <span class="title function_">set_info</span>(<span class="params">self,name,age</span>): <span class="comment">#对外提供设置老师信息的接口，并附加类型检查的逻辑</span></span><br><span class="line"><span class="meta">... </span>        <span class="keyword">if</span> <span class="keyword">not</span> <span class="built_in">isinstance</span>(name,<span class="built_in">str</span>):</span><br><span class="line"><span class="meta">... </span>            <span class="keyword">raise</span> TypeError(<span class="string">&#x27;姓名必须是字符串类型&#x27;</span>)</span><br><span class="line"><span class="meta">... </span>        <span class="keyword">if</span> <span class="keyword">not</span> <span class="built_in">isinstance</span>(age,<span class="built_in">int</span>):</span><br><span class="line"><span class="meta">... </span>            <span class="keyword">raise</span> TypeError(<span class="string">&#x27;年龄必须是整型&#x27;</span>)</span><br><span class="line"><span class="meta">... </span>        <span class="variable language_">self</span>.__name=name</span><br><span class="line"><span class="meta">... </span>        <span class="variable language_">self</span>.__age=age</span><br><span class="line"><span class="meta">... </span></span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>t=Teacher(<span class="string">&#x27;lili&#x27;</span>,<span class="number">18</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>t.set_info(‘LiLi<span class="string">&#x27;,&#x27;</span><span class="number">19</span><span class="string">&#x27;) # 年龄不为整型，抛出异常</span></span><br><span class="line"><span class="string">Traceback (most recent call last):</span></span><br><span class="line"><span class="string">  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span></span><br><span class="line"><span class="string">  File &quot;&lt;stdin&gt;&quot;, line 11, in set_info</span></span><br><span class="line"><span class="string">TypeError: 年龄必须是整型</span></span><br><span class="line"><span class="string">&gt;&gt;&gt; t.set_info(&#x27;</span>LiLi<span class="string">&#x27;,19) # 名字为字符串类型，年龄为整形，可以正常设置</span></span><br><span class="line"><span class="string">&gt;&gt;&gt; t.tell_info() # 查看老师的信息</span></span><br><span class="line"><span class="string">姓名:LiLi,年龄:19</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="https://pic4.zhimg.com/80/v2-8ee414d1292c42e754f32fa3887c77eb_720w.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://pic4.zhimg.com/80/v2-8ee414d1292c42e754f32fa3887c77eb_720w.jpg" alt="img"></p>
 <h2 id="3-2-隐藏函数属性"><a href="#3-2-隐藏函数属性" class="headerlink" title="3.2 隐藏函数属性"></a>3.2 隐藏函数属性</h2><p>目的的是为了隔离复杂度，例如ATM程序的取款功能,该功能有很多其他功能组成，比如插卡、身份认证、输入金额、打印小票、取钱等，而对使用者来说,只需要开发取款这个功能接口即可,其余功能我们都可以隐藏起来</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">&gt;&gt;&gt; class ATM:
-...     def __card(self): #插卡
-...         print(&#39;插卡&#39;)
-...     def __auth(self): #身份认证
-...         print(&#39;用户认证&#39;)
-...     def __input(self): #输入金额
-...         print(&#39;输入取款金额&#39;)
-...     def __print_bill(self): #打印小票
-...         print(&#39;打印账单&#39;)
-...     def __take_money(self): #取钱
-...         print(&#39;取款&#39;)
-...     def withdraw(self): #取款功能
-...         self.__card()
-...         self.__auth()
-...         self.__input()
-...         self.__print_bill()
-...         self.__take_money()
-...
-&gt;&gt;&gt; obj&#x3D;ATM()
-&gt;&gt;&gt; obj.withdraw()</code></pre></div></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">class</span> <span class="title class_">ATM</span>:</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">def</span> <span class="title function_">__card</span>(<span class="params">self</span>): <span class="comment">#插卡</span></span><br><span class="line"><span class="meta">... </span>        <span class="built_in">print</span>(<span class="string">&#x27;插卡&#x27;</span>)</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">def</span> <span class="title function_">__auth</span>(<span class="params">self</span>): <span class="comment">#身份认证</span></span><br><span class="line"><span class="meta">... </span>        <span class="built_in">print</span>(<span class="string">&#x27;用户认证&#x27;</span>)</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">def</span> <span class="title function_">__input</span>(<span class="params">self</span>): <span class="comment">#输入金额</span></span><br><span class="line"><span class="meta">... </span>        <span class="built_in">print</span>(<span class="string">&#x27;输入取款金额&#x27;</span>)</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">def</span> <span class="title function_">__print_bill</span>(<span class="params">self</span>): <span class="comment">#打印小票</span></span><br><span class="line"><span class="meta">... </span>        <span class="built_in">print</span>(<span class="string">&#x27;打印账单&#x27;</span>)</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">def</span> <span class="title function_">__take_money</span>(<span class="params">self</span>): <span class="comment">#取钱</span></span><br><span class="line"><span class="meta">... </span>        <span class="built_in">print</span>(<span class="string">&#x27;取款&#x27;</span>)</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">def</span> <span class="title function_">withdraw</span>(<span class="params">self</span>): <span class="comment">#取款功能</span></span><br><span class="line"><span class="meta">... </span>        <span class="variable language_">self</span>.__card()</span><br><span class="line"><span class="meta">... </span>        <span class="variable language_">self</span>.__auth()</span><br><span class="line"><span class="meta">... </span>        <span class="variable language_">self</span>.__<span class="built_in">input</span>()</span><br><span class="line"><span class="meta">... </span>        <span class="variable language_">self</span>.__print_bill()</span><br><span class="line"><span class="meta">... </span>        <span class="variable language_">self</span>.__take_money()</span><br><span class="line">...</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>obj=ATM()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>obj.withdraw()</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://pic2.zhimg.com/80/v2-3a8cbf5b04077b88e85f6c075b37b94d_720w.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://pic2.zhimg.com/80/v2-3a8cbf5b04077b88e85f6c075b37b94d_720w.jpg" alt="img"></p>
 <p>总结隐藏属性与开放接口，本质就是为了明确地区分内外，类内部可以修改封装内的东西而不影响外部调用者的代码；而类外部只需拿到一个接口，只要接口名、参数不变，则无论设计者如何改变内部实现代码，使用者均无需改变代码。这就提供一个良好的合作基础，只要接口这个基础约定不变，则代码的修改不足为虑。</p>
 <h2 id="四-property"><a href="#四-property" class="headerlink" title="四 property"></a>四 property</h2><p>BMI指数是用来衡量一个人的体重与身高对健康影响的一个指标，计算公式为</p>
-<p><img src="https://pic3.zhimg.com/80/v2-43498605399e4a86e295e67ddd75962e_720w.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">体质指数（BMI）&#x3D;体重（kg）÷身高^2（m）
-EX：70kg÷（1.75×1.75）&#x3D;22.86</code></pre></div></figure>
+<p><img src="https://pic3.zhimg.com/80/v2-43498605399e4a86e295e67ddd75962e_720w.jpg" alt="img"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">体质指数（BMI）=体重（kg）÷身高^<span class="number">2</span>（m）</span><br><span class="line">EX：70kg÷（<span class="number">1.75</span>×<span class="number">1.75</span>）=<span class="number">22.86</span></span><br></pre></td></tr></table></figure>
 
 <p>身高或体重是不断变化的，因而每次想查看BMI值都需要通过计算才能得到，但很明显BMI听起来更像是一个特征而非功能，为此Python专门提供了一个装饰器property，可以将类中的函数“伪装成”对象的数据属性，对象在访问该特殊属性时会触发功能的执行，然后将返回值作为本次访问的结果，例如</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">&gt;&gt;&gt; class People:
-...     def __init__(self,name,weight,height):
-...         self.name&#x3D;name
-...         self.weight&#x3D;weight
-...         self.height&#x3D;height
-...     @property
-...     def bmi(self):
-...         return self.weight &#x2F; (self.height**2)
-...
-&gt;&gt;&gt; obj&#x3D;People(&#39;lili&#39;,75,1.85)
-&gt;&gt;&gt; obj.bmi #触发方法bmi的执行，将obj自动传给self，执行后返回值作为本次引用的结果
-21.913805697589478</code></pre></div></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">class</span> <span class="title class_">People</span>:</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name,weight,height</span>):</span><br><span class="line"><span class="meta">... </span>        <span class="variable language_">self</span>.name=name</span><br><span class="line"><span class="meta">... </span>        <span class="variable language_">self</span>.weight=weight</span><br><span class="line"><span class="meta">... </span>        <span class="variable language_">self</span>.height=height</span><br><span class="line"><span class="meta">... </span>    @<span class="built_in">property</span></span><br><span class="line"><span class="meta">... </span>    <span class="keyword">def</span> <span class="title function_">bmi</span>(<span class="params">self</span>):</span><br><span class="line"><span class="meta">... </span>        <span class="keyword">return</span> <span class="variable language_">self</span>.weight / (<span class="variable language_">self</span>.height**<span class="number">2</span>)</span><br><span class="line">...</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>obj=People(<span class="string">&#x27;lili&#x27;</span>,<span class="number">75</span>,<span class="number">1.85</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>obj.bmi <span class="comment">#触发方法bmi的执行，将obj自动传给self，执行后返回值作为本次引用的结果</span></span><br><span class="line"><span class="number">21.913805697589478</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="https://pic4.zhimg.com/80/v2-6efd0b831d73e828f7c644df0d8d996f_720w.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://pic4.zhimg.com/80/v2-6efd0b831d73e828f7c644df0d8d996f_720w.jpg" alt="img"></p>
 <p>使用property有效地保证了属性访问的一致性。另外property还提供设置和删除属性的功能，如下</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">&gt;&gt;&gt; class Foo:
-...     def __init__(self,val):
-...         self.__NAME&#x3D;val #将属性隐藏起来
-...     @property
-...     def name(self):
-...         return self.__NAME
-...     @name.setter
-...     def name(self,value):
-...         if not isinstance(value,str):  #在设定值之前进行类型检查
-...             raise TypeError(&#39;%s must be str&#39; %value)
-...         self.__NAME&#x3D;value #通过类型检查后,将值value存放到真实的位置self.__NAME
-...     @name.deleter
-...     def name(self):
-...         raise PermissionError(&#39;Can not delete&#39;)
-...
-&gt;&gt;&gt; f&#x3D;Foo(&#39;lili&#39;)
-&gt;&gt;&gt; f.name
-lili
-&gt;&gt;&gt; f.name&#x3D;&#39;LiLi&#39; #触发name.setter装饰器对应的函数name(f,’Egon&#39;)
-&gt;&gt;&gt; f.name&#x3D;123 #触发name.setter对应的的函数name(f,123),抛出异常TypeError
-&gt;&gt;&gt; del f.name #触发name.deleter对应的函数name(f),抛出异常PermissionError</code></pre></div></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">class</span> <span class="title class_">Foo</span>:</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,val</span>):</span><br><span class="line"><span class="meta">... </span>        <span class="variable language_">self</span>.__NAME=val <span class="comment">#将属性隐藏起来</span></span><br><span class="line"><span class="meta">... </span>    @<span class="built_in">property</span></span><br><span class="line"><span class="meta">... </span>    <span class="keyword">def</span> <span class="title function_">name</span>(<span class="params">self</span>):</span><br><span class="line"><span class="meta">... </span>        <span class="keyword">return</span> <span class="variable language_">self</span>.__NAME</span><br><span class="line"><span class="meta">... </span>    @name.setter</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">def</span> <span class="title function_">name</span>(<span class="params">self,value</span>):</span><br><span class="line"><span class="meta">... </span>        <span class="keyword">if</span> <span class="keyword">not</span> <span class="built_in">isinstance</span>(value,<span class="built_in">str</span>):  <span class="comment">#在设定值之前进行类型检查</span></span><br><span class="line"><span class="meta">... </span>            <span class="keyword">raise</span> TypeError(<span class="string">&#x27;%s must be str&#x27;</span> %value)</span><br><span class="line"><span class="meta">... </span>        <span class="variable language_">self</span>.__NAME=value <span class="comment">#通过类型检查后,将值value存放到真实的位置self.__NAME</span></span><br><span class="line"><span class="meta">... </span>    @name.deleter</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">def</span> <span class="title function_">name</span>(<span class="params">self</span>):</span><br><span class="line"><span class="meta">... </span>        <span class="keyword">raise</span> PermissionError(<span class="string">&#x27;Can not delete&#x27;</span>)</span><br><span class="line">...</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>f=Foo(<span class="string">&#x27;lili&#x27;</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>f.name</span><br><span class="line">lili</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>f.name=<span class="string">&#x27;LiLi&#x27;</span> <span class="comment">#触发name.setter装饰器对应的函数name(f,’Egon&#x27;)</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>f.name=<span class="number">123</span> <span class="comment">#触发name.setter对应的的函数name(f,123),抛出异常TypeError</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">del</span> f.name <span class="comment">#触发name.deleter对应的函数name(f),抛出异常PermissionError</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="视频链接："><a href="#视频链接：" class="headerlink" title="视频链接："></a>视频链接：</h2><p>封装之隐藏属性</p>
-<p><a href="https://link.zhihu.com/?target=https://www.bilibili.com/video/av73342471?p=111">python快速入门（一）_哔哩哔哩 (゜-゜)つロ 干杯~-bilibiliwww.bilibili.com/video/av73342471?p=111<img src="https://pic4.zhimg.com/v2-c64ada0dd06d0c57ed905be65d17acb7_180x120.jpg" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<p><a href="https://link.zhihu.com/?target=https://www.bilibili.com/video/av73342471?p=111">python快速入门（一）_哔哩哔哩 (゜-゜)つロ 干杯~-bilibiliwww.bilibili.com/video/av73342471?p=111<img src="https://pic4.zhimg.com/v2-c64ada0dd06d0c57ed905be65d17acb7_180x120.jpg" alt="img"></a></p>
 <p>封装真正的意义</p>
-<p><a href="https://link.zhihu.com/?target=https://www.bilibili.com/video/av73342471?p=112">python快速入门（一）_哔哩哔哩 (゜-゜)つロ 干杯~-bilibiliwww.bilibili.com/video/av73342471?p=112<img src="https://pic4.zhimg.com/v2-c64ada0dd06d0c57ed905be65d17acb7_180x120.jpg" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<p><a href="https://link.zhihu.com/?target=https://www.bilibili.com/video/av73342471?p=112">python快速入门（一）_哔哩哔哩 (゜-゜)つロ 干杯~-bilibiliwww.bilibili.com/video/av73342471?p=112<img src="https://pic4.zhimg.com/v2-c64ada0dd06d0c57ed905be65d17acb7_180x120.jpg" alt="img"></a></p>
 <p>property</p>
-<p><a href="https://link.zhihu.com/?target=https://www.bilibili.com/video/av73342471?p=113">python快速入门（一）_哔哩哔哩 (゜-゜)つロ 干杯~-bilibiliwww.bilibili.com/video/av73342471?p=113<img src="https://pic4.zhimg.com/v2-c64ada0dd06d0c57ed905be65d17acb7_180x120.jpg" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<p><a href="https://link.zhihu.com/?target=https://www.bilibili.com/video/av73342471?p=113">python快速入门（一）_哔哩哔哩 (゜-゜)つロ 干杯~-bilibiliwww.bilibili.com/video/av73342471?p=113<img src="https://pic4.zhimg.com/v2-c64ada0dd06d0c57ed905be65d17acb7_180x120.jpg" alt="img"></a></p>
 
-                
-              </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
       
-
-<span class="category-chains">
-  
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://gblog.github.io/2022/07/18/03_Python/02_Python%E8%BF%9B%E9%98%B6/24_%E5%B0%81%E8%A3%85/" data-id="cmrendt9s0056dsie4sqbb45n" data-title="24-封装" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
   
     
-      <span class="category-chain">
+<nav id="article-nav">
+  
+    <a href="/2022/07/18/03_Python/02_Python%E8%BF%9B%E9%98%B6/25_%E7%BB%A7%E6%89%BF%E4%B8%8E%E6%B4%BE%E7%94%9F/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
         
-  <a href="/categories/Python/" class="category-chain-item">Python</a>
+          25-继承与派生
+        
+      </div>
+    </a>
   
   
-    <span>></span>
+    <a href="/2022/07/18/03_Python/02_Python%E8%BF%9B%E9%98%B6/22_%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E7%9A%84%E7%9B%AE%E5%BD%95%E8%A7%84%E8%8C%83/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">22-软件开发的目录规范</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
     
-  <a href="/categories/Python/02-Python%E8%BF%9B%E9%98%B6/" class="category-chain-item">02_Python进阶</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C/01-C%E8%AF%AD%E8%A8%80/">01_C语言</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/01-Python%E5%85%A5%E9%97%A8/">01_Python入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/02-Python%E8%BF%9B%E9%98%B6/">02_Python进阶</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/03-MySQL/">03_MySQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/04-HTML/">04_HTML</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/05-CSS/">05_CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/06-JavaScript/">06_JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/07-JQuery/">07_JQuery</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/08-BootStrap/">08_BootStrap</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/09-Django/">09_Django</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/12-%E9%99%84%E5%BD%95%E8%A1%A5%E5%85%85/">12_附录补充</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E7%A5%9EK8S/">学神K8S</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E7%A5%9EK8S/%EF%BC%88%E4%B8%80%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E5%85%A5%E9%97%A8/">（一）Docker容器入门</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9D%82%E8%AE%B0/">杂记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8B%E8%AF%95/%E4%BF%A1%E5%88%9BPOC%E6%B5%8B%E8%AF%95/">信创POC测试</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/1%E3%80%81%E7%BD%91%E5%B7%A5%E5%85%A5%E9%97%A8/">1、网工入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/2%E3%80%81HCIA%E8%AF%BE%E7%A8%8B/">2、HCIA课程</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/">超哥K8S</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/%EF%BC%88%E4%B8%80%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E5%85%A5%E9%97%A8/">（一）Docker容器入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/%EF%BC%88%E4%BA%8C%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E8%BF%9B%E9%98%B6/">（二）Docker容器进阶</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/">（一）基础命令</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%89%EF%BC%89Docker/">（三）Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/">（二）综合架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%94%EF%BC%89K8S/">（五）K8S</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E5%85%AD%EF%BC%89%E6%99%BA%E7%AE%97%E4%B8%AD%E5%BF%83/">（六）智算中心</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E5%9B%9B%EF%BC%89%E8%99%9A%E6%8B%9F%E5%8C%96%E4%B9%8BOpenStack/">（四）虚拟化之OpenStack</a></li></ul></li></ul>
     </div>
-  
-  
-</div>
-
-
-              
-  
-
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>24-封装</div>
-      <div>https://gblog.github.io/2022/07/18/03_Python/02_Python进阶/24_封装/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>作者</div>
-          <div>Haris</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>发布于</div>
-          <div>2022年7月18日</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>许可协议</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
-          </div>
-        </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
   </div>
 
 
-
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2022/07/18/03_Python/02_Python%E8%BF%9B%E9%98%B6/23_%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/" title="23-面向对象编程">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">23-面向对象编程</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2022/07/18/03_Python/02_Python%E8%BF%9B%E9%98%B6/22_%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E7%9A%84%E7%9B%AE%E5%BD%95%E8%A7%84%E8%8C%83/" title="22-软件开发的目录规范">
-                        <span class="hidden-mobile">22-软件开发的目录规范</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-
-            
-          </article>
-        </div>
-      </div>
-    </div>
-
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E4%BD%9C/" rel="tag">工作</a></li></ul>
     </div>
   </div>
-</div>
-
-
-
 
 
   
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-
-
-
-
     
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E5%B7%A5%E4%BD%9C/" style="font-size: 10px;">工作</a>
     </div>
   </div>
-</div>
 
-    
-
-    
-  </main>
-
-  <footer>
-    <div class="footer-inner">
   
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/07/">七月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/05/">五月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/04/">四月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">三月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/02/">二月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">一月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">十一月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">十月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">九月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">八月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">七月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">六月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">五月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">四月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">三月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">一月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a></li></ul>
     </div>
+  </div>
+
+
   
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/07/10/06_%E6%9D%82%E8%AE%B0/%E7%BA%A2%E5%B8%BD%E7%B3%BB%E5%AE%89%E8%A3%85%E7%B3%BB%E7%BB%9F%E6%A0%BC%E5%BC%8F%E5%8C%96/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2025/05/14/06_%E6%9D%82%E8%AE%B0/%E5%8D%8E%E4%B8%BAUSG6615F%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AESSL%20VPN/">华为USG6615F防火墙配置SSLVPN</a>
+          </li>
+        
+          <li>
+            <a href="/2025/05/06/10_%E5%AD%A6%E7%A5%9EK8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%9F%BA%E7%A1%80/">01-Docker基础</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/30/06_%E6%9D%82%E8%AE%B0/vllm%E9%83%A8%E7%BD%B2Qwen3%E5%A4%A7%E6%A8%A1%E5%9E%8B/">VLLM部署Qwen3大模型</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/21/06_%E6%9D%82%E8%AE%B0/%E5%8D%8E%E4%B8%BA%E4%BA%A4%E6%8D%A2%E6%9C%BA%E9%85%8D%E7%BD%AEmux-vlan/">华为交换机配置mux-vlan</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
   
+</aside>
+        
+      </div>
+      <footer id="footer">
   
-</div>
-
-  </footer>
-
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
+  <div class="outer">
+    <div id="footer-info" class="inner">
       
-        typing(text);
-      
-    })(window, document);
-  </script>
+      &copy; 2026 Haris<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
 
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
 
 
 
   
-    <script  src="/js/img-lazyload.js" ></script>
-  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
 
 
 
 
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
-    }
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
-</script>
-
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
-
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
-
-  <script>Fluid.plugins.codeWidget();</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
-    };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
-        }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
-      }
-    });
-  });
-</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
-  });
-</script>
-
-
-  <script>Fluid.plugins.imageCaption();</script>
-
-  <script  src="/js/local-search.js" ></script>
+<script src="/js/script.js"></script>
 
 
 
 
 
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
-
-
-  
-
-  <noscript>
-    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
-  </noscript>
+  </div>
 </body>
 </html>

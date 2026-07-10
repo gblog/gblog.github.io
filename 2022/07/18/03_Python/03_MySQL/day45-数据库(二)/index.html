@@ -1,25 +1,12 @@
-
-
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
-
-
-
+<html>
 <head>
-  <meta charset="UTF-8">
-
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <meta charset="utf-8">
   
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="Haris">
-  <meta name="keywords" content="">
-  
-    <meta name="description" content="“Day45-数据库(二)学习笔记” 一、存储引擎日常生活中文件格式有很多中，并且针对不同的文件格式会有对应不同存储方式和处理机制(比如txt、pdf、word、 mp4等等) 针对不同的数据应该有对应的不同的处理机制来存储 存储引擎就是不同的处理机制 1.1 MySQL主要存储引擎 Innodb 是MySQL5.5版本及之后默认的存储引擎 存储数据更加的安全  myisam 是MySQL5.5版">
+  <title>Day45-数据库（二） | Haris的小站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="“Day45-数据库(二)学习笔记” 一、存储引擎日常生活中文件格式有很多中，并且针对不同的文件格式会有对应不同存储方式和处理机制(比如txt、pdf、word、 mp4等等) 针对不同的数据应该有对应的不同的处理机制来存储 存储引擎就是不同的处理机制 1.1 MySQL主要存储引擎 Innodb 是MySQL5.5版本及之后默认的存储引擎 存储数据更加的安全  myisam 是MySQL5.5版">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Day45-数据库（二）">
 <meta property="og:url" content="https://gblog.github.io/2022/07/18/03_Python/03_MySQL/day45-%E6%95%B0%E6%8D%AE%E5%BA%93(%E4%BA%8C)/index.html">
@@ -29,268 +16,92 @@
 <meta property="article:published_time" content="2022-07-18T02:50:22.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.237Z">
 <meta property="article:author" content="Haris">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Haris的小站" type="application/atom+xml">
   
   
+    <link rel="shortcut icon" href="/favicon.png">
   
-  <title>Day45-数据库（二） - Haris的小站</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
   
-
-
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"gblog.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
   
+<link rel="stylesheet" href="/css/style.css">
 
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
+  
   
 <meta name="generator" content="Hexo 7.3.0"></head>
 
-
 <body>
-  
-
-  <header>
-    
-
-<div class="header-inner" style="height: 70vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>Haris的博客</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>首页</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>归档</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>分类</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
-          </li>
-        
-      </ul>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Haris的小站</a>
+      </h1>
+      
     </div>
-  </div>
-</nav>
-
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="Day45-数据库（二）"></span>
-          
-        </div>
-
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
         
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-07-18 10:50" pubdate>
-          2022年7月18日 上午
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
+          <a class="main-nav-link" href="/">Home</a>
         
-          2.2k 字
+          <a class="main-nav-link" href="/archives">Archives</a>
         
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
+      </nav>
+      <nav id="sub-nav">
         
         
+          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
         
-          19 分钟
-        
-      </span>
-    
-
-    
-    
-  </div>
-
-
-        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://gblog.github.io"></form>
       </div>
-
-      
     </div>
   </div>
-</div>
+</header>
 
-</div>
-
-  </header>
-
-  <main>
+      <div class="outer">
+        <section id="main"><article id="post-03_Python/03_MySQL/day45-数据库(二)" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/07/18/03_Python/03_MySQL/day45-%E6%95%B0%E6%8D%AE%E5%BA%93(%E4%BA%8C)/" class="article-date">
+  <time class="dt-published" datetime="2022-07-18T02:50:22.000Z" itemprop="datePublished">2022-07-18</time>
+</a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Python/">Python</a>►<a class="article-category-link" href="/categories/Python/03-MySQL/">03_MySQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Day45-数据库（二）
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
       
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
-
-    </div>
-
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">Day45-数据库（二）</h1>
-            
-            
-              <div class="markdown-body">
-                
-                <p>“Day45-数据库(二)学习笔记”</p>
+        <p>“Day45-数据库(二)学习笔记”</p>
 <h1 id="一、存储引擎"><a href="#一、存储引擎" class="headerlink" title="一、存储引擎"></a>一、存储引擎</h1><p>日常生活中文件格式有很多中，并且针对不同的文件格式会有对应不同存储方式和处理机制(比如txt、pdf、word、</p>
 <p>mp4等等)</p>
 <p>针对不同的数据应该有对应的不同的处理机制来存储</p>
@@ -312,77 +123,32 @@
 </li>
 </ul>
 <h2 id="1-2-查看和设置存储引擎："><a href="#1-2-查看和设置存储引擎：" class="headerlink" title="1.2 查看和设置存储引擎："></a>1.2 查看和设置存储引擎：</h2><p>1、查看所有存储引擎</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">mysql&gt; show engines;
-
-# 输出
-+--------------------+---------+----------------------------------------------------------------+--------------+------+------------+
-| Engine             | Support | Comment                                                        | Transactions | XA   | Savepoints |
-+--------------------+---------+---------------------------------------------------------------
-....
-| MyISAM             | YES     | MyISAM storage engine                                          | NO           | NO   | NO         |
-| InnoDB             | DEFAULT | Supports transactions, row-level locking, and foreign keys     | YES          | YES  | YES        |
-| BLACKHOLE          | YES     | &#x2F;dev&#x2F;null storage engine (anything you write to it disappears) | NO           | NO   | NO         |
-.....</code></pre></div></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show engines;</span><br><span class="line"></span><br><span class="line"># 输出</span><br><span class="line">+--------------------+---------+----------------------------------------------------------------+--------------+------+------------+</span><br><span class="line">| Engine             | Support | Comment                                                        | Transactions | XA   | Savepoints |</span><br><span class="line">+--------------------+---------+---------------------------------------------------------------</span><br><span class="line">....</span><br><span class="line">| MyISAM             | YES     | MyISAM storage engine                                          | NO           | NO   | NO         |</span><br><span class="line">| InnoDB             | DEFAULT | Supports transactions, row-level locking, and foreign keys     | YES          | YES  | YES        |</span><br><span class="line">| BLACKHOLE          | YES     | /dev/null storage engine (anything you write to it disappears) | NO           | NO   | NO         |</span><br><span class="line">.....</span><br></pre></td></tr></table></figure>
 
 <p>2、设置存储引擎</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"># 设置存储引擎
-create table t1(id int) engine&#x3D;innodb;
-create table t2(id int) engine&#x3D;myisam;
-create table t3(id int) engine&#x3D;blackhole;
-create table t4(id int) engine&#x3D;memory;
-
-# 存数据后的表现
-insert into t1 values(1);
-insert into t2 values(1);
-insert into t3 values(1);	# 存进去后查不到数据：Empty set
-insert into t4 values(1);	# 服务端重启后查不到数据，没重启之前可以（模拟断电）</code></pre></div></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置存储引擎</span></span><br><span class="line">create table t1(<span class="built_in">id</span> <span class="built_in">int</span>) engine=innodb;</span><br><span class="line">create table t2(<span class="built_in">id</span> <span class="built_in">int</span>) engine=myisam;</span><br><span class="line">create table t3(<span class="built_in">id</span> <span class="built_in">int</span>) engine=blackhole;</span><br><span class="line">create table t4(<span class="built_in">id</span> <span class="built_in">int</span>) engine=memory;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 存数据后的表现</span></span><br><span class="line">insert into t1 values(<span class="number">1</span>);</span><br><span class="line">insert into t2 values(<span class="number">1</span>);</span><br><span class="line">insert into t3 values(<span class="number">1</span>);	<span class="comment"># 存进去后查不到数据：Empty set</span></span><br><span class="line">insert into t4 values(<span class="number">1</span>);	<span class="comment"># 服务端重启后查不到数据，没重启之前可以（模拟断电）</span></span><br></pre></td></tr></table></figure>
 
 <h1 id="二、创建表的完整语法"><a href="#二、创建表的完整语法" class="headerlink" title="二、创建表的完整语法"></a>二、创建表的完整语法</h1><h2 id="2-1-创建表的语法"><a href="#2-1-创建表的语法" class="headerlink" title="2.1 创建表的语法"></a>2.1 创建表的语法</h2><p>创建表的基本语法为：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">create table 表名(
-	字段名1 类型(宽度) 约束条件,
-    字段名2 类型(宽度) 约束条件,
-    字段名3 类型(宽度) 约束条件
-);</code></pre></div></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">create table 表名(</span><br><span class="line">	字段名<span class="number">1</span> 类型(宽度) 约束条件,</span><br><span class="line">    字段名<span class="number">2</span> 类型(宽度) 约束条件,</span><br><span class="line">    字段名<span class="number">3</span> 类型(宽度) 约束条件</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 
 <p>案例：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">create table t5(id int, 
-                name char(12), 
-                age int);</code></pre></div></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create table t5(id int, </span><br><span class="line">                name char(12), </span><br><span class="line">                age int);</span><br></pre></td></tr></table></figure>
 
 <h2 id="2-2-创建表的注意事项"><a href="#2-2-创建表的注意事项" class="headerlink" title="2.2 创建表的注意事项"></a>2.2 创建表的注意事项</h2><p>1、在同一张表中字段名不能重复</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">mysql&gt; create table t6(id int, name char(12), id int);
-ERROR 1060 (42S21): Duplicate column name &#39;id&#39;</code></pre></div></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; create table t6(id int, name char(12), id int);</span><br><span class="line">ERROR 1060 (42S21): Duplicate column name &#x27;id&#x27;</span><br></pre></td></tr></table></figure>
 
 <p>2、宽度和约束条件是可选的(可写可不写) 而<code>字段名和字段类型是必须</code>的，约束条件写的话 也支持写多个</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">字段名1 类型(宽度) 约束条件1 约束条件2...,</code></pre></div></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">字段名<span class="number">1</span> 类型(宽度) 约束条件<span class="number">1</span> 约束条件<span class="number">2.</span>..,</span><br></pre></td></tr></table></figure>
 
 <p>少些了会报错，例如：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">mysql&gt; create table t7(id);
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#39;)&#39; at line 1</code></pre></div></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; create table t7(id);</span><br><span class="line">ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#x27;)&#x27; at line 1</span><br></pre></td></tr></table></figure>
 
 <p>3、最后一行不能有逗号，否则会报错：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">mysql&gt; create table t6(id int, 
-                       name char(12), 
-                       age int,);
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#39;)&#39; at line 1</code></pre></div></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; create table t6(id int, </span><br><span class="line">                       name char(12), </span><br><span class="line">                       age int,);</span><br><span class="line">ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#x27;)&#x27; at line 1</span><br></pre></td></tr></table></figure>
 
 <h2 id="2-3-宽度和约束条件"><a href="#2-3-宽度和约束条件" class="headerlink" title="2.3 宽度和约束条件"></a>2.3 宽度和约束条件</h2><h3 id="2-3-1-宽度"><a href="#2-3-1-宽度" class="headerlink" title="2.3.1 宽度"></a>2.3.1 宽度</h3><p>宽度：一般情况下指的是对存储数据的限制</p>
 <p>比如：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql"># 创建表
-create table t7(name char);  默认宽度是1
-
-# 插入数据&#39;jason&#39;
-insert into t7 values(&#39;jason&#39;);
-# 报错
-ERROR 1406 (22001): Data too long for column &#39;name&#39; at row 1
-
-# 插入数据NULL
-insert into t7 values(null);  关键字NULL
-Query OK, 1 row affected (0.00 sec)
-
-# 插入数据&#39;j&#39;
-insert into t7 values(&#39;j&#39;);
-Query OK, 1 row affected (0.00 sec)</code></pre></div></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 创建表</span><br><span class="line">create table t7(name char);  默认宽度是1</span><br><span class="line"></span><br><span class="line"># 插入数据&#x27;jason&#x27;</span><br><span class="line">insert into t7 values(&#x27;jason&#x27;);</span><br><span class="line"># 报错</span><br><span class="line">ERROR 1406 (22001): Data too long for column &#x27;name&#x27; at row 1</span><br><span class="line"></span><br><span class="line"># 插入数据NULL</span><br><span class="line">insert into t7 values(null);  关键字NULL</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line"></span><br><span class="line"># 插入数据&#x27;j&#x27;</span><br><span class="line">insert into t7 values(&#x27;j&#x27;);</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p>关于宽度的限制，跟<code>严格模式</code>有关，</p>
 <p>5.6版本默认没有开启严格模式 规定只能存一个字符你给了多个字符，那么我会自动帮你截取</p>
@@ -390,24 +156,10 @@ Query OK, 1 row affected (0.00 sec)</code></pre></div></figure>
 <p>一旦超出范围立刻报错 Data too long for ….</p>
 <h3 id="2-3-2-约束条件"><a href="#2-3-2-约束条件" class="headerlink" title="2.3.2 约束条件"></a>2.3.2 约束条件</h3><p>约束条件：是指在宽度的基础之上增加的额外的约束</p>
 <p>比如限制是可以插入空值的约束条件</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">null：可以插入NULL
-not null：不能插入NULL</code></pre></div></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">null：可以插入NULL</span><br><span class="line"><span class="keyword">not</span> null：不能插入NULL</span><br></pre></td></tr></table></figure>
 
 <p>案例：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"># 创建表
-create table t6(id int null, name char(10) not null, age int);
-
-# 插入数据01，正常
-mysql&gt; insert into t6 values(1, &#39;大蒜&#39;, 10);
-Query OK, 1 row affected (0.00 sec)
-
-# 插入数据02，正常
-mysql&gt; insert into t6 values(null, &#39;小葱&#39;, 10);
-Query OK, 1 row affected (0.00 sec)
-
-# 插入数据03，报错
-mysql&gt; insert into t6 values(null, NULL, 10);
-ERROR 1048 (23000): Column &#39;name&#39; cannot be null</code></pre></div></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建表</span></span><br><span class="line">create table t6(<span class="built_in">id</span> <span class="built_in">int</span> null, name char(<span class="number">10</span>) <span class="keyword">not</span> null, age <span class="built_in">int</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment"># 插入数据01，正常</span></span><br><span class="line">mysql&gt; insert into t6 values(<span class="number">1</span>, <span class="string">&#x27;大蒜&#x27;</span>, <span class="number">10</span>);</span><br><span class="line">Query OK, <span class="number">1</span> row affected (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 插入数据02，正常</span></span><br><span class="line">mysql&gt; insert into t6 values(null, <span class="string">&#x27;小葱&#x27;</span>, <span class="number">10</span>);</span><br><span class="line">Query OK, <span class="number">1</span> row affected (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 插入数据03，报错</span></span><br><span class="line">mysql&gt; insert into t6 values(null, NULL, <span class="number">10</span>);</span><br><span class="line">ERROR <span class="number">1048</span> (<span class="number">23000</span>): Column <span class="string">&#x27;name&#x27;</span> cannot be null</span><br></pre></td></tr></table></figure>
 
 
 
@@ -450,76 +202,22 @@ ERROR 1048 (23000): Column &#39;name&#39; cannot be null</code></pre></div></fig
 <p>超出会如何？ — 超出限制只存最大可接受值</p>
 <p>来验证这两个问题：</p>
 <p><strong>有符号插入：</strong></p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql"># 创建表
-create table t8(id tinyint, age tinyint);
-
-# 插入数据，过大会报错
-mysql&gt; insert into t8 values(-129, 256);
-ERROR 1264 (22003): Out of range value for column &#39;id&#39; at row 1
-
-# 正常范围可以插入
-mysql&gt; insert into t8 values(-128, 127);
-Query OK, 1 row affected (0.00 sec)</code></pre></div></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 创建表</span><br><span class="line">create table t8(id tinyint, age tinyint);</span><br><span class="line"></span><br><span class="line"># 插入数据，过大会报错</span><br><span class="line">mysql&gt; insert into t8 values(-129, 256);</span><br><span class="line">ERROR 1264 (22003): Out of range value for column &#x27;id&#x27; at row 1</span><br><span class="line"></span><br><span class="line"># 正常范围可以插入</span><br><span class="line">mysql&gt; insert into t8 values(-128, 127);</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p><strong>无符号插入</strong></p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql"># 修改为有符号
-mysql&gt; alter table t8 change age age tinyint unsigned;
-mysql&gt; alter table t8 change id id tinyint unsigned;
-
-# 插入数据，成功
-mysql&gt; insert into t8 values(0, 255);
-Query OK, 1 row affected (0.00 sec)
-
-# 插入数据，失败，超出范围
-mysql&gt; insert into t8 values(-127, 128);
-ERROR 1264 (22003): Out of range value for column &#39;id&#39; at row 1</code></pre></div></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 修改为有符号</span><br><span class="line">mysql&gt; alter table t8 change age age tinyint unsigned;</span><br><span class="line">mysql&gt; alter table t8 change id id tinyint unsigned;</span><br><span class="line"></span><br><span class="line"># 插入数据，成功</span><br><span class="line">mysql&gt; insert into t8 values(0, 255);</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line"></span><br><span class="line"># 插入数据，失败，超出范围</span><br><span class="line">mysql&gt; insert into t8 values(-127, 128);</span><br><span class="line">ERROR 1264 (22003): Out of range value for column &#x27;id&#x27; at row 1</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>☀️补充：</p>
 <p>整型也可以使用括号指定宽度，这个宽度到底是干嘛的？</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">&gt;# 创建表，并指定整型宽度
-&gt;create table t12(id int(8));
-&gt;insert into t12 values(123456789);
-
-&gt;# 即使超过了8位，也能成功
-&gt;mysql&gt; insert into t9 values(123456789);
-&gt;Query OK, 1 row affected (0.00 sec)</code></pre></div></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;# 创建表，并指定整型宽度</span><br><span class="line">&gt;create table t12(id int(8));</span><br><span class="line">&gt;insert into t12 values(123456789);</span><br><span class="line"></span><br><span class="line">&gt;# 即使超过了8位，也能成功</span><br><span class="line">&gt;mysql&gt; insert into t9 values(123456789);</span><br><span class="line">&gt;Query OK, 1 row affected (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p>这是因为：只有整型括号里面的数字不是表示限制位数<br>id int(8)<br>如果数字没有超出8位 那么默认用空格填充至8位<br>如果数字超出了8位 那么有几位就存几位(但是还是要遵守最大范围)</p>
 <p>可以在创建时设置<code>zerofill</code>,用0填充至8位</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">&gt;mysql&gt; create table t10(id int(8) unsigned zerofill);
-&gt;Query OK, 0 rows affected, 2 warnings (0.01 sec)
-
-&gt;mysql&gt; insert into t10 values(1);
-&gt;Query OK, 1 row affected (0.00 sec)
-
-&gt;mysql&gt; select * from t10;
-&gt;+----------+
-&gt;| id       |
-&gt;+----------+
-&gt;| 00000001 |
-&gt;+----------+
-&gt;1 row in set (0.00 sec)</code></pre></div></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt;mysql&gt; create table t10(id int(8) unsigned zerofill);</span><br><span class="line">&gt;Query OK, 0 rows affected, 2 warnings (0.01 sec)</span><br><span class="line"></span><br><span class="line">&gt;mysql&gt; insert into t10 values(1);</span><br><span class="line">&gt;Query OK, 1 row affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">&gt;mysql&gt; select * from t10;</span><br><span class="line">&gt;+----------+</span><br><span class="line">&gt;| id       |</span><br><span class="line">&gt;+----------+</span><br><span class="line">&gt;| 00000001 |</span><br><span class="line">&gt;+----------+</span><br><span class="line">&gt;1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
 </blockquote>
 <p>针对整型字段 括号内无需指定宽度 因为它默认的宽度以及足够显示所有的数据了</p>
-<h2 id="3-2-严格模式"><a href="#3-2-严格模式" class="headerlink" title="3.2 严格模式"></a>3.2 严格模式</h2><figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"># 1、如何查看严格模式
-show variables like &quot;%mode&quot;;
-或者
-select @@sql_mode
-
-模糊匹配&#x2F;查询
-	关键字 like
-		%:匹配任意多个字符
-        _:匹配任意单个字符
-
-# 2、修改严格模式
-	set session  只在当前窗口有效
-    set global   全局有效
-    
-    # 临时关闭严格模式（具体内容依据#1命令得到的结果为准，去除ONLY_FULL_GROUP_BY即可）
-    set global sql_mode &#x3D; &#39;STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION&#39;;
-    
-	修改完之后 重新进入服务端即可</code></pre></div></figure>
+<h2 id="3-2-严格模式"><a href="#3-2-严格模式" class="headerlink" title="3.2 严格模式"></a>3.2 严格模式</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1、如何查看严格模式</span></span><br><span class="line">show variables like <span class="string">&quot;%mode&quot;</span>;</span><br><span class="line">或者</span><br><span class="line">select @@sql_mode</span><br><span class="line"></span><br><span class="line">模糊匹配/查询</span><br><span class="line">	关键字 like</span><br><span class="line">		%:匹配任意多个字符</span><br><span class="line">        _:匹配任意单个字符</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2、修改严格模式</span></span><br><span class="line">	<span class="built_in">set</span> session  只在当前窗口有效</span><br><span class="line">    <span class="built_in">set</span> <span class="keyword">global</span>   全局有效</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 临时关闭严格模式（具体内容依据#1命令得到的结果为准，去除ONLY_FULL_GROUP_BY即可）</span></span><br><span class="line">    <span class="built_in">set</span> <span class="keyword">global</span> sql_mode = <span class="string">&#x27;STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION&#x27;</span>;</span><br><span class="line">    </span><br><span class="line">	修改完之后 重新进入服务端即可</span><br></pre></td></tr></table></figure>
 
 <h2 id="3-3-浮点型"><a href="#3-3-浮点型" class="headerlink" title="3.3 浮点型"></a>3.3 浮点型</h2><ul>
 <li><p>分类</p>
@@ -527,73 +225,13 @@ select @@sql_mode
 </li>
 <li><p>作用</p>
 <p>身高、体重、薪资</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"># 存储限制
-float(255,30)  # 总共255位 小数部分占30位
-double(255,30)  # 总共255位 小数部分占30位
-decimal(65,30)  # 总共65位 小数部分占30位
-
-# 精确度验证
-create table t15(id float(255,30));
-create table t16(id double(255,30));
-create table t17(id decimal(65,30));
-&quot;&quot;&quot;你们在前期不要给我用反向键 所有的命令全部手敲！！！增加熟练度&quot;&quot;&quot;
-
-insert into t15 values(1.111111111111111111111111111111);
-insert into t16 values(1.111111111111111111111111111111);
-insert into t17 values(1.111111111111111111111111111111);
-
-float &lt; double &lt; decimal
-# 要结合实际应用场景 三者都能使用</code></pre></div></figure></li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 存储限制</span></span><br><span class="line"><span class="built_in">float</span>(<span class="number">255</span>,<span class="number">30</span>)  <span class="comment"># 总共255位 小数部分占30位</span></span><br><span class="line">double(<span class="number">255</span>,<span class="number">30</span>)  <span class="comment"># 总共255位 小数部分占30位</span></span><br><span class="line">decimal(<span class="number">65</span>,<span class="number">30</span>)  <span class="comment"># 总共65位 小数部分占30位</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 精确度验证</span></span><br><span class="line">create table t15(<span class="built_in">id</span> <span class="built_in">float</span>(<span class="number">255</span>,<span class="number">30</span>));</span><br><span class="line">create table t16(<span class="built_in">id</span> double(<span class="number">255</span>,<span class="number">30</span>));</span><br><span class="line">create table t17(<span class="built_in">id</span> decimal(<span class="number">65</span>,<span class="number">30</span>));</span><br><span class="line"><span class="string">&quot;&quot;&quot;你们在前期不要给我用反向键 所有的命令全部手敲！！！增加熟练度&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">insert into t15 values(<span class="number">1.111111111111111111111111111111</span>);</span><br><span class="line">insert into t16 values(<span class="number">1.111111111111111111111111111111</span>);</span><br><span class="line">insert into t17 values(<span class="number">1.111111111111111111111111111111</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">float</span> &lt; double &lt; decimal</span><br><span class="line"><span class="comment"># 要结合实际应用场景 三者都能使用</span></span><br></pre></td></tr></table></figure></li>
 </ul>
 <h2 id="3-4-字符类型"><a href="#3-4-字符类型" class="headerlink" title="3.4 字符类型"></a>3.4 字符类型</h2><ul>
 <li><p>分类</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">&quot;&quot;&quot;
-char
-	定长
-	char(4)	 数据超过四个字符直接报错 不够四个字符空格补全
-varchar
-	变长
-	varchar(4)  数据超过四个字符直接报错 不够有几个存几个
-&quot;&quot;&quot;
-create table t18(name char(4));
-create table t19(name varchar(4));
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">char</span></span><br><span class="line"><span class="string">	定长</span></span><br><span class="line"><span class="string">	char(4)	 数据超过四个字符直接报错 不够四个字符空格补全</span></span><br><span class="line"><span class="string">varchar</span></span><br><span class="line"><span class="string">	变长</span></span><br><span class="line"><span class="string">	varchar(4)  数据超过四个字符直接报错 不够有几个存几个</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line">create table t18(name char(<span class="number">4</span>));</span><br><span class="line">create table t19(name varchar(<span class="number">4</span>));</span><br><span class="line"></span><br><span class="line">insert into t18 values(<span class="string">&#x27;a&#x27;</span>);</span><br><span class="line">insert into t19 values(<span class="string">&#x27;a&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment"># 介绍一个小方法 char_length统计字段长度</span></span><br><span class="line">select char_length(name) <span class="keyword">from</span> t18;</span><br><span class="line">select char_length(name) <span class="keyword">from</span> t19;</span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">首先可以肯定的是 char硬盘上存的绝对是真正的数据 带有空格的</span></span><br><span class="line"><span class="string">但是在显示的时候MySQL会自动将多余的空格剔除</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 再次修改sql_mode 让MySQL不要做自动剔除操作</span></span><br><span class="line"><span class="built_in">set</span> <span class="keyword">global</span> sql_mode = <span class="string">&#x27;STRICT_TRANS_TABLES,PAD_CHAR_TO_FULL_LENGTH&#x27;</span>;</span><br></pre></td></tr></table></figure>
 
-insert into t18 values(&#39;a&#39;);
-insert into t19 values(&#39;a&#39;);
-
-# 介绍一个小方法 char_length统计字段长度
-select char_length(name) from t18;
-select char_length(name) from t19;
-&quot;&quot;&quot;
-首先可以肯定的是 char硬盘上存的绝对是真正的数据 带有空格的
-但是在显示的时候MySQL会自动将多余的空格剔除
-&quot;&quot;&quot;
-
-# 再次修改sql_mode 让MySQL不要做自动剔除操作
-set global sql_mode &#x3D; &#39;STRICT_TRANS_TABLES,PAD_CHAR_TO_FULL_LENGTH&#39;;</code></pre></div></figure>
-
-<h4 id="char与varchar对比"><a href="#char与varchar对比" class="headerlink" title="char与varchar对比"></a>char与varchar对比</h4><figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">&quot;&quot;&quot;
-char
-	缺点:浪费空间
-	优点:存取都很简单
-		直接按照固定的字符存取数据即可
-		jason egon alex wusir tank 
-		存按照五个字符存 取也直接按照五个字符取
-		
-varchar
-	优点:节省空间
-	缺点:存取较为麻烦
-		1bytes+jason 1bytes+egon 1bytes+alex 1bytes+tank 
-		
-		存的时候需要制作报头
-		取的时候也需要先读取报头 之后才能读取真实数据
-		
-以前基本上都是用的char 其实现在用varchar的也挺多
-&quot;&quot;&quot;
-
-补充:
-    进来公司之后你完全不需要考虑字段类型和字段名
-    因为产品经理给你发的邮件上已经全部指明了</code></pre></div></figure></li>
+<h4 id="char与varchar对比"><a href="#char与varchar对比" class="headerlink" title="char与varchar对比"></a>char与varchar对比</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">char</span></span><br><span class="line"><span class="string">	缺点:浪费空间</span></span><br><span class="line"><span class="string">	优点:存取都很简单</span></span><br><span class="line"><span class="string">		直接按照固定的字符存取数据即可</span></span><br><span class="line"><span class="string">		jason egon alex wusir tank </span></span><br><span class="line"><span class="string">		存按照五个字符存 取也直接按照五个字符取</span></span><br><span class="line"><span class="string">		</span></span><br><span class="line"><span class="string">varchar</span></span><br><span class="line"><span class="string">	优点:节省空间</span></span><br><span class="line"><span class="string">	缺点:存取较为麻烦</span></span><br><span class="line"><span class="string">		1bytes+jason 1bytes+egon 1bytes+alex 1bytes+tank </span></span><br><span class="line"><span class="string">		</span></span><br><span class="line"><span class="string">		存的时候需要制作报头</span></span><br><span class="line"><span class="string">		取的时候也需要先读取报头 之后才能读取真实数据</span></span><br><span class="line"><span class="string">		</span></span><br><span class="line"><span class="string">以前基本上都是用的char 其实现在用varchar的也挺多</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">补充:</span><br><span class="line">    进来公司之后你完全不需要考虑字段类型和字段名</span><br><span class="line">    因为产品经理给你发的邮件上已经全部指明了</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h2 id="3-5-时间类型"><a href="#3-5-时间类型" class="headerlink" title="3.5 时间类型"></a>3.5 时间类型</h2><ul>
 <li><p>分类</p>
@@ -602,419 +240,165 @@ varchar
 </ul>
 <p>| ——– | ——————————- |<br>  | date     | 年月日：2020-5-4                |<br>| datetime | 年月日时分秒：2020-5-4 11:11:11 |<br>  | time     | 时分秒：11:11:11                |<br>| year     | 年：2020                        |</p>
 <p>案例如下：</p>
-  <figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">create table student(
-	id int,
-    name varchar(16),
-    born_year year,
-    birth date,
-    study_time time,
-    reg_time datetime
-);
-insert into student values(1,&#39;egon&#39;,&#39;1880&#39;,&#39;1880-11-11&#39;,&#39;11:11:11&#39;,&#39;2020-11-11 11:11:11&#39;);</code></pre></div></figure>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">create table student(</span><br><span class="line">	<span class="built_in">id</span> <span class="built_in">int</span>,</span><br><span class="line">    name varchar(<span class="number">16</span>),</span><br><span class="line">    born_year year,</span><br><span class="line">    birth date,</span><br><span class="line">    study_time time,</span><br><span class="line">    reg_time datetime</span><br><span class="line">);</span><br><span class="line">insert into student values(<span class="number">1</span>,<span class="string">&#x27;egon&#x27;</span>,<span class="string">&#x27;1880&#x27;</span>,<span class="string">&#x27;1880-11-11&#x27;</span>,<span class="string">&#x27;11:11:11&#x27;</span>,<span class="string">&#x27;2020-11-11 11:11:11&#x27;</span>);</span><br></pre></td></tr></table></figure>
 
 <h2 id="3-6-枚举与集合类型"><a href="#3-6-枚举与集合类型" class="headerlink" title="3.6 枚举与集合类型"></a>3.6 枚举与集合类型</h2><ul>
 <li><p>分类</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">&quot;&quot;&quot;
-枚举(enum)  多选一
-集合(set)   多选多
-&quot;&quot;&quot;</code></pre></div></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">枚举(enum)  多选一</span></span><br><span class="line"><span class="string">集合(set)   多选多</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>具体使用</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">  # 1、使用枚举
-  create table user(
-  	id int,
-      name char(16),
-      gender enum(&#39;male&#39;,&#39;female&#39;,&#39;others&#39;)
-  );
-  # 插入数据，正常
-  insert into user values(1,&#39;jason&#39;,&#39;male&#39;);  
-  # 插入数据，报错
-  insert into user values(2,&#39;egon&#39;,&#39;xxxxooo&#39;); 
-  # 枚举字段 后期在存数据的时候只能从枚举里面选择一个存储 
-  
-  
-  # 2、使用集合
-  create table teacher(
-  	id int,
-      name char(16),
-      gender enum(&#39;male&#39;,&#39;female&#39;,&#39;others&#39;),
-      hobby set(&#39;read&#39;,&#39;DBJ&#39;,&#39;hecha&#39;)
-  );
-  insert into teacher values(1,&#39;jason&#39;,&#39;male&#39;,&#39;read&#39;);  # 正常
-insert into teacher values(2,&#39;egon&#39;,&#39;female&#39;,&#39;DBJ,hecha&#39;);  # 正常
-  insert into teacher values(3,&#39;tank&#39;,&#39;others&#39;,&#39;生蚝&#39;); # 报错</code></pre></div></figure></li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">  <span class="comment"># 1、使用枚举</span></span><br><span class="line">  create table user(</span><br><span class="line">  	<span class="built_in">id</span> <span class="built_in">int</span>,</span><br><span class="line">      name char(<span class="number">16</span>),</span><br><span class="line">      gender enum(<span class="string">&#x27;male&#x27;</span>,<span class="string">&#x27;female&#x27;</span>,<span class="string">&#x27;others&#x27;</span>)</span><br><span class="line">  );</span><br><span class="line">  <span class="comment"># 插入数据，正常</span></span><br><span class="line">  insert into user values(<span class="number">1</span>,<span class="string">&#x27;jason&#x27;</span>,<span class="string">&#x27;male&#x27;</span>);  </span><br><span class="line">  <span class="comment"># 插入数据，报错</span></span><br><span class="line">  insert into user values(<span class="number">2</span>,<span class="string">&#x27;egon&#x27;</span>,<span class="string">&#x27;xxxxooo&#x27;</span>); </span><br><span class="line">  <span class="comment"># 枚举字段 后期在存数据的时候只能从枚举里面选择一个存储 </span></span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  <span class="comment"># 2、使用集合</span></span><br><span class="line">  create table teacher(</span><br><span class="line">  	<span class="built_in">id</span> <span class="built_in">int</span>,</span><br><span class="line">      name char(<span class="number">16</span>),</span><br><span class="line">      gender enum(<span class="string">&#x27;male&#x27;</span>,<span class="string">&#x27;female&#x27;</span>,<span class="string">&#x27;others&#x27;</span>),</span><br><span class="line">      hobby <span class="built_in">set</span>(<span class="string">&#x27;read&#x27;</span>,<span class="string">&#x27;DBJ&#x27;</span>,<span class="string">&#x27;hecha&#x27;</span>)</span><br><span class="line">  );</span><br><span class="line">  insert into teacher values(<span class="number">1</span>,<span class="string">&#x27;jason&#x27;</span>,<span class="string">&#x27;male&#x27;</span>,<span class="string">&#x27;read&#x27;</span>);  <span class="comment"># 正常</span></span><br><span class="line">insert into teacher values(<span class="number">2</span>,<span class="string">&#x27;egon&#x27;</span>,<span class="string">&#x27;female&#x27;</span>,<span class="string">&#x27;DBJ,hecha&#x27;</span>);  <span class="comment"># 正常</span></span><br><span class="line">  insert into teacher values(<span class="number">3</span>,<span class="string">&#x27;tank&#x27;</span>,<span class="string">&#x27;others&#x27;</span>,<span class="string">&#x27;生蚝&#x27;</span>); <span class="comment"># 报错</span></span><br></pre></td></tr></table></figure></li>
 </ul>
-<h1 id="集合可以只写一个-但是不能写没有列举的"><a href="#集合可以只写一个-但是不能写没有列举的" class="headerlink" title="集合可以只写一个  但是不能写没有列举的"></a>集合可以只写一个  但是不能写没有列举的</h1>  <figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">  
-
-
-
-
-
-
-
-
-
-
-
-</code></pre></div></figure>
-                
-              </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
+<h1 id="集合可以只写一个-但是不能写没有列举的"><a href="#集合可以只写一个-但是不能写没有列举的" class="headerlink" title="集合可以只写一个  但是不能写没有列举的"></a>集合可以只写一个  但是不能写没有列举的</h1>  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
       
-
-<span class="category-chains">
-  
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://gblog.github.io/2022/07/18/03_Python/03_MySQL/day45-%E6%95%B0%E6%8D%AE%E5%BA%93(%E4%BA%8C)/" data-id="cmrendtc700h6dsie5l6bbecf" data-title="Day45-数据库（二）" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
   
     
-      <span class="category-chain">
+<nav id="article-nav">
+  
+    <a href="/2022/07/18/03_Python/08-%E9%99%84%E5%BD%95%E8%A1%A5%E5%85%85/50_%E9%99%84%E5%BD%95%E4%BA%94%EF%BC%9A%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E4%B9%8Btimeit/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
         
-  <a href="/categories/Python/" class="category-chain-item">Python</a>
+          50-附录五：性能测试之timeit
+        
+      </div>
+    </a>
   
   
-    <span>></span>
+    <a href="/2022/07/18/03_Python/08-%E9%99%84%E5%BD%95%E8%A1%A5%E5%85%85/49_%E9%99%84%E5%BD%95%E5%9B%9B%EF%BC%9APython%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%844%E4%B8%AD%E6%96%B9%E5%BC%8F/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">49-附录四：Python格式化字符串的4种方式</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
     
-  <a href="/categories/Python/03-MySQL/" class="category-chain-item">03_MySQL</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C/01-C%E8%AF%AD%E8%A8%80/">01_C语言</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/01-Python%E5%85%A5%E9%97%A8/">01_Python入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/02-Python%E8%BF%9B%E9%98%B6/">02_Python进阶</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/03-MySQL/">03_MySQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/04-HTML/">04_HTML</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/05-CSS/">05_CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/06-JavaScript/">06_JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/07-JQuery/">07_JQuery</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/08-BootStrap/">08_BootStrap</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/09-Django/">09_Django</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/12-%E9%99%84%E5%BD%95%E8%A1%A5%E5%85%85/">12_附录补充</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E7%A5%9EK8S/">学神K8S</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E7%A5%9EK8S/%EF%BC%88%E4%B8%80%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E5%85%A5%E9%97%A8/">（一）Docker容器入门</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9D%82%E8%AE%B0/">杂记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8B%E8%AF%95/%E4%BF%A1%E5%88%9BPOC%E6%B5%8B%E8%AF%95/">信创POC测试</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/1%E3%80%81%E7%BD%91%E5%B7%A5%E5%85%A5%E9%97%A8/">1、网工入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/2%E3%80%81HCIA%E8%AF%BE%E7%A8%8B/">2、HCIA课程</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/">超哥K8S</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/%EF%BC%88%E4%B8%80%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E5%85%A5%E9%97%A8/">（一）Docker容器入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/%EF%BC%88%E4%BA%8C%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E8%BF%9B%E9%98%B6/">（二）Docker容器进阶</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/">（一）基础命令</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%89%EF%BC%89Docker/">（三）Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/">（二）综合架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%94%EF%BC%89K8S/">（五）K8S</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E5%85%AD%EF%BC%89%E6%99%BA%E7%AE%97%E4%B8%AD%E5%BF%83/">（六）智算中心</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E5%9B%9B%EF%BC%89%E8%99%9A%E6%8B%9F%E5%8C%96%E4%B9%8BOpenStack/">（四）虚拟化之OpenStack</a></li></ul></li></ul>
     </div>
-  
-  
-</div>
-
-
-              
-  
-
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>Day45-数据库（二）</div>
-      <div>https://gblog.github.io/2022/07/18/03_Python/03_MySQL/day45-数据库(二)/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>作者</div>
-          <div>Haris</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>发布于</div>
-          <div>2022年7月18日</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>许可协议</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
-          </div>
-        </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
   </div>
 
 
-
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2022/07/18/03_Python/08-%E9%99%84%E5%BD%95%E8%A1%A5%E5%85%85/51_%E9%99%84%E5%BD%95%E5%85%AD%EF%BC%9A%E8%BD%BB%E6%9D%BE%E6%90%9E%E5%AE%9A%E4%BD%8D%E8%BF%90%E7%AE%97/" title="51-附录六：轻松搞定位运算">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">51-附录六：轻松搞定位运算</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2022/07/18/03_Python/08-%E9%99%84%E5%BD%95%E8%A1%A5%E5%85%85/50_%E9%99%84%E5%BD%95%E4%BA%94%EF%BC%9A%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E4%B9%8Btimeit/" title="50-附录五：性能测试之timeit">
-                        <span class="hidden-mobile">50-附录五：性能测试之timeit</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-
-            
-          </article>
-        </div>
-      </div>
-    </div>
-
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E4%BD%9C/" rel="tag">工作</a></li></ul>
     </div>
   </div>
-</div>
-
-
-
 
 
   
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-
-
-
-
     
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E5%B7%A5%E4%BD%9C/" style="font-size: 10px;">工作</a>
     </div>
   </div>
-</div>
 
-    
-
-    
-  </main>
-
-  <footer>
-    <div class="footer-inner">
   
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/07/">七月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/05/">五月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/04/">四月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">三月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/02/">二月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">一月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">十一月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">十月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">九月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">八月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">七月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">六月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">五月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">四月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">三月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">一月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a></li></ul>
     </div>
+  </div>
+
+
   
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/07/10/06_%E6%9D%82%E8%AE%B0/%E7%BA%A2%E5%B8%BD%E7%B3%BB%E5%AE%89%E8%A3%85%E7%B3%BB%E7%BB%9F%E6%A0%BC%E5%BC%8F%E5%8C%96/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2025/05/14/06_%E6%9D%82%E8%AE%B0/%E5%8D%8E%E4%B8%BAUSG6615F%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AESSL%20VPN/">华为USG6615F防火墙配置SSLVPN</a>
+          </li>
+        
+          <li>
+            <a href="/2025/05/06/10_%E5%AD%A6%E7%A5%9EK8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%9F%BA%E7%A1%80/">01-Docker基础</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/30/06_%E6%9D%82%E8%AE%B0/vllm%E9%83%A8%E7%BD%B2Qwen3%E5%A4%A7%E6%A8%A1%E5%9E%8B/">VLLM部署Qwen3大模型</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/21/06_%E6%9D%82%E8%AE%B0/%E5%8D%8E%E4%B8%BA%E4%BA%A4%E6%8D%A2%E6%9C%BA%E9%85%8D%E7%BD%AEmux-vlan/">华为交换机配置mux-vlan</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
   
+</aside>
+        
+      </div>
+      <footer id="footer">
   
-</div>
-
-  </footer>
-
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
+  <div class="outer">
+    <div id="footer-info" class="inner">
       
-        typing(text);
-      
-    })(window, document);
-  </script>
+      &copy; 2026 Haris<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
 
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
 
 
 
   
-    <script  src="/js/img-lazyload.js" ></script>
-  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
 
 
 
 
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
-    }
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
-</script>
-
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
-
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
-
-  <script>Fluid.plugins.codeWidget();</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
-    };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
-        }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
-      }
-    });
-  });
-</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
-  });
-</script>
-
-
-  <script>Fluid.plugins.imageCaption();</script>
-
-  <script  src="/js/local-search.js" ></script>
+<script src="/js/script.js"></script>
 
 
 
 
 
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
-
-
-  
-
-  <noscript>
-    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
-  </noscript>
+  </div>
 </body>
 </html>

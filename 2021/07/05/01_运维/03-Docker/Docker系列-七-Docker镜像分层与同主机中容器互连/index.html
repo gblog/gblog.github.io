@@ -1,317 +1,119 @@
-
-
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
-
-
-
+<html>
 <head>
-  <meta charset="UTF-8">
-
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <meta charset="utf-8">
   
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="Haris">
-  <meta name="keywords" content="">
-  
-    <meta name="description" content="一、Docker镜像分层 镜像分层的好处： ​	复用、节省磁盘空间，相同的内容只需加载一份到内存 ​	修改dockerfile后，重新构建时可以用缓存，速度快  1 查看docker镜像分层通过导入镜像可以查看到镜像分层 docker load -i [镜像文件]  通过查看镜像历史可以查看到分层 [root@docker01 ~]# docker image history centos6.9_">
+  <title>Docker系列(七)-Docker镜像分层与同主机中容器互连 | Haris的小站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="一、Docker镜像分层 镜像分层的好处： ​	复用、节省磁盘空间，相同的内容只需加载一份到内存 ​	修改dockerfile后，重新构建时可以用缓存，速度快  1 查看docker镜像分层通过导入镜像可以查看到镜像分层 1docker load -i [镜像文件]  通过查看镜像历史可以查看到分层 12345678910[root@docker01 ~]# docker image histor">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker系列(七)-Docker镜像分层与同主机中容器互连">
 <meta property="og:url" content="https://gblog.github.io/2021/07/05/01_%E8%BF%90%E7%BB%B4/03-Docker/Docker%E7%B3%BB%E5%88%97-%E4%B8%83-Docker%E9%95%9C%E5%83%8F%E5%88%86%E5%B1%82%E4%B8%8E%E5%90%8C%E4%B8%BB%E6%9C%BA%E4%B8%AD%E5%AE%B9%E5%99%A8%E4%BA%92%E8%BF%9E/index.html">
 <meta property="og:site_name" content="Haris的小站">
-<meta property="og:description" content="一、Docker镜像分层 镜像分层的好处： ​	复用、节省磁盘空间，相同的内容只需加载一份到内存 ​	修改dockerfile后，重新构建时可以用缓存，速度快  1 查看docker镜像分层通过导入镜像可以查看到镜像分层 docker load -i [镜像文件]  通过查看镜像历史可以查看到分层 [root@docker01 ~]# docker image history centos6.9_">
+<meta property="og:description" content="一、Docker镜像分层 镜像分层的好处： ​	复用、节省磁盘空间，相同的内容只需加载一份到内存 ​	修改dockerfile后，重新构建时可以用缓存，速度快  1 查看docker镜像分层通过导入镜像可以查看到镜像分层 1docker load -i [镜像文件]  通过查看镜像历史可以查看到分层 12345678910[root@docker01 ~]# docker image histor">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-07-05T07:28:40.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.145Z">
 <meta property="article:author" content="Haris">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Haris的小站" type="application/atom+xml">
   
   
+    <link rel="shortcut icon" href="/favicon.png">
   
-  <title>Docker系列(七)-Docker镜像分层与同主机中容器互连 - Haris的小站</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
   
-
-
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"gblog.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
   
+<link rel="stylesheet" href="/css/style.css">
 
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
+  
   
 <meta name="generator" content="Hexo 7.3.0"></head>
 
-
 <body>
-  
-
-  <header>
-    
-
-<div class="header-inner" style="height: 70vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>Haris的博客</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>首页</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>归档</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>分类</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
-          </li>
-        
-      </ul>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Haris的小站</a>
+      </h1>
+      
     </div>
-  </div>
-</nav>
-
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="Docker系列(七)-Docker镜像分层与同主机中容器互连"></span>
-          
-        </div>
-
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
         
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2021-07-05 15:28" pubdate>
-          2021年7月5日 下午
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
+          <a class="main-nav-link" href="/">Home</a>
         
-          920 字
+          <a class="main-nav-link" href="/archives">Archives</a>
         
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
+      </nav>
+      <nav id="sub-nav">
         
         
+          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
         
-          8 分钟
-        
-      </span>
-    
-
-    
-    
-  </div>
-
-
-        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://gblog.github.io"></form>
       </div>
-
-      
     </div>
   </div>
-</div>
+</header>
 
-</div>
-
-  </header>
-
-  <main>
+      <div class="outer">
+        <section id="main"><article id="post-01_运维/03-Docker/Docker系列-七-Docker镜像分层与同主机中容器互连" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/07/05/01_%E8%BF%90%E7%BB%B4/03-Docker/Docker%E7%B3%BB%E5%88%97-%E4%B8%83-Docker%E9%95%9C%E5%83%8F%E5%88%86%E5%B1%82%E4%B8%8E%E5%90%8C%E4%B8%BB%E6%9C%BA%E4%B8%AD%E5%AE%B9%E5%99%A8%E4%BA%92%E8%BF%9E/" class="article-date">
+  <time class="dt-published" datetime="2021-07-05T07:28:40.000Z" itemprop="datePublished">2021-07-05</time>
+</a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a>►<a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%89%EF%BC%89Docker/">（三）Docker</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Docker系列(七)-Docker镜像分层与同主机中容器互连
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
       
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
-
-    </div>
-
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">Docker系列(七)-Docker镜像分层与同主机中容器互连</h1>
-            
-            
-              <div class="markdown-body">
-                
-                <h2 id="一、Docker镜像分层"><a href="#一、Docker镜像分层" class="headerlink" title="一、Docker镜像分层"></a>一、Docker镜像分层</h2><blockquote>
+        <h2 id="一、Docker镜像分层"><a href="#一、Docker镜像分层" class="headerlink" title="一、Docker镜像分层"></a>一、Docker镜像分层</h2><blockquote>
 <p>镜像分层的好处：</p>
 <p>​	复用、节省磁盘空间，相同的内容只需加载一份到内存</p>
 <p>​	修改dockerfile后，重新构建时可以用缓存，速度快</p>
 </blockquote>
 <h3 id="1-查看docker镜像分层"><a href="#1-查看docker镜像分层" class="headerlink" title="1 查看docker镜像分层"></a>1 查看docker镜像分层</h3><p>通过导入镜像可以查看到镜像分层</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker load -i [镜像文件]</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker load -i [镜像文件]</span><br></pre></td></tr></table></figure>
 
 <p>通过查看镜像历史可以查看到分层</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@docker01 ~]# docker image history centos6.9_ssh:v2
-IMAGE          CREATED       CREATED BY                                      SIZE      COMMENT
-57761235f898   2 days ago    &#x2F;bin&#x2F;sh -c #(nop)  CMD [&quot;&#x2F;usr&#x2F;sbin&#x2F;sshd&quot; &quot;-D…   0B
-c0a2c21457c4   2 days ago    &#x2F;bin&#x2F;sh -c echo &#39;123456&#39; | passwd --stdin ro…   537B
-29d10ff8b8e0   2 days ago    &#x2F;bin&#x2F;sh -c service sshd restart                 4.91kB
-666b9ddfff15   2 days ago    &#x2F;bin&#x2F;sh -c yum install openssh-server -y        154MB
-5b00553af9fc   2 days ago    &#x2F;bin&#x2F;sh -c #(nop) ADD file:65a30e1b327fec80b…   1.18kB
-2199b8eb8390   2 years ago   &#x2F;bin&#x2F;sh -c #(nop)  CMD [&quot;&#x2F;bin&#x2F;bash&quot;]            0B
-&lt;missing&gt;      2 years ago   &#x2F;bin&#x2F;sh -c #(nop)  LABEL name&#x3D;CentOS Base Im…   0B
-&lt;missing&gt;      2 years ago   &#x2F;bin&#x2F;sh -c #(nop) ADD file:0e6d175401c5b4260…   195MB</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@docker01 ~]# docker image history centos6.9_ssh:v2</span><br><span class="line">IMAGE          CREATED       CREATED BY                                      SIZE      COMMENT</span><br><span class="line">57761235f898   2 days ago    /bin/sh -c #(nop)  CMD [&quot;/usr/sbin/sshd&quot; &quot;-D…   0B</span><br><span class="line">c0a2c21457c4   2 days ago    /bin/sh -c echo &#x27;123456&#x27; | passwd --stdin ro…   537B</span><br><span class="line">29d10ff8b8e0   2 days ago    /bin/sh -c service sshd restart                 4.91kB</span><br><span class="line">666b9ddfff15   2 days ago    /bin/sh -c yum install openssh-server -y        154MB</span><br><span class="line">5b00553af9fc   2 days ago    /bin/sh -c #(nop) ADD file:65a30e1b327fec80b…   1.18kB</span><br><span class="line">2199b8eb8390   2 years ago   /bin/sh -c #(nop)  CMD [&quot;/bin/bash&quot;]            0B</span><br><span class="line">&lt;missing&gt;      2 years ago   /bin/sh -c #(nop)  LABEL name=CentOS Base Im…   0B</span><br><span class="line">&lt;missing&gt;      2 years ago   /bin/sh -c #(nop) ADD file:0e6d175401c5b4260…   195MB</span><br></pre></td></tr></table></figure>
 
 <p>所有的这些层都会在<code>Docker</code>主机本地存储区域内存储，可以通过以下指令来列出：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ls &#x2F;var&#x2F;lib&#x2F;docker&#x2F;overlay2&#x2F;</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /var/lib/docker/overlay2/</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-通过Dockerfile优化分层信息"><a href="#2-通过Dockerfile优化分层信息" class="headerlink" title="2  通过Dockerfile优化分层信息"></a>2  通过Dockerfile优化分层信息</h3><ul>
 <li>尽量合并RUN和ADD来减少镜像分层数</li>
@@ -322,66 +124,34 @@ c0a2c21457c4   2 days ago    &#x2F;bin&#x2F;sh -c echo &#39;123456&#39; | passwd
 </blockquote>
 <h3 id="1-功能介绍"><a href="#1-功能介绍" class="headerlink" title="1 功能介绍"></a>1 功能介绍</h3><p>docker run –link可以用来链接2个容器，使得源容器（被链接的容器）和接受容器（主动去链接的容器）之间可以互相通信，并且接收容器可以获取源容器的一些数据，如源容器的环境变量。使用案例如下：</p>
 <p>源容器启动：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker run -d --name src_docker nginx 
-容器ID:xxxx01, IP:172.16.0.2</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name src_docker nginx </span><br><span class="line">容器ID:xxxx01, IP:172.16.0.2</span><br></pre></td></tr></table></figure>
 
 <p>接受容器连接：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker run -d --name dest_docker --link src_docker:web centos7.9:v2
-容器ID:xxxx02, IP:172.16.0.3</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name dest_docker --link src_docker:web centos7.9:v2</span><br><span class="line">容器ID:xxxx02, IP:172.16.0.3</span><br></pre></td></tr></table></figure>
 
 <p>进入接受容器测试，不需要ping IP，直接ping别名就可以，web和src_docker都指向172.16.0.2<font color=red>（单向）</font></p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker exec -it xxxx01 &#x2F;bin&#x2F;bash
-ping web
-ping src_docker</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it xxxx01 /bin/bash</span><br><span class="line">ping web</span><br><span class="line">ping src_docker</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>接受容器的&#x2F;etc&#x2F;hosts将更新</p>
 </blockquote>
 <h3 id="2-案例：构建zabbix-server"><a href="#2-案例：构建zabbix-server" class="headerlink" title="2 案例：构建zabbix-server"></a>2 案例：构建zabbix-server</h3><p>启动一个mysql的容器</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker run --name mysql-server -t \
-      -e MYSQL_DATABASE&#x3D;&quot;zabbix&quot; \
-      -e MYSQL_USER&#x3D;&quot;zabbix&quot; \
-      -e MYSQL_PASSWORD&#x3D;&quot;zabbix_pwd&quot; \
-      -e MYSQL_ROOT_PASSWORD&#x3D;&quot;root_pwd&quot; \
-      -d mysql:5.7 \
-      --character-set-server&#x3D;utf8 --collation-server&#x3D;utf8_bin </code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker run --name mysql-server -t \</span><br><span class="line">      -e MYSQL_DATABASE=&quot;zabbix&quot; \</span><br><span class="line">      -e MYSQL_USER=&quot;zabbix&quot; \</span><br><span class="line">      -e MYSQL_PASSWORD=&quot;zabbix_pwd&quot; \</span><br><span class="line">      -e MYSQL_ROOT_PASSWORD=&quot;root_pwd&quot; \</span><br><span class="line">      -d mysql:5.7 \</span><br><span class="line">      --character-set-server=utf8 --collation-server=utf8_bin </span><br></pre></td></tr></table></figure>
 
 <p>启动java-gateway容器监控java服务</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker run --name zabbix-java-gateway -t \
-      -d zabbix&#x2F;zabbix-java-gateway:latest</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run --name zabbix-java-gateway -t \</span><br><span class="line">      -d zabbix/zabbix-java-gateway:latest</span><br></pre></td></tr></table></figure>
 
 <p>启动zabbix-mysql容器使用link连接mysql与java-gateway</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker run --name zabbix-server-mysql -t \
-      -e DB_SERVER_HOST&#x3D;&quot;mysql-server&quot; \
-      -e MYSQL_DATABASE&#x3D;&quot;zabbix&quot; \
-      -e MYSQL_USER&#x3D;&quot;zabbix&quot; \
-      -e MYSQL_PASSWORD&#x3D;&quot;zabbix_pwd&quot; \
-      -e MYSQL_ROOT_PASSWORD&#x3D;&quot;root_pwd&quot; \
-      -e ZBX_JAVAGATEWAY&#x3D;&quot;zabbix-java-gateway&quot; \
-      --link mysql-server:mysql \
-      --link zabbix-java-gateway:zabbix-java-gateway \
-      -p 10051:10051 \
-      -d zabbix&#x2F;zabbix-server-mysql:latest</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">docker run --name zabbix-server-mysql -t \</span><br><span class="line">      -e DB_SERVER_HOST=&quot;mysql-server&quot; \</span><br><span class="line">      -e MYSQL_DATABASE=&quot;zabbix&quot; \</span><br><span class="line">      -e MYSQL_USER=&quot;zabbix&quot; \</span><br><span class="line">      -e MYSQL_PASSWORD=&quot;zabbix_pwd&quot; \</span><br><span class="line">      -e MYSQL_ROOT_PASSWORD=&quot;root_pwd&quot; \</span><br><span class="line">      -e ZBX_JAVAGATEWAY=&quot;zabbix-java-gateway&quot; \</span><br><span class="line">      --link mysql-server:mysql \</span><br><span class="line">      --link zabbix-java-gateway:zabbix-java-gateway \</span><br><span class="line">      -p 10051:10051 \</span><br><span class="line">      -d zabbix/zabbix-server-mysql:latest</span><br></pre></td></tr></table></figure>
 
 <p>启动zabbix web显示，使用link连接zabbix-mysql与mysql</p>
 <blockquote>
 <p>zabbix的默认端口已有80改为8080，可见配置文件&#x2F;etc&#x2F;zabbix&#x2F;nginx.conf</p>
 </blockquote>
-<figure><div class="code-wrapper"><pre class="line-numbers language-she" data-language="she"><code class="language-she">docker run --name zabbix-web-nginx-mysql -t \
-      -e DB_SERVER_HOST&#x3D;&quot;mysql-server&quot; \
-      -e MYSQL_DATABASE&#x3D;&quot;zabbix&quot; \
-      -e MYSQL_USER&#x3D;&quot;zabbix&quot; \
-      -e MYSQL_PASSWORD&#x3D;&quot;zabbix_pwd&quot; \
-      -e MYSQL_ROOT_PASSWORD&#x3D;&quot;root_pwd&quot; \
-      --link mysql-server:mysql \
-      --link zabbix-server-mysql:zabbix-server \
-      -p 8082:8080 \     
-      -d zabbix&#x2F;zabbix-web-nginx-mysql:latest</code></pre></div></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">docker run --name zabbix-web-nginx-mysql -t \</span><br><span class="line">      -e DB_SERVER_HOST=&quot;mysql-server&quot; \</span><br><span class="line">      -e MYSQL_DATABASE=&quot;zabbix&quot; \</span><br><span class="line">      -e MYSQL_USER=&quot;zabbix&quot; \</span><br><span class="line">      -e MYSQL_PASSWORD=&quot;zabbix_pwd&quot; \</span><br><span class="line">      -e MYSQL_ROOT_PASSWORD=&quot;root_pwd&quot; \</span><br><span class="line">      --link mysql-server:mysql \</span><br><span class="line">      --link zabbix-server-mysql:zabbix-server \</span><br><span class="line">      -p 8082:8080 \     </span><br><span class="line">      -d zabbix/zabbix-web-nginx-mysql:latest</span><br></pre></td></tr></table></figure>
 
 <p>登录Zabbix</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-she" data-language="she"><code class="language-she">浏览器访问：10.0.0.11:8082
-Admin
-zabbix</code></pre></div></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">浏览器访问：10.0.0.11:8082</span><br><span class="line">Admin</span><br><span class="line">zabbix</span><br></pre></td></tr></table></figure>
 
 <p>添加被监控节点-安装zabbix-agent</p>
 <blockquote>
@@ -390,16 +160,13 @@ zabbix</code></pre></div></figure>
 <p>web页面查看zabbix版本</p>
 <p><a target="_blank" rel="noopener" href="https://www.zabbix.com/download">https://www.zabbix.com/download</a> 获取对应agent的安装方法</p>
 </blockquote>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rpm -Uvh https:&#x2F;&#x2F;repo.zabbix.com&#x2F;zabbix&#x2F;5.4&#x2F;rhel&#x2F;7&#x2F;x86_64&#x2F;zabbix-release-5.4-1.el7.noarch.rpm
-yum clean all
-yum install zabbix-agent</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rpm -Uvh https://repo.zabbix.com/zabbix/5.4/rhel/7/x86_64/zabbix-release-5.4-1.el7.noarch.rpm</span><br><span class="line">yum clean all</span><br><span class="line">yum install zabbix-agent</span><br></pre></td></tr></table></figure>
 
 <p>添加被监控节点-agent配置文件修改</p>
 <blockquote>
 <p>117行：Server&#x3D;10.0.0.11, 注意防火墙和selinux的阻挡</p>
 </blockquote>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">vim &#x2F;etc&#x2F;zabbix&#x2F;zabbix_agentd.conf
-systemctl restart zabbix-agent</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/zabbix/zabbix_agentd.conf</span><br><span class="line">systemctl restart zabbix-agent</span><br></pre></td></tr></table></figure>
 
 <h2 id="三、docker重启后容器不退出"><a href="#三、docker重启后容器不退出" class="headerlink" title="三、docker重启后容器不退出"></a>三、docker重启后容器不退出</h2><blockquote>
 <p>默认情况下，systemctl restart docker之后，容器将处于Exited状态</p>
@@ -407,14 +174,12 @@ systemctl restart zabbix-agent</code></pre></div></figure>
 <h3 id="1-添加容器启动参数"><a href="#1-添加容器启动参数" class="headerlink" title="1 添加容器启动参数"></a>1 添加容器启动参数</h3><blockquote>
 <p>docker重启后，容器先停止，再立即重新启动</p>
 </blockquote>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker run --restart&#x3D;always</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --restart=always</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-daemon配置文件修改（不推荐）"><a href="#2-daemon配置文件修改（不推荐）" class="headerlink" title="2 daemon配置文件修改（不推荐）"></a>2 daemon配置文件修改（不推荐）</h3><blockquote>
 <p>docker重启后，容器不会停止，一直在运行，不推荐使用，不好控制</p>
 </blockquote>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">vim &#x2F;etc&#x2F;docker&#x2F;daemon.json
-# 添加一行，上行后面加逗号
-&quot;live-restore&quot;:true</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/docker/daemon.json</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">添加一行，上行后面加逗号</span></span><br><span class="line">&quot;live-restore&quot;:true</span><br></pre></td></tr></table></figure>
 
 
 
@@ -422,364 +187,155 @@ systemctl restart zabbix-agent</code></pre></div></figure>
 
 <p>​	</p>
 
-                
-              </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
       
-
-<span class="category-chains">
-  
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://gblog.github.io/2021/07/05/01_%E8%BF%90%E7%BB%B4/03-Docker/Docker%E7%B3%BB%E5%88%97-%E4%B8%83-Docker%E9%95%9C%E5%83%8F%E5%88%86%E5%B1%82%E4%B8%8E%E5%90%8C%E4%B8%BB%E6%9C%BA%E4%B8%AD%E5%AE%B9%E5%99%A8%E4%BA%92%E8%BF%9E/" data-id="cmrendt990046dsie0kmndpa9" data-title="Docker系列(七)-Docker镜像分层与同主机中容器互连" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
   
     
-      <span class="category-chain">
+<nav id="article-nav">
+  
+    <a href="/2021/07/06/01_%E8%BF%90%E7%BB%B4/03-Docker/Docker%E7%B3%BB%E5%88%97-%E5%85%AB-Docker%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
         
-  <a href="/categories/%E8%BF%90%E7%BB%B4/" class="category-chain-item">运维</a>
+          Docker系列(八)-Docker私有仓库
+        
+      </div>
+    </a>
   
   
-    <span>></span>
+    <a href="/2021/06/30/01_%E8%BF%90%E7%BB%B4/03-Docker/Docker%E7%B3%BB%E5%88%97-%E5%85%AD-Dockfile%E7%9A%84%E4%BD%BF%E7%94%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">Docker系列(六)-Dockfile的使用</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
     
-  <a href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%89%EF%BC%89Docker/" class="category-chain-item">（三）Docker</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C/01-C%E8%AF%AD%E8%A8%80/">01_C语言</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/01-Python%E5%85%A5%E9%97%A8/">01_Python入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/02-Python%E8%BF%9B%E9%98%B6/">02_Python进阶</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/03-MySQL/">03_MySQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/04-HTML/">04_HTML</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/05-CSS/">05_CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/06-JavaScript/">06_JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/07-JQuery/">07_JQuery</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/08-BootStrap/">08_BootStrap</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/09-Django/">09_Django</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/12-%E9%99%84%E5%BD%95%E8%A1%A5%E5%85%85/">12_附录补充</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E7%A5%9EK8S/">学神K8S</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E7%A5%9EK8S/%EF%BC%88%E4%B8%80%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E5%85%A5%E9%97%A8/">（一）Docker容器入门</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9D%82%E8%AE%B0/">杂记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8B%E8%AF%95/%E4%BF%A1%E5%88%9BPOC%E6%B5%8B%E8%AF%95/">信创POC测试</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/1%E3%80%81%E7%BD%91%E5%B7%A5%E5%85%A5%E9%97%A8/">1、网工入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/2%E3%80%81HCIA%E8%AF%BE%E7%A8%8B/">2、HCIA课程</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/">超哥K8S</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/%EF%BC%88%E4%B8%80%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E5%85%A5%E9%97%A8/">（一）Docker容器入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/%EF%BC%88%E4%BA%8C%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E8%BF%9B%E9%98%B6/">（二）Docker容器进阶</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/">（一）基础命令</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%89%EF%BC%89Docker/">（三）Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/">（二）综合架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%94%EF%BC%89K8S/">（五）K8S</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E5%85%AD%EF%BC%89%E6%99%BA%E7%AE%97%E4%B8%AD%E5%BF%83/">（六）智算中心</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E5%9B%9B%EF%BC%89%E8%99%9A%E6%8B%9F%E5%8C%96%E4%B9%8BOpenStack/">（四）虚拟化之OpenStack</a></li></ul></li></ul>
     </div>
-  
-  
-</div>
-
-
-              
-  
-
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>Docker系列(七)-Docker镜像分层与同主机中容器互连</div>
-      <div>https://gblog.github.io/2021/07/05/01_运维/03-Docker/Docker系列-七-Docker镜像分层与同主机中容器互连/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>作者</div>
-          <div>Haris</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>发布于</div>
-          <div>2021年7月5日</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>许可协议</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
-          </div>
-        </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
   </div>
 
 
-
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2021/07/06/01_%E8%BF%90%E7%BB%B4/03-Docker/Docker%E7%B3%BB%E5%88%97-%E5%85%AB-Docker%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/" title="Docker系列(八)-Docker私有仓库">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Docker系列(八)-Docker私有仓库</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2021/06/30/01_%E8%BF%90%E7%BB%B4/03-Docker/Docker%E7%B3%BB%E5%88%97-%E5%85%AD-Dockfile%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Docker系列(六)-Dockfile的使用">
-                        <span class="hidden-mobile">Docker系列(六)-Dockfile的使用</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-
-            
-          </article>
-        </div>
-      </div>
-    </div>
-
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E4%BD%9C/" rel="tag">工作</a></li></ul>
     </div>
   </div>
-</div>
-
-
-
 
 
   
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-
-
-
-
     
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E5%B7%A5%E4%BD%9C/" style="font-size: 10px;">工作</a>
     </div>
   </div>
-</div>
 
-    
-
-    
-  </main>
-
-  <footer>
-    <div class="footer-inner">
   
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/07/">七月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/05/">五月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/04/">四月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">三月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/02/">二月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">一月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">十一月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">十月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">九月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">八月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">七月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">六月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">五月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">四月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">三月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">一月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a></li></ul>
     </div>
+  </div>
+
+
   
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/07/10/06_%E6%9D%82%E8%AE%B0/%E7%BA%A2%E5%B8%BD%E7%B3%BB%E5%AE%89%E8%A3%85%E7%B3%BB%E7%BB%9F%E6%A0%BC%E5%BC%8F%E5%8C%96/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2025/05/14/06_%E6%9D%82%E8%AE%B0/%E5%8D%8E%E4%B8%BAUSG6615F%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AESSL%20VPN/">华为USG6615F防火墙配置SSLVPN</a>
+          </li>
+        
+          <li>
+            <a href="/2025/05/06/10_%E5%AD%A6%E7%A5%9EK8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%9F%BA%E7%A1%80/">01-Docker基础</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/30/06_%E6%9D%82%E8%AE%B0/vllm%E9%83%A8%E7%BD%B2Qwen3%E5%A4%A7%E6%A8%A1%E5%9E%8B/">VLLM部署Qwen3大模型</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/21/06_%E6%9D%82%E8%AE%B0/%E5%8D%8E%E4%B8%BA%E4%BA%A4%E6%8D%A2%E6%9C%BA%E9%85%8D%E7%BD%AEmux-vlan/">华为交换机配置mux-vlan</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
   
+</aside>
+        
+      </div>
+      <footer id="footer">
   
-</div>
-
-  </footer>
-
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
+  <div class="outer">
+    <div id="footer-info" class="inner">
       
-        typing(text);
-      
-    })(window, document);
-  </script>
+      &copy; 2026 Haris<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
 
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
 
 
 
   
-    <script  src="/js/img-lazyload.js" ></script>
-  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
 
 
 
 
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
-    }
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
-</script>
-
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
-
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
-
-  <script>Fluid.plugins.codeWidget();</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
-    };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
-        }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
-      }
-    });
-  });
-</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
-  });
-</script>
-
-
-  <script>Fluid.plugins.imageCaption();</script>
-
-  <script  src="/js/local-search.js" ></script>
+<script src="/js/script.js"></script>
 
 
 
 
 
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
-
-
-  
-
-  <noscript>
-    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
-  </noscript>
+  </div>
 </body>
 </html>

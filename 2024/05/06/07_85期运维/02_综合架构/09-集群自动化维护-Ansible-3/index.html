@@ -1,298 +1,109 @@
-
-
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
-
-
-
+<html>
 <head>
-  <meta charset="UTF-8">
-
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <meta charset="utf-8">
   
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="Haris">
-  <meta name="keywords" content="">
-  
-    <meta name="description" content="Ansible集群自动化维护（三）主要内容：Ansible流程控制和调试方法 1 流程控制流程控制分为  handler when loop&#x2F;with_items  1.1 handler触发器应用场景：  一般用于分发配置文件的时候. 如果配置文件发生变化则重启服务,如果没有变化则重启  案例01：没有使用触发器，无论下发文件有没有改变，都需要重启服务 - hosts: backup">
+  <title>09-集群自动化维护-Ansible(三) | Haris的小站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Ansible集群自动化维护（三）主要内容：Ansible流程控制和调试方法 1 流程控制流程控制分为  handler when loop&#x2F;with_items  1.1 handler触发器应用场景：  一般用于分发配置文件的时候. 如果配置文件发生变化则重启服务,如果没有变化则重启  案例01：没有使用触发器，无论下发文件有没有改变，都需要重启服务 1234567891011- h">
 <meta property="og:type" content="article">
 <meta property="og:title" content="09-集群自动化维护-Ansible(三)">
 <meta property="og:url" content="https://gblog.github.io/2024/05/06/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/09-%E9%9B%86%E7%BE%A4%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BB%B4%E6%8A%A4-Ansible-3/index.html">
 <meta property="og:site_name" content="Haris的小站">
-<meta property="og:description" content="Ansible集群自动化维护（三）主要内容：Ansible流程控制和调试方法 1 流程控制流程控制分为  handler when loop&#x2F;with_items  1.1 handler触发器应用场景：  一般用于分发配置文件的时候. 如果配置文件发生变化则重启服务,如果没有变化则重启  案例01：没有使用触发器，无论下发文件有没有改变，都需要重启服务 - hosts: backup">
+<meta property="og:description" content="Ansible集群自动化维护（三）主要内容：Ansible流程控制和调试方法 1 流程控制流程控制分为  handler when loop&#x2F;with_items  1.1 handler触发器应用场景：  一般用于分发配置文件的时候. 如果配置文件发生变化则重启服务,如果没有变化则重启  案例01：没有使用触发器，无论下发文件有没有改变，都需要重启服务 1234567891011- h">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gblog.github.io/img/image-20240506163401162.png">
 <meta property="article:published_time" content="2024-05-06T08:35:52.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.316Z">
 <meta property="article:author" content="Haris">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gblog.github.io/img/image-20240506163401162.png">
   
+    <link rel="alternate" href="/atom.xml" title="Haris的小站" type="application/atom+xml">
   
   
-  <title>09-集群自动化维护-Ansible(三) - Haris的小站</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.png">
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
 
-
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"gblog.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
   
+  
+<link rel="stylesheet" href="/css/style.css">
 
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
+  
   
 <meta name="generator" content="Hexo 7.3.0"></head>
 
-
 <body>
-  
-
-  <header>
-    
-
-<div class="header-inner" style="height: 70vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>Haris的博客</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>首页</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>归档</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>分类</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
-          </li>
-        
-      </ul>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Haris的小站</a>
+      </h1>
+      
     </div>
-  </div>
-</nav>
-
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="09-集群自动化维护-Ansible(三)"></span>
-          
-        </div>
-
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
         
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-05-06 16:35" pubdate>
-          2024年5月6日 下午
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
+          <a class="main-nav-link" href="/">Home</a>
         
-          2.8k 字
+          <a class="main-nav-link" href="/archives">Archives</a>
         
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
+      </nav>
+      <nav id="sub-nav">
         
         
+          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
         
-          23 分钟
-        
-      </span>
-    
-
-    
-    
-  </div>
-
-
-        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://gblog.github.io"></form>
       </div>
-
-      
     </div>
   </div>
-</div>
+</header>
 
-</div>
-
-  </header>
-
-  <main>
+      <div class="outer">
+        <section id="main"><article id="post-07_85期运维/02_综合架构/09-集群自动化维护-Ansible-3" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/05/06/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/09-%E9%9B%86%E7%BE%A4%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BB%B4%E6%8A%A4-Ansible-3/" class="article-date">
+  <time class="dt-published" datetime="2024-05-06T08:35:52.000Z" itemprop="datePublished">2024-05-06</time>
+</a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a>►<a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/">（二）综合架构</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      09-集群自动化维护-Ansible(三)
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
       
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
-
-    </div>
-
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">09-集群自动化维护-Ansible(三)</h1>
-            
-            
-              <div class="markdown-body">
-                
-                <h1 id="Ansible集群自动化维护（三）"><a href="#Ansible集群自动化维护（三）" class="headerlink" title="Ansible集群自动化维护（三）"></a>Ansible集群自动化维护（三）</h1><p>主要内容：Ansible流程控制和调试方法</p>
+        <h1 id="Ansible集群自动化维护（三）"><a href="#Ansible集群自动化维护（三）" class="headerlink" title="Ansible集群自动化维护（三）"></a>Ansible集群自动化维护（三）</h1><p>主要内容：Ansible流程控制和调试方法</p>
 <h1 id="1-流程控制"><a href="#1-流程控制" class="headerlink" title="1 流程控制"></a>1 流程控制</h1><p>流程控制分为</p>
 <ul>
 <li>handler</li>
@@ -305,66 +116,17 @@
 <li>如果配置文件发生变化则重启服务,如果没有变化则重启</li>
 </ul>
 <p>案例01：没有使用触发器，无论下发文件有没有改变，都需要重启服务</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">- hosts: backup
-  tasks:
-  - name: 分发配置文件
-    copy:
-    src: files&#x2F;exports
-    dest: &#x2F;etc&#x2F;exports
-    backup: yes
-  - name: 重启服务
-    systemd:
-    name: nfs
-    state: reloaded</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- hosts: backup</span><br><span class="line">  tasks:</span><br><span class="line">  - name: 分发配置文件</span><br><span class="line">    copy:</span><br><span class="line">    src: files/exports</span><br><span class="line">    dest: /etc/exports</span><br><span class="line">    backup: yes</span><br><span class="line">  - name: 重启服务</span><br><span class="line">    systemd:</span><br><span class="line">    name: nfs</span><br><span class="line">    state: reloaded</span><br></pre></td></tr></table></figure>
 
 <p>使用触发器之后</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#cat 10-handler.yml
-- hosts: backup01
-  gather_facts: no
-  tasks:
-    - name: 分发配置文件
-      copy:
-        src: &#x2F;server&#x2F;files&#x2F;exports
-        dest: &#x2F;etc&#x2F;exports
-        backup: yes
-      notify:
-        - 重启服务
-  handlers:
-    - name: 重启服务
-      systemd:
-        name: nfs
-        state: reloaded</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/playbook]#cat 10-handler.yml</span><br><span class="line">- hosts: backup01</span><br><span class="line">  gather_facts: no</span><br><span class="line">  tasks:</span><br><span class="line">    - name: 分发配置文件</span><br><span class="line">      copy:</span><br><span class="line">        src: /server/files/exports</span><br><span class="line">        dest: /etc/exports</span><br><span class="line">        backup: yes</span><br><span class="line">      notify:</span><br><span class="line">        - 重启服务</span><br><span class="line">  handlers:</span><br><span class="line">    - name: 重启服务</span><br><span class="line">      systemd:</span><br><span class="line">        name: nfs</span><br><span class="line">        state: reloaded</span><br></pre></td></tr></table></figure>
 
 <p>执行效果：</p>
 <ul>
 <li>下发下去的文件识别“有改变”，则触发handler重启服务。</li>
 <li>如文件没有改变，则不触发重启服务的handler</li>
 </ul>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#ansible-playbook 10-handler.yml
- _________________
-&lt; PLAY [backup01] &gt;
-...
- _______________
-&lt; TASK [分发配置文件] &gt;
- ---------------
-        \   ^__^
-         \  (oo)\_______
-            (__)\       )\&#x2F;\
-                ||----w |
-                ||     ||
-
-changed: [172.16.1.41]
- ________________________
-&lt; RUNNING HANDLER [重启服务] &gt;
- ------------------------
-        \   ^__^
-         \  (oo)\_______
-            (__)\       )\&#x2F;\
-                ||----w |
-                ||     ||
-
-changed: [172.16.1.41]
-...</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/playbook]#ansible-playbook 10-handler.yml</span><br><span class="line"> _________________</span><br><span class="line">&lt; PLAY [backup01] &gt;</span><br><span class="line">...</span><br><span class="line"> _______________</span><br><span class="line">&lt; TASK [分发配置文件] &gt;</span><br><span class="line"> ---------------</span><br><span class="line">        \   ^__^</span><br><span class="line">         \  (oo)\_______</span><br><span class="line">            (__)\       )\/\</span><br><span class="line">                ||----w |</span><br><span class="line">                ||     ||</span><br><span class="line"></span><br><span class="line">changed: [172.16.1.41]</span><br><span class="line"> ________________________</span><br><span class="line">&lt; RUNNING HANDLER [重启服务] &gt;</span><br><span class="line"> ------------------------</span><br><span class="line">        \   ^__^</span><br><span class="line">         \  (oo)\_______</span><br><span class="line">            (__)\       )\/\</span><br><span class="line">                ||----w |</span><br><span class="line">                ||     ||</span><br><span class="line"></span><br><span class="line">changed: [172.16.1.41]</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 
 <h2 id="1-2-when判断"><a href="#1-2-when判断" class="headerlink" title="1.2 when判断"></a>1.2 when判断</h2><p>作用：</p>
 <ul>
@@ -376,89 +138,22 @@ changed: [172.16.1.41]
 <li>when条件一般与facts变量或register变量一起使用</li>
 </ul>
 <h3 id="1-2-1-单个条件"><a href="#1-2-1-单个条件" class="headerlink" title="1.2.1 单个条件"></a>1.2.1 单个条件</h3><p>案例：只想在web01上执行软件安装操作（以Debug msg方式模拟）</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#cat 11-when.yml
-- hosts: all
-  tasks:
-    - name: 只有web01安装软件（输出信息）
-      debug:
-        msg: &quot;这是web01，正在安装软件&quot;
-      when: ansible_hostname &#x3D;&#x3D; &quot;web01&quot;
-      </code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/playbook]#cat 11-when.yml</span><br><span class="line">- hosts: all</span><br><span class="line">  tasks:</span><br><span class="line">    - name: 只有web01安装软件（输出信息）</span><br><span class="line">      debug:</span><br><span class="line">        msg: &quot;这是web01，正在安装软件&quot;</span><br><span class="line">      when: ansible_hostname == &quot;web01&quot;</span><br><span class="line">      </span><br></pre></td></tr></table></figure>
 
 <p>执行效果：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#ansible-playbook 11-when.yml
- ____________
-&lt; PLAY [all] &gt;
- ------------
-...
- ________________________
-&lt; TASK [Gathering Facts] &gt;
-...
-ok: [172.16.1.41]
-ok: [172.16.1.7]
-ok: [172.16.1.31]
- __________________________
-&lt; TASK [只有web01安装软件（输出信息）] &gt;
- --------------------------
-        \   ^__^
-         \  (oo)\_______
-            (__)\       )\&#x2F;\
-                ||----w |
-                ||     ||
-
-ok: [172.16.1.7] &#x3D;&gt; &#123;
-    &quot;msg&quot;: &quot;这是web01，正在安装软件&quot;
-&#125;
-skipping: [172.16.1.31]
-skipping: [172.16.1.41]
-...</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/playbook]#ansible-playbook 11-when.yml</span><br><span class="line"> ____________</span><br><span class="line">&lt; PLAY [all] &gt;</span><br><span class="line"> ------------</span><br><span class="line">...</span><br><span class="line"> ________________________</span><br><span class="line">&lt; TASK [Gathering Facts] &gt;</span><br><span class="line">...</span><br><span class="line">ok: [172.16.1.41]</span><br><span class="line">ok: [172.16.1.7]</span><br><span class="line">ok: [172.16.1.31]</span><br><span class="line"> __________________________</span><br><span class="line">&lt; TASK [只有web01安装软件（输出信息）] &gt;</span><br><span class="line"> --------------------------</span><br><span class="line">        \   ^__^</span><br><span class="line">         \  (oo)\_______</span><br><span class="line">            (__)\       )\/\</span><br><span class="line">                ||----w |</span><br><span class="line">                ||     ||</span><br><span class="line"></span><br><span class="line">ok: [172.16.1.7] =&gt; &#123;</span><br><span class="line">    &quot;msg&quot;: &quot;这是web01，正在安装软件&quot;</span><br><span class="line">&#125;</span><br><span class="line">skipping: [172.16.1.31]</span><br><span class="line">skipping: [172.16.1.41]</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>扩展1：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 也可以做系统方面的判断，如
-	  when: ansible_distribution &#x3D;&#x3D; &quot;CentOS&quot;
-# 具体参数，可以通过以下命令获取
-[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#ansible web01 -m setup | grep ansible
-&quot;ansible_facts&quot;: &#123;
-    &quot;ansible_all_ipv4_addresses&quot;: [
-    &quot;ansible_all_ipv6_addresses&quot;: [
-    &quot;ansible_apparmor&quot;: &#123;
-    &quot;ansible_architecture&quot;: &quot;x86_64&quot;,
-    &quot;ansible_bios_date&quot;: &quot;11&#x2F;12&#x2F;2020&quot;,
-    &quot;ansible_bios_version&quot;: &quot;6.00&quot;,
-    &quot;ansible_cmdline&quot;: &#123;
-    &quot;ansible_date_time&quot;: &#123;
-    &quot;ansible_default_ipv4&quot;: &#123;
-    &quot;ansible_default_ipv6&quot;: &#123;&#125;,
-    &quot;ansible_device_links&quot;: &#123;
-    &quot;ansible_devices&quot;: &#123;
-    &quot;ansible_distribution&quot;: &quot;CentOS&quot;,
-    &quot;ansible_distribution_file_parsed&quot;: true,
-    &quot;ansible_distribution_file_path&quot;: &quot;&#x2F;etc&#x2F;redhat-release&quot;,
-    &quot;ansible_distribution_file_variety&quot;: &quot;RedHat&quot;,
-    &quot;ansible_distribution_major_version&quot;: &quot;7&quot;,
-    &quot;ansible_distribution_release&quot;: &quot;Core&quot;,
-    &quot;ansible_distribution_version&quot;: &quot;7.9&quot;,
-...</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">也可以做系统方面的判断，如</span></span><br><span class="line">	  when: ansible_distribution == &quot;CentOS&quot;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">具体参数，可以通过以下命令获取</span></span><br><span class="line">[root@mn01[ /server/scripts/playbook]#ansible web01 -m setup | grep ansible</span><br><span class="line">&quot;ansible_facts&quot;: &#123;</span><br><span class="line">    &quot;ansible_all_ipv4_addresses&quot;: [</span><br><span class="line">    &quot;ansible_all_ipv6_addresses&quot;: [</span><br><span class="line">    &quot;ansible_apparmor&quot;: &#123;</span><br><span class="line">    &quot;ansible_architecture&quot;: &quot;x86_64&quot;,</span><br><span class="line">    &quot;ansible_bios_date&quot;: &quot;11/12/2020&quot;,</span><br><span class="line">    &quot;ansible_bios_version&quot;: &quot;6.00&quot;,</span><br><span class="line">    &quot;ansible_cmdline&quot;: &#123;</span><br><span class="line">    &quot;ansible_date_time&quot;: &#123;</span><br><span class="line">    &quot;ansible_default_ipv4&quot;: &#123;</span><br><span class="line">    &quot;ansible_default_ipv6&quot;: &#123;&#125;,</span><br><span class="line">    &quot;ansible_device_links&quot;: &#123;</span><br><span class="line">    &quot;ansible_devices&quot;: &#123;</span><br><span class="line">    &quot;ansible_distribution&quot;: &quot;CentOS&quot;,</span><br><span class="line">    &quot;ansible_distribution_file_parsed&quot;: true,</span><br><span class="line">    &quot;ansible_distribution_file_path&quot;: &quot;/etc/redhat-release&quot;,</span><br><span class="line">    &quot;ansible_distribution_file_variety&quot;: &quot;RedHat&quot;,</span><br><span class="line">    &quot;ansible_distribution_major_version&quot;: &quot;7&quot;,</span><br><span class="line">    &quot;ansible_distribution_release&quot;: &quot;Core&quot;,</span><br><span class="line">    &quot;ansible_distribution_version&quot;: &quot;7.9&quot;,</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 
 </blockquote>
 <blockquote>
 <p>扩展2：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">&gt;when中使用的符号
-&gt;&#x3D;&#x3D; 等于
-&gt;!&#x3D; 不等于
-&gt;is match(web)
-&gt;ansible_hostname is match(&quot;web|backup&quot;) #类似于grep,正则.
-&gt;ansible_hostname is not match(&quot;web|backup&quot;) #取反,排除.</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">when中使用的符号</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">== 等于</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">!= 不等于</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">is match(web)</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">ansible_hostname is match(<span class="string">&quot;web|backup&quot;</span>) <span class="comment">#类似于grep,正则.</span></span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">ansible_hostname is not match(<span class="string">&quot;web|backup&quot;</span>) <span class="comment">#取反,排除.</span></span></span><br></pre></td></tr></table></figure>
 </blockquote>
 <h3 id="1-2-3-多个条件"><a href="#1-2-3-多个条件" class="headerlink" title="1.2.3 多个条件"></a>1.2.3 多个条件</h3><p>当存在多个条件时，可以使用and和or</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 方法一
-when: #条件1 条件2 同时成立 相当于使用and.
-  - ansible_distribution &#x3D;&#x3D; &quot;CentOS&quot;
-  - ansible_hostname is match(&quot;web|backup&quot;)
-  
-# 方法二：
-when: ansible_distribution &#x3D;&#x3D; &quot;CentOS&quot; and ansible_hostname is match(&quot;web|backup&quot;)</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">方法一</span></span><br><span class="line">when: #条件1 条件2 同时成立 相当于使用and.</span><br><span class="line">  - ansible_distribution == &quot;CentOS&quot;</span><br><span class="line">  - ansible_hostname is match(&quot;web|backup&quot;)</span><br><span class="line"><span class="meta prompt_">  </span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">方法二：</span></span><br><span class="line">when: ansible_distribution == &quot;CentOS&quot; and ansible_hostname is match(&quot;web|backup&quot;)</span><br></pre></td></tr></table></figure>
 
 
 
@@ -469,60 +164,16 @@ when: ansible_distribution &#x3D;&#x3D; &quot;CentOS&quot; and ansible_hostname 
 </ul>
 <p>常用于批量创建用户、文件夹、重启服务等</p>
 <p>案例01：批量启动服务，rpcbind然后nfs</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">- hosts: backup01
-  gather_facts: false
-  tasks:
-    - name: restared rpcbind and nfs
-      systemd:
-        name: &quot;&#123;&#123; item &#125;&#125;&quot;
-        state: restarted
-      loop:	# 或者with_items
-        - rpcbind
-        - nfs</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- hosts: backup01</span><br><span class="line">  gather_facts: false</span><br><span class="line">  tasks:</span><br><span class="line">    - name: restared rpcbind and nfs</span><br><span class="line">      systemd:</span><br><span class="line">        name: &quot;&#123;&#123; item &#125;&#125;&quot;</span><br><span class="line">        state: restarted</span><br><span class="line">      loop:	# 或者with_items</span><br><span class="line">        - rpcbind</span><br><span class="line">        - nfs</span><br></pre></td></tr></table></figure>
 
 <p>执行效果：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-she" data-language="she"><code class="language-she">[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#ansible-playbook 12-loop.yml
- _________________
-&lt; PLAY [backup01] &gt;
- -----------------
- _________________________________
-&lt; TASK [restared rpcbind and nfs] &gt;
- ---------------------------------
-changed: [172.16.1.41] &#x3D;&gt; (item&#x3D;rpcbind)
-changed: [172.16.1.41] &#x3D;&gt; (item&#x3D;nfs)
- ____________
-...</code></pre></div></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/playbook]#ansible-playbook 12-loop.yml</span><br><span class="line"> _________________</span><br><span class="line">&lt; PLAY [backup01] &gt;</span><br><span class="line"> -----------------</span><br><span class="line"> _________________________________</span><br><span class="line">&lt; TASK [restared rpcbind and nfs] &gt;</span><br><span class="line"> ---------------------------------</span><br><span class="line">changed: [172.16.1.41] =&gt; (item=rpcbind)</span><br><span class="line">changed: [172.16.1.41] =&gt; (item=nfs)</span><br><span class="line"> ____________</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 
 <h3 id="1-3-2-循环多个变量"><a href="#1-3-2-循环多个变量" class="headerlink" title="1.3.2 循环多个变量"></a>1.3.2 循环多个变量</h3><p>循环多个变量的例子：批量添加用户</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#cat 13-loop-adduser.yml
-- hosts: backup01
-  tasks:
-    - name: 批量添加用户
-      user:
-        name: &quot;&#123;&#123; item.name &#125;&#125;&quot;
-        uid: &quot;&#123;&#123; item.uid &#125;&#125;&quot;
-        state: present
-      with_items:
-        - &#123; name: &#39;user01&#39;, uid: 2020 &#125;
-        - &#123; name: &#39;user02&#39;, uid: 2021 &#125;
-        - &#123; name: &#39;user03&#39;, uid: 2022 &#125;</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/playbook]#cat 13-loop-adduser.yml</span><br><span class="line">- hosts: backup01</span><br><span class="line">  tasks:</span><br><span class="line">    - name: 批量添加用户</span><br><span class="line">      user:</span><br><span class="line">        name: &quot;&#123;&#123; item.name &#125;&#125;&quot;</span><br><span class="line">        uid: &quot;&#123;&#123; item.uid &#125;&#125;&quot;</span><br><span class="line">        state: present</span><br><span class="line">      with_items:</span><br><span class="line">        - &#123; name: &#x27;user01&#x27;, uid: 2020 &#125;</span><br><span class="line">        - &#123; name: &#x27;user02&#x27;, uid: 2021 &#125;</span><br><span class="line">        - &#123; name: &#x27;user03&#x27;, uid: 2022 &#125;</span><br></pre></td></tr></table></figure>
 
 <p>执行效果：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#ansible-playbook 13-loop-adduser.yml
- _________________
-&lt; PLAY [backup01] &gt;
- -----------------
- ________________________
-&lt; TASK [Gathering Facts] &gt;
- ------------------------
-ok: [172.16.1.41]
- _______________
-&lt; TASK [批量添加用户] &gt;
- ---------------
-changed: [172.16.1.41] &#x3D;&gt; (item&#x3D;&#123;u&#39;name&#39;: u&#39;user01&#39;, u&#39;uid&#39;: 2020&#125;)
-changed: [172.16.1.41] &#x3D;&gt; (item&#x3D;&#123;u&#39;name&#39;: u&#39;user02&#39;, u&#39;uid&#39;: 2021&#125;)
-changed: [172.16.1.41] &#x3D;&gt; (item&#x3D;&#123;u&#39;name&#39;: u&#39;user03&#39;, u&#39;uid&#39;: 2022&#125;)
-...</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/playbook]#ansible-playbook 13-loop-adduser.yml</span><br><span class="line"> _________________</span><br><span class="line">&lt; PLAY [backup01] &gt;</span><br><span class="line"> -----------------</span><br><span class="line"> ________________________</span><br><span class="line">&lt; TASK [Gathering Facts] &gt;</span><br><span class="line"> ------------------------</span><br><span class="line">ok: [172.16.1.41]</span><br><span class="line"> _______________</span><br><span class="line">&lt; TASK [批量添加用户] &gt;</span><br><span class="line"> ---------------</span><br><span class="line">changed: [172.16.1.41] =&gt; (item=&#123;u&#x27;name&#x27;: u&#x27;user01&#x27;, u&#x27;uid&#x27;: 2020&#125;)</span><br><span class="line">changed: [172.16.1.41] =&gt; (item=&#123;u&#x27;name&#x27;: u&#x27;user02&#x27;, u&#x27;uid&#x27;: 2021&#125;)</span><br><span class="line">changed: [172.16.1.41] =&gt; (item=&#123;u&#x27;name&#x27;: u&#x27;user03&#x27;, u&#x27;uid&#x27;: 2022&#125;)</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 
 
 
@@ -539,680 +190,200 @@ changed: [172.16.1.41] &#x3D;&gt; (item&#x3D;&#123;u&#39;name&#39;: u&#39;user03
 <li><font color=blue><strong>-step</strong></font> 单步运行. y执行这个task,n忽略这个task,c自动运行</li>
 </ul>
 <h2 id="2-2-tag标签"><a href="#2-2-tag标签" class="headerlink" title="2.2 tag标签"></a>2.2 tag标签</h2><p>以部署nfs服务的playbool为例，剧本中打上了几处tags，代码如下：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#cat 14-deploy-nfs.yml
-# 服务端
-- hosts: backup01
-  tasks:
-    - name: 01. 安装服务
-      yum:
-        name: nfs-utils, rpcbind
-        state: present
-      # 打标签tag
-      tags:
-        - 01.install
-    - name: 02. 修改配置文件
-      lineinfile:
-        path: &#x2F;etc&#x2F;exports
-        line: &quot;&#x2F;backup-nfs 172.16.1.0&#x2F;24(rw, all_squash)&quot;
-        create: true
-      tags:
-        - 02.conf
-    - name: 03. 创建共享目录并修改所有者
-      file:
-        path: &#x2F;backup-nfs
-        owner: nfsnobody
-        group: nfsnobody
-        state: directory
-      tags:
-        - 03.dir
-    - name: 04. 启动服务
-      systemd:
-        name: &quot;&#123;&#123; item &#125;&#125;&quot;
-        state: started
-        enabled: yes
-      loop:
-        - rpcbind
-        - nfs
-      tags:
-        - 04.start_srv
-
-
-
-# 客户端
-- hosts: web01
-  tasks:
-    - name: 01. 部署nfs-utils
-      yum:
-        name: nfs-utils
-        state: present
-    - name: 02. 挂载nfs
-      mount:
-        src: 172.16.1.41:&#x2F;backup-nfs
-        path: &#x2F;ans-upload
-        fstype: nfs
-        state: mounted</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/playbook]#cat 14-deploy-nfs.yml</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">服务端</span></span><br><span class="line">- hosts: backup01</span><br><span class="line">  tasks:</span><br><span class="line">    - name: 01. 安装服务</span><br><span class="line">      yum:</span><br><span class="line">        name: nfs-utils, rpcbind</span><br><span class="line">        state: present</span><br><span class="line">      # 打标签tag</span><br><span class="line">      tags:</span><br><span class="line">        - 01.install</span><br><span class="line">    - name: 02. 修改配置文件</span><br><span class="line">      lineinfile:</span><br><span class="line">        path: /etc/exports</span><br><span class="line">        line: &quot;/backup-nfs 172.16.1.0/24(rw, all_squash)&quot;</span><br><span class="line">        create: true</span><br><span class="line">      tags:</span><br><span class="line">        - 02.conf</span><br><span class="line">    - name: 03. 创建共享目录并修改所有者</span><br><span class="line">      file:</span><br><span class="line">        path: /backup-nfs</span><br><span class="line">        owner: nfsnobody</span><br><span class="line">        group: nfsnobody</span><br><span class="line">        state: directory</span><br><span class="line">      tags:</span><br><span class="line">        - 03.dir</span><br><span class="line">    - name: 04. 启动服务</span><br><span class="line">      systemd:</span><br><span class="line">        name: &quot;&#123;&#123; item &#125;&#125;&quot;</span><br><span class="line">        state: started</span><br><span class="line">        enabled: yes</span><br><span class="line">      loop:</span><br><span class="line">        - rpcbind</span><br><span class="line">        - nfs</span><br><span class="line">      tags:</span><br><span class="line">        - 04.start_srv</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">客户端</span></span><br><span class="line">- hosts: web01</span><br><span class="line">  tasks:</span><br><span class="line">    - name: 01. 部署nfs-utils</span><br><span class="line">      yum:</span><br><span class="line">        name: nfs-utils</span><br><span class="line">        state: present</span><br><span class="line">    - name: 02. 挂载nfs</span><br><span class="line">      mount:</span><br><span class="line">        src: 172.16.1.41:/backup-nfs</span><br><span class="line">        path: /ans-upload</span><br><span class="line">        fstype: nfs</span><br><span class="line">        state: mounted</span><br></pre></td></tr></table></figure>
 
 <p>在运行剧本的时候，可以通过：</p>
 <ul>
 <li>-t 运行指定的标签,如果多个标签通过”,”分割</li>
 </ul>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#ansible-playbook -t 02.conf 14-deploy-nfs.yml
- _________________
-&lt; PLAY [backup01] &gt;
- -----------------
-...
-ok: [172.16.1.41]
- ___________________
-&lt; TASK [02. 修改配置文件] &gt;
- -------------------
-ok: [172.16.1.41]
- ______________
-&lt; PLAY [web01] &gt;
- --------------
- ________________________
-&lt; TASK [Gathering Facts] &gt;
- ------------------------
-...</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/playbook]#ansible-playbook -t 02.conf 14-deploy-nfs.yml</span><br><span class="line"> _________________</span><br><span class="line">&lt; PLAY [backup01] &gt;</span><br><span class="line"> -----------------</span><br><span class="line">...</span><br><span class="line">ok: [172.16.1.41]</span><br><span class="line"> ___________________</span><br><span class="line">&lt; TASK [02. 修改配置文件] &gt;</span><br><span class="line"> -------------------</span><br><span class="line">ok: [172.16.1.41]</span><br><span class="line"> ______________</span><br><span class="line">&lt; PLAY [web01] &gt;</span><br><span class="line"> --------------</span><br><span class="line"> ________________________</span><br><span class="line">&lt; TASK [Gathering Facts] &gt;</span><br><span class="line"> ------------------------</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>–skip-tags 排除指定的tags,如果多个标签通过”,”分割</li>
 </ul>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#ansible-playbook --skip-tags 01.install,02.conf 14-deploy-nfs.yml
- _________________
-&lt; PLAY [backup01] &gt;
- -----------------
- ________________________
-&lt; TASK [Gathering Facts] &gt;
- ------------------------
-ok: [172.16.1.41]
- _________________________
-&lt; TASK [03. 创建共享目录并修改所有者] &gt;
- -------------------------
-ok: [172.16.1.41]
- _________________
-&lt; TASK [04. 启动服务] &gt;
- -----------------
- ______________
-&lt; PLAY [web01] &gt;
- --------------
- ________________________
-&lt; TASK [Gathering Facts] &gt;
- ------------------------
-ok: [172.16.1.7]
- ________________________
-&lt; TASK [01. 部署nfs-utils] &gt;
- ------------------------
-ok: [172.16.1.7]
- __________________
-&lt; TASK [02. 挂载nfs] &gt;
- ------------------
-ok: [172.16.1.7]</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/playbook]#ansible-playbook --skip-tags 01.install,02.conf 14-deploy-nfs.yml</span><br><span class="line"> _________________</span><br><span class="line">&lt; PLAY [backup01] &gt;</span><br><span class="line"> -----------------</span><br><span class="line"> ________________________</span><br><span class="line">&lt; TASK [Gathering Facts] &gt;</span><br><span class="line"> ------------------------</span><br><span class="line">ok: [172.16.1.41]</span><br><span class="line"> _________________________</span><br><span class="line">&lt; TASK [03. 创建共享目录并修改所有者] &gt;</span><br><span class="line"> -------------------------</span><br><span class="line">ok: [172.16.1.41]</span><br><span class="line"> _________________</span><br><span class="line">&lt; TASK [04. 启动服务] &gt;</span><br><span class="line"> -----------------</span><br><span class="line"> ______________</span><br><span class="line">&lt; PLAY [web01] &gt;</span><br><span class="line"> --------------</span><br><span class="line"> ________________________</span><br><span class="line">&lt; TASK [Gathering Facts] &gt;</span><br><span class="line"> ------------------------</span><br><span class="line">ok: [172.16.1.7]</span><br><span class="line"> ________________________</span><br><span class="line">&lt; TASK [01. 部署nfs-utils] &gt;</span><br><span class="line"> ------------------------</span><br><span class="line">ok: [172.16.1.7]</span><br><span class="line"> __________________</span><br><span class="line">&lt; TASK [02. 挂载nfs] &gt;</span><br><span class="line"> ------------------</span><br><span class="line">ok: [172.16.1.7]</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>–list-tags显示剧本中所有的tags标签</li>
 </ul>
-<figure><div class="code-wrapper"><pre class="line-numbers language-she" data-language="she"><code class="language-she">[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#ansible-playbook --list-tags 14-deploy-nfs.yml
-
-playbook: 14-deploy-nfs.yml
-
-  play #1 (backup01): backup01  TAGS: []
-      TASK TAGS: [01.install, 02.conf, 03.dir, 04.start_srv]
-
-  play #2 (web01): web01        TAGS: []
-      TASK TAGS: []</code></pre></div></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/playbook]#ansible-playbook --list-tags 14-deploy-nfs.yml</span><br><span class="line"></span><br><span class="line">playbook: 14-deploy-nfs.yml</span><br><span class="line"></span><br><span class="line">  play #1 (backup01): backup01  TAGS: []</span><br><span class="line">      TASK TAGS: [01.install, 02.conf, 03.dir, 04.start_srv]</span><br><span class="line"></span><br><span class="line">  play #2 (web01): web01        TAGS: []</span><br><span class="line">      TASK TAGS: []</span><br></pre></td></tr></table></figure>
 
 <h2 id="2-3-忽略错误"><a href="#2-3-忽略错误" class="headerlink" title="2.3 忽略错误"></a>2.3 忽略错误</h2><p>运行剧本的时候，可能存在<strong>因为重复运行导致的错误提示</strong>，这些提示并非是真的错误，比如：目录已经存在，用</p>
 <p>户已经存在。在这种情况下,我们可以通过使用<code>ignore_errors</code>忽略错误，让剧本可以继续运行。</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">- hosts: backup01
-  ignore_errors: true
-  tasks:
-    - name: 批量添加用户
-    ...</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- hosts: backup01</span><br><span class="line">  ignore_errors: true</span><br><span class="line">  tasks:</span><br><span class="line">    - name: 批量添加用户</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
 
 
 
 <h1 id="3-Jinjia2模板"><a href="#3-Jinjia2模板" class="headerlink" title="3 Jinjia2模板"></a>3 Jinjia2模板</h1><p>应用场景：</p>
 <p>在进行配置文件或普通文件的分发时，如果需要对文件中使用的变量进行解析，则需要使用jinja2文件，如<code>nginx.conf.j2</code>文件需要使用template模块进行分发。图示如下：</p>
-<p><img src="/../../../img/image-20240506163401162.png" srcset="/img/loading.gif" lazyload alt="image-20240506163401162"></p>
+<p><img src="/../../../img/image-20240506163401162.png" alt="image-20240506163401162"></p>
 <h2 id="3-1-基本使用"><a href="#3-1-基本使用" class="headerlink" title="3.1 基本使用"></a>3.1 基本使用</h2><p>案例: 分发motd文件，motd文件中包含ans变量(目标文件是&#x2F;etc&#x2F;motd)</p>
 <p>motd文件</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#cat templates&#x2F;motd.j2
-#######################################
-welcome to oldboy elastic linux system
-操作需谨慎,删根弹指间.
-主机名: &#123;&#123; ansible_hostname &#125;&#125;
-ip地址: &#123;&#123; ansible_default_ipv4.address &#125;&#125;
-内存大小: &#123;&#123; ansible_memtotal_mb &#125;&#125;
-CPU数量: &#123;&#123; ansible_processor_vcpus &#125;&#125;
-核心总数: &#123;&#123; ansible_processor_cores &#125;&#125;
-发行版本: &#123;&#123; ansible_distribution &#125;&#125;</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/playbook]#cat templates/motd.j2</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">######################################</span></span></span><br><span class="line">welcome to oldboy elastic linux system</span><br><span class="line">操作需谨慎,删根弹指间.</span><br><span class="line">主机名: &#123;&#123; ansible_hostname &#125;&#125;</span><br><span class="line">ip地址: &#123;&#123; ansible_default_ipv4.address &#125;&#125;</span><br><span class="line">内存大小: &#123;&#123; ansible_memtotal_mb &#125;&#125;</span><br><span class="line">CPU数量: &#123;&#123; ansible_processor_vcpus &#125;&#125;</span><br><span class="line">核心总数: &#123;&#123; ansible_processor_cores &#125;&#125;</span><br><span class="line">发行版本: &#123;&#123; ansible_distribution &#125;&#125;</span><br></pre></td></tr></table></figure>
 
 <p>剧本分发，分别使用templates和copy两种方法</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-she" data-language="she"><code class="language-she">[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#cat 15-changemotd.yml
-- hosts: all
-  gather_facts: yes
-  tasks:
-    - name: template分发motd文件
-      template:
-        src: templates&#x2F;motd.j2
-        dest: &#x2F;etc&#x2F;motd
-        backup: yes
-    - name: copy分发motd文件
-      copy:
-        src: templates&#x2F;motd.j2
-        dest: &#x2F;tmp&#x2F;motd
-        backup: yes</code></pre></div></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/playbook]#cat 15-changemotd.yml</span><br><span class="line">- hosts: all</span><br><span class="line">  gather_facts: yes</span><br><span class="line">  tasks:</span><br><span class="line">    - name: template分发motd文件</span><br><span class="line">      template:</span><br><span class="line">        src: templates/motd.j2</span><br><span class="line">        dest: /etc/motd</span><br><span class="line">        backup: yes</span><br><span class="line">    - name: copy分发motd文件</span><br><span class="line">      copy:</span><br><span class="line">        src: templates/motd.j2</span><br><span class="line">        dest: /tmp/motd</span><br><span class="line">        backup: yes</span><br></pre></td></tr></table></figure>
 
 <p>查看执行结果：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 剧本执行
-[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#ansible-playbook 15-changemotd.yml
- ____________
-&lt; PLAY [all] &gt;
- ------------
- ________________________
-&lt; TASK [Gathering Facts] &gt;
- ------------------------
-ok: [172.16.1.41]
-ok: [172.16.1.31]
-ok: [172.16.1.7]
- _________________________
-&lt; TASK [template分发motd文件] &gt;
- -------------------------
-ok: [172.16.1.7]
-ok: [172.16.1.41]
-ok: [172.16.1.31]
- _____________________
-&lt; TASK [copy分发motd文件] &gt;
- ---------------------
-ok: [172.16.1.31]
-ok: [172.16.1.7]
-ok: [172.16.1.41]
- ____________
-&lt; PLAY RECAP &gt;
- ------------
-...
-
-# 目标机器&#x2F;etc&#x2F;motd，得到解析
-[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#ansible all -m shell -a  &quot;cat &#x2F;etc&#x2F;motd&quot;
-172.16.1.41 | CHANGED | rc&#x3D;0 &gt;&gt;
-#######################################
-welcome to oldboy elastic linux system
-操作需谨慎,删根弹指间.
-主机名: backup01
-ip地址: 10.0.0.41
-内存大小: 1980
-CPU数量: 1
-核心总数: 1
-发行版本: CentOS
-172.16.1.31 | CHANGED | rc&#x3D;0 &gt;&gt;
-#######################################
-welcome to oldboy elastic linux system
-操作需谨慎,删根弹指间.
-主机名: nfs01
-ip地址: 10.0.0.31
-内存大小: 1980
-CPU数量: 1
-核心总数: 1
-发行版本: CentOS
-172.16.1.7 | CHANGED | rc&#x3D;0 &gt;&gt;
-#######################################
-welcome to oldboy elastic linux system
-操作需谨慎,删根弹指间.
-主机名: web01
-ip地址: 10.0.0.7
-内存大小: 1980
-CPU数量: 1
-核心总数: 1
-发行版本: CentOS
-
-# 目标机器&#x2F;tmp&#x2F;motd
-[root@mn01[ &#x2F;server&#x2F;scripts&#x2F;playbook]#ansible all -m shell -a  &quot;cat &#x2F;tmp&#x2F;motd&quot;
-172.16.1.41 | CHANGED | rc&#x3D;0 &gt;&gt;
-#######################################
-welcome to oldboy elastic linux system
-操作需谨慎,删根弹指间.
-主机名: &#123;&#123; ansible_hostname &#125;&#125;
-ip地址: &#123;&#123; ansible_default_ipv4.address &#125;&#125;
-内存大小: &#123;&#123; ansible_memtotal_mb &#125;&#125;
-CPU数量: &#123;&#123; ansible_processor_vcpus &#125;&#125;
-核心总数: &#123;&#123; ansible_processor_cores &#125;&#125;
-发行版本: &#123;&#123; ansible_distribution &#125;&#125;
-172.16.1.31 | CHANGED | rc&#x3D;0 &gt;&gt;
-#######################################
-welcome to oldboy elastic linux system
-操作需谨慎,删根弹指间.
-主机名: &#123;&#123; ansible_hostname &#125;&#125;
-ip地址: &#123;&#123; ansible_default_ipv4.address &#125;&#125;
-内存大小: &#123;&#123; ansible_memtotal_mb &#125;&#125;
-CPU数量: &#123;&#123; ansible_processor_vcpus &#125;&#125;
-核心总数: &#123;&#123; ansible_processor_cores &#125;&#125;
-发行版本: &#123;&#123; ansible_distribution &#125;&#125;
-172.16.1.7 | CHANGED | rc&#x3D;0 &gt;&gt;
-#######################################
-welcome to oldboy elastic linux system
-操作需谨慎,删根弹指间.
-主机名: &#123;&#123; ansible_hostname &#125;&#125;
-ip地址: &#123;&#123; ansible_default_ipv4.address &#125;&#125;
-内存大小: &#123;&#123; ansible_memtotal_mb &#125;&#125;
-CPU数量: &#123;&#123; ansible_processor_vcpus &#125;&#125;
-核心总数: &#123;&#123; ansible_processor_cores &#125;&#125;
-发行版本: &#123;&#123; ansible_distribution &#125;&#125;</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">剧本执行</span></span><br><span class="line">[root@mn01[ /server/scripts/playbook]#ansible-playbook 15-changemotd.yml</span><br><span class="line"> ____________</span><br><span class="line">&lt; PLAY [all] &gt;</span><br><span class="line"> ------------</span><br><span class="line"> ________________________</span><br><span class="line">&lt; TASK [Gathering Facts] &gt;</span><br><span class="line"> ------------------------</span><br><span class="line">ok: [172.16.1.41]</span><br><span class="line">ok: [172.16.1.31]</span><br><span class="line">ok: [172.16.1.7]</span><br><span class="line"> _________________________</span><br><span class="line">&lt; TASK [template分发motd文件] &gt;</span><br><span class="line"> -------------------------</span><br><span class="line">ok: [172.16.1.7]</span><br><span class="line">ok: [172.16.1.41]</span><br><span class="line">ok: [172.16.1.31]</span><br><span class="line"> _____________________</span><br><span class="line">&lt; TASK [copy分发motd文件] &gt;</span><br><span class="line"> ---------------------</span><br><span class="line">ok: [172.16.1.31]</span><br><span class="line">ok: [172.16.1.7]</span><br><span class="line">ok: [172.16.1.41]</span><br><span class="line"> ____________</span><br><span class="line">&lt; PLAY RECAP &gt;</span><br><span class="line"> ------------</span><br><span class="line">...</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">目标机器/etc/motd，得到解析</span></span><br><span class="line">[root@mn01[ /server/scripts/playbook]#ansible all -m shell -a  &quot;cat /etc/motd&quot;</span><br><span class="line">172.16.1.41 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">######################################</span></span></span><br><span class="line">welcome to oldboy elastic linux system</span><br><span class="line">操作需谨慎,删根弹指间.</span><br><span class="line">主机名: backup01</span><br><span class="line">ip地址: 10.0.0.41</span><br><span class="line">内存大小: 1980</span><br><span class="line">CPU数量: 1</span><br><span class="line">核心总数: 1</span><br><span class="line">发行版本: CentOS</span><br><span class="line">172.16.1.31 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">######################################</span></span></span><br><span class="line">welcome to oldboy elastic linux system</span><br><span class="line">操作需谨慎,删根弹指间.</span><br><span class="line">主机名: nfs01</span><br><span class="line">ip地址: 10.0.0.31</span><br><span class="line">内存大小: 1980</span><br><span class="line">CPU数量: 1</span><br><span class="line">核心总数: 1</span><br><span class="line">发行版本: CentOS</span><br><span class="line">172.16.1.7 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">######################################</span></span></span><br><span class="line">welcome to oldboy elastic linux system</span><br><span class="line">操作需谨慎,删根弹指间.</span><br><span class="line">主机名: web01</span><br><span class="line">ip地址: 10.0.0.7</span><br><span class="line">内存大小: 1980</span><br><span class="line">CPU数量: 1</span><br><span class="line">核心总数: 1</span><br><span class="line">发行版本: CentOS</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">目标机器/tmp/motd</span></span><br><span class="line">[root@mn01[ /server/scripts/playbook]#ansible all -m shell -a  &quot;cat /tmp/motd&quot;</span><br><span class="line">172.16.1.41 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">######################################</span></span></span><br><span class="line">welcome to oldboy elastic linux system</span><br><span class="line">操作需谨慎,删根弹指间.</span><br><span class="line">主机名: &#123;&#123; ansible_hostname &#125;&#125;</span><br><span class="line">ip地址: &#123;&#123; ansible_default_ipv4.address &#125;&#125;</span><br><span class="line">内存大小: &#123;&#123; ansible_memtotal_mb &#125;&#125;</span><br><span class="line">CPU数量: &#123;&#123; ansible_processor_vcpus &#125;&#125;</span><br><span class="line">核心总数: &#123;&#123; ansible_processor_cores &#125;&#125;</span><br><span class="line">发行版本: &#123;&#123; ansible_distribution &#125;&#125;</span><br><span class="line">172.16.1.31 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">######################################</span></span></span><br><span class="line">welcome to oldboy elastic linux system</span><br><span class="line">操作需谨慎,删根弹指间.</span><br><span class="line">主机名: &#123;&#123; ansible_hostname &#125;&#125;</span><br><span class="line">ip地址: &#123;&#123; ansible_default_ipv4.address &#125;&#125;</span><br><span class="line">内存大小: &#123;&#123; ansible_memtotal_mb &#125;&#125;</span><br><span class="line">CPU数量: &#123;&#123; ansible_processor_vcpus &#125;&#125;</span><br><span class="line">核心总数: &#123;&#123; ansible_processor_cores &#125;&#125;</span><br><span class="line">发行版本: &#123;&#123; ansible_distribution &#125;&#125;</span><br><span class="line">172.16.1.7 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">######################################</span></span></span><br><span class="line">welcome to oldboy elastic linux system</span><br><span class="line">操作需谨慎,删根弹指间.</span><br><span class="line">主机名: &#123;&#123; ansible_hostname &#125;&#125;</span><br><span class="line">ip地址: &#123;&#123; ansible_default_ipv4.address &#125;&#125;</span><br><span class="line">内存大小: &#123;&#123; ansible_memtotal_mb &#125;&#125;</span><br><span class="line">CPU数量: &#123;&#123; ansible_processor_vcpus &#125;&#125;</span><br><span class="line">核心总数: &#123;&#123; ansible_processor_cores &#125;&#125;</span><br><span class="line">发行版本: &#123;&#123; ansible_distribution &#125;&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="3-2-条件判断（未实践）"><a href="#3-2-条件判断（未实践）" class="headerlink" title="3.2 条件判断（未实践）"></a>3.2 条件判断（未实践）</h2><p>根据主机名或ip或其他条件，生成不同的配置文件</p>
-  <figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">&#x2F;tmp&#x2F;keepalived.conf
-lb01
-lb02
-配置文件内容
-&#x2F;tmp&#x2F;keepalived.conf
-web01 配置文件内容
-state MASTER
-&#x2F;tmp&#x2F;keepalived.conf
-backup 配置文件内容
-state BACKUP
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">/tmp/keepalived.conf</span><br><span class="line">lb01</span><br><span class="line">lb02</span><br><span class="line">配置文件内容</span><br><span class="line">/tmp/keepalived.conf</span><br><span class="line">web01 配置文件内容</span><br><span class="line">state MASTER</span><br><span class="line">/tmp/keepalived.conf</span><br><span class="line">backup 配置文件内容</span><br><span class="line">state BACKUP</span><br><span class="line"></span><br><span class="line">[root@m01 /server/scripts/playbook]# cat 15.jinja2-if.yml</span><br><span class="line">- hosts: all</span><br><span class="line">tasks:</span><br><span class="line">- name: 分发配置文件</span><br><span class="line">template:</span><br><span class="line">src: templates/keepalived.conf.j2</span><br><span class="line">dest: /tmp/keepalived.conf</span><br><span class="line">[root@m01 /server/scripts/playbook]# tree templates/</span><br><span class="line">templates/</span><br><span class="line">├── keepalived.conf.j2</span><br><span class="line">└── motd.j2</span><br><span class="line">0 directories, 2 files</span><br><span class="line">[root@m01 /server/scripts/playbook]# cat</span><br><span class="line">templates/keepalived.conf.j2</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">this is keepalived.conf</span></span><br><span class="line">&#123;% if ansible_hostname == &quot;web01&quot; %&#125;</span><br><span class="line">state 主节点</span><br><span class="line">&#123;% elif ansible_hostname == &quot;backup&quot; %&#125;</span><br><span class="line">state 备节点</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
 
-[root@m01 &#x2F;server&#x2F;scripts&#x2F;playbook]# cat 15.jinja2-if.yml
-- hosts: all
-tasks:
-- name: 分发配置文件
-template:
-src: templates&#x2F;keepalived.conf.j2
-dest: &#x2F;tmp&#x2F;keepalived.conf
-[root@m01 &#x2F;server&#x2F;scripts&#x2F;playbook]# tree templates&#x2F;
-templates&#x2F;
-├── keepalived.conf.j2
-└── motd.j2
-0 directories, 2 files
-[root@m01 &#x2F;server&#x2F;scripts&#x2F;playbook]# cat
-templates&#x2F;keepalived.conf.j2
-#this is keepalived.conf
-&#123;% if ansible_hostname &#x3D;&#x3D; &quot;web01&quot; %&#125;
-state 主节点
-&#123;% elif ansible_hostname &#x3D;&#x3D; &quot;backup&quot; %&#125;
-state 备节点
-&#123;% endif %&#125;</code></pre></div></figure>
-
-<h2 id="3-3-循环语句（未实践）"><a href="#3-3-循环语句（未实践）" class="headerlink" title="3.3 循环语句（未实践）"></a>3.3 循环语句（未实践）</h2><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">配置文件 server.conf web服务器的&#x2F;tmp&#x2F;目录下
-10.0.0.5
-10.0.0.6
-10.0.0.7
-10.0.0.8
-10.0.0.9
-10.0.0.10
-
-&#123;% for ip in [1,2,3,4,5,6] %&#125;
-  10.0.0.&#123;&#123; ip &#125;&#125;
-&#123;% endfor %&#125;
-
-&#123;% for ip in range(2,11) %&#125;
-  10.0.0.&#123;&#123; ip &#125;&#125;
-&#123;%endfor%&#125;
-
-
-&#123;% for ip in [&quot;lidao&quot;,&quot;oldwang&quot;] %&#125;
-  10.0.0.&#123;&#123; ip &#125;&#125;
-&#123;%endfor%&#125;</code></pre></div></figure>
+<h2 id="3-3-循环语句（未实践）"><a href="#3-3-循环语句（未实践）" class="headerlink" title="3.3 循环语句（未实践）"></a>3.3 循环语句（未实践）</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">配置文件 server.conf web服务器的/tmp/目录下</span><br><span class="line">10.0.0.5</span><br><span class="line">10.0.0.6</span><br><span class="line">10.0.0.7</span><br><span class="line">10.0.0.8</span><br><span class="line">10.0.0.9</span><br><span class="line">10.0.0.10</span><br><span class="line"></span><br><span class="line">&#123;% for ip in [1,2,3,4,5,6] %&#125;</span><br><span class="line">  10.0.0.&#123;&#123; ip &#125;&#125;</span><br><span class="line">&#123;% endfor %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% for ip in range(2,11) %&#125;</span><br><span class="line">  10.0.0.&#123;&#123; ip &#125;&#125;</span><br><span class="line">&#123;%endfor%&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% for ip in [&quot;lidao&quot;,&quot;oldwang&quot;] %&#125;</span><br><span class="line">  10.0.0.&#123;&#123; ip &#125;&#125;</span><br><span class="line">&#123;%endfor%&#125;</span><br></pre></td></tr></table></figure>
 
 
 
 
-                
-              </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
       
-
-<span class="category-chains">
-  
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://gblog.github.io/2024/05/06/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/09-%E9%9B%86%E7%BE%A4%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BB%B4%E6%8A%A4-Ansible-3/" data-id="cmrendtch00i4dsie1a2qda9z" data-title="09-集群自动化维护-Ansible(三)" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
   
     
-      <span class="category-chain">
+<nav id="article-nav">
+  
+    <a href="/2024/05/06/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/10-%E9%9B%86%E7%BE%A4%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BB%B4%E6%8A%A4-Ansible-4-%E5%AE%8C%E7%BB%93/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
         
-  <a href="/categories/%E8%BF%90%E7%BB%B4/" class="category-chain-item">运维</a>
+          10-集群自动化维护-Ansible(四)-完结
+        
+      </div>
+    </a>
   
   
-    <span>></span>
+    <a href="/2024/05/04/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/08-%E9%9B%86%E7%BE%A4%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BB%B4%E6%8A%A4-Ansible-2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">08-集群自动化维护-Ansible(二)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
     
-  <a href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/" class="category-chain-item">（二）综合架构</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C/01-C%E8%AF%AD%E8%A8%80/">01_C语言</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/01-Python%E5%85%A5%E9%97%A8/">01_Python入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/02-Python%E8%BF%9B%E9%98%B6/">02_Python进阶</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/03-MySQL/">03_MySQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/04-HTML/">04_HTML</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/05-CSS/">05_CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/06-JavaScript/">06_JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/07-JQuery/">07_JQuery</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/08-BootStrap/">08_BootStrap</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/09-Django/">09_Django</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/12-%E9%99%84%E5%BD%95%E8%A1%A5%E5%85%85/">12_附录补充</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E7%A5%9EK8S/">学神K8S</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E7%A5%9EK8S/%EF%BC%88%E4%B8%80%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E5%85%A5%E9%97%A8/">（一）Docker容器入门</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9D%82%E8%AE%B0/">杂记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8B%E8%AF%95/%E4%BF%A1%E5%88%9BPOC%E6%B5%8B%E8%AF%95/">信创POC测试</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/1%E3%80%81%E7%BD%91%E5%B7%A5%E5%85%A5%E9%97%A8/">1、网工入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/2%E3%80%81HCIA%E8%AF%BE%E7%A8%8B/">2、HCIA课程</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/">超哥K8S</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/%EF%BC%88%E4%B8%80%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E5%85%A5%E9%97%A8/">（一）Docker容器入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/%EF%BC%88%E4%BA%8C%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E8%BF%9B%E9%98%B6/">（二）Docker容器进阶</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/">（一）基础命令</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%89%EF%BC%89Docker/">（三）Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/">（二）综合架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%94%EF%BC%89K8S/">（五）K8S</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E5%85%AD%EF%BC%89%E6%99%BA%E7%AE%97%E4%B8%AD%E5%BF%83/">（六）智算中心</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E5%9B%9B%EF%BC%89%E8%99%9A%E6%8B%9F%E5%8C%96%E4%B9%8BOpenStack/">（四）虚拟化之OpenStack</a></li></ul></li></ul>
     </div>
-  
-  
-</div>
-
-
-              
-  
-
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>09-集群自动化维护-Ansible(三)</div>
-      <div>https://gblog.github.io/2024/05/06/07_85期运维/02_综合架构/09-集群自动化维护-Ansible-3/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>作者</div>
-          <div>Haris</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>发布于</div>
-          <div>2024年5月6日</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>许可协议</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
-          </div>
-        </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
   </div>
 
 
-
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2024/05/06/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/10-%E9%9B%86%E7%BE%A4%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BB%B4%E6%8A%A4-Ansible-4-%E5%AE%8C%E7%BB%93/" title="10-集群自动化维护-Ansible(四)-完结">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">10-集群自动化维护-Ansible(四)-完结</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2024/05/04/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/08-%E9%9B%86%E7%BE%A4%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BB%B4%E6%8A%A4-Ansible-2/" title="08-集群自动化维护-Ansible(二)">
-                        <span class="hidden-mobile">08-集群自动化维护-Ansible(二)</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-
-            
-          </article>
-        </div>
-      </div>
-    </div>
-
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E4%BD%9C/" rel="tag">工作</a></li></ul>
     </div>
   </div>
-</div>
-
-
-
 
 
   
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-
-
-
-
     
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E5%B7%A5%E4%BD%9C/" style="font-size: 10px;">工作</a>
     </div>
   </div>
-</div>
 
-    
-
-    
-  </main>
-
-  <footer>
-    <div class="footer-inner">
   
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/07/">七月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/05/">五月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/04/">四月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">三月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/02/">二月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">一月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">十一月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">十月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">九月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">八月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">七月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">六月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">五月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">四月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">三月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">一月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a></li></ul>
     </div>
+  </div>
+
+
   
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/07/10/06_%E6%9D%82%E8%AE%B0/%E7%BA%A2%E5%B8%BD%E7%B3%BB%E5%AE%89%E8%A3%85%E7%B3%BB%E7%BB%9F%E6%A0%BC%E5%BC%8F%E5%8C%96/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2025/05/14/06_%E6%9D%82%E8%AE%B0/%E5%8D%8E%E4%B8%BAUSG6615F%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AESSL%20VPN/">华为USG6615F防火墙配置SSLVPN</a>
+          </li>
+        
+          <li>
+            <a href="/2025/05/06/10_%E5%AD%A6%E7%A5%9EK8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%9F%BA%E7%A1%80/">01-Docker基础</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/30/06_%E6%9D%82%E8%AE%B0/vllm%E9%83%A8%E7%BD%B2Qwen3%E5%A4%A7%E6%A8%A1%E5%9E%8B/">VLLM部署Qwen3大模型</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/21/06_%E6%9D%82%E8%AE%B0/%E5%8D%8E%E4%B8%BA%E4%BA%A4%E6%8D%A2%E6%9C%BA%E9%85%8D%E7%BD%AEmux-vlan/">华为交换机配置mux-vlan</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
   
+</aside>
+        
+      </div>
+      <footer id="footer">
   
-</div>
-
-  </footer>
-
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
+  <div class="outer">
+    <div id="footer-info" class="inner">
       
-        typing(text);
-      
-    })(window, document);
-  </script>
+      &copy; 2026 Haris<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
 
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
 
 
 
   
-    <script  src="/js/img-lazyload.js" ></script>
-  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
 
 
 
 
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
-    }
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
-</script>
-
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
-
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
-
-  <script>Fluid.plugins.codeWidget();</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
-    };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
-        }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
-      }
-    });
-  });
-</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
-  });
-</script>
-
-
-  <script>Fluid.plugins.imageCaption();</script>
-
-  <script  src="/js/local-search.js" ></script>
+<script src="/js/script.js"></script>
 
 
 
 
 
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
-
-
-  
-
-  <noscript>
-    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
-  </noscript>
+  </div>
 </body>
 </html>

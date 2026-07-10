@@ -1,25 +1,12 @@
-
-
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
-
-
-
+<html>
 <head>
-  <meta charset="UTF-8">
-
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <meta charset="utf-8">
   
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="Haris">
-  <meta name="keywords" content="">
-  
-    <meta name="description" content="自动化架构-iptables防火墙今日内容： ​	iptables防火墙 一、防火墙概述1.1 防火墙的功能可以用于实现：  端口封禁 IP封禁 实现NAT功能 共享上网 端口转发、IP映射    1.2 防火墙种类及使用说明硬件: 整个企业入口  三层路由: H3C 华为 Cisco(思科) 防火墙: 深信服,绿盟,奇安信…..  软件: 开源软件 网站内部 封ip 封ip  iptables">
+  <title>day59-自动化架构-iptables防火墙 | Haris的小站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="自动化架构-iptables防火墙今日内容： ​	iptables防火墙 一、防火墙概述1.1 防火墙的功能可以用于实现：  端口封禁 IP封禁 实现NAT功能 共享上网 端口转发、IP映射    1.2 防火墙种类及使用说明硬件: 整个企业入口  三层路由: H3C 华为 Cisco(思科) 防火墙: 深信服,绿盟,奇安信…..  软件: 开源软件 网站内部 封ip 封ip  iptables">
 <meta property="og:type" content="article">
 <meta property="og:title" content="day59-自动化架构-iptables防火墙">
 <meta property="og:url" content="https://gblog.github.io/2024/05/23/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day58-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84-iptables%E9%98%B2%E7%81%AB%E5%A2%99/index.html">
@@ -41,269 +28,93 @@
 <meta property="article:published_time" content="2024-05-23T01:08:52.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.337Z">
 <meta property="article:author" content="Haris">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gblog.github.io/img/image-20240523093136580.png">
   
+    <link rel="alternate" href="/atom.xml" title="Haris的小站" type="application/atom+xml">
   
   
-  <title>day59-自动化架构-iptables防火墙 - Haris的小站</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.png">
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
 
-
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"gblog.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
   
+  
+<link rel="stylesheet" href="/css/style.css">
 
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
+  
   
 <meta name="generator" content="Hexo 7.3.0"></head>
 
-
 <body>
-  
-
-  <header>
-    
-
-<div class="header-inner" style="height: 70vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>Haris的博客</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>首页</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>归档</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>分类</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
-          </li>
-        
-      </ul>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Haris的小站</a>
+      </h1>
+      
     </div>
-  </div>
-</nav>
-
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="day59-自动化架构-iptables防火墙"></span>
-          
-        </div>
-
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
         
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-05-23 09:08" pubdate>
-          2024年5月23日 上午
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
+          <a class="main-nav-link" href="/">Home</a>
         
-          4k 字
+          <a class="main-nav-link" href="/archives">Archives</a>
         
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
+      </nav>
+      <nav id="sub-nav">
         
         
+          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
         
-          34 分钟
-        
-      </span>
-    
-
-    
-    
-  </div>
-
-
-        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://gblog.github.io"></form>
       </div>
-
-      
     </div>
   </div>
-</div>
+</header>
 
-</div>
-
-  </header>
-
-  <main>
+      <div class="outer">
+        <section id="main"><article id="post-07_85期运维/03_自动化架构/day58-自动化架构-iptables防火墙" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/05/23/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day58-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84-iptables%E9%98%B2%E7%81%AB%E5%A2%99/" class="article-date">
+  <time class="dt-published" datetime="2024-05-23T01:08:52.000Z" itemprop="datePublished">2024-05-23</time>
+</a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a>►<a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/">（二）综合架构</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      day59-自动化架构-iptables防火墙
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
       
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
-
-    </div>
-
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">day59-自动化架构-iptables防火墙</h1>
-            
-            
-              <div class="markdown-body">
-                
-                <h1 id="自动化架构-iptables防火墙"><a href="#自动化架构-iptables防火墙" class="headerlink" title="自动化架构-iptables防火墙"></a>自动化架构-iptables防火墙</h1><p>今日内容：</p>
+        <h1 id="自动化架构-iptables防火墙"><a href="#自动化架构-iptables防火墙" class="headerlink" title="自动化架构-iptables防火墙"></a>自动化架构-iptables防火墙</h1><p>今日内容：</p>
 <p>​	iptables防火墙</p>
 <h1 id="一、防火墙概述"><a href="#一、防火墙概述" class="headerlink" title="一、防火墙概述"></a>一、防火墙概述</h1><h2 id="1-1-防火墙的功能"><a href="#1-1-防火墙的功能" class="headerlink" title="1.1 防火墙的功能"></a>1.1 防火墙的功能</h2><p>可以用于实现：</p>
 <ul>
@@ -466,7 +277,7 @@
 <p>主要用来修改数据包的服务类型，生存周期，为数据包设置标记，实现流量整形、策略</p>
 <p>路由等，对应的内核模块为：<code>iptable_mangle</code>，</p>
 <p>其表内包括五个链：<code>prerouting</code>、<code>postrouting</code>、<code>input</code>、<code>output</code>、<code>forward</code>;</p>
-<h3 id="1-5-3-流程图"><a href="#1-5-3-流程图" class="headerlink" title="1.5.3 流程图"></a>1.5.3 流程图</h3><p><img src="/../../../img/image-20240523093136580.png" srcset="/img/loading.gif" lazyload alt="image-20240523093136580"></p>
+<h3 id="1-5-3-流程图"><a href="#1-5-3-流程图" class="headerlink" title="1.5.3 流程图"></a>1.5.3 流程图</h3><p><img src="/../../../img/image-20240523093136580.png" alt="image-20240523093136580"></p>
 <h2 id="1-6-iptables的命令参数"><a href="#1-6-iptables的命令参数" class="headerlink" title="1.6 iptables的命令参数"></a>1.6 iptables的命令参数</h2><table>
 <thead>
 <tr>
@@ -628,157 +439,52 @@
 </tr>
 </tbody></table>
 <h1 id="二、实操"><a href="#二、实操" class="headerlink" title="二、实操"></a>二、实操</h1><h2 id="2-1-环境准备"><a href="#2-1-环境准备" class="headerlink" title="2.1 环境准备"></a>2.1 环境准备</h2><p>1）虚拟机准备</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">m01 10.0.0.61 172.16.1.61
-web01 10.0.0.7 172.16.1.7
-web02 10.0.0.8 172.16.1.8</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">m01 10.0.0.61 172.16.1.61</span><br><span class="line">web01 10.0.0.7 172.16.1.7</span><br><span class="line">web02 10.0.0.8 172.16.1.8</span><br></pre></td></tr></table></figure>
 
 <p>2）安装</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@mn01[ ~]#yum install -y iptables-services</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ ~]#yum install -y iptables-services</span><br></pre></td></tr></table></figure>
 
 <p>主要配置文件</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@mn01[ ~]#rpm -ql iptables-services
-# 防火墙配置文件
-&#x2F;etc&#x2F;sysconfig&#x2F;ip6tables
-&#x2F;etc&#x2F;sysconfig&#x2F;iptables
-# 防火墙服务的配置文件(systemctl)
-&#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;ip6tables.service
-&#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;iptables.service
-...
-
-[root@mn01[ ~]#rpm -ql iptables | grep iptables
-...
-&#x2F;usr&#x2F;sbin&#x2F;iptables	# iptables命令
-&#x2F;usr&#x2F;sbin&#x2F;iptables-restore	# 恢复
-&#x2F;usr&#x2F;sbin&#x2F;iptables-save	# iptables规则 输出（保存）
-...</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ ~]#rpm -ql iptables-services</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">防火墙配置文件</span></span><br><span class="line">/etc/sysconfig/ip6tables</span><br><span class="line">/etc/sysconfig/iptables</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">防火墙服务的配置文件(systemctl)</span></span><br><span class="line">/usr/lib/systemd/system/ip6tables.service</span><br><span class="line">/usr/lib/systemd/system/iptables.service</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">[root@mn01[ ~]#rpm -ql iptables | grep iptables</span><br><span class="line">...</span><br><span class="line">/usr/sbin/iptables	# iptables命令</span><br><span class="line">/usr/sbin/iptables-restore	# 恢复</span><br><span class="line">/usr/sbin/iptables-save	# iptables规则 输出（保存）</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 
 <p>3）iptable模块加载到内核中</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 写入文件，用久生效，如只想临时生效，执行modprobe命令即可
-cat &gt;&gt;&#x2F;etc&#x2F;rc.local&lt;&lt;EOF
-modprobe ip_tables
-modprobe iptable_filter
-modprobe iptable_nat
-modprobe ip_conntrack
-modprobe ip_conntrack_ftp
-modprobe ip_nat_ftp
-modprobe ipt_state
-EOF
-
-# source生效 
-[root@mn01[ ~]#source &#x2F;etc&#x2F;rc.local </code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">写入文件，用久生效，如只想临时生效，执行modprobe命令即可</span></span><br><span class="line">cat &gt;&gt;/etc/rc.local&lt;&lt;EOF</span><br><span class="line">modprobe ip_tables</span><br><span class="line">modprobe iptable_filter</span><br><span class="line">modprobe iptable_nat</span><br><span class="line">modprobe ip_conntrack</span><br><span class="line">modprobe ip_conntrack_ftp</span><br><span class="line">modprobe ip_nat_ftp</span><br><span class="line">modprobe ipt_state</span><br><span class="line">EOF</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">source</span>生效</span> </span><br><span class="line">[root@mn01[ ~]#source /etc/rc.local </span><br></pre></td></tr></table></figure>
 
 <p>查看内核模块，是否生效</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@mn01[ ~]#lsmod | egrep &#39;filter|nat|ipt&#39;
-nf_nat_ftp             12809  0 
-nf_conntrack_ftp       18478  1 nf_nat_ftp
-iptable_nat            12875  0 
-nf_nat_ipv4            14115  1 iptable_nat
-nf_nat                 26583  2 nf_nat_ftp,nf_nat_ipv4
-ipt_REJECT             12541  2 
-nf_reject_ipv4         13373  1 ipt_REJECT
-nf_conntrack          139264  7 nf_nat_ftp,nf_nat,xt_state,nf_nat_ipv4,xt_conntrack,nf_conntrack_ftp,nf_conntrack_ipv4
-iptable_filter         12810  1 
-ip_tables              27126  2 iptable_filter,iptable_nat
-libcrc32c              12644  3 xfs,nf_nat,nf_conntrack</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ ~]#lsmod | egrep &#x27;filter|nat|ipt&#x27;</span><br><span class="line">nf_nat_ftp             12809  0 </span><br><span class="line">nf_conntrack_ftp       18478  1 nf_nat_ftp</span><br><span class="line">iptable_nat            12875  0 </span><br><span class="line">nf_nat_ipv4            14115  1 iptable_nat</span><br><span class="line">nf_nat                 26583  2 nf_nat_ftp,nf_nat_ipv4</span><br><span class="line">ipt_REJECT             12541  2 </span><br><span class="line">nf_reject_ipv4         13373  1 ipt_REJECT</span><br><span class="line">nf_conntrack          139264  7 nf_nat_ftp,nf_nat,xt_state,nf_nat_ipv4,xt_conntrack,nf_conntrack_ftp,nf_conntrack_ipv4</span><br><span class="line">iptable_filter         12810  1 </span><br><span class="line">ip_tables              27126  2 iptable_filter,iptable_nat</span><br><span class="line">libcrc32c              12644  3 xfs,nf_nat,nf_conntrack</span><br></pre></td></tr></table></figure>
 
 <p>4）启动服务</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 先停止firewalld服务
-[root@mn01[ ~]#systemctl stop firewalld
-[root@mn01[ ~]#systemctl disable firewalld
-
-# 再启动iptables
-[root@mn01[ ~]#systemctl enable iptables
-Created symlink from &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;basic.target.wants&#x2F;iptables.service to &#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;iptables.service.
-[root@mn01[ ~]#systemctl start iptables</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">先停止firewalld服务</span></span><br><span class="line">[root@mn01[ ~]#systemctl stop firewalld</span><br><span class="line">[root@mn01[ ~]#systemctl disable firewalld</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">再启动iptables</span></span><br><span class="line">[root@mn01[ ~]#systemctl enable iptables</span><br><span class="line">Created symlink from /etc/systemd/system/basic.target.wants/iptables.service to /usr/lib/systemd/system/iptables.service.</span><br><span class="line">[root@mn01[ ~]#systemctl start iptables</span><br></pre></td></tr></table></figure>
 
 <p>5）查看表中的规则，默认查看filter表</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@mn01[ ~]#iptables -nL
-Chain INPUT (policy ACCEPT)
-target     prot opt source               destination         
-ACCEPT     all  --  0.0.0.0&#x2F;0            0.0.0.0&#x2F;0            state RELATED,ESTABLISHED
-ACCEPT     icmp --  0.0.0.0&#x2F;0            0.0.0.0&#x2F;0           
-ACCEPT     all  --  0.0.0.0&#x2F;0            0.0.0.0&#x2F;0           
-ACCEPT     tcp  --  0.0.0.0&#x2F;0            0.0.0.0&#x2F;0            state NEW tcp dpt:22
-REJECT     all  --  0.0.0.0&#x2F;0            0.0.0.0&#x2F;0            reject-with icmp-host-prohibited
-
-Chain FORWARD (policy ACCEPT)
-target     prot opt source               destination         
-REJECT     all  --  0.0.0.0&#x2F;0            0.0.0.0&#x2F;0            reject-with icmp-host-prohibited
-
-Chain OUTPUT (policy ACCEPT)
-target     prot opt source               destination         </code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ ~]#iptables -nL</span><br><span class="line">Chain INPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line">ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0            state RELATED,ESTABLISHED</span><br><span class="line">ACCEPT     icmp --  0.0.0.0/0            0.0.0.0/0           </span><br><span class="line">ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           </span><br><span class="line">ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            state NEW tcp dpt:22</span><br><span class="line">REJECT     all  --  0.0.0.0/0            0.0.0.0/0            reject-with icmp-host-prohibited</span><br><span class="line"></span><br><span class="line">Chain FORWARD (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line">REJECT     all  --  0.0.0.0/0            0.0.0.0/0            reject-with icmp-host-prohibited</span><br><span class="line"></span><br><span class="line">Chain OUTPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br></pre></td></tr></table></figure>
 
 <p>查看指定表中的规则</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@mn01[ ~]#iptables -t nat -nL
-Chain PREROUTING (policy ACCEPT)
-target     prot opt source               destination         
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ ~]#iptables -t nat -nL</span><br><span class="line">Chain PREROUTING (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line"></span><br><span class="line">Chain INPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line"></span><br><span class="line">Chain OUTPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line"></span><br><span class="line">Chain POSTROUTING (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination       </span><br></pre></td></tr></table></figure>
 
-Chain INPUT (policy ACCEPT)
-target     prot opt source               destination         
-
-Chain OUTPUT (policy ACCEPT)
-target     prot opt source               destination         
-
-Chain POSTROUTING (policy ACCEPT)
-target     prot opt source               destination       </code></pre></div></figure>
-
-<p><img src="/../../../img/image-20240523095135715.png" srcset="/img/loading.gif" lazyload alt="image-20240523095135715"></p>
+<p><img src="/../../../img/image-20240523095135715.png" alt="image-20240523095135715"></p>
 <h2 id="2-2-配置filter表规则"><a href="#2-2-配置filter表规则" class="headerlink" title="2.2 配置filter表规则"></a>2.2 配置filter表规则</h2><h3 id="2-2-1-备份并清空"><a href="#2-2-1-备份并清空" class="headerlink" title="2.2.1 备份并清空"></a>2.2.1 备份并清空</h3><p>正式配置之前，先备份，清空规则</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@mn01[ ~]#iptables -F	# Flush清空
-[root@mn01[ ~]#iptables -X	# 删除用户自定义的链
-[root@mn01[ ~]#iptables -Z	# 链的计数重置为0
-
-# 确保清空
-[root@mn01[ ~]#iptables -nL
-Chain INPUT (policy ACCEPT)
-target     prot opt source               destination         
-
-Chain FORWARD (policy ACCEPT)
-target     prot opt source               destination         
-
-Chain OUTPUT (policy ACCEPT)
-target     prot opt source               destination    </code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ ~]#iptables -F	# Flush清空</span><br><span class="line">[root@mn01[ ~]#iptables -X	# 删除用户自定义的链</span><br><span class="line">[root@mn01[ ~]#iptables -Z	# 链的计数重置为0</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">确保清空</span></span><br><span class="line">[root@mn01[ ~]#iptables -nL</span><br><span class="line">Chain INPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line"></span><br><span class="line">Chain FORWARD (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line"></span><br><span class="line">Chain OUTPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination    </span><br></pre></td></tr></table></figure>
 
 <h3 id="2-2-2-禁止访问22端口"><a href="#2-2-2-禁止访问22端口" class="headerlink" title="2.2.2 禁止访问22端口"></a>2.2.2 禁止访问22端口</h3><p>配置：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@mn01[ ~]#iptables -t  filter -A INPUT -p tcp --dport 22 -j DROP
-# 配置后ssh链接会断开
-
-# 查看规则
-
-# 删除规则</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ ~]#iptables -t  filter -A INPUT -p tcp --dport 22 -j DROP</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置后ssh链接会断开</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看规则</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除规则</span></span><br></pre></td></tr></table></figure>
 
 <p>虚拟机上查看规则</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 显示序号
-iptables -t filter -nL --line-number</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示序号</span></span><br><span class="line">iptables -t filter -nL --line-number</span><br></pre></td></tr></table></figure>
 
-<p><img src="/../../../img/image-20240523100757954.png" srcset="/img/loading.gif" lazyload alt="image-20240523100757954"></p>
+<p><img src="/../../../img/image-20240523100757954.png" alt="image-20240523100757954"></p>
 <p>删除规则</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">iptables -t filter -D INPUT 1 #根据序号删除</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -t filter -D INPUT 1 #根据序号删除</span><br></pre></td></tr></table></figure>
 
-<p><img src="/../../../img/image-20240523100936333.png" srcset="/img/loading.gif" lazyload alt="image-20240523100936333"></p>
+<p><img src="/../../../img/image-20240523100936333.png" alt="image-20240523100936333"></p>
 <p>删除完，又能重新ssh访问</p>
 <h3 id="2-2-3-禁止指定IP"><a href="#2-2-3-禁止指定IP" class="headerlink" title="2.2.3 禁止指定IP"></a>2.2.3 禁止指定IP</h3><p>配置</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@mn01[ ~]#iptables -I INPUT -s 10.0.0.7 -j DROP
-[root@mn01[ ~]#iptables -I INPUT -s 172.16.1.7 -j DROP
-
-# 查看
-[root@mn01[ ~]#iptables -nL --line-number
-Chain INPUT (policy ACCEPT)
-num  target     prot opt source               destination         
-1    DROP       all  --  172.16.1.7           0.0.0.0&#x2F;0           
-2    DROP       all  --  10.0.0.7             0.0.0.0&#x2F;0           
-3               all  --  10.0.0.7             0.0.0.0&#x2F;0           
-
-Chain FORWARD (policy ACCEPT)
-num  target     prot opt source               destination         
-
-Chain OUTPUT (policy ACCEPT)
-num  target     prot opt source               destination     </code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ ~]#iptables -I INPUT -s 10.0.0.7 -j DROP</span><br><span class="line">[root@mn01[ ~]#iptables -I INPUT -s 172.16.1.7 -j DROP</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看</span></span><br><span class="line">[root@mn01[ ~]#iptables -nL --line-number</span><br><span class="line">Chain INPUT (policy ACCEPT)</span><br><span class="line">num  target     prot opt source               destination         </span><br><span class="line">1    DROP       all  --  172.16.1.7           0.0.0.0/0           </span><br><span class="line">2    DROP       all  --  10.0.0.7             0.0.0.0/0           </span><br><span class="line">3               all  --  10.0.0.7             0.0.0.0/0           </span><br><span class="line"></span><br><span class="line">Chain FORWARD (policy ACCEPT)</span><br><span class="line">num  target     prot opt source               destination         </span><br><span class="line"></span><br><span class="line">Chain OUTPUT (policy ACCEPT)</span><br><span class="line">num  target     prot opt source               destination     </span><br></pre></td></tr></table></figure>
 
 <p>封禁后ping不通、ssh也不通</p>
-<p><img src="/../../../img/image-20240523101321910.png" srcset="/img/loading.gif" lazyload alt="image-20240523101321910"></p>
+<p><img src="/../../../img/image-20240523101321910.png" alt="image-20240523101321910"></p>
 <h3 id="2-2-4-禁止指定网段"><a href="#2-2-4-禁止指定网段" class="headerlink" title="2.2.4 禁止指定网段"></a>2.2.4 禁止指定网段</h3><p>配置，禁止10.0.0.0&#x2F;24网段访问8080端口  </p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@mn01[ ~]#iptables -I INPUT -s 10.0.0.0&#x2F;24 -p tcp --dport 8080 -j DROP</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ ~]#iptables -I INPUT -s 10.0.0.0/24 -p tcp --dport 8080 -j DROP</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>参数理解：</p>
@@ -789,52 +495,35 @@ num  target     prot opt source               destination     </code></pre></div
 <p>-j：禁止访问</p>
 </blockquote>
 <h3 id="2-2-5-只允许指定网段连入"><a href="#2-2-5-只允许指定网段连入" class="headerlink" title="2.2.5 只允许指定网段连入"></a>2.2.5 只允许指定网段连入</h3><p>实现阿里云白名单功能 :默认是拒绝，开放部分端口、网段，如</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">allow 10.0.0.0&#x2F;24;
-deny all;</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">allow 10.0.0.0/24;</span><br><span class="line">deny all;</span><br></pre></td></tr></table></figure>
 
 <p>配置方法一，利用<code>!</code>排除</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">iptables -I INPUT ! -s 172.16.1.0&#x2F;24 -j DROP
-iptables -I INPUT ! -s 10.0.0.0&#x2F;24 -j DROP</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">iptables -I INPUT ! -s 172.16.1.0/24 -j DROP</span><br><span class="line">iptables -I INPUT ! -s 10.0.0.0/24 -j DROP</span><br></pre></td></tr></table></figure>
 
 <p>配置方法二：修改链的默认规则，默认拒绝，再添加允许</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">#修改默认规则
-iptables -P INPUT DROP
-
-# 再允许
-iptables -t filter -I INPUT -s 10.0.0.0&#x2F;24 -j ACCEPT</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">修改默认规则</span></span><br><span class="line">iptables -P INPUT DROP</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">再允许</span></span><br><span class="line">iptables -t filter -I INPUT -s 10.0.0.0/24 -j ACCEPT</span><br></pre></td></tr></table></figure>
 
 
 
 <h3 id="2-2-6-指定多个端口"><a href="#2-2-6-指定多个端口" class="headerlink" title="2.2.6 指定多个端口"></a>2.2.6 指定多个端口</h3><p>如果需要封禁多个端口，一个个来比较麻烦</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 效率低
-iptables -I INPUT -p tcp --dport 8888 -j DROP
-iptables -I INPUT -p tcp --dport 9999 -j DROP</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">效率低</span></span><br><span class="line">iptables -I INPUT -p tcp --dport 8888 -j DROP</span><br><span class="line">iptables -I INPUT -p tcp --dport 9999 -j DROP</span><br></pre></td></tr></table></figure>
 
 <p>可以通过选项，一次指定多个端口</p>
 <p><code>-m multiport -p tcp --dport 80,443  </code></p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">iptables -A INPUT -m multiport -p tcp --dport 80,443 -j ACCEP</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -m multiport -p tcp --dport 80,443 -j ACCEP</span><br></pre></td></tr></table></figure>
 
 <p>如果端口是连续的，可以不加<code>-m multiport</code>选项</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">iptables -I INPUT -p tcp --dport 1024:65535 -j DROP</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -I INPUT -p tcp --dport 1024:65535 -j DROP</span><br></pre></td></tr></table></figure>
 
 
 
 <h3 id="2-2-7-匹配ICMP类型"><a href="#2-2-7-匹配ICMP类型" class="headerlink" title="2.2.7 匹配ICMP类型"></a>2.2.7 匹配ICMP类型</h3><p>通过防火墙规则，控制是否可以ping通</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 精确写法
-iptables -I INPUT -p icmp --icmp-type 8 -j DROP
-
-# 简单写法
-iptables -I INPUT -p icmp -j DROP</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">精确写法</span></span><br><span class="line">iptables -I INPUT -p icmp --icmp-type 8 -j DROP</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">简单写法</span></span><br><span class="line">iptables -I INPUT -p icmp -j DROP</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>扩展：</p>
 <p>也可以通过修改内核参数，来控制ping</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">&gt;[root@m01 ~]# cat &#x2F;etc&#x2F;sysctl.conf
-&gt;#&#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;icmp_echo_ignore_all
-&gt;#net网络 ipv4协议 icmp协议忽略所有
-&gt;net.ipv4.icmp_echo_ignore_all &#x3D; 1
-&gt;#生效
-&gt;sysctl -p</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">[root@m01 ~]# <span class="built_in">cat</span> /etc/sysctl.conf</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"><span class="comment">#/proc/sys/net/ipv4/icmp_echo_ignore_all</span></span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"><span class="comment">#net网络 ipv4协议 icmp协议忽略所有</span></span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">net.ipv4.icmp_echo_ignore_all = 1</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"><span class="comment">#生效</span></span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">sysctl -p</span></span><br></pre></td></tr></table></figure>
 </blockquote>
 <h3 id="2-2-8-匹配网络状态（TCP-IP连接状态）"><a href="#2-2-8-匹配网络状态（TCP-IP连接状态）" class="headerlink" title="2.2.8 匹配网络状态（TCP&#x2F;IP连接状态）"></a>2.2.8 匹配网络状态（TCP&#x2F;IP连接状态）</h3><p><code>-m state --state</code> 状态即可</p>
 <ul>
@@ -843,104 +532,37 @@ iptables -I INPUT -p icmp -j DROP</code></pre></div></figure>
 <li>RELATED：正在启动的新连接</li>
 <li>INVALID：非法或无法识别的</li>
 </ul>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@mn01[ ~]#iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-[root@mn01[ ~]#iptables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ ~]#iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT</span><br><span class="line">[root@mn01[ ~]#iptables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT</span><br></pre></td></tr></table></figure>
 
 
 
 <h3 id="2-2-9-限制并发及速率"><a href="#2-2-9-限制并发及速率" class="headerlink" title="2.2.9 限制并发及速率"></a>2.2.9 限制并发及速率</h3><p><code>-m limit</code>限制模块</p>
 <p><code>--limit</code>选项：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">#每分钟只能有10个数据包，即每6秒生成一个
--m limit --limit 10&#x2F;minute 
-
-# 指定时间内的请求速率”n”为速率，后面为时间分别为：秒 分 时
--m limit --limit n&#x2F;&#123;second&#x2F;minute&#x2F;hour&#125;:</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">每分钟只能有10个数据包，即每6秒生成一个</span></span><br><span class="line">-m limit --limit 10/minute </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">指定时间内的请求速率”n”为速率，后面为时间分别为：秒 分 时</span></span><br><span class="line">-m limit --limit n/&#123;second/minute/hour&#125;:</span><br></pre></td></tr></table></figure>
 
 <p><code>--limit-burst</code>选项：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 每6秒释放工牌 给别人使用
-# 10个数据包前5个 1秒1个工牌 从第6个开始 每6秒 才能释放1个工牌
--m limit --limit 10&#x2F;minute --limit-burst 5 </code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">每6秒释放工牌 给别人使用</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">10个数据包前5个 1秒1个工牌 从第6个开始 每6秒 才能释放1个工牌</span></span><br><span class="line">-m limit --limit 10/minute --limit-burst 5 </span><br></pre></td></tr></table></figure>
 
 <p>实验：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">#清空
-iptables -F
-
-# 拒绝所有
-iptables -P INPUT DROP
-
-# 只允许icmp，但是限制速率
-iptables -I INPUT -p icmp -m limit --limit 10&#x2F;minute --limit-burst 5 -j ACCEPT</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">清空</span></span><br><span class="line">iptables -F</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">拒绝所有</span></span><br><span class="line">iptables -P INPUT DROP</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">只允许icmp，但是限制速率</span></span><br><span class="line">iptables -I INPUT -p icmp -m limit --limit 10/minute --limit-burst 5 -j ACCEPT</span><br></pre></td></tr></table></figure>
 
 <p>测试：用web01 ping</p>
-<p><img src="/../../../img/image-20240523152333677.png" srcset="/img/loading.gif" lazyload alt="image-20240523152333677"></p>
+<p><img src="/../../../img/image-20240523152333677.png" alt="image-20240523152333677"></p>
 <h3 id="2-2-10-防火墙规则的保存与恢复（重要）"><a href="#2-2-10-防火墙规则的保存与恢复（重要）" class="headerlink" title="2.2.10 防火墙规则的保存与恢复（重要）"></a>2.2.10 防火墙规则的保存与恢复（重要）</h3><p><code>iptables-save</code> 进行备份,默认输出到屏幕</p>
 <p><code>iptables-restore</code> 进行恢复，加上文件</p>
 <h4 id="2-2-10-1-保存"><a href="#2-2-10-1-保存" class="headerlink" title="2.2.10.1 保存"></a>2.2.10.1 保存</h4><p>案例：保存配置到<code>/etc/sysconfig/iptables</code>  </p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 查查看现在的规则
-[root@mn01[ ~]#iptables -nL
-Chain INPUT (policy ACCEPT)
-target     prot opt source               destination         
-ACCEPT     icmp --  0.0.0.0&#x2F;0            0.0.0.0&#x2F;0            limit: avg 10&#x2F;min burst 5
-
-Chain FORWARD (policy ACCEPT)
-target     prot opt source               destination         
-
-Chain OUTPUT (policy ACCEPT)
-target     prot opt source               destination         
-
-# 保存
-[root@mn01[ ~]#iptables-save &gt;&#x2F;etc&#x2F;sysconfig&#x2F;iptables
-
-# 保存后的文件
-[root@mn01[ ~]#cat &#x2F;etc&#x2F;sysconfig&#x2F;iptables
-# Generated by iptables-save v1.4.21 on Thu May 23 15:26:57 2024
-*nat
-:PREROUTING ACCEPT [46:3292]
-:INPUT ACCEPT [17:1184]
-:OUTPUT ACCEPT [121:7862]
-:POSTROUTING ACCEPT [121:7862]
-COMMIT
-# Completed on Thu May 23 15:26:57 2024
-# Generated by iptables-save v1.4.21 on Thu May 23 15:26:57 2024
-*filter
-:INPUT ACCEPT [113:6572]
-:FORWARD ACCEPT [0:0]
-:OUTPUT ACCEPT [59:5420]
--A INPUT -p icmp -m limit --limit 10&#x2F;min -j ACCEPT
-COMMIT
-# Completed on Thu May 23 15:26:57 2024</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查查看现在的规则</span></span><br><span class="line">[root@mn01[ ~]#iptables -nL</span><br><span class="line">Chain INPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line">ACCEPT     icmp --  0.0.0.0/0            0.0.0.0/0            limit: avg 10/min burst 5</span><br><span class="line"></span><br><span class="line">Chain FORWARD (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line"></span><br><span class="line">Chain OUTPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">保存</span></span><br><span class="line">[root@mn01[ ~]#iptables-save &gt;/etc/sysconfig/iptables</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">保存后的文件</span></span><br><span class="line">[root@mn01[ ~]#cat /etc/sysconfig/iptables</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Generated by iptables-save v1.4.21 on Thu May 23 15:26:57 2024</span></span><br><span class="line">*nat</span><br><span class="line">:PREROUTING ACCEPT [46:3292]</span><br><span class="line">:INPUT ACCEPT [17:1184]</span><br><span class="line">:OUTPUT ACCEPT [121:7862]</span><br><span class="line">:POSTROUTING ACCEPT [121:7862]</span><br><span class="line">COMMIT</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Completed on Thu May 23 15:26:57 2024</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Generated by iptables-save v1.4.21 on Thu May 23 15:26:57 2024</span></span><br><span class="line">*filter</span><br><span class="line">:INPUT ACCEPT [113:6572]</span><br><span class="line">:FORWARD ACCEPT [0:0]</span><br><span class="line">:OUTPUT ACCEPT [59:5420]</span><br><span class="line">-A INPUT -p icmp -m limit --limit 10/min -j ACCEPT</span><br><span class="line">COMMIT</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Completed on Thu May 23 15:26:57 2024</span></span><br></pre></td></tr></table></figure>
 
 <h4 id="2-2-10-2-恢复"><a href="#2-2-10-2-恢复" class="headerlink" title="2.2.10.2 恢复"></a>2.2.10.2 恢复</h4><p>先删除有的规则</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@mn01[ ~]#iptables -D INPUT 1
-[root@mn01[ ~]#iptables -nL
-Chain INPUT (policy ACCEPT)
-target     prot opt source               destination         
-
-Chain FORWARD (policy ACCEPT)
-target     prot opt source               destination         
-
-Chain OUTPUT (policy ACCEPT)
-target     prot opt source               destination        </code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ ~]#iptables -D INPUT 1</span><br><span class="line">[root@mn01[ ~]#iptables -nL</span><br><span class="line">Chain INPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line"></span><br><span class="line">Chain FORWARD (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line"></span><br><span class="line">Chain OUTPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination        </span><br></pre></td></tr></table></figure>
 
 <p>再恢复</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@mn01[ ~]#iptables-restore &lt;&#x2F;etc&#x2F;sysconfig&#x2F;iptables
-# 已复原
-[root@mn01[ ~]#iptables -nL
-Chain INPUT (policy ACCEPT)
-target     prot opt source               destination         
-ACCEPT     icmp --  0.0.0.0&#x2F;0            0.0.0.0&#x2F;0            limit: avg 10&#x2F;min burst 5
-
-Chain FORWARD (policy ACCEPT)
-target     prot opt source               destination         
-
-Chain OUTPUT (policy ACCEPT)
-target     prot opt source               destination         </code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ ~]#iptables-restore &lt;/etc/sysconfig/iptables</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">已复原</span></span><br><span class="line">[root@mn01[ ~]#iptables -nL</span><br><span class="line">Chain INPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line">ACCEPT     icmp --  0.0.0.0/0            0.0.0.0/0            limit: avg 10/min burst 5</span><br><span class="line"></span><br><span class="line">Chain FORWARD (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line"></span><br><span class="line">Chain OUTPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>补充：</p>
 <p>重启iptables服务，也可以恢复配置</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">&gt;# 会自动读取&#x2F;etc&#x2F;sysconfig&#x2F;iptables内容
-&gt;systemctl restart iptables </code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"><span class="comment"># 会自动读取/etc/sysconfig/iptables内容</span></span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">systemctl restart iptables</span> </span><br></pre></td></tr></table></figure>
 </blockquote>
 <h3 id="2-2-11-filter表的实际生产用法"><a href="#2-2-11-filter表的实际生产用法" class="headerlink" title="2.2.11 filter表的实际生产用法"></a>2.2.11 filter表的实际生产用法</h3><p>iptables配置方式</p>
 <ul>
@@ -949,501 +571,218 @@ target     prot opt source               destination         </code></pre></div>
 </ul>
 <p>生产中建议采用<code>看电影模式</code>，在设置以下白名单</p>
 <p>1、ssh可以连接进来</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 清空
-iptables -F
-iptables -X
-iptables -Z
-
-# 配置
-iptables -A INPUT -p tcp Վʔdport 22 -j ACCEPT</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">清空</span></span><br><span class="line">iptables -F</span><br><span class="line">iptables -X</span><br><span class="line">iptables -Z</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置</span></span><br><span class="line">iptables -A INPUT -p tcp Վʔdport 22 -j ACCEPT</span><br></pre></td></tr></table></figure>
 
 <p>2、允许本机回环lo接口数据流量流出与流入  </p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># -i 数据进入的时候
-iptables -A INPUT -i lo -j ACCEPT
-# -o 数据流出的时候
-iptables -A OUTPUT -o lo -j ACCEPT</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-i 数据进入的时候</span></span><br><span class="line">iptables -A INPUT -i lo -j ACCEPT</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-o 数据流出的时候</span></span><br><span class="line">iptables -A OUTPUT -o lo -j ACCEPT</span><br></pre></td></tr></table></figure>
 
 <p>3、配置默认规则，放行80、443端口</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">iptables -A INPUT -m multiport -p tcp --dport 443,80 -j ACCEPT</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -m multiport -p tcp --dport 443,80 -j ACCEPT</span><br></pre></td></tr></table></figure>
 
 <p>4、允许网段访问</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">iptables -A INPUT -s 10.0.0.0&#x2F;24 -j ACCEPT
-iptables -A INPUT -s 172.16.1.0&#x2F;24 -j ACCEPT</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -s 10.0.0.0/24 -j ACCEPT</span><br><span class="line">iptables -A INPUT -s 172.16.1.0/24 -j ACCEPT</span><br></pre></td></tr></table></figure>
 
 <p>5、保存配置</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">iptables-save</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables-save</span><br></pre></td></tr></table></figure>
 
 <h2 id="2-3-配置NAT表规则"><a href="#2-3-配置NAT表规则" class="headerlink" title="2.3 配置NAT表规则"></a>2.3 配置NAT表规则</h2><h3 id="2-3-1-实现共享上网🌟"><a href="#2-3-1-实现共享上网🌟" class="headerlink" title="2.3.1 实现共享上网🌟"></a>2.3.1 实现共享上网🌟</h3><h4 id="1）原理"><a href="#1）原理" class="headerlink" title="1）原理"></a>1）原理</h4><p>172.16.1.7内网服务器，通过iptables实现共享上网</p>
-<p><img src="/../../../img/image-20240523155941222.png" srcset="/img/loading.gif" lazyload alt="image-20240523155941222"></p>
+<p><img src="/../../../img/image-20240523155941222.png" alt="image-20240523155941222"></p>
 <p>相关命令如下：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">iptables -t nat -A POSTROUTING -s 172.16.1.7 -j SNAT --to-source 10.0.0.61
-
-# 1. 指定nat表,配置POSTROUTING链
-# 2. 源ip是172.16.1.7这台主机进行共享上网,如果是多台(-s 172.16.1.0&#x2F;24)
-# 3. 指定使用SNAT功能,源地址转换
-# 4. 通过SNAT功能把数据包中的源ip地址改为防火墙公网的ip地址.(10.0.0.61)</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">iptables -t nat -A POSTROUTING -s 172.16.1.7 -j SNAT --to-source 10.0.0.61</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">1. 指定nat表,配置POSTROUTING链</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">2. 源ip是172.16.1.7这台主机进行共享上网,如果是多台(-s 172.16.1.0/24)</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">3. 指定使用SNAT功能,源地址转换</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">4. 通过SNAT功能把数据包中的源ip地址改为防火墙公网的ip地址.(10.0.0.61)</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>温馨提示：</p>
 <p>如果公网ip不固定, -j SNAT –to-source 10.0.0.61 可以写为 -j MASQUERADE 伪装成公网ip  </p>
 </blockquote>
 <h4 id="2）环境准备"><a href="#2）环境准备" class="headerlink" title="2）环境准备"></a>2）环境准备</h4><p>关闭web01的公网网卡（10.0.0.7），只保留内网172网段的IP</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@web01[ ~]#ifconfig ens33 down</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@web01[ ~]#ifconfig ens33 down</span><br></pre></td></tr></table></figure>
 
 
 
 <h4 id="3）配置NAT共享上网"><a href="#3）配置NAT共享上网" class="headerlink" title="3）配置NAT共享上网"></a>3）配置NAT共享上网</h4><p>命令</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 配置iptables
-iptables -t nat -A POSTROUTING -s 172.16.1.0&#x2F;24 -j SNAT --to-source 10.0.0.61
-
-# -- 如公网IP不固定，改用这条
-iptables -t nat -A POSTROUTING -s 172.16.1.0&#x2F;24 -j MASQUERADE
-
-# 开启内核转发🌟🌟
-echo &#39;net.ipv4.ip_forward &#x3D; 1&#39; &gt;&gt; &#x2F;etc&#x2F;sysctl.conf
-# 生效
-sysctl -p</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置iptables</span></span><br><span class="line">iptables -t nat -A POSTROUTING -s 172.16.1.0/24 -j SNAT --to-source 10.0.0.61</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-- 如公网IP不固定，改用这条</span></span><br><span class="line">iptables -t nat -A POSTROUTING -s 172.16.1.0/24 -j MASQUERADE</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">开启内核转发🌟🌟</span></span><br><span class="line">echo &#x27;net.ipv4.ip_forward = 1&#x27; &gt;&gt; /etc/sysctl.conf</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">生效</span></span><br><span class="line">sysctl -p</span><br></pre></td></tr></table></figure>
 
 
 
 <h4 id="4）web01服务器设置网关"><a href="#4）web01服务器设置网关" class="headerlink" title="4）web01服务器设置网关"></a>4）web01服务器设置网关</h4><p>将网关指向172.16.1.61，并设置DNS</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@web01[ ~]#cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens36 
-NMAE&#x3D;ens36
-DEVICE&#x3D;ens36
-IPADDR&#x3D;172.16.1.7
-PREFIX&#x3D;24
-ONBOOT&#x3D;yes
-BOOPROTO&#x3D;static
-GATEWAY&#x3D;172.16.1.61	# 网关
-DNS1&#x3D;223.5.5.5	# DNS</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@web01[ ~]#cat /etc/sysconfig/network-scripts/ifcfg-ens36 </span><br><span class="line">NMAE=ens36</span><br><span class="line">DEVICE=ens36</span><br><span class="line">IPADDR=172.16.1.7</span><br><span class="line">PREFIX=24</span><br><span class="line">ONBOOT=yes</span><br><span class="line">BOOPROTO=static</span><br><span class="line">GATEWAY=172.16.1.61	# 网关</span><br><span class="line">DNS1=223.5.5.5	# DNS</span><br></pre></td></tr></table></figure>
 
 
 
 <h4 id="5）测试"><a href="#5）测试" class="headerlink" title="5）测试"></a>5）测试</h4><p>ping百度，虽然无10网段IP，但仍然可以通</p>
-<p><img src="/../../../img/image-20240523161946286.png" srcset="/img/loading.gif" lazyload alt="image-20240523161946286"></p>
+<p><img src="/../../../img/image-20240523161946286.png" alt="image-20240523161946286"></p>
 <h3 id="2-3-2-实现端口转发🌟"><a href="#2-3-2-实现端口转发🌟" class="headerlink" title="2.3.2 实现端口转发🌟"></a>2.3.2 实现端口转发🌟</h3><p>端口转发常用于解决用户进来的问题，如：外部的用户访问内网的某个服务器，端口…</p>
 <p>vmware也能设置端口映射，比如我想在真实机，通过<a href="http://127.0.0.1:9000访问到http://10.0.0.7:80，可以按图示设置端口映射">http://127.0.0.1:9000访问到http://10.0.0.7:80，可以按图示设置端口映射</a></p>
-<p><img src="/../../../img/image-20240523163857176.png" srcset="/img/loading.gif" lazyload alt="image-20240523163857176"></p>
-<h4 id="1）原理-1"><a href="#1）原理-1" class="headerlink" title="1）原理"></a>1）原理</h4><p><img src="/../../../img/image-20240523163311287.png" srcset="/img/loading.gif" lazyload alt="image-20240523163311287"></p>
+<p><img src="/../../../img/image-20240523163857176.png" alt="image-20240523163857176"></p>
+<h4 id="1）原理-1"><a href="#1）原理-1" class="headerlink" title="1）原理"></a>1）原理</h4><p><img src="/../../../img/image-20240523163311287.png" alt="image-20240523163311287"></p>
 <h4 id="2）配置"><a href="#2）配置" class="headerlink" title="2）配置"></a>2）配置</h4><p>作用：访问10.0.0.61:9000，相当于访问172.16.1.7:22</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 配置sysctl.conf
-略过
-
-# 开启系统nat模块（重要！！）
-iptables -t nat -A POSTROUTING -j MASQUERADE
-
-# 配置端口转发
-iptables -t nat -A PREROUTING -d 10.0.0.61 -p tcp --dport 388 -j DNAT --to-destination 172.16.1.7:22
-
-# 查看
-[root@mn01[ ~]#iptables -t nat -nL
-Chain PREROUTING (policy ACCEPT)
-target     prot opt source               destination         
-DNAT       tcp  --  0.0.0.0&#x2F;0            10.0.0.61            tcp dpt:388 to:172.16.1.7:22
-
-Chain INPUT (policy ACCEPT)
-target     prot opt source               destination         
-
-Chain OUTPUT (policy ACCEPT)
-target     prot opt source               destination         
-
-Chain POSTROUTING (policy ACCEPT)
-target     prot opt source               destination         
-MASQUERADE  all  --  0.0.0.0&#x2F;0            0.0.0.0&#x2F;0      </code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置sysctl.conf</span></span><br><span class="line">略过</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">开启系统nat模块（重要！！）</span></span><br><span class="line">iptables -t nat -A POSTROUTING -j MASQUERADE</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置端口转发</span></span><br><span class="line">iptables -t nat -A PREROUTING -d 10.0.0.61 -p tcp --dport 388 -j DNAT --to-destination 172.16.1.7:22</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看</span></span><br><span class="line">[root@mn01[ ~]#iptables -t nat -nL</span><br><span class="line">Chain PREROUTING (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line">DNAT       tcp  --  0.0.0.0/0            10.0.0.61            tcp dpt:388 to:172.16.1.7:22</span><br><span class="line"></span><br><span class="line">Chain INPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line"></span><br><span class="line">Chain OUTPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line"></span><br><span class="line">Chain POSTROUTING (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line">MASQUERADE  all  --  0.0.0.0/0            0.0.0.0/0      </span><br></pre></td></tr></table></figure>
 
 
 
 <h4 id="3）测试"><a href="#3）测试" class="headerlink" title="3）测试"></a>3）测试</h4><p>在xshell本地模式中</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[d:\~]$ ssh root@10.0.0.61 388
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[d:\~]$ ssh root@10.0.0.61 388</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">登录进去是web01</span></span><br></pre></td></tr></table></figure>
 
-# 登录进去是web01</code></pre></div></figure>
-
-<p><img src="/../../../img/image-20240523173000068.png" srcset="/img/loading.gif" lazyload alt="image-20240523173000068"></p>
+<p><img src="/../../../img/image-20240523173000068.png" alt="image-20240523173000068"></p>
 <blockquote>
 <p>记录：</p>
 <p>首先测试失败，因为没有“开启系统nat模块”的命令</p>
 </blockquote>
-<h3 id="2-3-3-实现IP映射"><a href="#2-3-3-实现IP映射" class="headerlink" title="2.3.3 实现IP映射"></a>2.3.3 实现IP映射</h3><h4 id="1）配置"><a href="#1）配置" class="headerlink" title="1）配置"></a>1）配置</h4><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">iptables -t nat -A PREROUTING -d 10.0.0.61 -j DNAT --to-destination 172.16.1.7
-
-# 查看
-[root@mn01[ ~]#iptables -t nat -nL
-Chain PREROUTING (policy ACCEPT)
-target     prot opt source               destination         
-DNAT       tcp  --  0.0.0.0&#x2F;0            10.0.0.61            tcp dpt:388 to:172.16.1.7:22
-DNAT       all  --  0.0.0.0&#x2F;0            10.0.0.61            to:172.16.1.7
-
-Chain INPUT (policy ACCEPT)
-target     prot opt source               destination         
-
-Chain OUTPUT (policy ACCEPT)
-target     prot opt source               destination         
-
-Chain POSTROUTING (policy ACCEPT)
-target     prot opt source               destination         
-MASQUERADE  all  --  0.0.0.0&#x2F;0            0.0.0.0&#x2F;0           </code></pre></div></figure>
+<h3 id="2-3-3-实现IP映射"><a href="#2-3-3-实现IP映射" class="headerlink" title="2.3.3 实现IP映射"></a>2.3.3 实现IP映射</h3><h4 id="1）配置"><a href="#1）配置" class="headerlink" title="1）配置"></a>1）配置</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">iptables -t nat -A PREROUTING -d 10.0.0.61 -j DNAT --to-destination 172.16.1.7</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看</span></span><br><span class="line">[root@mn01[ ~]#iptables -t nat -nL</span><br><span class="line">Chain PREROUTING (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line">DNAT       tcp  --  0.0.0.0/0            10.0.0.61            tcp dpt:388 to:172.16.1.7:22</span><br><span class="line">DNAT       all  --  0.0.0.0/0            10.0.0.61            to:172.16.1.7</span><br><span class="line"></span><br><span class="line">Chain INPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line"></span><br><span class="line">Chain OUTPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line"></span><br><span class="line">Chain POSTROUTING (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line">MASQUERADE  all  --  0.0.0.0/0            0.0.0.0/0           </span><br></pre></td></tr></table></figure>
 
 <p>测试</p>
 <p>ssh访问10.0.0.61:22，登录到了web01，说明IP转发成功</p>
-<p><img src="/../../../img/image-20240523173536525.png" srcset="/img/loading.gif" lazyload alt="image-20240523173536525"></p>
+<p><img src="/../../../img/image-20240523173536525.png" alt="image-20240523173536525"></p>
 
-                
-              </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
       
-
-<span class="category-chains">
-  
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://gblog.github.io/2024/05/23/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day58-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84-iptables%E9%98%B2%E7%81%AB%E5%A2%99/" data-id="cmrendtcs00j3dsie3huebcot" data-title="day59-自动化架构-iptables防火墙" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
   
     
-      <span class="category-chain">
+<nav id="article-nav">
+  
+    <a href="/2024/05/24/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day59-%E5%AE%B9%E5%99%A8%E6%9E%B6%E6%9E%84-docker-1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
         
-  <a href="/categories/%E8%BF%90%E7%BB%B4/" class="category-chain-item">运维</a>
+          day59-容器架构-Docker（一）
+        
+      </div>
+    </a>
   
   
-    <span>></span>
+    <a href="/2024/05/22/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day57-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84-shell%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BC%96%E7%A8%8B-6/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">day57-自动化架构-shell自动化编程（六）-完结</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
     
-  <a href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/" class="category-chain-item">（二）综合架构</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C/01-C%E8%AF%AD%E8%A8%80/">01_C语言</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/01-Python%E5%85%A5%E9%97%A8/">01_Python入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/02-Python%E8%BF%9B%E9%98%B6/">02_Python进阶</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/03-MySQL/">03_MySQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/04-HTML/">04_HTML</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/05-CSS/">05_CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/06-JavaScript/">06_JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/07-JQuery/">07_JQuery</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/08-BootStrap/">08_BootStrap</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/09-Django/">09_Django</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/12-%E9%99%84%E5%BD%95%E8%A1%A5%E5%85%85/">12_附录补充</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E7%A5%9EK8S/">学神K8S</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E7%A5%9EK8S/%EF%BC%88%E4%B8%80%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E5%85%A5%E9%97%A8/">（一）Docker容器入门</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9D%82%E8%AE%B0/">杂记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8B%E8%AF%95/%E4%BF%A1%E5%88%9BPOC%E6%B5%8B%E8%AF%95/">信创POC测试</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/1%E3%80%81%E7%BD%91%E5%B7%A5%E5%85%A5%E9%97%A8/">1、网工入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/2%E3%80%81HCIA%E8%AF%BE%E7%A8%8B/">2、HCIA课程</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/">超哥K8S</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/%EF%BC%88%E4%B8%80%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E5%85%A5%E9%97%A8/">（一）Docker容器入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/%EF%BC%88%E4%BA%8C%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E8%BF%9B%E9%98%B6/">（二）Docker容器进阶</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/">（一）基础命令</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%89%EF%BC%89Docker/">（三）Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/">（二）综合架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%94%EF%BC%89K8S/">（五）K8S</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E5%85%AD%EF%BC%89%E6%99%BA%E7%AE%97%E4%B8%AD%E5%BF%83/">（六）智算中心</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E5%9B%9B%EF%BC%89%E8%99%9A%E6%8B%9F%E5%8C%96%E4%B9%8BOpenStack/">（四）虚拟化之OpenStack</a></li></ul></li></ul>
     </div>
-  
-  
-</div>
-
-
-              
-  
-
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>day59-自动化架构-iptables防火墙</div>
-      <div>https://gblog.github.io/2024/05/23/07_85期运维/03_自动化架构/day58-自动化架构-iptables防火墙/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>作者</div>
-          <div>Haris</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>发布于</div>
-          <div>2024年5月23日</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>许可协议</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
-          </div>
-        </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
   </div>
 
 
-
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2024/05/24/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day59-%E5%AE%B9%E5%99%A8%E6%9E%B6%E6%9E%84-docker-1/" title="day59-容器架构-Docker（一）">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">day59-容器架构-Docker（一）</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2024/05/22/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day57-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84-shell%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BC%96%E7%A8%8B-6/" title="day57-自动化架构-shell自动化编程（六）-完结">
-                        <span class="hidden-mobile">day57-自动化架构-shell自动化编程（六）-完结</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-
-            
-          </article>
-        </div>
-      </div>
-    </div>
-
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E4%BD%9C/" rel="tag">工作</a></li></ul>
     </div>
   </div>
-</div>
-
-
-
 
 
   
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-
-
-
-
     
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E5%B7%A5%E4%BD%9C/" style="font-size: 10px;">工作</a>
     </div>
   </div>
-</div>
 
-    
-
-    
-  </main>
-
-  <footer>
-    <div class="footer-inner">
   
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/07/">七月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/05/">五月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/04/">四月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">三月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/02/">二月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">一月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">十一月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">十月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">九月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">八月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">七月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">六月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">五月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">四月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">三月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">一月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a></li></ul>
     </div>
+  </div>
+
+
   
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/07/10/06_%E6%9D%82%E8%AE%B0/%E7%BA%A2%E5%B8%BD%E7%B3%BB%E5%AE%89%E8%A3%85%E7%B3%BB%E7%BB%9F%E6%A0%BC%E5%BC%8F%E5%8C%96/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2025/05/14/06_%E6%9D%82%E8%AE%B0/%E5%8D%8E%E4%B8%BAUSG6615F%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AESSL%20VPN/">华为USG6615F防火墙配置SSLVPN</a>
+          </li>
+        
+          <li>
+            <a href="/2025/05/06/10_%E5%AD%A6%E7%A5%9EK8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%9F%BA%E7%A1%80/">01-Docker基础</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/30/06_%E6%9D%82%E8%AE%B0/vllm%E9%83%A8%E7%BD%B2Qwen3%E5%A4%A7%E6%A8%A1%E5%9E%8B/">VLLM部署Qwen3大模型</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/21/06_%E6%9D%82%E8%AE%B0/%E5%8D%8E%E4%B8%BA%E4%BA%A4%E6%8D%A2%E6%9C%BA%E9%85%8D%E7%BD%AEmux-vlan/">华为交换机配置mux-vlan</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
   
+</aside>
+        
+      </div>
+      <footer id="footer">
   
-</div>
-
-  </footer>
-
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
+  <div class="outer">
+    <div id="footer-info" class="inner">
       
-        typing(text);
-      
-    })(window, document);
-  </script>
+      &copy; 2026 Haris<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
 
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
 
 
 
   
-    <script  src="/js/img-lazyload.js" ></script>
-  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
 
 
 
 
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
-    }
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
-</script>
-
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
-
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
-
-  <script>Fluid.plugins.codeWidget();</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
-    };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
-        }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
-      }
-    });
-  });
-</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
-  });
-</script>
-
-
-  <script>Fluid.plugins.imageCaption();</script>
-
-  <script  src="/js/local-search.js" ></script>
+<script src="/js/script.js"></script>
 
 
 
 
 
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
-
-
-  
-
-  <noscript>
-    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
-  </noscript>
+  </div>
 </body>
 </html>

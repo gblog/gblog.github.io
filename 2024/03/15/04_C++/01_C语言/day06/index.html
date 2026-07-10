@@ -1,25 +1,12 @@
-
-
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
-
-
-
+<html>
 <head>
-  <meta charset="UTF-8">
-
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <meta charset="utf-8">
   
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="Haris">
-  <meta name="keywords" content="">
-  
-    <meta name="description" content="“C语言部分-Day06” 一、字符串1.1 字符串的字面量字符串的字面量概念：  是用双引号括起来的字符序列，如“I love you”，编译器会自动合并两个相邻的字符串（相邻：仅以空白分割）。 它是个常量，不能修改  字符串字面量是如何存储的？  如字符串”abc”，它会用4个字节存储，存储方式是：a	b	c	\0 最后一个’\0’代表空字符” “ 字面量实际可以理解为const char *">
+  <title>C语言-Day06 | Haris的小站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="“C语言部分-Day06” 一、字符串1.1 字符串的字面量字符串的字面量概念：  是用双引号括起来的字符序列，如“I love you”，编译器会自动合并两个相邻的字符串（相邻：仅以空白分割）。 它是个常量，不能修改  字符串字面量是如何存储的？  如字符串”abc”，它会用4个字节存储，存储方式是：a	b	c	\0 最后一个’\0’代表空字符” “ 字面量实际可以理解为const char *">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C语言-Day06">
 <meta property="og:url" content="https://gblog.github.io/2024/03/15/04_C++/01_C%E8%AF%AD%E8%A8%80/day06/index.html">
@@ -31,269 +18,93 @@
 <meta property="article:published_time" content="2024-03-15T07:36:22.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.274Z">
 <meta property="article:author" content="Haris">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gblog.github.io/img/image-20240315105832583.png">
   
+    <link rel="alternate" href="/atom.xml" title="Haris的小站" type="application/atom+xml">
   
   
-  <title>C语言-Day06 - Haris的小站</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.png">
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
 
-
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"gblog.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
   
+  
+<link rel="stylesheet" href="/css/style.css">
 
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
+  
   
 <meta name="generator" content="Hexo 7.3.0"></head>
 
-
 <body>
-  
-
-  <header>
-    
-
-<div class="header-inner" style="height: 70vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>Haris的博客</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>首页</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>归档</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>分类</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
-          </li>
-        
-      </ul>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Haris的小站</a>
+      </h1>
+      
     </div>
-  </div>
-</nav>
-
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="C语言-Day06"></span>
-          
-        </div>
-
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
         
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-03-15 15:36" pubdate>
-          2024年3月15日 下午
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
+          <a class="main-nav-link" href="/">Home</a>
         
-          1.5k 字
+          <a class="main-nav-link" href="/archives">Archives</a>
         
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
+      </nav>
+      <nav id="sub-nav">
         
         
+          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
         
-          13 分钟
-        
-      </span>
-    
-
-    
-    
-  </div>
-
-
-        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://gblog.github.io"></form>
       </div>
-
-      
     </div>
   </div>
-</div>
+</header>
 
-</div>
-
-  </header>
-
-  <main>
+      <div class="outer">
+        <section id="main"><article id="post-04_C++/01_C语言/day06" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/03/15/04_C++/01_C%E8%AF%AD%E8%A8%80/day06/" class="article-date">
+  <time class="dt-published" datetime="2024-03-15T07:36:22.000Z" itemprop="datePublished">2024-03-15</time>
+</a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/C/">C++</a>►<a class="article-category-link" href="/categories/C/01-C%E8%AF%AD%E8%A8%80/">01_C语言</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      C语言-Day06
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
       
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
-
-    </div>
-
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">C语言-Day06</h1>
-            
-            
-              <div class="markdown-body">
-                
-                <p>“C语言部分-Day06”</p>
+        <p>“C语言部分-Day06”</p>
 <h1 id="一、字符串"><a href="#一、字符串" class="headerlink" title="一、字符串"></a>一、字符串</h1><h2 id="1-1-字符串的字面量"><a href="#1-1-字符串的字面量" class="headerlink" title="1.1 字符串的字面量"></a>1.1 字符串的字面量</h2><p>字符串的字面量概念：</p>
 <ul>
 <li>是用双引号括起来的字符序列，如<code>“I love you”</code>，编译器会自动合并两个相邻的字符串（相邻：仅以空白分割）。</li>
@@ -306,33 +117,19 @@
 <li>字面量实际可以理解为<code>const char *</code>类型，无法修改</li>
 </ul>
 <h2 id="1-2-字符串变量"><a href="#1-2-字符串变量" class="headerlink" title="1.2 字符串变量"></a>1.2 字符串变量</h2><p>C语言是没有字符串类型的，都是依赖<code>字符数组</code>来实现，如</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">char name[10] &#x3D; &quot;Alex&quot;;
-
-&#x2F;&#x2F; 存储方式，不足的会用&#39;\0&#39;填充
-A l e x \0 \0 \0 \0 \0 \0 </code></pre></div></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> name[<span class="number">10</span>] = <span class="string">&quot;Alex&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 存储方式，不足的会用&#x27;\0&#x27;填充</span></span><br><span class="line">A l e x \<span class="number">0</span> \<span class="number">0</span> \<span class="number">0</span> \<span class="number">0</span> \<span class="number">0</span> \<span class="number">0</span> </span><br></pre></td></tr></table></figure>
 
 
 
 <h2 id="1-3-字符串的初始化"><a href="#1-3-字符串的初始化" class="headerlink" title="1.3 字符串的初始化"></a>1.3 字符串的初始化</h2><p>字符串的初始化分为两种方式：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">char name[] &#x3D; &quot;Alex&quot;;	&#x2F;&#x2F; 以数组方式存储 A l e x \0，可以修改
-char * name &#x3D; &quot;Alex&quot;;	&#x2F;&#x2F; 为字符串字面量，无法修改</code></pre></div></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> name[] = <span class="string">&quot;Alex&quot;</span>;	<span class="comment">// 以数组方式存储 A l e x \0，可以修改</span></span><br><span class="line"><span class="type">char</span> * name = <span class="string">&quot;Alex&quot;</span>;	<span class="comment">// 为字符串字面量，无法修改</span></span><br></pre></td></tr></table></figure>
 
 <p>这两种方式使用区别的案例：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">char name[] &#x3D; &quot;Alex&quot;;
-char* name2 &#x3D; &quot;Alex&quot;;
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> name[] = <span class="string">&quot;Alex&quot;</span>;</span><br><span class="line"><span class="type">char</span>* name2 = <span class="string">&quot;Alex&quot;</span>;</span><br><span class="line"></span><br><span class="line">name[<span class="number">1</span>] = <span class="string">&#x27;L&#x27;</span>;</span><br><span class="line">name2[<span class="number">1</span>] = <span class="string">&#x27;L&#x27;</span>;	<span class="comment">// Error</span></span><br></pre></td></tr></table></figure>
 
-name[1] &#x3D; &#39;L&#39;;
-name2[1] &#x3D; &#39;L&#39;;	&#x2F;&#x2F; Error</code></pre></div></figure>
-
-<p><img src="/../../../img/image-20240315105832583.png" srcset="/img/loading.gif" lazyload alt="image-20240315105832583"></p>
+<p><img src="/../../../img/image-20240315105832583.png" alt="image-20240315105832583"></p>
 <h2 id="1-4-读写字符串"><a href="#1-4-读写字符串" class="headerlink" title="1.4 读写字符串"></a>1.4 读写字符串</h2><h3 id="1-4-1-写字符串（打印）"><a href="#1-4-1-写字符串（打印）" class="headerlink" title="1.4.1 写字符串（打印）"></a>1.4.1 写字符串（打印）</h3><p>打印字符串有两种方式：<code>%s</code>和<code>puts()</code>，它们的区别如下</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">char name[] &#x3D; &quot;Alex&quot;;
-
-&#x2F;&#x2F; 方法一
-printf(&quot;%s\n&quot;, name);
-
-&#x2F;&#x2F; 方法二
-puts(name);	&#x2F;&#x2F; 会自动添加&#39;\n&#39;换行符</code></pre></div></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> name[] = <span class="string">&quot;Alex&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法一</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, name);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法二</span></span><br><span class="line"><span class="built_in">puts</span>(name);	<span class="comment">// 会自动添加&#x27;\n&#x27;换行符</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="1-4-2-读字符串（输入）"><a href="#1-4-2-读字符串（输入）" class="headerlink" title="1.4.2 读字符串（输入）"></a>1.4.2 读字符串（输入）</h3><p>输入字符串有三种方式：<code>scanf()</code>和<code>gets()</code>和<code>get_s()</code>:</p>
 <p><strong>方法一：scanf()</strong>	<font color=red>【不推荐】</font></p>
@@ -341,8 +138,7 @@ puts(name);	&#x2F;&#x2F; 会自动添加&#39;\n&#39;换行符</code></pre></div>
 <li>​	永远不会包含空白字符</li>
 <li>​	scanf不会检测数组越界</li>
 </ul>
-<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">char name[10] &#x3D; &quot;&quot;;
-scanf(&quot;%s&quot;, &amp;name);</code></pre></div></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> name[<span class="number">10</span>] = <span class="string">&quot;&quot;</span>;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, &amp;name);</span><br></pre></td></tr></table></figure>
 
 
 
@@ -351,7 +147,7 @@ scanf(&quot;%s&quot;, &amp;name);</code></pre></div></figure>
 <li>不跳过前面的空白字符，一直读取字符存入数组，直到遇到<em><strong>换行符</strong></em>为止，最后添加’\0’</li>
 <li>gets不会检查数组是否越界</li>
 </ul>
-<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">gets(name);</code></pre></div></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gets(name);</span><br></pre></td></tr></table></figure>
 
 <p>**</p>
 <p><strong>方法三：gets_s()</strong>	<font color=red>【推荐】</font></p>
@@ -360,17 +156,13 @@ scanf(&quot;%s&quot;, &amp;name);</code></pre></div></figure>
 <li>gets_s<strong>会检查数组是否越界</strong>，较为安全</li>
 <li>但是存在兼容性问题，使用需注意</li>
 </ul>
-<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">gets_s(name);</code></pre></div></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gets_s(name);</span><br></pre></td></tr></table></figure>
 
 <h2 id="1-5-字符串的库函数"><a href="#1-5-字符串的库函数" class="headerlink" title="1.5 字符串的库函数"></a>1.5 字符串的库函数</h2><h3 id="1-5-1-计算字符串的长度strlen"><a href="#1-5-1-计算字符串的长度strlen" class="headerlink" title="1.5.1 计算字符串的长度strlen"></a>1.5.1 计算字符串的长度<code>strlen</code></h3><p>返回值：</p>
 <ul>
 <li>字符串的长度</li>
 </ul>
-<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">char name1[5] &#x3D; &quot;Alex&quot; ;
-char name2[6] &#x3D; &quot;Haris&quot;;
-
-&#x2F;&#x2F; 计算字符串的长度
-printf(&quot;name1的长度是%d\n&quot;, strlen(name1));	&#x2F;&#x2F; 输出 4</code></pre></div></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> name1[<span class="number">5</span>] = <span class="string">&quot;Alex&quot;</span> ;</span><br><span class="line"><span class="type">char</span> name2[<span class="number">6</span>] = <span class="string">&quot;Haris&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 计算字符串的长度</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;name1的长度是%d\n&quot;</span>, <span class="built_in">strlen</span>(name1));	<span class="comment">// 输出 4</span></span><br></pre></td></tr></table></figure>
 
 
 
@@ -380,17 +172,7 @@ printf(&quot;name1的长度是%d\n&quot;, strlen(name1));	&#x2F;&#x2F; 输出 4<
 <li>负整数：&lt;</li>
 <li>零：相等</li>
 </ul>
-<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">&#x2F;&#x2F; 比较两个字符串
-int result &#x3D; strcmp(name1, name2);
-if (result &gt; 0) &#123;
-    printf(&quot;name1 &gt; name2\n&quot;);
-&#125;
-else if (result &#x3D;&#x3D; 0) &#123;
-    printf(&quot;name1 &#x3D;&#x3D; name2\n&quot;);
-&#125;
-else &#123;
-    printf(&quot;name1 &lt; name2\n&quot;);
-&#125;</code></pre></div></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 比较两个字符串</span></span><br><span class="line"><span class="type">int</span> result = <span class="built_in">strcmp</span>(name1, name2);</span><br><span class="line"><span class="keyword">if</span> (result &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;name1 &gt; name2\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (result == <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;name1 == name2\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;name1 &lt; name2\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
@@ -402,11 +184,7 @@ else &#123;
 <ul>
 <li>该函数返回一个指向最终的目标字符串 dest 的指针</li>
 </ul>
-<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">&#x2F;&#x2F; 字符串复制
-char name3[6];
-memset(name3, &#39;\0&#39;, sizeof(name3));
-strcpy(name3, name1);
-puts(name3);	&#x2F;&#x2F; 输出Alex</code></pre></div></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 字符串复制</span></span><br><span class="line"><span class="type">char</span> name3[<span class="number">6</span>];</span><br><span class="line"><span class="built_in">memset</span>(name3, <span class="string">&#x27;\0&#x27;</span>, <span class="keyword">sizeof</span>(name3));</span><br><span class="line"><span class="built_in">strcpy</span>(name3, name1);</span><br><span class="line"><span class="built_in">puts</span>(name3);	<span class="comment">// 输出Alex</span></span><br></pre></td></tr></table></figure>
 
 
 
@@ -418,18 +196,11 @@ puts(name3);	&#x2F;&#x2F; 输出Alex</code></pre></div></figure>
 <ul>
 <li>该函数返回最终复制的字符串</li>
 </ul>
-<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">&#x2F;&#x2F; 字符串复制
-char name3[6];
-memset(name3, &#39;\0&#39;, sizeof(name3));
-strncpy(name3, name1, 5);
-puts(name3);	&#x2F;&#x2F; 输出Alex</code></pre></div></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 字符串复制</span></span><br><span class="line"><span class="type">char</span> name3[<span class="number">6</span>];</span><br><span class="line"><span class="built_in">memset</span>(name3, <span class="string">&#x27;\0&#x27;</span>, <span class="keyword">sizeof</span>(name3));</span><br><span class="line"><span class="built_in">strncpy</span>(name3, name1, <span class="number">5</span>);</span><br><span class="line"><span class="built_in">puts</span>(name3);	<span class="comment">// 输出Alex</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>strncpy的安全拷贝策略：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">&gt;char s1[10];
-&gt;strncpy(s1, &quot;Hello&quot;, 4);	&#x2F;&#x2F; 内存中，H e l l o, 不加&#39;\o&#39;
-&gt;strncpy(s1, &quot;Hello&quot;, 6);	&#x2F;&#x2F; 内存中，H e l l o \o，刚好
-&gt;strncpy(s1, &quot;Hello&quot;, 8);	&#x2F;&#x2F; 内存中，H e l l o \o \o \o，填补</code></pre></div></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="type">char</span> s1[<span class="number">10</span>];</span><br><span class="line">&gt;<span class="built_in">strncpy</span>(s1, <span class="string">&quot;Hello&quot;</span>, <span class="number">4</span>);	<span class="comment">// 内存中，H e l l o, 不加&#x27;\o&#x27;</span></span><br><span class="line">&gt;<span class="built_in">strncpy</span>(s1, <span class="string">&quot;Hello&quot;</span>, <span class="number">6</span>);	<span class="comment">// 内存中，H e l l o \o，刚好</span></span><br><span class="line">&gt;<span class="built_in">strncpy</span>(s1, <span class="string">&quot;Hello&quot;</span>, <span class="number">8</span>);	<span class="comment">// 内存中，H e l l o \o \o \o，填补</span></span><br></pre></td></tr></table></figure>
 </blockquote>
 <h3 id="1-5-4-字符串拼接"><a href="#1-5-4-字符串拼接" class="headerlink" title="1.5.4 字符串拼接"></a>1.5.4 字符串拼接</h3><h4 id="1-5-4-1-普通拼接strcat"><a href="#1-5-4-1-普通拼接strcat" class="headerlink" title="1.5.4.1 普通拼接strcat"></a>1.5.4.1 普通拼接<code>strcat</code></h4><p>参数：</p>
 <ul>
@@ -439,15 +210,12 @@ puts(name3);	&#x2F;&#x2F; 输出Alex</code></pre></div></figure>
 <ul>
 <li>返回拼接完的字符串</li>
 </ul>
-<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">&#x2F;&#x2F; 字符串拼接
-char s1[11] &#x3D; &quot;Hello&quot;;	
-strcat(s1, &quot;World&quot;);
-puts(s1);	&#x2F;&#x2F; 输出HelloWorld</code></pre></div></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 字符串拼接</span></span><br><span class="line"><span class="type">char</span> s1[<span class="number">11</span>] = <span class="string">&quot;Hello&quot;</span>;	</span><br><span class="line"><span class="built_in">strcat</span>(s1, <span class="string">&quot;World&quot;</span>);</span><br><span class="line"><span class="built_in">puts</span>(s1);	<span class="comment">// 输出HelloWorld</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>注意事项：</p>
 <p>需注意字符串的长度，以上案例中，如s1的数组长度为10，则在编译时会报错，因为拼接完的字符串最后还会加上’\0’，因此需要多留一个长度</p>
-<p><img src="/../../../img/image-20240315141428872.png" srcset="/img/loading.gif" lazyload alt="image-20240315141428872"></p>
+<p><img src="/../../../img/image-20240315141428872.png" alt="image-20240315141428872"></p>
 </blockquote>
 <p>1.5.4.2 更安全的拼接<code>strncat</code></p>
 <p>参数：</p>
@@ -460,443 +228,186 @@ puts(s1);	&#x2F;&#x2F; 输出HelloWorld</code></pre></div></figure>
 <ul>
 <li>char *</li>
 </ul>
-<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">&#x2F;&#x2F; 安全的字符串拼接
-char s2[11] &#x3D; &quot;Hello&quot;;
-strncat(s2, &quot;World&quot;, 4);
-puts(s2);	&#x2F;&#x2F; 输出HelloWorl</code></pre></div></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 安全的字符串拼接</span></span><br><span class="line"><span class="type">char</span> s2[<span class="number">11</span>] = <span class="string">&quot;Hello&quot;</span>;</span><br><span class="line"><span class="built_in">strncat</span>(s2, <span class="string">&quot;World&quot;</span>, <span class="number">4</span>);</span><br><span class="line"><span class="built_in">puts</span>(s2);	<span class="comment">// 输出HelloWorl</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>strncat的安全拼接策略：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">&gt;char s1[10] &#x3D; &quot;abc&quot;;
-&gt;strncat(s1, &quot;def&quot;, 2);	&#x2F;&#x2F; a b c d e \0 \0 \0 \0 \0
-&gt;strncat(s1, &quot;def&quot;, 3);	&#x2F;&#x2F; a b c d e f \0 \0 \0 \0
-&gt;strncat(s1, &quot;def&quot;, 6);	&#x2F;&#x2F; a b c d e f \0 \0 \0 \0</code></pre></div></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="type">char</span> s1[<span class="number">10</span>] = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">&gt;<span class="built_in">strncat</span>(s1, <span class="string">&quot;def&quot;</span>, <span class="number">2</span>);	<span class="comment">// a b c d e \0 \0 \0 \0 \0</span></span><br><span class="line">&gt;<span class="built_in">strncat</span>(s1, <span class="string">&quot;def&quot;</span>, <span class="number">3</span>);	<span class="comment">// a b c d e f \0 \0 \0 \0</span></span><br><span class="line">&gt;<span class="built_in">strncat</span>(s1, <span class="string">&quot;def&quot;</span>, <span class="number">6</span>);	<span class="comment">// a b c d e f \0 \0 \0 \0</span></span><br></pre></td></tr></table></figure>
 
 <p>因为strncat总会写入’\0’填充，所以我们一般会这样调用：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">&gt;strncat(s1, s2, sizeof(s1) - sizeof(s1) - 1);	&#x2F;&#x2F; 最后的1预留给&#39;\0&#39;</code></pre></div></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="built_in">strncat</span>(s1, s2, <span class="keyword">sizeof</span>(s1) - <span class="keyword">sizeof</span>(s1) - <span class="number">1</span>);	<span class="comment">// 最后的1预留给&#x27;\0&#x27;</span></span><br></pre></td></tr></table></figure>
 </blockquote>
 <h2 id="1-6-字符串的惯用法-TODO-例子不能跑"><a href="#1-6-字符串的惯用法-TODO-例子不能跑" class="headerlink" title="1.6 字符串的惯用法(TODO 例子不能跑)"></a>1.6 字符串的惯用法(TODO 例子不能跑)</h2><p>1、搜索字符串的末尾（<font color=red>编译错误</font>）</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">while(*s) &#123;
-    s++;
-&#125;</code></pre></div></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(*s) &#123;</span><br><span class="line">    s++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>2、赋值字符串，包括空字符（<font color=red>编译错误</font>）</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">while(*p++ &#x3D; *s++);</code></pre></div></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(*p++ = *s++);</span><br></pre></td></tr></table></figure>
 
 
 
 <h2 id="1-7-字符串数组"><a href="#1-7-字符串数组" class="headerlink" title="1.7 字符串数组"></a>1.7 字符串数组</h2><p>如何表示字符串数组？</p>
 <p>1、二维数组方式	【不推荐，空白空间很多】</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">char planets[3][8] &#x3D; &#123; &quot;Mecury&quot;, &quot;Venus&quot;, &quot;Earth&quot; &#125;;
-for (int i &#x3D; 0; i &lt; 3; i++) &#123;
-    puts(planets[i]);
-&#125;</code></pre></div></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> planets[<span class="number">3</span>][<span class="number">8</span>] = &#123; <span class="string">&quot;Mecury&quot;</span>, <span class="string">&quot;Venus&quot;</span>, <span class="string">&quot;Earth&quot;</span> &#125;;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">    <span class="built_in">puts</span>(planets[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>2、字符指针数组	【推荐】</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">char *planets[3] &#x3D; &#123; &quot;Mecury&quot;, &quot;Venus&quot;, &quot;Earth&quot; &#125;;</code></pre></div></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *planets[<span class="number">3</span>] = &#123; <span class="string">&quot;Mecury&quot;</span>, <span class="string">&quot;Venus&quot;</span>, <span class="string">&quot;Earth&quot;</span> &#125;;</span><br></pre></td></tr></table></figure>
 
 <h2 id="1-8-练习"><a href="#1-8-练习" class="headerlink" title="1.8 练习"></a>1.8 练习</h2><p>1、编写自己的strlen函数</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">int getlen(const char *arr) &#123;
-    &#x2F;&#x2F;合法性校验
-    if (arr &#x3D;&#x3D; NULL) &#123;
-        return -1;
-    &#125;
-	int num &#x3D; 0;
-	while (*arr !&#x3D; &#39;\0&#39;) &#123;
-		arr++;
-		num++;
-	&#125;
-	return num;
-&#125;</code></pre></div></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">getlen</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *arr)</span> &#123;</span><br><span class="line">    <span class="comment">//合法性校验</span></span><br><span class="line">    <span class="keyword">if</span> (arr == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="type">int</span> num = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (*arr != <span class="string">&#x27;\0&#x27;</span>) &#123;</span><br><span class="line">		arr++;</span><br><span class="line">		num++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> num;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>2、编写自己的strcat函数</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c">char* mycat(char* dest, const char* src) &#123;
-	&#x2F;&#x2F;合法性校验
-	if (dest &#x3D;&#x3D; NULL || src &#x3D;&#x3D; NULL) &#123;		
-		return dest;
-	&#125;
-
-	&#x2F;&#x2F; 临时指针变量
-	char* temp &#x3D; dest;
-
-	&#x2F;&#x2F; 指针移动到dest的最后一个字符（&#39;\0&#39;之前）
-	while (*temp !&#x3D; &#39;\0&#39;) &#123;
-		temp++;
-	&#125;
-
-	&#x2F;&#x2F; src指针每后移一个字符，都加到dest后面
-	while (*src !&#x3D; &#39;\0&#39;) &#123;
-		*temp &#x3D; *src;
-		*temp++;
-		src++;
-	&#125;
-
-	&#x2F;&#x2F; 最后追加&#39;\0&#39;符号
-	*temp &#x3D; &#39;\0&#39;;
-    
-    &#x2F;&#x2F; 返回合并后的字符串
-	return dest;
-&#125;</code></pre></div></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span>* <span class="title function_">mycat</span><span class="params">(<span class="type">char</span>* dest, <span class="type">const</span> <span class="type">char</span>* src)</span> &#123;</span><br><span class="line">	<span class="comment">//合法性校验</span></span><br><span class="line">	<span class="keyword">if</span> (dest == <span class="literal">NULL</span> || src == <span class="literal">NULL</span>) &#123;		</span><br><span class="line">		<span class="keyword">return</span> dest;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 临时指针变量</span></span><br><span class="line">	<span class="type">char</span>* temp = dest;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 指针移动到dest的最后一个字符（&#x27;\0&#x27;之前）</span></span><br><span class="line">	<span class="keyword">while</span> (*temp != <span class="string">&#x27;\0&#x27;</span>) &#123;</span><br><span class="line">		temp++;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// src指针每后移一个字符，都加到dest后面</span></span><br><span class="line">	<span class="keyword">while</span> (*src != <span class="string">&#x27;\0&#x27;</span>) &#123;</span><br><span class="line">		*temp = *src;</span><br><span class="line">		*temp++;</span><br><span class="line">		src++;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 最后追加&#x27;\0&#x27;符号</span></span><br><span class="line">	*temp = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 返回合并后的字符串</span></span><br><span class="line">	<span class="keyword">return</span> dest;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
-                
-              </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
       
-
-<span class="category-chains">
-  
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://gblog.github.io/2024/03/15/04_C++/01_C%E8%AF%AD%E8%A8%80/day06/" data-id="cmrendt8x002vdsie21hv0ldu" data-title="C语言-Day06" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
   
     
-      <span class="category-chain">
+<nav id="article-nav">
+  
+    <a href="/2024/03/18/04_C++/01_C%E8%AF%AD%E8%A8%80/day07/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
         
-  <a href="/categories/C/" class="category-chain-item">C++</a>
+          C语言-Day07
+        
+      </div>
+    </a>
   
   
-    <span>></span>
+    <a href="/2024/03/14/04_C++/01_C%E8%AF%AD%E8%A8%80/day05/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">C语言-Day05</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
     
-  <a href="/categories/C/01-C%E8%AF%AD%E8%A8%80/" class="category-chain-item">01_C语言</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C/01-C%E8%AF%AD%E8%A8%80/">01_C语言</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/01-Python%E5%85%A5%E9%97%A8/">01_Python入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/02-Python%E8%BF%9B%E9%98%B6/">02_Python进阶</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/03-MySQL/">03_MySQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/04-HTML/">04_HTML</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/05-CSS/">05_CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/06-JavaScript/">06_JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/07-JQuery/">07_JQuery</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/08-BootStrap/">08_BootStrap</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/09-Django/">09_Django</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/12-%E9%99%84%E5%BD%95%E8%A1%A5%E5%85%85/">12_附录补充</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E7%A5%9EK8S/">学神K8S</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E7%A5%9EK8S/%EF%BC%88%E4%B8%80%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E5%85%A5%E9%97%A8/">（一）Docker容器入门</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9D%82%E8%AE%B0/">杂记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8B%E8%AF%95/%E4%BF%A1%E5%88%9BPOC%E6%B5%8B%E8%AF%95/">信创POC测试</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/1%E3%80%81%E7%BD%91%E5%B7%A5%E5%85%A5%E9%97%A8/">1、网工入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/2%E3%80%81HCIA%E8%AF%BE%E7%A8%8B/">2、HCIA课程</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/">超哥K8S</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/%EF%BC%88%E4%B8%80%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E5%85%A5%E9%97%A8/">（一）Docker容器入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/%EF%BC%88%E4%BA%8C%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E8%BF%9B%E9%98%B6/">（二）Docker容器进阶</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/">（一）基础命令</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%89%EF%BC%89Docker/">（三）Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/">（二）综合架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%94%EF%BC%89K8S/">（五）K8S</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E5%85%AD%EF%BC%89%E6%99%BA%E7%AE%97%E4%B8%AD%E5%BF%83/">（六）智算中心</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E5%9B%9B%EF%BC%89%E8%99%9A%E6%8B%9F%E5%8C%96%E4%B9%8BOpenStack/">（四）虚拟化之OpenStack</a></li></ul></li></ul>
     </div>
-  
-  
-</div>
-
-
-              
-  
-
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>C语言-Day06</div>
-      <div>https://gblog.github.io/2024/03/15/04_C++/01_C语言/day06/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>作者</div>
-          <div>Haris</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>发布于</div>
-          <div>2024年3月15日</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>许可协议</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
-          </div>
-        </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
   </div>
 
 
-
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2024/03/18/04_C++/01_C%E8%AF%AD%E8%A8%80/day07/" title="C语言-Day07">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">C语言-Day07</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2024/03/14/04_C++/01_C%E8%AF%AD%E8%A8%80/day05/" title="C语言-Day05">
-                        <span class="hidden-mobile">C语言-Day05</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-
-            
-          </article>
-        </div>
-      </div>
-    </div>
-
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E4%BD%9C/" rel="tag">工作</a></li></ul>
     </div>
   </div>
-</div>
-
-
-
 
 
   
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-
-
-
-
     
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E5%B7%A5%E4%BD%9C/" style="font-size: 10px;">工作</a>
     </div>
   </div>
-</div>
 
-    
-
-    
-  </main>
-
-  <footer>
-    <div class="footer-inner">
   
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/07/">七月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/05/">五月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/04/">四月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">三月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/02/">二月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">一月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">十一月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">十月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">九月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">八月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">七月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">六月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">五月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">四月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">三月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">一月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a></li></ul>
     </div>
+  </div>
+
+
   
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/07/10/06_%E6%9D%82%E8%AE%B0/%E7%BA%A2%E5%B8%BD%E7%B3%BB%E5%AE%89%E8%A3%85%E7%B3%BB%E7%BB%9F%E6%A0%BC%E5%BC%8F%E5%8C%96/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2025/05/14/06_%E6%9D%82%E8%AE%B0/%E5%8D%8E%E4%B8%BAUSG6615F%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AESSL%20VPN/">华为USG6615F防火墙配置SSLVPN</a>
+          </li>
+        
+          <li>
+            <a href="/2025/05/06/10_%E5%AD%A6%E7%A5%9EK8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%9F%BA%E7%A1%80/">01-Docker基础</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/30/06_%E6%9D%82%E8%AE%B0/vllm%E9%83%A8%E7%BD%B2Qwen3%E5%A4%A7%E6%A8%A1%E5%9E%8B/">VLLM部署Qwen3大模型</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/21/06_%E6%9D%82%E8%AE%B0/%E5%8D%8E%E4%B8%BA%E4%BA%A4%E6%8D%A2%E6%9C%BA%E9%85%8D%E7%BD%AEmux-vlan/">华为交换机配置mux-vlan</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
   
+</aside>
+        
+      </div>
+      <footer id="footer">
   
-</div>
-
-  </footer>
-
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
+  <div class="outer">
+    <div id="footer-info" class="inner">
       
-        typing(text);
-      
-    })(window, document);
-  </script>
+      &copy; 2026 Haris<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
 
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
 
 
 
   
-    <script  src="/js/img-lazyload.js" ></script>
-  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
 
 
 
 
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
-    }
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
-</script>
-
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
-
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
-
-  <script>Fluid.plugins.codeWidget();</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
-    };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
-        }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
-      }
-    });
-  });
-</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
-  });
-</script>
-
-
-  <script>Fluid.plugins.imageCaption();</script>
-
-  <script  src="/js/local-search.js" ></script>
+<script src="/js/script.js"></script>
 
 
 
 
 
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
-
-
-  
-
-  <noscript>
-    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
-  </noscript>
+  </div>
 </body>
 </html>

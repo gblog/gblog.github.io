@@ -1,340 +1,111 @@
-
-
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
-
-
-
+<html>
 <head>
-  <meta charset="UTF-8">
-
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <meta charset="utf-8">
   
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="Haris">
-  <meta name="keywords" content="">
-  
-    <meta name="description" content="鲲鹏服务器性能测试最佳实践配置清单操作系统： [root@localhost ceshi]# cat &#x2F;etc&#x2F;openEuler-release openEuler release 22.03 LTS  #uname -a Linux localhost.localdomain 5.10.0-60.18.0.50.oe2203.aarch64 #1 SMP Wed Mar 3">
+  <title>鲲鹏服务器性能测试最佳实践 | Haris的小站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="鲲鹏服务器性能测试最佳实践配置清单操作系统： 12345[root@localhost ceshi]# cat &#x2F;etc&#x2F;openEuler-releaseopenEuler release 22.03 LTS#uname -aLinux localhost.localdomain 5.10.0-60.18.0.50.oe2203.aarch64 #1 SMP Wed Mar 30 02:43:0">
 <meta property="og:type" content="article">
 <meta property="og:title" content="鲲鹏服务器性能测试最佳实践">
 <meta property="og:url" content="https://gblog.github.io/2024/01/30/02_%E6%B5%8B%E8%AF%95/08_%E9%B2%B2%E9%B9%8F%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/index.html">
 <meta property="og:site_name" content="Haris的小站">
-<meta property="og:description" content="鲲鹏服务器性能测试最佳实践配置清单操作系统： [root@localhost ceshi]# cat &#x2F;etc&#x2F;openEuler-release openEuler release 22.03 LTS  #uname -a Linux localhost.localdomain 5.10.0-60.18.0.50.oe2203.aarch64 #1 SMP Wed Mar 3">
+<meta property="og:description" content="鲲鹏服务器性能测试最佳实践配置清单操作系统： 12345[root@localhost ceshi]# cat &#x2F;etc&#x2F;openEuler-releaseopenEuler release 22.03 LTS#uname -aLinux localhost.localdomain 5.10.0-60.18.0.50.oe2203.aarch64 #1 SMP Wed Mar 30 02:43:0">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-01-30T03:19:52.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.197Z">
 <meta property="article:author" content="Haris">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Haris的小站" type="application/atom+xml">
   
   
+    <link rel="shortcut icon" href="/favicon.png">
   
-  <title>鲲鹏服务器性能测试最佳实践 - Haris的小站</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
   
-
-
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"gblog.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
   
+<link rel="stylesheet" href="/css/style.css">
 
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
+  
   
 <meta name="generator" content="Hexo 7.3.0"></head>
 
-
 <body>
-  
-
-  <header>
-    
-
-<div class="header-inner" style="height: 70vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>Haris的博客</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>首页</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>归档</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>分类</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
-          </li>
-        
-      </ul>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Haris的小站</a>
+      </h1>
+      
     </div>
-  </div>
-</nav>
-
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="鲲鹏服务器性能测试最佳实践"></span>
-          
-        </div>
-
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
         
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-01-30 11:19" pubdate>
-          2024年1月30日 上午
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
+          <a class="main-nav-link" href="/">Home</a>
         
-          703 字
+          <a class="main-nav-link" href="/archives">Archives</a>
         
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
+      </nav>
+      <nav id="sub-nav">
         
         
+          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
         
-          6 分钟
-        
-      </span>
-    
-
-    
-    
-  </div>
-
-
-        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://gblog.github.io"></form>
       </div>
-
-      
     </div>
   </div>
-</div>
+</header>
 
-</div>
-
-  </header>
-
-  <main>
+      <div class="outer">
+        <section id="main"><article id="post-02_测试/08_鲲鹏服务器性能测试最佳实践" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/01/30/02_%E6%B5%8B%E8%AF%95/08_%E9%B2%B2%E9%B9%8F%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="article-date">
+  <time class="dt-published" datetime="2024-01-30T03:19:52.000Z" itemprop="datePublished">2024-01-30</time>
+</a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a>►<a class="article-category-link" href="/categories/%E6%B5%8B%E8%AF%95/%E4%BF%A1%E5%88%9BPOC%E6%B5%8B%E8%AF%95/">信创POC测试</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      鲲鹏服务器性能测试最佳实践
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
       
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
-
-    </div>
-
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">鲲鹏服务器性能测试最佳实践</h1>
-            
-            
-              <div class="markdown-body">
-                
-                <h1 id="鲲鹏服务器性能测试最佳实践"><a href="#鲲鹏服务器性能测试最佳实践" class="headerlink" title="鲲鹏服务器性能测试最佳实践"></a>鲲鹏服务器性能测试最佳实践</h1><h1 id="配置清单"><a href="#配置清单" class="headerlink" title="配置清单"></a>配置清单</h1><p>操作系统：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@localhost ceshi]# cat &#x2F;etc&#x2F;openEuler-release
-openEuler release 22.03 LTS
-
-#uname -a
-Linux localhost.localdomain 5.10.0-60.18.0.50.oe2203.aarch64 #1 SMP Wed Mar 30 02:43:08 UTC 2022 aarch64 aarch64 aarch64 GNU&#x2F;Linux</code></pre></div></figure>
+        <h1 id="鲲鹏服务器性能测试最佳实践"><a href="#鲲鹏服务器性能测试最佳实践" class="headerlink" title="鲲鹏服务器性能测试最佳实践"></a>鲲鹏服务器性能测试最佳实践</h1><h1 id="配置清单"><a href="#配置清单" class="headerlink" title="配置清单"></a>配置清单</h1><p>操作系统：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ceshi]# cat /etc/openEuler-release</span><br><span class="line">openEuler release 22.03 LTS</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="built_in">uname</span> -a</span></span><br><span class="line">Linux localhost.localdomain 5.10.0-60.18.0.50.oe2203.aarch64 #1 SMP Wed Mar 30 02:43:08 UTC 2022 aarch64 aarch64 aarch64 GNU/Linux</span><br></pre></td></tr></table></figure>
 
 <p>CPU信息（鲲鹏920 &#x2F; 128核）：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Architecture:           aarch64
-  CPU op-mode(s):       64-bit
-  Byte Order:           Little Endian
-CPU(s):                 128
-  On-line CPU(s) list:  0-127
-Vendor ID:              HiSilicon
-  BIOS Vendor ID:       HiSilicon
-  Model name:           Kunpeng-920
-    BIOS Model name:    Kunpeng 920-6426
-    Model:              0
-    Thread(s) per core: 1
-    Core(s) per socket: 64
-    Socket(s):          2
-    Stepping:           0x1
-    BogoMIPS:           200.00
-    Flags:              fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma dcpop asimddp asimdfhm
-Caches (sum of all):
-  L1d:                  8 MiB (128 instances)
-  L1i:                  8 MiB (128 instances)
-  L2:                   64 MiB (128 instances)
-  L3:                   256 MiB (4 instances)
-NUMA:
-  NUMA node(s):         4
-  NUMA node0 CPU(s):    0-31
-  NUMA node1 CPU(s):    32-63
-  NUMA node2 CPU(s):    64-95
-  NUMA node3 CPU(s):    96-127
-Vulnerabilities:
-  Itlb multihit:        Not affected
-  L1tf:                 Not affected
-  Mds:                  Not affected
-  Meltdown:             Not affected
-  Spec store bypass:    Vulnerable
-  Spectre v1:           Mitigation; __user pointer sanitization
-  Spectre v2:           Not affected
-  Srbds:                Not affected
-  Tsx async abort:      Not affected</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">Architecture:           aarch64</span><br><span class="line">  CPU op-mode(s):       64-bit</span><br><span class="line">  Byte Order:           Little Endian</span><br><span class="line">CPU(s):                 128</span><br><span class="line">  On-line CPU(s) list:  0-127</span><br><span class="line">Vendor ID:              HiSilicon</span><br><span class="line">  BIOS Vendor ID:       HiSilicon</span><br><span class="line">  Model name:           Kunpeng-920</span><br><span class="line">    BIOS Model name:    Kunpeng 920-6426</span><br><span class="line">    Model:              0</span><br><span class="line">    Thread(s) per core: 1</span><br><span class="line">    Core(s) per socket: 64</span><br><span class="line">    Socket(s):          2</span><br><span class="line">    Stepping:           0x1</span><br><span class="line">    BogoMIPS:           200.00</span><br><span class="line">    Flags:              fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma dcpop asimddp asimdfhm</span><br><span class="line">Caches (sum of all):</span><br><span class="line">  L1d:                  8 MiB (128 instances)</span><br><span class="line">  L1i:                  8 MiB (128 instances)</span><br><span class="line">  L2:                   64 MiB (128 instances)</span><br><span class="line">  L3:                   256 MiB (4 instances)</span><br><span class="line">NUMA:</span><br><span class="line">  NUMA node(s):         4</span><br><span class="line">  NUMA node0 CPU(s):    0-31</span><br><span class="line">  NUMA node1 CPU(s):    32-63</span><br><span class="line">  NUMA node2 CPU(s):    64-95</span><br><span class="line">  NUMA node3 CPU(s):    96-127</span><br><span class="line">Vulnerabilities:</span><br><span class="line">  Itlb multihit:        Not affected</span><br><span class="line">  L1tf:                 Not affected</span><br><span class="line">  Mds:                  Not affected</span><br><span class="line">  Meltdown:             Not affected</span><br><span class="line">  Spec store bypass:    Vulnerable</span><br><span class="line">  Spectre v1:           Mitigation; __user pointer sanitization</span><br><span class="line">  Spectre v2:           Not affected</span><br><span class="line">  Srbds:                Not affected</span><br><span class="line">  Tsx async abort:      Not affected</span><br></pre></td></tr></table></figure>
 
 <p>测试服务器软件配置清单</p>
 <table>
@@ -352,110 +123,46 @@ Vulnerabilities:
 </tr>
 </tbody></table>
 <p>内存512G（16 x 32G）：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@localhost ceshi]# free -m
-               total        used        free      shared  buff&#x2F;cache   available
-Mem:          513391        9983      502466          27         941      501290
-Swap:           4095           0        4095
-
-[root@localhost ceshi]# dmidecode  | grep -i mem | grep 2666
-        Configured Memory Speed: 2666 MT&#x2F;s
-        Configured Memory Speed: 2666 MT&#x2F;s
-        Configured Memory Speed: 2666 MT&#x2F;s
-        Configured Memory Speed: 2666 MT&#x2F;s
-        Configured Memory Speed: 2666 MT&#x2F;s
-        Configured Memory Speed: 2666 MT&#x2F;s
-        Configured Memory Speed: 2666 MT&#x2F;s
-        Configured Memory Speed: 2666 MT&#x2F;s
-        Configured Memory Speed: 2666 MT&#x2F;s
-        Configured Memory Speed: 2666 MT&#x2F;s
-        Configured Memory Speed: 2666 MT&#x2F;s
-        Configured Memory Speed: 2666 MT&#x2F;s
-        Configured Memory Speed: 2666 MT&#x2F;s
-        Configured Memory Speed: 2666 MT&#x2F;s
-        Configured Memory Speed: 2666 MT&#x2F;s
-        Configured Memory Speed: 2666 MT&#x2F;s
-[root@localhost ceshi]# dmidecode  | grep -i mem | grep 2666 | wc -l
-16</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ceshi]# free -m</span><br><span class="line">               total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:          513391        9983      502466          27         941      501290</span><br><span class="line">Swap:           4095           0        4095</span><br><span class="line"></span><br><span class="line">[root@localhost ceshi]# dmidecode  | grep -i mem | grep 2666</span><br><span class="line">        Configured Memory Speed: 2666 MT/s</span><br><span class="line">        Configured Memory Speed: 2666 MT/s</span><br><span class="line">        Configured Memory Speed: 2666 MT/s</span><br><span class="line">        Configured Memory Speed: 2666 MT/s</span><br><span class="line">        Configured Memory Speed: 2666 MT/s</span><br><span class="line">        Configured Memory Speed: 2666 MT/s</span><br><span class="line">        Configured Memory Speed: 2666 MT/s</span><br><span class="line">        Configured Memory Speed: 2666 MT/s</span><br><span class="line">        Configured Memory Speed: 2666 MT/s</span><br><span class="line">        Configured Memory Speed: 2666 MT/s</span><br><span class="line">        Configured Memory Speed: 2666 MT/s</span><br><span class="line">        Configured Memory Speed: 2666 MT/s</span><br><span class="line">        Configured Memory Speed: 2666 MT/s</span><br><span class="line">        Configured Memory Speed: 2666 MT/s</span><br><span class="line">        Configured Memory Speed: 2666 MT/s</span><br><span class="line">        Configured Memory Speed: 2666 MT/s</span><br><span class="line">[root@localhost ceshi]# dmidecode  | grep -i mem | grep 2666 | wc -l</span><br><span class="line">16</span><br></pre></td></tr></table></figure>
 
 <h1 id="1、SPEC-CPU2017测试"><a href="#1、SPEC-CPU2017测试" class="headerlink" title="1、SPEC CPU2017测试"></a>1、SPEC CPU2017测试</h1><h2 id="1-1-整型rate测试"><a href="#1-1-整型rate测试" class="headerlink" title="1.1 整型rate测试"></a>1.1 整型rate测试</h2><p>准备测试工具</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-she" data-language="she"><code class="language-she">spec镜像文件:cpu2017-1.0.5.iso
-openEuler镜像文件:
-毕昇编译器:
-spec2017配置文件:</code></pre></div></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">spec镜像文件:cpu2017-1.0.5.iso</span><br><span class="line">openEuler镜像文件:</span><br><span class="line">毕昇编译器:</span><br><span class="line">spec2017配置文件:</span><br></pre></td></tr></table></figure>
 
 <p>安装SPEC CPU 2017的依赖（如已有则忽略）</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"></code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>挂载镜像</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mount cpu2017-1.0.5.iso &#x2F;mnt</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount cpu2017-1.0.5.iso /mnt</span><br></pre></td></tr></table></figure>
 
 <p>安装SPEC 2017，指定安装到<code>/home/spec2017</code></p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">cd &#x2F;mnt
-.&#x2F;install.sh -d &#x2F;ceshi&#x2F;SPEC2017&#x2F;spectest</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /mnt</span><br><span class="line">./install.sh -d /ceshi/SPEC2017/spectest</span><br></pre></td></tr></table></figure>
 
 <p>安装毕昇编译器（1.3.3版本）</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 下载地址
-https:&#x2F;&#x2F;mirrors.huaweicloud.com&#x2F;kunpeng&#x2F;archive&#x2F;compiler&#x2F;bisheng_compiler&#x2F;bisheng-compiler-1.3.3-aarch64-linux.tar.gz
-# 解压安装包
-tar -vxf bisheng-compiler-1.3.3-aarch64-linux.tar.gz
-# 查看目录
-[root@localhost spectest]# ls &#x2F;usr&#x2F;local&#x2F;BSC133&#x2F;
-bin  include  lib  libexec  share</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">下载地址</span></span><br><span class="line">https://mirrors.huaweicloud.com/kunpeng/archive/compiler/bisheng_compiler/bisheng-compiler-1.3.3-aarch64-linux.tar.gz</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">解压安装包</span></span><br><span class="line">tar -vxf bisheng-compiler-1.3.3-aarch64-linux.tar.gz</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看目录</span></span><br><span class="line">[root@localhost spectest]# ls /usr/local/BSC133/</span><br><span class="line">bin  include  lib  libexec  share</span><br></pre></td></tr></table></figure>
 
 <p>设置编译器环境变量</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">export LLVM_DIR&#x3D;&#x2F;usr&#x2F;local&#x2F;BSC133&#x2F;</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export LLVM_DIR=/usr/local/BSC133/</span><br></pre></td></tr></table></figure>
 
 <p>安装鲲鹏数学库</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 下载地址 
-https:&#x2F;&#x2F;www.hikunpeng.com&#x2F;developer&#x2F;boostkit&#x2F;library&#x2F;math
-# 安装
-[root@localhost iso]# rpm -ivh boostkit-kml-2.2.0-1.aarch64.rpm
-Verifying...                          ################################# [100%]
-Preparing...                          ################################# [100%]</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">下载地址</span> </span><br><span class="line">https://www.hikunpeng.com/developer/boostkit/library/math</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装</span></span><br><span class="line">[root@localhost iso]# rpm -ivh boostkit-kml-2.2.0-1.aarch64.rpm</span><br><span class="line">Verifying...                          ################################# [100%]</span><br><span class="line">Preparing...                          ################################# [100%]</span><br></pre></td></tr></table></figure>
 
 <p>安装大页内存编译包</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 下载地址
-https:&#x2F;&#x2F;repo.almalinux.org&#x2F;almalinux&#x2F;8&#x2F;BaseOS&#x2F;aarch64&#x2F;os&#x2F;Packages&#x2F;libhugetlbfs-2.21-17.el8.aarch64.rpm
-# 安装
-rpm -ivh libhugetlbfs-2.21-17.el8.aarch64.rpm</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">下载地址</span></span><br><span class="line">https://repo.almalinux.org/almalinux/8/BaseOS/aarch64/os/Packages/libhugetlbfs-2.21-17.el8.aarch64.rpm</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装</span></span><br><span class="line">rpm -ivh libhugetlbfs-2.21-17.el8.aarch64.rpm</span><br></pre></td></tr></table></figure>
 
 <p>安装jemalloc</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 解压源码包
-tar -xf jemalloc-5.3.0.tar.gz 
-# 编译
-cd jemalloc-5.3.0 
-bash autogen.sh 
-mkdir build 
-cd build 
-..&#x2F;configure  CFLAGS&#x3D;&quot;-march&#x3D;armv8.2-a+crc+fp+crypto -flto&#x3D;32&quot; CXXFLAGS&#x3D;&quot;-march&#x3D;armv8.2-a+crc+fp+crypto -flto&#x3D;32&quot; 
-make -j 
-# 安装
-make install</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">解压源码包</span></span><br><span class="line">tar -xf jemalloc-5.3.0.tar.gz </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">编译</span></span><br><span class="line">cd jemalloc-5.3.0 </span><br><span class="line">bash autogen.sh </span><br><span class="line">mkdir build </span><br><span class="line">cd build </span><br><span class="line">../configure  CFLAGS=&quot;-march=armv8.2-a+crc+fp+crypto -flto=32&quot; CXXFLAGS=&quot;-march=armv8.2-a+crc+fp+crypto -flto=32&quot; </span><br><span class="line">make -j </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装</span></span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
 
 <p>安装optimized-routines优化库</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 解压源码包
-tar -xf optimized-routines-23.01.tar.gz 
-cd optimized-routines-23.01&#x2F;
-# 编译
-make ARCH&#x3D;aarch64 -j 8
-# 拷贝库文件
-cp -a build&#x2F;lib&#x2F;lib* &#x2F;usr&#x2F;local&#x2F;lib</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">解压源码包</span></span><br><span class="line">tar -xf optimized-routines-23.01.tar.gz </span><br><span class="line">cd optimized-routines-23.01/</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">编译</span></span><br><span class="line">make ARCH=aarch64 -j 8</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">拷贝库文件</span></span><br><span class="line">cp -a build/lib/lib* /usr/local/lib</span><br></pre></td></tr></table></figure>
 
 <p>拷贝cpu2017配置文件到config目录中</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># rate配置文件
-cp cpu2017-kunpeng920-128-rate.cfg &#x2F;ceshi&#x2F;SPEC2017&#x2F;spectest&#x2F;config </code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">rate配置文件</span></span><br><span class="line">cp cpu2017-kunpeng920-128-rate.cfg /ceshi/SPEC2017/spectest/config </span><br></pre></td></tr></table></figure>
 
 <p>拷贝flag文件</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">cp Bisheng-compiler-flags.xml &#x2F;ceshi&#x2F;SPEC2017&#x2F;spectest&#x2F;config&#x2F;flag</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp Bisheng-compiler-flags.xml /ceshi/SPEC2017/spectest/config/flag</span><br></pre></td></tr></table></figure>
 
 <p>开始测试</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 测试前优化
-source shrc
-echo 3 &gt; &#x2F;proc&#x2F;sys&#x2F;vm&#x2F;drop_caches
-ulimit -s unlimited
-
-# rate测试
-nohup runcpu -c cpu2017-kunpeng920-128-rate.cfg  --rebuild --copies 128 --reportable --define fastmath&#x3D;0 --define jemalloc&#x3D;1 --define hugepages&#x3D;0 --nopower --runmode rate --tune base --size refrate intrate &amp;</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">测试前优化</span></span><br><span class="line">source shrc</span><br><span class="line">echo 3 &gt; /proc/sys/vm/drop_caches</span><br><span class="line">ulimit -s unlimited</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">rate测试</span></span><br><span class="line">nohup runcpu -c cpu2017-kunpeng920-128-rate.cfg  --rebuild --copies 128 --reportable --define fastmath=0 --define jemalloc=1 --define hugepages=0 --nopower --runmode rate --tune base --size refrate intrate &amp;</span><br></pre></td></tr></table></figure>
 
 <h2 id="1-2-浮点测试"><a href="#1-2-浮点测试" class="headerlink" title="1.2 浮点测试"></a>1.2 浮点测试</h2><h2 id="1-3-测试数据"><a href="#1-3-测试数据" class="headerlink" title="1.3 测试数据"></a>1.3 测试数据</h2><table>
 <thead>
@@ -502,364 +209,155 @@ nohup runcpu -c cpu2017-kunpeng920-128-rate.cfg  --rebuild --copies 128 --report
 </tr>
 </tbody></table>
 <h1 id="2、SPEC-CPU2006测试"><a href="#2、SPEC-CPU2006测试" class="headerlink" title="2、SPEC CPU2006测试"></a>2、SPEC CPU2006测试</h1>
-                
-              </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
       
-
-<span class="category-chains">
-  
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://gblog.github.io/2024/01/30/02_%E6%B5%8B%E8%AF%95/08_%E9%B2%B2%E9%B9%8F%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" data-id="cmrendt800008dsie9wg739q0" data-title="鲲鹏服务器性能测试最佳实践" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
   
     
-      <span class="category-chain">
+<nav id="article-nav">
+  
+    <a href="/2024/03/06/04_C++/01_C%E8%AF%AD%E8%A8%80/day02/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
         
-  <a href="/categories/%E6%B5%8B%E8%AF%95/" class="category-chain-item">测试</a>
+          C语言-Day02
+        
+      </div>
+    </a>
   
   
-    <span>></span>
+    <a href="/2023/12/21/02_%E6%B5%8B%E8%AF%95/07_%E6%B5%B7%E5%85%89%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">海光服务器性能测试最佳实践</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
     
-  <a href="/categories/%E6%B5%8B%E8%AF%95/%E4%BF%A1%E5%88%9BPOC%E6%B5%8B%E8%AF%95/" class="category-chain-item">信创POC测试</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C/01-C%E8%AF%AD%E8%A8%80/">01_C语言</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/01-Python%E5%85%A5%E9%97%A8/">01_Python入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/02-Python%E8%BF%9B%E9%98%B6/">02_Python进阶</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/03-MySQL/">03_MySQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/04-HTML/">04_HTML</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/05-CSS/">05_CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/06-JavaScript/">06_JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/07-JQuery/">07_JQuery</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/08-BootStrap/">08_BootStrap</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/09-Django/">09_Django</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/12-%E9%99%84%E5%BD%95%E8%A1%A5%E5%85%85/">12_附录补充</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E7%A5%9EK8S/">学神K8S</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E7%A5%9EK8S/%EF%BC%88%E4%B8%80%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E5%85%A5%E9%97%A8/">（一）Docker容器入门</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9D%82%E8%AE%B0/">杂记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8B%E8%AF%95/%E4%BF%A1%E5%88%9BPOC%E6%B5%8B%E8%AF%95/">信创POC测试</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/1%E3%80%81%E7%BD%91%E5%B7%A5%E5%85%A5%E9%97%A8/">1、网工入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/2%E3%80%81HCIA%E8%AF%BE%E7%A8%8B/">2、HCIA课程</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/">超哥K8S</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/%EF%BC%88%E4%B8%80%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E5%85%A5%E9%97%A8/">（一）Docker容器入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/%EF%BC%88%E4%BA%8C%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E8%BF%9B%E9%98%B6/">（二）Docker容器进阶</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/">（一）基础命令</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%89%EF%BC%89Docker/">（三）Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/">（二）综合架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%94%EF%BC%89K8S/">（五）K8S</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E5%85%AD%EF%BC%89%E6%99%BA%E7%AE%97%E4%B8%AD%E5%BF%83/">（六）智算中心</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E5%9B%9B%EF%BC%89%E8%99%9A%E6%8B%9F%E5%8C%96%E4%B9%8BOpenStack/">（四）虚拟化之OpenStack</a></li></ul></li></ul>
     </div>
-  
-  
-</div>
-
-
-              
-  
-
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>鲲鹏服务器性能测试最佳实践</div>
-      <div>https://gblog.github.io/2024/01/30/02_测试/08_鲲鹏服务器性能测试最佳实践/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>作者</div>
-          <div>Haris</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>发布于</div>
-          <div>2024年1月30日</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>许可协议</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
-          </div>
-        </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
   </div>
 
 
-
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2024/03/06/04_C++/01_C%E8%AF%AD%E8%A8%80/day02/" title="C语言-Day02">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">C语言-Day02</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2023/12/21/02_%E6%B5%8B%E8%AF%95/07_%E6%B5%B7%E5%85%89%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="海光服务器性能测试最佳实践">
-                        <span class="hidden-mobile">海光服务器性能测试最佳实践</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-
-            
-          </article>
-        </div>
-      </div>
-    </div>
-
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E4%BD%9C/" rel="tag">工作</a></li></ul>
     </div>
   </div>
-</div>
-
-
-
 
 
   
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-
-
-
-
     
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E5%B7%A5%E4%BD%9C/" style="font-size: 10px;">工作</a>
     </div>
   </div>
-</div>
 
-    
-
-    
-  </main>
-
-  <footer>
-    <div class="footer-inner">
   
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/07/">七月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/05/">五月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/04/">四月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">三月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/02/">二月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">一月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">十一月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">十月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">九月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">八月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">七月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">六月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">五月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">四月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">三月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">一月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a></li></ul>
     </div>
+  </div>
+
+
   
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/07/10/06_%E6%9D%82%E8%AE%B0/%E7%BA%A2%E5%B8%BD%E7%B3%BB%E5%AE%89%E8%A3%85%E7%B3%BB%E7%BB%9F%E6%A0%BC%E5%BC%8F%E5%8C%96/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2025/05/14/06_%E6%9D%82%E8%AE%B0/%E5%8D%8E%E4%B8%BAUSG6615F%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AESSL%20VPN/">华为USG6615F防火墙配置SSLVPN</a>
+          </li>
+        
+          <li>
+            <a href="/2025/05/06/10_%E5%AD%A6%E7%A5%9EK8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%9F%BA%E7%A1%80/">01-Docker基础</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/30/06_%E6%9D%82%E8%AE%B0/vllm%E9%83%A8%E7%BD%B2Qwen3%E5%A4%A7%E6%A8%A1%E5%9E%8B/">VLLM部署Qwen3大模型</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/21/06_%E6%9D%82%E8%AE%B0/%E5%8D%8E%E4%B8%BA%E4%BA%A4%E6%8D%A2%E6%9C%BA%E9%85%8D%E7%BD%AEmux-vlan/">华为交换机配置mux-vlan</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
   
+</aside>
+        
+      </div>
+      <footer id="footer">
   
-</div>
-
-  </footer>
-
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
+  <div class="outer">
+    <div id="footer-info" class="inner">
       
-        typing(text);
-      
-    })(window, document);
-  </script>
+      &copy; 2026 Haris<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
 
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
 
 
 
   
-    <script  src="/js/img-lazyload.js" ></script>
-  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
 
 
 
 
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
-    }
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
-</script>
-
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
-
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
-
-  <script>Fluid.plugins.codeWidget();</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
-    };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
-        }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
-      }
-    });
-  });
-</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
-  });
-</script>
-
-
-  <script>Fluid.plugins.imageCaption();</script>
-
-  <script  src="/js/local-search.js" ></script>
+<script src="/js/script.js"></script>
 
 
 
 
 
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
-
-
-  
-
-  <noscript>
-    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
-  </noscript>
+  </div>
 </body>
 </html>

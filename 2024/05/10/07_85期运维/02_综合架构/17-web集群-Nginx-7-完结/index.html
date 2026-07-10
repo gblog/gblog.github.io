@@ -1,25 +1,12 @@
-
-
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
-
-
-
+<html>
 <head>
-  <meta charset="UTF-8">
-
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <meta charset="utf-8">
   
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="Haris">
-  <meta name="keywords" content="">
-  
-    <meta name="description" content="Web集群-Nginx（七）完结今日内容：  高可用服务，keepalived 数据加密服务，https  一、HA高可用服务1.1 概述HA高可用的英文全称（HighAvailablity），学习使用软件keepalived实现， 它的实现机制：  多台服务器组成高可用集群，生成虚拟IP（Virtual IP） dns解析到这个VIP地址即可  高可用软件的选型：    选型 说明    kee">
+  <title>17-Web集群-Nginx(七) | Haris的小站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Web集群-Nginx（七）完结今日内容：  高可用服务，keepalived 数据加密服务，https  一、HA高可用服务1.1 概述HA高可用的英文全称（HighAvailablity），学习使用软件keepalived实现， 它的实现机制：  多台服务器组成高可用集群，生成虚拟IP（Virtual IP） dns解析到这个VIP地址即可  高可用软件的选型：    选型 说明    kee">
 <meta property="og:type" content="article">
 <meta property="og:title" content="17-Web集群-Nginx(七)">
 <meta property="og:url" content="https://gblog.github.io/2024/05/10/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/17-web%E9%9B%86%E7%BE%A4-Nginx-7-%E5%AE%8C%E7%BB%93/index.html">
@@ -44,269 +31,93 @@
 <meta property="article:published_time" content="2024-05-10T08:23:52.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.327Z">
 <meta property="article:author" content="Haris">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gblog.github.io/img/image-20240510165558192.png">
   
+    <link rel="alternate" href="/atom.xml" title="Haris的小站" type="application/atom+xml">
   
   
-  <title>17-Web集群-Nginx(七) - Haris的小站</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.png">
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
 
-
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"gblog.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
   
+  
+<link rel="stylesheet" href="/css/style.css">
 
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
+  
   
 <meta name="generator" content="Hexo 7.3.0"></head>
 
-
 <body>
-  
-
-  <header>
-    
-
-<div class="header-inner" style="height: 70vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>Haris的博客</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>首页</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>归档</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>分类</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
-          </li>
-        
-      </ul>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Haris的小站</a>
+      </h1>
+      
     </div>
-  </div>
-</nav>
-
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="17-Web集群-Nginx(七)"></span>
-          
-        </div>
-
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
         
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-05-10 16:23" pubdate>
-          2024年5月10日 下午
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
+          <a class="main-nav-link" href="/">Home</a>
         
-          3.6k 字
+          <a class="main-nav-link" href="/archives">Archives</a>
         
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
+      </nav>
+      <nav id="sub-nav">
         
         
+          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
         
-          31 分钟
-        
-      </span>
-    
-
-    
-    
-  </div>
-
-
-        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://gblog.github.io"></form>
       </div>
-
-      
     </div>
   </div>
-</div>
+</header>
 
-</div>
-
-  </header>
-
-  <main>
+      <div class="outer">
+        <section id="main"><article id="post-07_85期运维/02_综合架构/17-web集群-Nginx-7-完结" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/05/10/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/17-web%E9%9B%86%E7%BE%A4-Nginx-7-%E5%AE%8C%E7%BB%93/" class="article-date">
+  <time class="dt-published" datetime="2024-05-10T08:23:52.000Z" itemprop="datePublished">2024-05-10</time>
+</a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a>►<a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/">（二）综合架构</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      17-Web集群-Nginx(七)
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
       
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
-
-    </div>
-
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">17-Web集群-Nginx(七)</h1>
-            
-            
-              <div class="markdown-body">
-                
-                <h1 id="Web集群-Nginx（七）完结"><a href="#Web集群-Nginx（七）完结" class="headerlink" title="Web集群-Nginx（七）完结"></a>Web集群-Nginx（七）完结</h1><p>今日内容：</p>
+        <h1 id="Web集群-Nginx（七）完结"><a href="#Web集群-Nginx（七）完结" class="headerlink" title="Web集群-Nginx（七）完结"></a>Web集群-Nginx（七）完结</h1><p>今日内容：</p>
 <ul>
 <li>高可用服务，keepalived</li>
 <li>数据加密服务，https</li>
@@ -366,22 +177,7 @@
 </tr>
 </tbody></table>
 <p>部署服务</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># nginx repo
-[root@lb01[ &#x2F;var&#x2F;run]#cat &#x2F;etc&#x2F;yum.repos.d&#x2F;nginx.repo
-[nginx-stable]
-name&#x3D;nginx stable repo
-baseurl&#x3D;http:&#x2F;&#x2F;nginx.org&#x2F;packages&#x2F;centos&#x2F;$releasever&#x2F;$basearch&#x2F;
-gpgcheck&#x3D;1
-enabled&#x3D;1
-gpgkey&#x3D;https:&#x2F;&#x2F;nginx.org&#x2F;keys&#x2F;nginx_signing.key
-module_hotfixes&#x3D;true
-
-# 安装nginx和keepalived
-[root@lb02[ ~]#yum install -y nginx keepalived
-
-# 启动服务
-systemctl enable --now keepalived
-systemctl enable --now nginx</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">nginx repo</span></span><br><span class="line">[root@lb01[ /var/run]#cat /etc/yum.repos.d/nginx.repo</span><br><span class="line">[nginx-stable]</span><br><span class="line">name=nginx stable repo</span><br><span class="line">baseurl=http://nginx.org/packages/centos/$releasever/$basearch/</span><br><span class="line">gpgcheck=1</span><br><span class="line">enabled=1</span><br><span class="line">gpgkey=https://nginx.org/keys/nginx_signing.key</span><br><span class="line">module_hotfixes=true</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装nginx和keepalived</span></span><br><span class="line">[root@lb02[ ~]#yum install -y nginx keepalived</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动服务</span></span><br><span class="line">systemctl enable --now keepalived</span><br><span class="line">systemctl enable --now nginx</span><br></pre></td></tr></table></figure>
 
 <p>keepalived配置文件<code>/etc/keepalived/keepalived.conf</code>，分为三部分</p>
 <table>
@@ -405,103 +201,29 @@ systemctl enable --now nginx</code></pre></div></figure>
 </tr>
 </tbody></table>
 <p>lb01配置如下</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01[ &#x2F;etc&#x2F;keepalived]#cat keepalived.conf
-! Configuration File for keepalived
-
-! 全局定义部分
-global_defs &#123;
-  ! 每一个keepalived的名字，当前网络中唯一
-  router_id lb01
-&#125;
-
-! vrrp实例配置部分
-vrrp_instance vip_3 &#123;	! vrrp实例名称
-  state MASTER			! 设置在一对主备之间使用的名字，备为BACKUP
-  interface ens33		! 指定网卡
-  virtual_router_id 51	! 一对主备之间的id号，统一即可
-  priority 100			! 优先级，数字越大，优先级越高，建议备50，相差50
-  advert_int 1			! 心跳间隔，多久发一次vrrp数据
-  authentication &#123;		! 授权认证，保持默认即可
-    auth_type PASS
-    auth_pass 1111
-  &#125;
-  virtual_ipaddress &#123;	! 设置Vip ※※※
-    10.0.0.3 dev ens33 label ens33:0
-  &#125;
-&#125;</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[root@lb01[ /etc/keepalived]#cat keepalived.conf</span><br><span class="line">! Configuration File for keepalived</span><br><span class="line"></span><br><span class="line">! 全局定义部分</span><br><span class="line">global_defs &#123;</span><br><span class="line">  ! 每一个keepalived的名字，当前网络中唯一</span><br><span class="line">  router_id lb01</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">! vrrp实例配置部分</span><br><span class="line">vrrp_instance vip_3 &#123;	! vrrp实例名称</span><br><span class="line">  state MASTER			! 设置在一对主备之间使用的名字，备为BACKUP</span><br><span class="line">  interface ens33		! 指定网卡</span><br><span class="line">  virtual_router_id 51	! 一对主备之间的id号，统一即可</span><br><span class="line">  priority 100			! 优先级，数字越大，优先级越高，建议备50，相差50</span><br><span class="line">  advert_int 1			! 心跳间隔，多久发一次vrrp数据</span><br><span class="line">  authentication &#123;		! 授权认证，保持默认即可</span><br><span class="line">    auth_type PASS</span><br><span class="line">    auth_pass 1111</span><br><span class="line">  &#125;</span><br><span class="line">  virtual_ipaddress &#123;	! 设置Vip ※※※</span><br><span class="line">    10.0.0.3 dev ens33 label ens33:0</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>lb02配置对比：</p>
-<p><img src="/../../../img/image-20240510165558192.png" srcset="/img/loading.gif" lazyload alt="image-20240510165558192"></p>
+<p><img src="/../../../img/image-20240510165558192.png" alt="image-20240510165558192"></p>
 <p>测试：</p>
 <p>hosts设置</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">10.0.0.3 blog.oldboylinux.cn</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10.0.0.3 blog.oldboylinux.cn</span><br></pre></td></tr></table></figure>
 
 <p>此时10.0.0.5为主，有10.0.0.3的VIP，另一台为备，没有VIP</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># lb01 - IP信息
-[root@lb01[ &#x2F;etc&#x2F;nginx&#x2F;conf.d]#ip add
-...
-2: ens33: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
-    link&#x2F;ether 00:0c:29:8e:c3:71 brd ff:ff:ff:ff:ff:ff
-    inet 10.0.0.5&#x2F;24 brd 10.0.0.255 scope global noprefixroute ens33
-       valid_lft forever preferred_lft forever
-    inet 10.0.0.3&#x2F;32 scope global ens33:0
-...
-# lb01 - keepalived服务状态
-[root@lb01[ &#x2F;etc&#x2F;nginx&#x2F;conf.d]#systemctl status keepalived
-keepalived.service - LVS and VRRP High Availability Monitor
-   Loaded: loaded (&#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;keepalived.service; enabled; vendor preset: disabled)
-...
-May 10 22:24:22 lb01 Keepalived_vrrp[26784]: Sending gratuitous ARP on ens33 for 10.0.0.3
-...
-
-# lb02 - IP信息
-[root@lb02[ &#x2F;etc&#x2F;nginx]#ip add
-...
-2: ens33: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
-    link&#x2F;ether 00:0c:29:7a:5a:37 brd ff:ff:ff:ff:ff:ff
-    inet 10.0.0.6&#x2F;24 brd 10.0.0.255 scope global noprefixroute ens33
-       valid_lft forever preferred_lft forever
-...
-
-# lb02 - keepalived服务状态
-[root@lb02[ &#x2F;etc&#x2F;nginx]#systemctl status keepalived
-● keepalived.service - LVS and VRRP High Availability Monitor
-   Loaded: loaded (&#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;keepalived.service; enabled; vendor preset: disabled)
-...
-May 10 22:24:21 lb02 Keepalived_vrrp[20206]: VRRP_Instance(vip_3) Entering BACKUP STATE
-May 10 22:24:21 lb02 Keepalived_vrrp[20206]: VRRP_Instance(vip_3) removing protocol VIPs.
-...</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">lb01 - IP信息</span></span><br><span class="line">[root@lb01[ /etc/nginx/conf.d]#ip add</span><br><span class="line">...</span><br><span class="line">2: ens33: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000</span><br><span class="line">    link/ether 00:0c:29:8e:c3:71 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 10.0.0.5/24 brd 10.0.0.255 scope global noprefixroute ens33</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet 10.0.0.3/32 scope global ens33:0</span><br><span class="line">...</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">lb01 - keepalived服务状态</span></span><br><span class="line">[root@lb01[ /etc/nginx/conf.d]#systemctl status keepalived</span><br><span class="line">keepalived.service - LVS and VRRP High Availability Monitor</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/keepalived.service; enabled; vendor preset: disabled)</span><br><span class="line">...</span><br><span class="line">May 10 22:24:22 lb01 Keepalived_vrrp[26784]: Sending gratuitous ARP on ens33 for 10.0.0.3</span><br><span class="line">...</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">lb02 - IP信息</span></span><br><span class="line">[root@lb02[ /etc/nginx]#ip add</span><br><span class="line">...</span><br><span class="line">2: ens33: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000</span><br><span class="line">    link/ether 00:0c:29:7a:5a:37 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 10.0.0.6/24 brd 10.0.0.255 scope global noprefixroute ens33</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">...</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">lb02 - keepalived服务状态</span></span><br><span class="line">[root@lb02[ /etc/nginx]#systemctl status keepalived</span><br><span class="line">● keepalived.service - LVS and VRRP High Availability Monitor</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/keepalived.service; enabled; vendor preset: disabled)</span><br><span class="line">...</span><br><span class="line">May 10 22:24:21 lb02 Keepalived_vrrp[20206]: VRRP_Instance(vip_3) Entering BACKUP STATE</span><br><span class="line">May 10 22:24:21 lb02 Keepalived_vrrp[20206]: VRRP_Instance(vip_3) removing protocol VIPs.</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 
 <p>测试网站访问正常（走10.0.0.3 —&gt; 10.0.0.5）</p>
-<p><img src="/../../../img/image-20240510223153695.png" srcset="/img/loading.gif" lazyload alt="image-20240510223153695"></p>
+<p><img src="/../../../img/image-20240510223153695.png" alt="image-20240510223153695"></p>
 <p>抓包信息：</p>
-<p><img src="/../../../img/image-20240510223914266.png" srcset="/img/loading.gif" lazyload alt="image-20240510223914266"></p>
+<p><img src="/../../../img/image-20240510223914266.png" alt="image-20240510223914266"></p>
 <p>关闭lb01的服务</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl stop nginx keepalived</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop nginx keepalived</span><br></pre></td></tr></table></figure>
 
 <p>测试网站仍可正常访问（走10.0.0.3 —&gt; 10.0.0.6），此时备机转正，拥有VIP</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># lb02转正，拥有VIP
-[root@lb02[ &#x2F;etc&#x2F;nginx]#ip add
-...
-2: ens33: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
-    link&#x2F;ether 00:0c:29:7a:5a:37 brd ff:ff:ff:ff:ff:ff
-    inet 10.0.0.6&#x2F;24 brd 10.0.0.255 scope global noprefixroute ens33
-       valid_lft forever preferred_lft forever
-    inet 10.0.0.3&#x2F;32 scope global ens33:0
-       valid_lft forever preferred_lft forever
-...
-
-# keepalived状态
-[root@lb02[ &#x2F;etc&#x2F;nginx]#systemctl status keepalived
-● keepalived.service - LVS and VRRP High Availability Monitor
-   Loaded: loaded (&#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;keepalived.service; enabled; vendor preset: disabled)
-   Active: active (running) since Fri 2024-05-10 22:22:45 CST; 10min 
-...
-May 10 22:33:32 lb02 Keepalived_vrrp[20206]: Sending gratuitous ARP on ens33 for 10.0.0.3
-...</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">lb02转正，拥有VIP</span></span><br><span class="line">[root@lb02[ /etc/nginx]#ip add</span><br><span class="line">...</span><br><span class="line">2: ens33: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000</span><br><span class="line">    link/ether 00:0c:29:7a:5a:37 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 10.0.0.6/24 brd 10.0.0.255 scope global noprefixroute ens33</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet 10.0.0.3/32 scope global ens33:0</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">...</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">keepalived状态</span></span><br><span class="line">[root@lb02[ /etc/nginx]#systemctl status keepalived</span><br><span class="line">● keepalived.service - LVS and VRRP High Availability Monitor</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/keepalived.service; enabled; vendor preset: disabled)</span><br><span class="line">   Active: active (running) since Fri 2024-05-10 22:22:45 CST; 10min </span><br><span class="line">...</span><br><span class="line">May 10 22:33:32 lb02 Keepalived_vrrp[20206]: Sending gratuitous ARP on ens33 for 10.0.0.3</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 
 <p>抓包信息</p>
-<p><img src="/../../../img/image-20240510223924312.png" srcset="/img/loading.gif" lazyload alt="image-20240510223924312"></p>
+<p><img src="/../../../img/image-20240510223924312.png" alt="image-20240510223924312"></p>
 <p>重启lb01的服务后，主回归正常</p>
 <h2 id="1-4-keepalived的问题"><a href="#1-4-keepalived的问题" class="headerlink" title="1.4 keepalived的问题"></a>1.4 keepalived的问题</h2><h3 id="1-4-1-脑裂故障（重要）"><a href="#1-4-1-脑裂故障（重要）" class="headerlink" title="1.4.1 脑裂故障（重要）"></a>1.4.1 脑裂故障（重要）</h3><p>故障现象：主备都有vip.</p>
 <p>原因:</p>
@@ -540,57 +262,10 @@ May 10 22:33:32 lb02 Keepalived_vrrp[20206]: Sending gratuitous ARP on ens33 for
 <li>修改keepalived配置文件，通过keepalived调用这个脚本</li>
 </ul>
 <p>书写脚本</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01[ &#x2F;etc&#x2F;nginx&#x2F;conf.d]#cat &#x2F;server&#x2F;scripts&#x2F;keep-lb.sh
-#!&#x2F;bin&#x2F;bash
-
-# desc: 监控nginx端口数量
-
-port_cnt&#x3D;&#96;ss -lntup | grep nginx | wc -l&#96;
-
-if [ $port_cnt -eq 0 ];then
-   systemctl stop keepalived;
-fi
-
-# 给予脚本执行权限
-[root@lb01[ &#x2F;etc&#x2F;nginx&#x2F;conf.d]#chmod a+x &#x2F;server&#x2F;scripts&#x2F;keep-lb.sh</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@lb01[ /etc/nginx/conf.d]#cat /server/scripts/keep-lb.sh</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">desc: 监控nginx端口数量</span></span><br><span class="line"></span><br><span class="line">port_cnt=`ss -lntup | grep nginx | wc -l`</span><br><span class="line"></span><br><span class="line">if [ $port_cnt -eq 0 ];then</span><br><span class="line">   systemctl stop keepalived;</span><br><span class="line">fi</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">给予脚本执行权限</span></span><br><span class="line">[root@lb01[ /etc/nginx/conf.d]#chmod a+x /server/scripts/keep-lb.sh</span><br></pre></td></tr></table></figure>
 
 <p>keepalived配置文件监控</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01[ &#x2F;etc&#x2F;nginx&#x2F;conf.d]#cat &#x2F;etc&#x2F;keepalived&#x2F;keepalived.conf
-! Configuration File for keepalived
-
-global_defs &#123;
-  router_id lb01
-&#125;
-
-! 定义监控脚本
-vrrp_script keep-lb.sh &#123;
-  script &#x2F;server&#x2F;scripts&#x2F;keep-lb.sh
-  interval 2
-  weight 1
-  user root
-&#125;
-
-
-vrrp_instance vip_3 &#123;
-  state MASTER
-  interface ens33
-  virtual_router_id 51
-  priority 100
-  advert_int 1
-  authentication &#123;
-    auth_type PASS
-    auth_pass 1111
-  &#125;
-
-  virtual_ipaddress &#123;   ! 设置Vip ※※※
-    10.0.0.3 dev ens33 label ens33:0
-  &#125;
-
-  ! 这个vrrp实例使用keep-lb.sh脚本
-  track_script &#123;
-    keep-lb.sh
-  &#125;
-&#125;</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">[root@lb01[ /etc/nginx/conf.d]#cat /etc/keepalived/keepalived.conf</span><br><span class="line">! Configuration File for keepalived</span><br><span class="line"></span><br><span class="line">global_defs &#123;</span><br><span class="line">  router_id lb01</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">! 定义监控脚本</span><br><span class="line">vrrp_script keep-lb.sh &#123;</span><br><span class="line">  script /server/scripts/keep-lb.sh</span><br><span class="line">  interval 2</span><br><span class="line">  weight 1</span><br><span class="line">  user root</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">vrrp_instance vip_3 &#123;</span><br><span class="line">  state MASTER</span><br><span class="line">  interface ens33</span><br><span class="line">  virtual_router_id 51</span><br><span class="line">  priority 100</span><br><span class="line">  advert_int 1</span><br><span class="line">  authentication &#123;</span><br><span class="line">    auth_type PASS</span><br><span class="line">    auth_pass 1111</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  virtual_ipaddress &#123;   ! 设置Vip ※※※</span><br><span class="line">    10.0.0.3 dev ens33 label ens33:0</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ! 这个vrrp实例使用keep-lb.sh脚本</span><br><span class="line">  track_script &#123;</span><br><span class="line">    keep-lb.sh</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>测试：</p>
 <ul>
@@ -613,12 +288,12 @@ vrrp_instance vip_3 &#123;
 <li>两个节点都改为BACKUP状态</li>
 <li>配置nopreempt选项</li>
 </ul>
-<p><img src="/../../../img/image-20240510230717070.png" srcset="/img/loading.gif" lazyload alt="image-20240510230717070"></p>
+<p><img src="/../../../img/image-20240510230717070.png" alt="image-20240510230717070"></p>
 <h3 id="1-5-2-双主模式"><a href="#1-5-2-双主模式" class="headerlink" title="1.5.2 双主模式"></a>1.5.2 双主模式</h3><p>应对高并发的时候设置的双主模式：</p>
 <ul>
 <li>设置两个VIP，互为主备</li>
 </ul>
-<p><img src="/../../../img/image-20240510230842673.png" srcset="/img/loading.gif" lazyload alt="image-20240510230842673"></p>
+<p><img src="/../../../img/image-20240510230842673.png" alt="image-20240510230842673"></p>
 <h1 id="二、HTTPS证书"><a href="#二、HTTPS证书" class="headerlink" title="二、HTTPS证书"></a>二、HTTPS证书</h1><h2 id="2-1-概述"><a href="#2-1-概述" class="headerlink" title="2.1 概述"></a>2.1 概述</h2><p>https是基于http的协议，在传输的时候进行加密</p>
 <p>部署https加密的流程</p>
 <ul>
@@ -627,123 +302,51 @@ vrrp_instance vip_3 &#123;
 <li>进行配置web&#x2F;lb.</li>
 </ul>
 <p>阿里云支持的SSL证书</p>
-<p><img src="/../../../img/image-20240511092226204.png" srcset="/img/loading.gif" lazyload alt="image-20240511092226204"></p>
+<p><img src="/../../../img/image-20240511092226204.png" alt="image-20240511092226204"></p>
 <h2 id="2-2-真实证书申请"><a href="#2-2-真实证书申请" class="headerlink" title="2.2 真实证书申请"></a>2.2 真实证书申请</h2><p>申请SSL证书需要有真实域名，freedomain域名和SSL都免费</p>
 <h3 id="2-2-1-freedomian申请"><a href="#2-2-1-freedomian申请" class="headerlink" title="2.2.1 freedomian申请"></a>2.2.1 freedomian申请</h3><p>在freedomian：<a target="_blank" rel="noopener" href="https://freedomain.one/%E5%8F%AF%E4%BB%A5%E7%94%B3%E8%AF%B7%E5%85%8D%E8%B4%B9%E7%9A%84%E5%9F%9F%E5%90%8D%E3%80%81DNS%E3%80%81SSL%E8%AF%81%E4%B9%A6">https://freedomain.one/可以申请免费的域名、DNS、SSL证书</a></p>
 <p>我申请的：gsblog.work.gd</p>
 <p>进入SSL页面申请证书</p>
-<p><img src="/../../../img/image-20240511101002021.png" srcset="/img/loading.gif" lazyload alt="image-20240511101002021"></p>
+<p><img src="/../../../img/image-20240511101002021.png" alt="image-20240511101002021"></p>
 <p>申请完成</p>
-<p><img src="/../../../img/image-20240511101242798.png" srcset="/img/loading.gif" lazyload alt="image-20240511101242798"></p>
+<p><img src="/../../../img/image-20240511101242798.png" alt="image-20240511101242798"></p>
 <p>下载证书</p>
-<p><img src="/../../../img/image-20240511101335706.png" srcset="/img/loading.gif" lazyload alt="image-20240511101335706"></p>
+<p><img src="/../../../img/image-20240511101335706.png" alt="image-20240511101335706"></p>
 <p>里面是这三个文件</p>
-<p><img src="/../../../img/image-20240511101423902.png" srcset="/img/loading.gif" lazyload alt="image-20240511101423902"></p>
+<p><img src="/../../../img/image-20240511101423902.png" alt="image-20240511101423902"></p>
 <h3 id="2-2-2-阿里云申请"><a href="#2-2-2-阿里云申请" class="headerlink" title="2.2.2 阿里云申请"></a>2.2.2 阿里云申请</h3><p>阿里云每个账户提供20个免费域名额度，申请需要个人信息验证</p>
 <p>进入免费域名购买页面</p>
-<p><img src="/../../../img/image-20240511100053875.png" srcset="/img/loading.gif" lazyload alt="image-20240511100053875"></p>
+<p><img src="/../../../img/image-20240511100053875.png" alt="image-20240511100053875"></p>
 <p>输入域名，申请证书，需要提供个人信息</p>
-<p><img src="/../../../img/image-20240511100442396.png" srcset="/img/loading.gif" lazyload alt="image-20240511100442396"></p>
+<p><img src="/../../../img/image-20240511100442396.png" alt="image-20240511100442396"></p>
 <h2 id="2-3-命令行创建https证书"><a href="#2-3-命令行创建https证书" class="headerlink" title="2.3 命令行创建https证书"></a>2.3 命令行创建https证书</h2><p>如果实在申请不到真实证书，也可以使用命令行创建一对</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">#创建私钥
-openssl genrsa -idea -out server.key 2048
-
-#根据私钥创建 证书
-openssl req -days 36500 -x509 -sha256 -nodes -newkey rsa:2048 -keyout server.key -out server.crt</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">创建私钥</span></span><br><span class="line">openssl genrsa -idea -out server.key 2048</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">根据私钥创建 证书</span></span><br><span class="line">openssl req -days 36500 -x509 -sha256 -nodes -newkey rsa:2048 -keyout server.key -out server.crt</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>这种key会触发浏览器报警，不是私密连接</p>
 </blockquote>
-<p><img src="/../../../img/image-20240511104318120.png" srcset="/img/loading.gif" lazyload alt="image-20240511104318120"></p>
+<p><img src="/../../../img/image-20240511104318120.png" alt="image-20240511104318120"></p>
 <h2 id="2-4-HTTPS加密流程-单台"><a href="#2-4-HTTPS加密流程-单台" class="headerlink" title="2.4 HTTPS加密流程-单台"></a>2.4 HTTPS加密流程-单台</h2><blockquote>
 <p>注意：</p>
 <p>申请的https证书域名要与网站域名一致才能正常使用。否则用户访问会有警告与提示  </p>
 </blockquote>
 <h3 id="2-4-1-部署证书"><a href="#2-4-1-部署证书" class="headerlink" title="2.4.1 部署证书"></a>2.4.1 部署证书</h3><p>将freedomain下载的证书上传到服务器中</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@web01[ &#x2F;etc&#x2F;nginx&#x2F;ssl_keys]#ls
-gsblog.work.gd.ll730fjv.zip
-[root@web01[ &#x2F;etc&#x2F;nginx&#x2F;ssl_keys]#unzip gsblog.work.gd.ll730fjv.zip
-Archive:  gsblog.work.gd.ll730fjv.zip
-  inflating: gsblog.work.gd.cer
-  inflating: gsblog.work.gd.key
-  inflating: ca.cer</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@web01[ /etc/nginx/ssl_keys]#ls</span><br><span class="line">gsblog.work.gd.ll730fjv.zip</span><br><span class="line">[root@web01[ /etc/nginx/ssl_keys]#unzip gsblog.work.gd.ll730fjv.zip</span><br><span class="line">Archive:  gsblog.work.gd.ll730fjv.zip</span><br><span class="line">  inflating: gsblog.work.gd.cer</span><br><span class="line">  inflating: gsblog.work.gd.key</span><br><span class="line">  inflating: ca.cer</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-4-2-HTTPS部署流程"><a href="#2-4-2-HTTPS部署流程" class="headerlink" title="2.4.2 HTTPS部署流程"></a>2.4.2 HTTPS部署流程</h3><p>创建子配置文件</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@web01[ &#x2F;etc&#x2F;nginx&#x2F;conf.d]#cat gsblog.work.gd.conf
-server &#123;
-  # 端口由80改为443
-  listen 443 ssl;
-  #ssl on;  # 1.15.0以后被废弃
-
-  server_name gsblog.work.gd;
-  root &#x2F;app&#x2F;code&#x2F;ssl;
-  error_log  &#x2F;var&#x2F;log&#x2F;nginx&#x2F;ssl-error.log notice;
-  access_log &#x2F;var&#x2F;log&#x2F;nginx&#x2F;ssl-access.log main;
-
-  # ssh key 
-  ssl_certificate &#x2F;etc&#x2F;nginx&#x2F;ssl_keys&#x2F;gsblog.work.gd.cer;
-  ssl_certificate_key &#x2F;etc&#x2F;nginx&#x2F;ssl_keys&#x2F;gsblog.work.gd.key;
-
-
-  location &#x2F; &#123;
-    index index.html;
-  &#125;
-&#125;</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@web01[ /etc/nginx/conf.d]#cat gsblog.work.gd.conf</span><br><span class="line">server &#123;</span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">端口由80改为443</span></span><br><span class="line">  listen 443 ssl;</span><br><span class="line"><span class="meta prompt_">  #</span><span class="language-bash">ssl on;  <span class="comment"># 1.15.0以后被废弃</span></span></span><br><span class="line"></span><br><span class="line">  server_name gsblog.work.gd;</span><br><span class="line">  root /app/code/ssl;</span><br><span class="line">  error_log  /var/log/nginx/ssl-error.log notice;</span><br><span class="line">  access_log /var/log/nginx/ssl-access.log main;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">ssh key</span> </span><br><span class="line">  ssl_certificate /etc/nginx/ssl_keys/gsblog.work.gd.cer;</span><br><span class="line">  ssl_certificate_key /etc/nginx/ssl_keys/gsblog.work.gd.key;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  location / &#123;</span><br><span class="line">    index index.html;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>创建站点目录</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mkdir -p &#x2F;app&#x2F;code&#x2F;ssl
-echo &quot;ssl web page web01&quot; &gt; &#x2F;app&#x2F;code&#x2F;ssl&#x2F;index.html</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /app/code/ssl</span><br><span class="line">echo &quot;ssl web page web01&quot; &gt; /app/code/ssl/index.html</span><br></pre></td></tr></table></figure>
 
 <p>配置DNS，重启服务，测试访问https成功，证书安全有效</p>
-<p><img src="/../../../img/image-20240511102557458.png" srcset="/img/loading.gif" lazyload alt="image-20240511102557458"></p>
+<p><img src="/../../../img/image-20240511102557458.png" alt="image-20240511102557458"></p>
 <h3 id="2-4-3-HTTP跳转HTTPS"><a href="#2-4-3-HTTP跳转HTTPS" class="headerlink" title="2.4.3 HTTP跳转HTTPS"></a>2.4.3 HTTP跳转HTTPS</h3><p>有人误输入了http怎么办，为了防止不能正常访问到站点，需要设置http跳转https</p>
 <p>子配置文件如下：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@web01[ &#x2F;etc&#x2F;nginx&#x2F;conf.d]#cat gsblog.work.gd.conf
-# 添加80端口跳转443
-server &#123;
-  listen 80;
-  server_name gsblog.work.gd;
-  return 301 https:&#x2F;&#x2F;gsblog.work.gd$request_uri;
-&#125;
-
-
-server &#123;
-  # 端口由80改为443
-  listen 443 ssl;
-  #ssl on;  # 1.15.0以后被废弃
-
-  server_name gsblog.work.gd;
-  root &#x2F;app&#x2F;code&#x2F;ssl;
-  error_log  &#x2F;var&#x2F;log&#x2F;nginx&#x2F;ssl-error.log notice;
-  access_log &#x2F;var&#x2F;log&#x2F;nginx&#x2F;ssl-access.log main;
-
-  # ssh key
-  ssl_certificate &#x2F;etc&#x2F;nginx&#x2F;ssl_keys&#x2F;gsblog.work.gd.cer;
-  ssl_certificate_key &#x2F;etc&#x2F;nginx&#x2F;ssl_keys&#x2F;gsblog.work.gd.key;
-
-
-  location &#x2F; &#123;
-    index index.html;
-  &#125;
-&#125;</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[root@web01[ /etc/nginx/conf.d]#cat gsblog.work.gd.conf</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">添加80端口跳转443</span></span><br><span class="line">server &#123;</span><br><span class="line">  listen 80;</span><br><span class="line">  server_name gsblog.work.gd;</span><br><span class="line">  return 301 https://gsblog.work.gd$request_uri;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">端口由80改为443</span></span><br><span class="line">  listen 443 ssl;</span><br><span class="line"><span class="meta prompt_">  #</span><span class="language-bash">ssl on;  <span class="comment"># 1.15.0以后被废弃</span></span></span><br><span class="line"></span><br><span class="line">  server_name gsblog.work.gd;</span><br><span class="line">  root /app/code/ssl;</span><br><span class="line">  error_log  /var/log/nginx/ssl-error.log notice;</span><br><span class="line">  access_log /var/log/nginx/ssl-access.log main;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">ssh key</span></span><br><span class="line">  ssl_certificate /etc/nginx/ssl_keys/gsblog.work.gd.cer;</span><br><span class="line">  ssl_certificate_key /etc/nginx/ssl_keys/gsblog.work.gd.key;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  location / &#123;</span><br><span class="line">    index index.html;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>测试访问</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@web02[ &#x2F;etc&#x2F;php-fpm.d]#curl -Lv -H Host:gsblog.work.gd http:&#x2F;&#x2F;10.0.0.7
-# 先到80
-* About to connect() to 10.0.0.7 port 80 (#0)
-..
-&gt; Host:gsblog.work.gd
-
-# 再到301跳转
-&lt; HTTP&#x2F;1.1 301 Moved Permanently
-...
-
-# 再到443
-* About to connect() to gsblog.work.gd port 443 (#1)
-*   Trying 10.0.0.7...
-* Connected to gsblog.work.gd (10.0.0.7) port 443 (#1)
-* Initializing NSS with certpath: sql:&#x2F;etc&#x2F;pki&#x2F;nssdb
-...</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@web02[ /etc/php-fpm.d]#curl -Lv -H Host:gsblog.work.gd http://10.0.0.7</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">先到80</span></span><br><span class="line">* About to connect() to 10.0.0.7 port 80 (#0)</span><br><span class="line">..</span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">Host:gsblog.work.gd</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">再到301跳转</span></span><br><span class="line">&lt; HTTP/1.1 301 Moved Permanently</span><br><span class="line">...</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">再到443</span></span><br><span class="line">* About to connect() to gsblog.work.gd port 443 (#1)</span><br><span class="line">*   Trying 10.0.0.7...</span><br><span class="line">* Connected to gsblog.work.gd (10.0.0.7) port 443 (#1)</span><br><span class="line">* Initializing NSS with certpath: sql:/etc/pki/nssdb</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 
 <h2 id="2-5-网站集群HTTPS配置"><a href="#2-5-网站集群HTTPS配置" class="headerlink" title="2.5 网站集群HTTPS配置"></a>2.5 网站集群HTTPS配置</h2><p>集群HTTPS分为<em><strong>全部加密</strong></em>和<em><strong>部分加密</strong></em></p>
 <p>全部加密：</p>
@@ -755,85 +358,15 @@ server &#123;
 <li>用户 —-&gt; （加密）—-&gt; lb（监听80&#x2F;443） —-&gt;  web（监听80）</li>
 </ul>
 <h3 id="2-5-1-全部加密"><a href="#2-5-1-全部加密" class="headerlink" title="2.5.1 全部加密"></a>2.5.1 全部加密</h3><p>web端加密，一心一意监听443</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@web01[ &#x2F;etc&#x2F;nginx&#x2F;conf.d]#cat gsblog.work.gd.conf
-server &#123;
-  # 端口由80改为443
-  listen 443 ssl;
-  #ssl on;  # 1.15.0以后被废弃
-
-  server_name gsblog.work.gd;
-  root &#x2F;app&#x2F;code&#x2F;ssl;
-  error_log  &#x2F;var&#x2F;log&#x2F;nginx&#x2F;ssl-error.log notice;
-  access_log &#x2F;var&#x2F;log&#x2F;nginx&#x2F;ssl-access.log main;
-
-  # ssh key
-  ssl_certificate &#x2F;etc&#x2F;nginx&#x2F;ssl_keys&#x2F;gsblog.work.gd.cer;
-  ssl_certificate_key &#x2F;etc&#x2F;nginx&#x2F;ssl_keys&#x2F;gsblog.work.gd.key;
-
-
-  location &#x2F; &#123;
-    index index.html;
-  &#125;
-&#125;</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@web01[ /etc/nginx/conf.d]#cat gsblog.work.gd.conf</span><br><span class="line">server &#123;</span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">端口由80改为443</span></span><br><span class="line">  listen 443 ssl;</span><br><span class="line"><span class="meta prompt_">  #</span><span class="language-bash">ssl on;  <span class="comment"># 1.15.0以后被废弃</span></span></span><br><span class="line"></span><br><span class="line">  server_name gsblog.work.gd;</span><br><span class="line">  root /app/code/ssl;</span><br><span class="line">  error_log  /var/log/nginx/ssl-error.log notice;</span><br><span class="line">  access_log /var/log/nginx/ssl-access.log main;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">ssh key</span></span><br><span class="line">  ssl_certificate /etc/nginx/ssl_keys/gsblog.work.gd.cer;</span><br><span class="line">  ssl_certificate_key /etc/nginx/ssl_keys/gsblog.work.gd.key;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  location / &#123;</span><br><span class="line">    index index.html;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>lb端加密，守住前线80&#x2F;443端口</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01[ &#x2F;etc&#x2F;nginx&#x2F;conf.d]#cat gsblog.work.gd.conf
-# 资源池
-upstream ssl_pools &#123;
-  server 10.0.0.7:443;
-&#125;
-
-# 80跳转443
-server &#123;
-  listen 80;
-  server_name gsblog.work.gd;
-  return 301 https:&#x2F;&#x2F;gsblog.work.gd$request_uri;
-&#125;
-
-# 443监听
-server &#123;
-  listen 443 ssl;
-  server_name gsblog.work.gd;
-
-  #ssl keys
-  ssl_certificate &#x2F;etc&#x2F;nginx&#x2F;ssl_keys&#x2F;gsblog.work.gd.cer;
-  ssl_certificate_key &#x2F;etc&#x2F;nginx&#x2F;ssl_keys&#x2F;gsblog.work.gd.key;
-
-  location &#x2F; &#123;
-    proxy_pass https:&#x2F;&#x2F;ssl_pools;
-    proxy_set_header Host $http_host;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Real-Ip $remote_addr;
-  &#125;
-&#125;</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[root@lb01[ /etc/nginx/conf.d]#cat gsblog.work.gd.conf</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">资源池</span></span><br><span class="line">upstream ssl_pools &#123;</span><br><span class="line">  server 10.0.0.7:443;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">80跳转443</span></span><br><span class="line">server &#123;</span><br><span class="line">  listen 80;</span><br><span class="line">  server_name gsblog.work.gd;</span><br><span class="line">  return 301 https://gsblog.work.gd$request_uri;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">443监听</span></span><br><span class="line">server &#123;</span><br><span class="line">  listen 443 ssl;</span><br><span class="line">  server_name gsblog.work.gd;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  #</span><span class="language-bash">ssl keys</span></span><br><span class="line">  ssl_certificate /etc/nginx/ssl_keys/gsblog.work.gd.cer;</span><br><span class="line">  ssl_certificate_key /etc/nginx/ssl_keys/gsblog.work.gd.key;</span><br><span class="line"></span><br><span class="line">  location / &#123;</span><br><span class="line">    proxy_pass https://ssl_pools;</span><br><span class="line">    proxy_set_header Host $http_host;</span><br><span class="line">    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">    proxy_set_header X-Real-Ip $remote_addr;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>设置hosts，重启服务，测试访问</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@web02[ &#x2F;etc&#x2F;php-fpm.d]#curl -Lv -H Host:gsblog.work.gd http:&#x2F;&#x2F;10.0.0.5
-# 先到80
-* About to connect() to 10.0.0.5 port 80 (#0)
-...
-# 再301跳转
-&lt; HTTP&#x2F;1.1 301 Moved Permanently
-...
-# 再到443
-* About to connect() to gsblog.work.gd port 443 (#1)
-*   Trying 10.0.0.5...
-* Connected to gsblog.work.gd (10.0.0.5) port 443 (#1)
-...</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@web02[ /etc/php-fpm.d]#curl -Lv -H Host:gsblog.work.gd http://10.0.0.5</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">先到80</span></span><br><span class="line">* About to connect() to 10.0.0.5 port 80 (#0)</span><br><span class="line">...</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">再301跳转</span></span><br><span class="line">&lt; HTTP/1.1 301 Moved Permanently</span><br><span class="line">...</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">再到443</span></span><br><span class="line">* About to connect() to gsblog.work.gd port 443 (#1)</span><br><span class="line">*   Trying 10.0.0.5...</span><br><span class="line">* Connected to gsblog.work.gd (10.0.0.5) port 443 (#1)</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 
-<h4 id="加配置HTTP2-0"><a href="#加配置HTTP2-0" class="headerlink" title="加配置HTTP2.0"></a>加配置HTTP2.0</h4><figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01[ &#x2F;etc&#x2F;nginx&#x2F;conf.d]#cat gsblog.work.gd.conf
-# 资源池
-...
-
-# 80跳转443
-...
-
-# 443监听
-server &#123;
-  listen 443 ssl http2; #此处加上标记即可
-  server_name gsblog.work.gd;
-...
-&#125;</code></pre></div></figure>
+<h4 id="加配置HTTP2-0"><a href="#加配置HTTP2-0" class="headerlink" title="加配置HTTP2.0"></a>加配置HTTP2.0</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@lb01[ /etc/nginx/conf.d]#cat gsblog.work.gd.conf</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">资源池</span></span><br><span class="line">...</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">80跳转443</span></span><br><span class="line">...</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">443监听</span></span><br><span class="line">server &#123;</span><br><span class="line">  listen 443 ssl http2; #此处加上标记即可</span><br><span class="line">  server_name gsblog.work.gd;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>提示：</p>
@@ -841,72 +374,15 @@ server &#123;
 <p>参考：<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/2325511">https://cloud.tencent.com/developer/article/2325511</a></p>
 </blockquote>
 <h3 id="2-5-2-部分加密"><a href="#2-5-2-部分加密" class="headerlink" title="2.5.2 部分加密"></a>2.5.2 部分加密</h3><p>web端不加密，监听80，放飞自我</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@web01[ &#x2F;etc&#x2F;nginx&#x2F;conf.d]#cat gsblog.work.gd.conf
-server &#123;
-  listen 80;
-  server_name gsblog.work.gd;
-  root &#x2F;app&#x2F;code&#x2F;ssl;
-  error_log  &#x2F;var&#x2F;log&#x2F;nginx&#x2F;ssl-error.log notice;
-  access_log &#x2F;var&#x2F;log&#x2F;nginx&#x2F;ssl-access.log main;
-
-  location &#x2F; &#123;
-    index index.html;
-  &#125;
-&#125;</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@web01[ /etc/nginx/conf.d]#cat gsblog.work.gd.conf</span><br><span class="line">server &#123;</span><br><span class="line">  listen 80;</span><br><span class="line">  server_name gsblog.work.gd;</span><br><span class="line">  root /app/code/ssl;</span><br><span class="line">  error_log  /var/log/nginx/ssl-error.log notice;</span><br><span class="line">  access_log /var/log/nginx/ssl-access.log main;</span><br><span class="line"></span><br><span class="line">  location / &#123;</span><br><span class="line">    index index.html;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>lb端加密，守住前线80&#x2F;443端口，<strong>转发注意改为80&#x2F;http</strong></p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01[ &#x2F;etc&#x2F;nginx&#x2F;conf.d]#cat gsblog.work.gd.conf
-upstream ssl_pools &#123;
-  # 改成80端口
-  server 10.0.0.7:80 ;
-&#125;
-
-server &#123;
-  listen 80;
-  server_name gsblog.work.gd;
-  return 301 https:&#x2F;&#x2F;gsblog.work.gd$request_uri;
-&#125;
-
-server &#123;
-  listen 443 ssl http2;
-  server_name gsblog.work.gd;
-  #ssl keys
-  ssl_certificate &#x2F;etc&#x2F;nginx&#x2F;ssl_keys&#x2F;gsblog.work.gd.cer;
-  ssl_certificate_key &#x2F;etc&#x2F;nginx&#x2F;ssl_keys&#x2F;gsblog.work.gd.key;
-  location &#x2F; &#123;
-    # 转发改成http
-    proxy_pass http:&#x2F;&#x2F;ssl_pools;
-    proxy_set_header Host $http_host;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Real-Ip $remote_addr;
-  &#125;
-&#125;</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[root@lb01[ /etc/nginx/conf.d]#cat gsblog.work.gd.conf</span><br><span class="line">upstream ssl_pools &#123;</span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">改成80端口</span></span><br><span class="line">  server 10.0.0.7:80 ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">  listen 80;</span><br><span class="line">  server_name gsblog.work.gd;</span><br><span class="line">  return 301 https://gsblog.work.gd$request_uri;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">  listen 443 ssl http2;</span><br><span class="line">  server_name gsblog.work.gd;</span><br><span class="line"><span class="meta prompt_">  #</span><span class="language-bash">ssl keys</span></span><br><span class="line">  ssl_certificate /etc/nginx/ssl_keys/gsblog.work.gd.cer;</span><br><span class="line">  ssl_certificate_key /etc/nginx/ssl_keys/gsblog.work.gd.key;</span><br><span class="line">  location / &#123;</span><br><span class="line">    # 转发改成http</span><br><span class="line">    proxy_pass http://ssl_pools;</span><br><span class="line">    proxy_set_header Host $http_host;</span><br><span class="line">    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">    proxy_set_header X-Real-Ip $remote_addr;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="2-6-课后任务"><a href="#2-6-课后任务" class="headerlink" title="2.6 课后任务"></a>2.6 课后任务</h2><p>搭建网站wordpress配置https.</p>
 <p>给lb01,lb02配置keepalived监控nginx  </p>
 <h1 id="三、优化与监控"><a href="#三、优化与监控" class="headerlink" title="三、优化与监控"></a>三、优化与监控</h1><h2 id="3-1-优化"><a href="#3-1-优化" class="headerlink" title="3.1 优化"></a>3.1 优化</h2><p>https &#x3D;&#x3D; http over tls</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">server &#123;
-  listen 443 ssl;
-  keepalive_timeout 70;
-  
-  #指定ssl加密协议的版本
-  ssl_protocols TLSv1 TLSv1.1 TLSv1.2; 
-  
-  #加密算法.需要排除算法
-  #排除null空算法, md5算法
-  ssl_ciphers AES128-SHA:AES256-SHA:RC4-SHA:DES-CBC3-SHA:RC4-MD5:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5; 
-
-  # 密钥
-  ssl_certificate &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;conf&#x2F;cert.pem;
-  ssl_certificate_key &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;conf&#x2F;cert.key;
-
-  #设置https 会话缓存
-  ssl_session_cache shared:SSL:10m;
-  
-  #超时时间 10分钟
-  ssl_session_timeout 10m;
-... 
-&#125;</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">  listen 443 ssl;</span><br><span class="line">  keepalive_timeout 70;</span><br><span class="line">  </span><br><span class="line"><span class="meta prompt_">  #</span><span class="language-bash">指定ssl加密协议的版本</span></span><br><span class="line">  ssl_protocols TLSv1 TLSv1.1 TLSv1.2; </span><br><span class="line">  </span><br><span class="line"><span class="meta prompt_">  #</span><span class="language-bash">加密算法.需要排除算法</span></span><br><span class="line"><span class="meta prompt_">  #</span><span class="language-bash">排除null空算法, md5算法</span></span><br><span class="line">  ssl_ciphers AES128-SHA:AES256-SHA:RC4-SHA:DES-CBC3-SHA:RC4-MD5:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5; </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">密钥</span></span><br><span class="line">  ssl_certificate /usr/local/nginx/conf/cert.pem;</span><br><span class="line">  ssl_certificate_key /usr/local/nginx/conf/cert.key;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  #</span><span class="language-bash">设置https 会话缓存</span></span><br><span class="line">  ssl_session_cache shared:SSL:10m;</span><br><span class="line">  </span><br><span class="line"><span class="meta prompt_">  #</span><span class="language-bash">超时时间 10分钟</span></span><br><span class="line">  ssl_session_timeout 10m;</span><br><span class="line">... </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="3-2-监控证书过期时间"><a href="#3-2-监控证书过期时间" class="headerlink" title="3.2 监控证书过期时间"></a>3.2 监控证书过期时间</h2><p>流程：</p>
 <ul>
@@ -914,411 +390,167 @@ server &#123;
 <li>与当前日期对比(30天之前)</li>
 </ul>
 <p>获取剩余时间的命令</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 获取不了
-[root@lb01[ &#x2F;etc&#x2F;nginx&#x2F;conf.d]#curl -Lv https:&#x2F;&#x2F;www.baidu.com | grep &#39;expire date&#39;
-
-# 有一些命令的输出,并非标准输出,而是作为标准错误输出
-[root@lb01[ &#x2F;etc&#x2F;nginx&#x2F;conf.d]#curl -Lv https:&#x2F;&#x2F;www.baidu.com |&amp; grep &#39;expire date&#39;
-*       expire date: Aug 06 01:51:05 2024 GMT</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">获取不了</span></span><br><span class="line">[root@lb01[ /etc/nginx/conf.d]#curl -Lv https://www.baidu.com | grep &#x27;expire date&#x27;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">有一些命令的输出,并非标准输出,而是作为标准错误输出</span></span><br><span class="line">[root@lb01[ /etc/nginx/conf.d]#curl -Lv https://www.baidu.com |&amp; grep &#x27;expire date&#x27;</span><br><span class="line">*       expire date: Aug 06 01:51:05 2024 GMT</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p><code>|&amp; </code>表示把管道前面标准输出(正确)和标准错误输出都传递给后面的命令。如果不加，默认传递标准输出(正确)  </p>
 </blockquote>
 <p>编写获取检查过期时间的脚本</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01[ &#x2F;server&#x2F;scripts]#cat check-ssl.sh
-#!&#x2F;bin&#x2F;bash
-url&#x3D;https:&#x2F;&#x2F;www.baidu.com
-expire_date_ori&#x3D;&#96;curl -vL $url |&amp; grep &#39;expire date&#39; |awk -F &#39;date:|GMT&#39; &#39;&#123;print $2&#125;&#39;&#96;
-expire_date_opt&#x3D;&#96;date -d &quot;$expire_date_ori&quot; +%F&#96;
-
-echo 原始格式的过期时间 $expire_date_ori
-echo 处理后的过期时间 $expire_date_opt
-
-# 执行
-[root@lb01[ &#x2F;server&#x2F;scripts]#chmod a+x check-ssl.sh
-[root@lb01[ &#x2F;server&#x2F;scripts]#.&#x2F;check-ssl.sh
-原始格式的过期时间 Aug 06 01:51:05 2024
-处理后的过期时间 2024-08-06</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@lb01[ /server/scripts]#cat check-ssl.sh</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line">url=https://www.baidu.com</span><br><span class="line">expire_date_ori=`curl -vL $url |&amp; grep &#x27;expire date&#x27; |awk -F &#x27;date:|GMT&#x27; &#x27;&#123;print $2&#125;&#x27;`</span><br><span class="line">expire_date_opt=`date -d &quot;$expire_date_ori&quot; +%F`</span><br><span class="line"></span><br><span class="line">echo 原始格式的过期时间 $expire_date_ori</span><br><span class="line">echo 处理后的过期时间 $expire_date_opt</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">执行</span></span><br><span class="line">[root@lb01[ /server/scripts]#chmod a+x check-ssl.sh</span><br><span class="line">[root@lb01[ /server/scripts]#./check-ssl.sh</span><br><span class="line">原始格式的过期时间 Aug 06 01:51:05 2024</span><br><span class="line">处理后的过期时间 2024-08-06</span><br></pre></td></tr></table></figure>
 
 <p>改进版</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@lb01[ &#x2F;server&#x2F;scripts]#cat check-ssl.sh
-#!&#x2F;bin&#x2F;bash
-#author: lidao996
-#version: v1.0 beta
-#desc: 检查指定url地址 https证书过期时间
-url&#x3D;https:&#x2F;&#x2F;www.jd.com
-expire_date_ori&#x3D;&#96;curl -vL $url |&amp; grep &#39;expire date&#39; |awk -F &#39;date:|GMT&#39; &#39;&#123;print $2&#125;&#39;&#96;
-expire_date_opt&#x3D;&#96;date -d &quot;$expire_date_ori&quot; +%s&#96;
-#当前的日期与过期时间进行相减 秒数
-date_now_second&#x3D;&#96;date +%s&#96;
-expire_days&#x3D;&#96;echo &quot;($expire_date_opt - $date_now_second)&#x2F;(60*60*24)&quot;|bc&#96;
-echo &quot;网站$url证书过期倒计时:还有 $expire_days 天&quot;
-echo &quot;网站过期日期是:&#96;date -d &quot;$expire_date_ori&quot; +%F&#96;&quot;
-
-# 执行
-[root@lb01[ &#x2F;server&#x2F;scripts]#.&#x2F;check-ssl.sh
-网站https:&#x2F;&#x2F;www.jd.com证书过期倒计时:还有 211 天
-网站过期日期是:2024-12-09</code></pre></div></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@lb01[ /server/scripts]#cat check-ssl.sh</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">author: lidao996</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">version: v1.0 beta</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">desc: 检查指定url地址 https证书过期时间</span></span><br><span class="line">url=https://www.jd.com</span><br><span class="line">expire_date_ori=`curl -vL $url |&amp; grep &#x27;expire date&#x27; |awk -F &#x27;date:|GMT&#x27; &#x27;&#123;print $2&#125;&#x27;`</span><br><span class="line">expire_date_opt=`date -d &quot;$expire_date_ori&quot; +%s`</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">当前的日期与过期时间进行相减 秒数</span></span><br><span class="line">date_now_second=`date +%s`</span><br><span class="line">expire_days=`echo &quot;($expire_date_opt - $date_now_second)/(60*60*24)&quot;|bc`</span><br><span class="line">echo &quot;网站$url证书过期倒计时:还有 $expire_days 天&quot;</span><br><span class="line">echo &quot;网站过期日期是:`date -d &quot;$expire_date_ori&quot; +%F`&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">执行</span></span><br><span class="line">[root@lb01[ /server/scripts]#./check-ssl.sh</span><br><span class="line">网站https://www.jd.com证书过期倒计时:还有 211 天</span><br><span class="line">网站过期日期是:2024-12-09</span><br></pre></td></tr></table></figure>
 
 
-                
-              </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
       
-
-<span class="category-chains">
-  
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://gblog.github.io/2024/05/10/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/17-web%E9%9B%86%E7%BE%A4-Nginx-7-%E5%AE%8C%E7%BB%93/" data-id="cmrendtcm00ildsiedzzkh9p1" data-title="17-Web集群-Nginx(七)" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
   
     
-      <span class="category-chain">
+<nav id="article-nav">
+  
+    <a href="/2024/05/11/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/18-web%E9%9B%86%E7%BE%A4-Tomcat-1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
         
-  <a href="/categories/%E8%BF%90%E7%BB%B4/" class="category-chain-item">运维</a>
+          17-Web集群-Tomcat(一)
+        
+      </div>
+    </a>
   
   
-    <span>></span>
+    <a href="/2024/05/10/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/16-web%E9%9B%86%E7%BE%A4-Nginx-6/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">16-Web集群-Nginx(六)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
     
-  <a href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/" class="category-chain-item">（二）综合架构</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C/01-C%E8%AF%AD%E8%A8%80/">01_C语言</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/01-Python%E5%85%A5%E9%97%A8/">01_Python入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/02-Python%E8%BF%9B%E9%98%B6/">02_Python进阶</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/03-MySQL/">03_MySQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/04-HTML/">04_HTML</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/05-CSS/">05_CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/06-JavaScript/">06_JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/07-JQuery/">07_JQuery</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/08-BootStrap/">08_BootStrap</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/09-Django/">09_Django</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/12-%E9%99%84%E5%BD%95%E8%A1%A5%E5%85%85/">12_附录补充</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E7%A5%9EK8S/">学神K8S</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E7%A5%9EK8S/%EF%BC%88%E4%B8%80%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E5%85%A5%E9%97%A8/">（一）Docker容器入门</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9D%82%E8%AE%B0/">杂记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8B%E8%AF%95/%E4%BF%A1%E5%88%9BPOC%E6%B5%8B%E8%AF%95/">信创POC测试</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/1%E3%80%81%E7%BD%91%E5%B7%A5%E5%85%A5%E9%97%A8/">1、网工入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/2%E3%80%81HCIA%E8%AF%BE%E7%A8%8B/">2、HCIA课程</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/">超哥K8S</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/%EF%BC%88%E4%B8%80%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E5%85%A5%E9%97%A8/">（一）Docker容器入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/%EF%BC%88%E4%BA%8C%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E8%BF%9B%E9%98%B6/">（二）Docker容器进阶</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/">（一）基础命令</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%89%EF%BC%89Docker/">（三）Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/">（二）综合架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%94%EF%BC%89K8S/">（五）K8S</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E5%85%AD%EF%BC%89%E6%99%BA%E7%AE%97%E4%B8%AD%E5%BF%83/">（六）智算中心</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E5%9B%9B%EF%BC%89%E8%99%9A%E6%8B%9F%E5%8C%96%E4%B9%8BOpenStack/">（四）虚拟化之OpenStack</a></li></ul></li></ul>
     </div>
-  
-  
-</div>
-
-
-              
-  
-
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>17-Web集群-Nginx(七)</div>
-      <div>https://gblog.github.io/2024/05/10/07_85期运维/02_综合架构/17-web集群-Nginx-7-完结/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>作者</div>
-          <div>Haris</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>发布于</div>
-          <div>2024年5月10日</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>许可协议</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
-          </div>
-        </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
   </div>
 
 
-
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2024/05/11/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/18-web%E9%9B%86%E7%BE%A4-Tomcat-1/" title="17-Web集群-Tomcat(一)">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">17-Web集群-Tomcat(一)</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2024/05/10/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/16-web%E9%9B%86%E7%BE%A4-Nginx-6/" title="16-Web集群-Nginx(六)">
-                        <span class="hidden-mobile">16-Web集群-Nginx(六)</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-
-            
-          </article>
-        </div>
-      </div>
-    </div>
-
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E4%BD%9C/" rel="tag">工作</a></li></ul>
     </div>
   </div>
-</div>
-
-
-
 
 
   
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-
-
-
-
     
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E5%B7%A5%E4%BD%9C/" style="font-size: 10px;">工作</a>
     </div>
   </div>
-</div>
 
-    
-
-    
-  </main>
-
-  <footer>
-    <div class="footer-inner">
   
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/07/">七月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/05/">五月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/04/">四月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">三月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/02/">二月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">一月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">十一月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">十月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">九月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">八月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">七月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">六月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">五月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">四月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">三月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">一月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a></li></ul>
     </div>
+  </div>
+
+
   
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/07/10/06_%E6%9D%82%E8%AE%B0/%E7%BA%A2%E5%B8%BD%E7%B3%BB%E5%AE%89%E8%A3%85%E7%B3%BB%E7%BB%9F%E6%A0%BC%E5%BC%8F%E5%8C%96/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2025/05/14/06_%E6%9D%82%E8%AE%B0/%E5%8D%8E%E4%B8%BAUSG6615F%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AESSL%20VPN/">华为USG6615F防火墙配置SSLVPN</a>
+          </li>
+        
+          <li>
+            <a href="/2025/05/06/10_%E5%AD%A6%E7%A5%9EK8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%9F%BA%E7%A1%80/">01-Docker基础</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/30/06_%E6%9D%82%E8%AE%B0/vllm%E9%83%A8%E7%BD%B2Qwen3%E5%A4%A7%E6%A8%A1%E5%9E%8B/">VLLM部署Qwen3大模型</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/21/06_%E6%9D%82%E8%AE%B0/%E5%8D%8E%E4%B8%BA%E4%BA%A4%E6%8D%A2%E6%9C%BA%E9%85%8D%E7%BD%AEmux-vlan/">华为交换机配置mux-vlan</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
   
+</aside>
+        
+      </div>
+      <footer id="footer">
   
-</div>
-
-  </footer>
-
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
+  <div class="outer">
+    <div id="footer-info" class="inner">
       
-        typing(text);
-      
-    })(window, document);
-  </script>
+      &copy; 2026 Haris<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
 
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
 
 
 
   
-    <script  src="/js/img-lazyload.js" ></script>
-  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
 
 
 
 
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
-    }
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
-</script>
-
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
-
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
-
-  <script>Fluid.plugins.codeWidget();</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
-    };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
-        }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
-      }
-    });
-  });
-</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
-  });
-</script>
-
-
-  <script>Fluid.plugins.imageCaption();</script>
-
-  <script  src="/js/local-search.js" ></script>
+<script src="/js/script.js"></script>
 
 
 
 
 
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
-
-
-  
-
-  <noscript>
-    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
-  </noscript>
+  </div>
 </body>
 </html>

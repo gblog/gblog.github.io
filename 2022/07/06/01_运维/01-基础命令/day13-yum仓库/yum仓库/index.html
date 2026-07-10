@@ -1,860 +1,278 @@
-
-
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
-
-
-
+<html>
 <head>
-  <meta charset="UTF-8">
-
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <meta charset="utf-8">
   
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="Haris">
-  <meta name="keywords" content="">
-  
-    <meta name="description" content="yum仓库1、克隆两台主机 yum仓库主机 	外网地址：192.168.15.30 	内网地址：172.16.1.30  yum测试主机 	外网地址：192.168.15.31 	内网地址：172.16.1.31  修改的命令： 	vim &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-eth0 	vim &#x2F;etc&amp;#x2">
+  <title>运维之基础命令--yum仓库 | Haris的小站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="yum仓库1、克隆两台主机 123456789101112131415161718yum仓库主机	外网地址：192.168.15.30	内网地址：172.16.1.30yum测试主机	外网地址：192.168.15.31	内网地址：172.16.1.31修改的命令：	vim &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-eth0	vim &#x2F;etc&#x2F;sysconfig&#x2F;n">
 <meta property="og:type" content="article">
 <meta property="og:title" content="运维之基础命令--yum仓库">
 <meta property="og:url" content="https://gblog.github.io/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day13-yum%E4%BB%93%E5%BA%93/yum%E4%BB%93%E5%BA%93/index.html">
 <meta property="og:site_name" content="Haris的小站">
-<meta property="og:description" content="yum仓库1、克隆两台主机 yum仓库主机 	外网地址：192.168.15.30 	内网地址：172.16.1.30  yum测试主机 	外网地址：192.168.15.31 	内网地址：172.16.1.31  修改的命令： 	vim &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-eth0 	vim &#x2F;etc&amp;#x2">
+<meta property="og:description" content="yum仓库1、克隆两台主机 123456789101112131415161718yum仓库主机	外网地址：192.168.15.30	内网地址：172.16.1.30yum测试主机	外网地址：192.168.15.31	内网地址：172.16.1.31修改的命令：	vim &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-eth0	vim &#x2F;etc&#x2F;sysconfig&#x2F;n">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gblog.github.io/.%5Cassets%5Cimage-20210318112338781.png">
 <meta property="article:published_time" content="2022-07-06T03:19:52.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.008Z">
 <meta property="article:author" content="Haris">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gblog.github.io/.%5Cassets%5Cimage-20210318112338781.png">
   
+    <link rel="alternate" href="/atom.xml" title="Haris的小站" type="application/atom+xml">
   
   
-  <title>运维之基础命令--yum仓库 - Haris的小站</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.png">
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
 
-
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"gblog.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
   
+  
+<link rel="stylesheet" href="/css/style.css">
 
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
+  
   
 <meta name="generator" content="Hexo 7.3.0"></head>
 
-
 <body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Haris的小站</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://gblog.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-01_运维/01-基础命令/day13-yum仓库/yum仓库" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day13-yum%E4%BB%93%E5%BA%93/yum%E4%BB%93%E5%BA%93/" class="article-date">
+  <time class="dt-published" datetime="2022-07-06T03:19:52.000Z" itemprop="datePublished">2022-07-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a>►<a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/">（一）基础命令</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      运维之基础命令--yum仓库
+    </h1>
   
 
-  <header>
+      </header>
     
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="yum仓库"><a href="#yum仓库" class="headerlink" title="yum仓库"></a>yum仓库</h1><p>1、克隆两台主机</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">yum仓库主机</span><br><span class="line">	外网地址：192.168.15.30</span><br><span class="line">	内网地址：172.16.1.30</span><br><span class="line"></span><br><span class="line">yum测试主机</span><br><span class="line">	外网地址：192.168.15.31</span><br><span class="line">	内网地址：172.16.1.31</span><br><span class="line"></span><br><span class="line">修改的命令：</span><br><span class="line">	vim /etc/sysconfig/network-scripts/ifcfg-eth0</span><br><span class="line">	vim /etc/sysconfig/network-scripts/ifcfg-eth1</span><br><span class="line">	</span><br><span class="line">	重启网卡：systemctl restart network</span><br><span class="line">	</span><br><span class="line">	修改主机名：</span><br><span class="line">		yum仓库主机：hostnamectl set-hostname warehouse</span><br><span class="line">		yum测试主机：hostnamectl set-hostname yum-test</span><br><span class="line">	</span><br></pre></td></tr></table></figure>
 
-<div class="header-inner" style="height: 70vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>Haris的博客</strong>
+<p>2、配置yum仓库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">1、需要有一个软件包目录，存放软件包的</span><br><span class="line">[root@warehouse ~]# <span class="built_in">mkdir</span> /backup</span><br><span class="line">	</span><br><span class="line">	1.1、缓存yum安装下载的软件包</span><br><span class="line">	[root@warehouse 7]# vim /etc/yum.conf</span><br><span class="line">	[main]</span><br><span class="line">    cachedir=/var/cache/yum/<span class="variable">$basearch</span>/<span class="variable">$releasever</span></span><br><span class="line">    keepcache=1</span><br><span class="line">    [root@warehouse ~]# yum install mariadb -y</span><br><span class="line">	</span><br><span class="line">	1.2、将缓存的软件包复制到yum仓库目录</span><br><span class="line">	[root@warehouse ~]# <span class="built_in">cd</span> /var/cache/yum/x86_64/7/base/packages/</span><br><span class="line">	[root@warehouse packages]# <span class="built_in">cp</span> -rp ./* /backup/</span><br><span class="line">    [root@warehouse packages]# <span class="built_in">cd</span> /backup/</span><br><span class="line">    [root@warehouse backup]# ll</span><br><span class="line">    total 8964</span><br><span class="line">    -rw-r--r-- 1 root root 9175948 Oct 15 02:55 mariadb-5.5.68-1.el7.x86_64.rpm</span><br><span class="line">	</span><br><span class="line">2、建立软件包依赖关系</span><br><span class="line">	[root@warehouse backup]# yum install createrepo -y</span><br><span class="line">	[root@warehouse backup]# createrepo /backup/</span><br><span class="line">    Spawning worker 0 with 1 pkgs</span><br><span class="line">    Spawning worker 1 with 0 pkgs</span><br><span class="line">    Workers Finished</span><br><span class="line">    Saving Primary metadata</span><br><span class="line">    Saving file lists metadata</span><br><span class="line">    Saving other metadata</span><br><span class="line">    Generating sqlite DBs</span><br><span class="line">    Sqlite DBs complete</span><br><span class="line">    [root@warehouse backup]# ll</span><br><span class="line">    total 8968</span><br><span class="line">    -rw-r--r-- 1 root root 9175948 Oct 15 02:55 mariadb-5.5.68-1.el7.x86_64.rpm</span><br><span class="line">    drwxr-xr-x 2 root root    4096 Mar 18 08:54 repodata</span><br><span class="line">    [root@warehouse backup]# ll repodata/</span><br><span class="line">    total 28</span><br><span class="line">    -rw-r--r-- 1 root root 1970 Mar 18 08:54 5d54624b2aa7a1fe974ff5553a9a78289683189c6a7b60c8c1421ecf011d270f-other.sqlite.bz2</span><br><span class="line">    -rw-r--r-- 1 root root 3449 Mar 18 08:54 5e68ee34f7e8f1a11a039f55c990bcc044f16bceb6af7f4486b55d518ad91346-primary.sqlite.bz2</span><br><span class="line">    -rw-r--r-- 1 root root  539 Mar 18 08:54 6e94b0fa1d98955542fb8238348ea171be7a130ba97573eb3ac756e1aadcec50-filelists.xml.gz</span><br><span class="line">    -rw-r--r-- 1 root root 1291 Mar 18 08:54 a9afb0b2457f41f5c2d64744a07d5d12599e6c2588c870ae73568cf345a0abca-other.xml.gz</span><br><span class="line">    -rw-r--r-- 1 root root 1333 Mar 18 08:54 cf41627875b17ef4bea5f0ea566ac63a5c83adc606d3ca730a74944ceb969028-primary.xml.gz</span><br><span class="line">    -rw-r--r-- 1 root root 1158 Mar 18 08:54 f34cbfd9e5608e8402041e98100f853e913f3df04d6946874c73ba31a78969ba-filelists.sqlite.bz2</span><br><span class="line">    -rw-r--r-- 1 root root 2969 Mar 18 08:54 repomd.xml</span><br><span class="line">    [root@warehouse backup]# </span><br></pre></td></tr></table></figure>
+
+<p>3、测试连接（本地版本）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">1、备份系统所有的yum源</span><br><span class="line">[root@warehouse yum.repos.d]# <span class="built_in">cd</span> /etc/yum.repos.d/</span><br><span class="line">[root@warehouse yum.repos.d]# <span class="built_in">mkdir</span> backup1</span><br><span class="line">[root@warehouse yum.repos.d]# <span class="built_in">mv</span> *.repo backup1</span><br><span class="line">[root@warehouse yum.repos.d]# vim local.repo</span><br><span class="line">[<span class="built_in">local</span>]</span><br><span class="line">name=<span class="string">&quot;This is xxx&quot;</span></span><br><span class="line">baseurl=file:///backup</span><br><span class="line">gpgcheck=0</span><br><span class="line">enabled=1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理yum缓存</span></span><br><span class="line">[root@warehouse ~]# yum clean all</span><br><span class="line">[root@warehouse ~]# <span class="built_in">rm</span> -rf /var/cache/yum/x86_64/7/*</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成新的yum缓存</span></span><br><span class="line">[root@warehouse ~]# yum makecache</span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试连接</span></span><br><span class="line">[root@warehouse yum.repos.d]# rpm -e mariadb</span><br><span class="line">[root@warehouse yum.repos.d]# rpm -ql mariadb</span><br><span class="line">package mariadb is not installed</span><br><span class="line">[root@warehouse yum.repos.d]# yum install mariadb</span><br></pre></td></tr></table></figure>
+
+
+
+<p>4、测试连接（远程版本）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#########################  yum仓库机器上执行  ###################################</span></span><br><span class="line">1、备份系统所有的yum源</span><br><span class="line">[root@warehouse yum.repos.d]# <span class="built_in">cd</span> /etc/yum.repos.d/</span><br><span class="line">[root@warehouse yum.repos.d]# <span class="built_in">mkdir</span> <span class="built_in">local</span></span><br><span class="line">[root@warehouse yum.repos.d]# <span class="built_in">mv</span> *.repo <span class="built_in">local</span></span><br><span class="line"></span><br><span class="line">2、安装远程访问软件</span><br><span class="line">[root@warehouse yum.repos.d]# <span class="built_in">cd</span> /etc/yum.repos.d/</span><br><span class="line">[root@warehouse yum.repos.d]# <span class="built_in">mv</span> backup1/*  .</span><br><span class="line">[root@warehouse yum.repos.d]# yum install vsftpd -y</span><br><span class="line">[root@warehouse yum.repos.d]# systemctl <span class="built_in">enable</span> --now vsftpd </span><br><span class="line">Created symlink from /etc/systemd/system/multi-user.target.wants/vsftpd.service to /usr/lib/systemd/system/vsftpd.service.</span><br><span class="line"></span><br><span class="line">3、配置系统yum仓库</span><br><span class="line">[root@warehouse yum.repos.d]# <span class="built_in">cd</span> /var/ftp</span><br><span class="line">[root@warehouse ftp]# <span class="built_in">mkdir</span> yum_warehouse</span><br><span class="line"></span><br><span class="line">4、将软件包复制到yum仓库目录</span><br><span class="line">[root@warehouse ftp]# <span class="built_in">cp</span> -rp /backup/* /var/ftp/yum_warehouse/</span><br><span class="line">[root@warehouse ftp]# ll yum_warehouse/</span><br><span class="line">total 8968</span><br><span class="line">-rw-r--r-- 1 root root 9175948 Oct 15 02:55 mariadb-5.5.68-1.el7.x86_64.rpm</span><br><span class="line">drwxr-xr-x 2 root root    4096 Mar 18 08:54 repodata</span><br><span class="line"></span><br><span class="line">5、建立yum软件包依赖关系</span><br><span class="line">[root@warehouse ftp]# createrepo /var/ftp/yum_warehouse/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#########################  yum测试机器上执行  ###################################</span></span><br><span class="line">1、本机测试网络连接</span><br><span class="line">    1、备份系统所有的yum源</span><br><span class="line">    [root@warehouse ftp]# <span class="built_in">cd</span> /etc/yum.repos.d/</span><br><span class="line">    [root@warehouse yum.repos.d]# <span class="built_in">mv</span> *.repo backup1</span><br><span class="line">    [root@warehouse yum.repos.d]# vim local.repo</span><br><span class="line">    [root@warehouse yum.repos.d]# <span class="built_in">cat</span> local.repo </span><br><span class="line">    [local-ftp]</span><br><span class="line">    name=<span class="string">&quot;This is ftp server&quot;</span></span><br><span class="line">    baseurl=ftp://172.16.1.30/yum_warehouse</span><br><span class="line">    gpgcheck=0</span><br><span class="line">    enabled=1</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 清理yum缓存</span></span><br><span class="line">    [root@warehouse ~]# yum clean all</span><br><span class="line">    [root@warehouse ~]# <span class="built_in">rm</span> -rf /var/cache/yum/x86_64/7/*</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 生成新的yum缓存</span></span><br><span class="line">    [root@warehouse ~]# yum makecache</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 测试连接</span></span><br><span class="line">    [root@warehouse yum.repos.d]# rpm -e mariadb</span><br><span class="line">    [root@warehouse yum.repos.d]# rpm -ql mariadb</span><br><span class="line">    package mariadb is not installed</span><br><span class="line">    [root@warehouse yum.repos.d]# yum install mariadb</span><br><span class="line"></span><br><span class="line">2、yum测试机器执行</span><br><span class="line">	1、备份yum仓库内容</span><br><span class="line">	[root@yum-test ~]# <span class="built_in">cd</span> /etc/yum.repos.d/</span><br><span class="line">    [root@yum-test yum.repos.d]# <span class="built_in">mkdir</span> backup1</span><br><span class="line">    [root@yum-test yum.repos.d]# <span class="built_in">mv</span> *.repo backup1</span><br><span class="line">    [root@yum-test yum.repos.d]# ll</span><br><span class="line">    total 0</span><br><span class="line">    drwxr-xr-x. 2 root root 187 Mar  4 09:55 backup</span><br><span class="line">    drwxr-xr-x  2 root root 220 Mar 18 09:20 backup1</span><br><span class="line">    [root@yum-test yum.repos.d]# </span><br><span class="line">    </span><br><span class="line">    2、编写本地yum源配置文件</span><br><span class="line">    [root@yum-test yum.repos.d]# vim local.repo</span><br><span class="line">    [root@yum-test yum.repos.d]# <span class="built_in">cat</span> local.repo </span><br><span class="line">    [loacl-ftp-30]</span><br><span class="line">    name=<span class="string">&quot;This is 30 ftp server&quot;</span></span><br><span class="line">    baseurl=ftp://172.16.1.30/yum_warehouse</span><br><span class="line">    gpgcheck=0</span><br><span class="line">    enabled=1</span><br><span class="line">    </span><br><span class="line">    3、清理yum缓存</span><br><span class="line">    [root@yum-test yum.repos.d]# yum clean all</span><br><span class="line">    [root@yum-test yum.repos.d]# <span class="built_in">rm</span> -rf /var/cache/yum/x86_64/7/*</span><br><span class="line">    </span><br><span class="line">    4、生成yum缓存</span><br><span class="line">    [root@yum-test yum.repos.d]# yum makecache</span><br><span class="line">    </span><br><span class="line">    5、测试安装</span><br><span class="line">    [root@yum-test yum.repos.d]# yum install mariadb</span><br></pre></td></tr></table></figure>
+
+
+
+<p>4、同步远程yum仓库内容到本机</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">1、安装华为云镜像仓库</span><br><span class="line">[root@warehouse yum.repos.d]# <span class="built_in">rm</span> -rf /etc/yum.repos.d/*</span><br><span class="line">[root@warehouse yum.repos.d]# wget -O /etc/yum.repos.d/CentOS-Base.repo https://repo.huaweicloud.com/repository/conf/CentOS-7-reg.repo</span><br><span class="line"></span><br><span class="line">2、生成yum缓存</span><br><span class="line">[root@warehouse yum.repos.d]# yum clean all</span><br><span class="line">[root@warehouse yum.repos.d]# <span class="built_in">rm</span> -rf /var/cache/yum/x86_64/7/*</span><br><span class="line">[root@warehouse yum.repos.d]# yum makecache</span><br><span class="line"></span><br><span class="line">3、同步华为云镜像站软件包到本地yum仓库</span><br><span class="line">[root@warehouse ftp]# yum install yum-utils -y</span><br><span class="line">[root@warehouse ftp]# reposync -r (仓库名称：yum repolist)</span><br><span class="line"></span><br><span class="line">4、建立依赖关系</span><br><span class="line">[root@warehouse ftp]# createrepo base</span><br><span class="line"></span><br><span class="line">5、测试</span><br><span class="line">    [loacl-ftp-30]</span><br><span class="line">    name=<span class="string">&quot;This is 30 ftp server&quot;</span></span><br><span class="line">    baseurl=ftp://172.16.1.30/base</span><br><span class="line">    gpgcheck=0</span><br><span class="line">    enabled=1</span><br></pre></td></tr></table></figure>
+
+<p><img src="/.%5Cassets%5Cimage-20210318112338781.png" alt="image-20210318112338781"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://gblog.github.io/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day13-yum%E4%BB%93%E5%BA%93/yum%E4%BB%93%E5%BA%93/" data-id="cmrendtdj00kudsie6923ey2k" data-title="运维之基础命令--yum仓库" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day17-Linux%E4%BF%A1%E5%8F%B7/%E7%AC%94%E8%AE%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          运维之基础命令--linux信号
+        
+      </div>
     </a>
+  
+  
+    <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day19-%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA/01_%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E7%AC%94%E8%AE%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">运维之基础命令--磁盘分区</div>
+    </a>
+  
+</nav>
 
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
+  
+</article>
 
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
+
+</section>
         
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>首页</span>
-              </a>
-            </li>
-          
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C/01-C%E8%AF%AD%E8%A8%80/">01_C语言</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/01-Python%E5%85%A5%E9%97%A8/">01_Python入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/02-Python%E8%BF%9B%E9%98%B6/">02_Python进阶</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/03-MySQL/">03_MySQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/04-HTML/">04_HTML</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/05-CSS/">05_CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/06-JavaScript/">06_JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/07-JQuery/">07_JQuery</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/08-BootStrap/">08_BootStrap</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/09-Django/">09_Django</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/12-%E9%99%84%E5%BD%95%E8%A1%A5%E5%85%85/">12_附录补充</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E7%A5%9EK8S/">学神K8S</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E7%A5%9EK8S/%EF%BC%88%E4%B8%80%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E5%85%A5%E9%97%A8/">（一）Docker容器入门</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9D%82%E8%AE%B0/">杂记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8B%E8%AF%95/%E4%BF%A1%E5%88%9BPOC%E6%B5%8B%E8%AF%95/">信创POC测试</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/1%E3%80%81%E7%BD%91%E5%B7%A5%E5%85%A5%E9%97%A8/">1、网工入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/2%E3%80%81HCIA%E8%AF%BE%E7%A8%8B/">2、HCIA课程</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/">超哥K8S</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/%EF%BC%88%E4%B8%80%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E5%85%A5%E9%97%A8/">（一）Docker容器入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B6%85%E5%93%A5K8S/%EF%BC%88%E4%BA%8C%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E8%BF%9B%E9%98%B6/">（二）Docker容器进阶</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/">（一）基础命令</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%89%EF%BC%89Docker/">（三）Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/">（二）综合架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%94%EF%BC%89K8S/">（五）K8S</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E5%85%AD%EF%BC%89%E6%99%BA%E7%AE%97%E4%B8%AD%E5%BF%83/">（六）智算中心</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E5%9B%9B%EF%BC%89%E8%99%9A%E6%8B%9F%E5%8C%96%E4%B9%8BOpenStack/">（四）虚拟化之OpenStack</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E4%BD%9C/" rel="tag">工作</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E5%B7%A5%E4%BD%9C/" style="font-size: 10px;">工作</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/07/">七月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/05/">五月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/04/">四月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">三月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/02/">二月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">一月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">十一月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">十月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">九月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">八月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">七月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">六月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">五月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">四月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">三月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">一月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
         
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>归档</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>分类</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
+          <li>
+            <a href="/2026/07/10/06_%E6%9D%82%E8%AE%B0/%E7%BA%A2%E5%B8%BD%E7%B3%BB%E5%AE%89%E8%A3%85%E7%B3%BB%E7%BB%9F%E6%A0%BC%E5%BC%8F%E5%8C%96/">(no title)</a>
           </li>
-          
         
+          <li>
+            <a href="/2025/05/14/06_%E6%9D%82%E8%AE%B0/%E5%8D%8E%E4%B8%BAUSG6615F%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AESSL%20VPN/">华为USG6615F防火墙配置SSLVPN</a>
+          </li>
         
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
+          <li>
+            <a href="/2025/05/06/10_%E5%AD%A6%E7%A5%9EK8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%9F%BA%E7%A1%80/">01-Docker基础</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/30/06_%E6%9D%82%E8%AE%B0/vllm%E9%83%A8%E7%BD%B2Qwen3%E5%A4%A7%E6%A8%A1%E5%9E%8B/">VLLM部署Qwen3大模型</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/21/06_%E6%9D%82%E8%AE%B0/%E5%8D%8E%E4%B8%BA%E4%BA%A4%E6%8D%A2%E6%9C%BA%E9%85%8D%E7%BD%AEmux-vlan/">华为交换机配置mux-vlan</a>
           </li>
         
       </ul>
     </div>
   </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2026 Haris<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
 </nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
 
   
+<script src="/fancybox/jquery.fancybox.min.js"></script>
 
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="运维之基础命令--yum仓库"></span>
-          
-        </div>
 
-        
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-07-06 11:19" pubdate>
-          2022年7月6日 上午
-        </time>
-      </span>
-    
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
   </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
-        
-          1.1k 字
-        
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
-        
-        
-        
-          10 分钟
-        
-      </span>
-    
-
-    
-    
-  </div>
-
-
-        
-      </div>
-
-      
-    </div>
-  </div>
-</div>
-
-</div>
-
-  </header>
-
-  <main>
-    
-      
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
-
-    </div>
-
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">运维之基础命令--yum仓库</h1>
-            
-            
-              <div class="markdown-body">
-                
-                <h1 id="yum仓库"><a href="#yum仓库" class="headerlink" title="yum仓库"></a>yum仓库</h1><p>1、克隆两台主机</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum仓库主机
-	外网地址：192.168.15.30
-	内网地址：172.16.1.30
-
-yum测试主机
-	外网地址：192.168.15.31
-	内网地址：172.16.1.31
-
-修改的命令：
-	vim &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-eth0
-	vim &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-eth1
-	
-	重启网卡：systemctl restart network
-	
-	修改主机名：
-		yum仓库主机：hostnamectl set-hostname warehouse
-		yum测试主机：hostnamectl set-hostname yum-test
-	</code></pre></div></figure>
-
-<p>2、配置yum仓库</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">1、需要有一个软件包目录，存放软件包的
-[root@warehouse ~]# mkdir &#x2F;backup
-	
-	1.1、缓存yum安装下载的软件包
-	[root@warehouse 7]# vim &#x2F;etc&#x2F;yum.conf
-	[main]
-    cachedir&#x3D;&#x2F;var&#x2F;cache&#x2F;yum&#x2F;$basearch&#x2F;$releasever
-    keepcache&#x3D;1
-    [root@warehouse ~]# yum install mariadb -y
-	
-	1.2、将缓存的软件包复制到yum仓库目录
-	[root@warehouse ~]# cd &#x2F;var&#x2F;cache&#x2F;yum&#x2F;x86_64&#x2F;7&#x2F;base&#x2F;packages&#x2F;
-	[root@warehouse packages]# cp -rp .&#x2F;* &#x2F;backup&#x2F;
-    [root@warehouse packages]# cd &#x2F;backup&#x2F;
-    [root@warehouse backup]# ll
-    total 8964
-    -rw-r--r-- 1 root root 9175948 Oct 15 02:55 mariadb-5.5.68-1.el7.x86_64.rpm
-	
-2、建立软件包依赖关系
-	[root@warehouse backup]# yum install createrepo -y
-	[root@warehouse backup]# createrepo &#x2F;backup&#x2F;
-    Spawning worker 0 with 1 pkgs
-    Spawning worker 1 with 0 pkgs
-    Workers Finished
-    Saving Primary metadata
-    Saving file lists metadata
-    Saving other metadata
-    Generating sqlite DBs
-    Sqlite DBs complete
-    [root@warehouse backup]# ll
-    total 8968
-    -rw-r--r-- 1 root root 9175948 Oct 15 02:55 mariadb-5.5.68-1.el7.x86_64.rpm
-    drwxr-xr-x 2 root root    4096 Mar 18 08:54 repodata
-    [root@warehouse backup]# ll repodata&#x2F;
-    total 28
-    -rw-r--r-- 1 root root 1970 Mar 18 08:54 5d54624b2aa7a1fe974ff5553a9a78289683189c6a7b60c8c1421ecf011d270f-other.sqlite.bz2
-    -rw-r--r-- 1 root root 3449 Mar 18 08:54 5e68ee34f7e8f1a11a039f55c990bcc044f16bceb6af7f4486b55d518ad91346-primary.sqlite.bz2
-    -rw-r--r-- 1 root root  539 Mar 18 08:54 6e94b0fa1d98955542fb8238348ea171be7a130ba97573eb3ac756e1aadcec50-filelists.xml.gz
-    -rw-r--r-- 1 root root 1291 Mar 18 08:54 a9afb0b2457f41f5c2d64744a07d5d12599e6c2588c870ae73568cf345a0abca-other.xml.gz
-    -rw-r--r-- 1 root root 1333 Mar 18 08:54 cf41627875b17ef4bea5f0ea566ac63a5c83adc606d3ca730a74944ceb969028-primary.xml.gz
-    -rw-r--r-- 1 root root 1158 Mar 18 08:54 f34cbfd9e5608e8402041e98100f853e913f3df04d6946874c73ba31a78969ba-filelists.sqlite.bz2
-    -rw-r--r-- 1 root root 2969 Mar 18 08:54 repomd.xml
-    [root@warehouse backup]# </code></pre></div></figure>
-
-<p>3、测试连接（本地版本）</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">1、备份系统所有的yum源
-[root@warehouse yum.repos.d]# cd &#x2F;etc&#x2F;yum.repos.d&#x2F;
-[root@warehouse yum.repos.d]# mkdir backup1
-[root@warehouse yum.repos.d]# mv *.repo backup1
-[root@warehouse yum.repos.d]# vim local.repo
-[local]
-name&#x3D;&quot;This is xxx&quot;
-baseurl&#x3D;file:&#x2F;&#x2F;&#x2F;backup
-gpgcheck&#x3D;0
-enabled&#x3D;1
-
-# 清理yum缓存
-[root@warehouse ~]# yum clean all
-[root@warehouse ~]# rm -rf &#x2F;var&#x2F;cache&#x2F;yum&#x2F;x86_64&#x2F;7&#x2F;*
-
-# 生成新的yum缓存
-[root@warehouse ~]# yum makecache
-
-# 测试连接
-[root@warehouse yum.repos.d]# rpm -e mariadb
-[root@warehouse yum.repos.d]# rpm -ql mariadb
-package mariadb is not installed
-[root@warehouse yum.repos.d]# yum install mariadb</code></pre></div></figure>
-
-
-
-<p>4、测试连接（远程版本）</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">#########################  yum仓库机器上执行  ###################################
-1、备份系统所有的yum源
-[root@warehouse yum.repos.d]# cd &#x2F;etc&#x2F;yum.repos.d&#x2F;
-[root@warehouse yum.repos.d]# mkdir local
-[root@warehouse yum.repos.d]# mv *.repo local
-
-2、安装远程访问软件
-[root@warehouse yum.repos.d]# cd &#x2F;etc&#x2F;yum.repos.d&#x2F;
-[root@warehouse yum.repos.d]# mv backup1&#x2F;*  .
-[root@warehouse yum.repos.d]# yum install vsftpd -y
-[root@warehouse yum.repos.d]# systemctl enable --now vsftpd 
-Created symlink from &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;multi-user.target.wants&#x2F;vsftpd.service to &#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;vsftpd.service.
-
-3、配置系统yum仓库
-[root@warehouse yum.repos.d]# cd &#x2F;var&#x2F;ftp
-[root@warehouse ftp]# mkdir yum_warehouse
-
-4、将软件包复制到yum仓库目录
-[root@warehouse ftp]# cp -rp &#x2F;backup&#x2F;* &#x2F;var&#x2F;ftp&#x2F;yum_warehouse&#x2F;
-[root@warehouse ftp]# ll yum_warehouse&#x2F;
-total 8968
--rw-r--r-- 1 root root 9175948 Oct 15 02:55 mariadb-5.5.68-1.el7.x86_64.rpm
-drwxr-xr-x 2 root root    4096 Mar 18 08:54 repodata
-
-5、建立yum软件包依赖关系
-[root@warehouse ftp]# createrepo &#x2F;var&#x2F;ftp&#x2F;yum_warehouse&#x2F;
-
-
-#########################  yum测试机器上执行  ###################################
-1、本机测试网络连接
-    1、备份系统所有的yum源
-    [root@warehouse ftp]# cd &#x2F;etc&#x2F;yum.repos.d&#x2F;
-    [root@warehouse yum.repos.d]# mv *.repo backup1
-    [root@warehouse yum.repos.d]# vim local.repo
-    [root@warehouse yum.repos.d]# cat local.repo 
-    [local-ftp]
-    name&#x3D;&quot;This is ftp server&quot;
-    baseurl&#x3D;ftp:&#x2F;&#x2F;172.16.1.30&#x2F;yum_warehouse
-    gpgcheck&#x3D;0
-    enabled&#x3D;1
-
-    # 清理yum缓存
-    [root@warehouse ~]# yum clean all
-    [root@warehouse ~]# rm -rf &#x2F;var&#x2F;cache&#x2F;yum&#x2F;x86_64&#x2F;7&#x2F;*
-
-    # 生成新的yum缓存
-    [root@warehouse ~]# yum makecache
-
-    # 测试连接
-    [root@warehouse yum.repos.d]# rpm -e mariadb
-    [root@warehouse yum.repos.d]# rpm -ql mariadb
-    package mariadb is not installed
-    [root@warehouse yum.repos.d]# yum install mariadb
-
-2、yum测试机器执行
-	1、备份yum仓库内容
-	[root@yum-test ~]# cd &#x2F;etc&#x2F;yum.repos.d&#x2F;
-    [root@yum-test yum.repos.d]# mkdir backup1
-    [root@yum-test yum.repos.d]# mv *.repo backup1
-    [root@yum-test yum.repos.d]# ll
-    total 0
-    drwxr-xr-x. 2 root root 187 Mar  4 09:55 backup
-    drwxr-xr-x  2 root root 220 Mar 18 09:20 backup1
-    [root@yum-test yum.repos.d]# 
-    
-    2、编写本地yum源配置文件
-    [root@yum-test yum.repos.d]# vim local.repo
-    [root@yum-test yum.repos.d]# cat local.repo 
-    [loacl-ftp-30]
-    name&#x3D;&quot;This is 30 ftp server&quot;
-    baseurl&#x3D;ftp:&#x2F;&#x2F;172.16.1.30&#x2F;yum_warehouse
-    gpgcheck&#x3D;0
-    enabled&#x3D;1
-    
-    3、清理yum缓存
-    [root@yum-test yum.repos.d]# yum clean all
-    [root@yum-test yum.repos.d]# rm -rf &#x2F;var&#x2F;cache&#x2F;yum&#x2F;x86_64&#x2F;7&#x2F;*
-    
-    4、生成yum缓存
-    [root@yum-test yum.repos.d]# yum makecache
-    
-    5、测试安装
-    [root@yum-test yum.repos.d]# yum install mariadb</code></pre></div></figure>
-
-
-
-<p>4、同步远程yum仓库内容到本机</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">1、安装华为云镜像仓库
-[root@warehouse yum.repos.d]# rm -rf &#x2F;etc&#x2F;yum.repos.d&#x2F;*
-[root@warehouse yum.repos.d]# wget -O &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo https:&#x2F;&#x2F;repo.huaweicloud.com&#x2F;repository&#x2F;conf&#x2F;CentOS-7-reg.repo
-
-2、生成yum缓存
-[root@warehouse yum.repos.d]# yum clean all
-[root@warehouse yum.repos.d]# rm -rf &#x2F;var&#x2F;cache&#x2F;yum&#x2F;x86_64&#x2F;7&#x2F;*
-[root@warehouse yum.repos.d]# yum makecache
-
-3、同步华为云镜像站软件包到本地yum仓库
-[root@warehouse ftp]# yum install yum-utils -y
-[root@warehouse ftp]# reposync -r (仓库名称：yum repolist)
-
-4、建立依赖关系
-[root@warehouse ftp]# createrepo base
-
-5、测试
-    [loacl-ftp-30]
-    name&#x3D;&quot;This is 30 ftp server&quot;
-    baseurl&#x3D;ftp:&#x2F;&#x2F;172.16.1.30&#x2F;base
-    gpgcheck&#x3D;0
-    enabled&#x3D;1</code></pre></div></figure>
-
-<p><img src="/.%5Cassets%5Cimage-20210318112338781.png" srcset="/img/loading.gif" lazyload alt="image-20210318112338781"></p>
-
-                
-              </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E8%BF%90%E7%BB%B4/" class="category-chain-item">运维</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/" class="category-chain-item">（一）基础命令</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
-</div>
-
-
-              
-  
-
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>运维之基础命令--yum仓库</div>
-      <div>https://gblog.github.io/2022/07/06/01_运维/01-基础命令/day13-yum仓库/yum仓库/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>作者</div>
-          <div>Haris</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>发布于</div>
-          <div>2022年7月6日</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>许可协议</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
-          </div>
-        </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
-  </div>
-
-
-
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day19-%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA/01_%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E7%AC%94%E8%AE%B0/" title="运维之基础命令--磁盘分区">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">运维之基础命令--磁盘分区</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2022/07/06/01_%E8%BF%90%E7%BB%B4/01-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/day19-%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA/02_%E9%80%BB%E8%BE%91%E5%8D%B7%E7%AE%A1%E7%90%86/" title="运维之基础命令--逻辑卷管理">
-                        <span class="hidden-mobile">运维之基础命令--逻辑卷管理</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-
-            
-          </article>
-        </div>
-      </div>
-    </div>
-
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-
-    </div>
-  </div>
-</div>
-
-
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-
-
-
-
-    
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-    
-
-    
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-  
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-    </div>
-  
-  
-  
-</div>
-
-  </footer>
-
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
-      
-        typing(text);
-      
-    })(window, document);
-  </script>
-
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
-    }
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
-</script>
-
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
-
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
-
-  <script>Fluid.plugins.codeWidget();</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
-    };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
-        }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
-      }
-    });
-  });
-</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
-  });
-</script>
-
-
-  <script>Fluid.plugins.imageCaption();</script>
-
-  <script  src="/js/local-search.js" ></script>
-
-
-
-
-
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
-
-
-  
-
-  <noscript>
-    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
-  </noscript>
 </body>
 </html>
