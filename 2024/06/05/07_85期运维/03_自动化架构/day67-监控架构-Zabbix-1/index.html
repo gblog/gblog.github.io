@@ -1,28 +1,29 @@
 
-
-<!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
-
-
+<!DOCTYPE html><html lang="zh-CN">
 
 <head>
-  <meta charset="UTF-8">
-
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
   
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="Haris">
-  <meta name="keywords" content="">
+  <meta name="generator" content="Hexo 7.3.0">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>day67-监控架构-Zabbix(一) - Haris的小站</title>
+
   
     <meta name="description" content="监控架构-Zabbix-01今日内容： -  一、Zabbix概述Zabbix是一个CS(服务端&#x2F;客户端)架构的服务.   它的整体架构：  客户端agent收集集群信息 agent反馈收集的信息给server服务端 通过前端展示数据   二、Zabbix使用指南2.1 主机规划2.1.1 推荐配置   规模 平台 CPU&#x2F;内存 数据库 受监控的主机数 量    小型 Cent">
 <meta property="og:type" content="article">
 <meta property="og:title" content="day67-监控架构-Zabbix(一)">
-<meta property="og:url" content="https://gblog.github.io/2024/06/05/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day67-%E7%9B%91%E6%8E%A7%E6%9E%B6%E6%9E%84-Zabbix-1/index.html">
+<meta property="og:url" content="https://gblog.github.io/2024/06/05/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day67-%E7%9B%91%E6%8E%A7%E6%9E%B6%E6%9E%84-Zabbix-1/">
 <meta property="og:site_name" content="Haris的小站">
 <meta property="og:description" content="监控架构-Zabbix-01今日内容： -  一、Zabbix概述Zabbix是一个CS(服务端&#x2F;客户端)架构的服务.   它的整体架构：  客户端agent收集集群信息 agent反馈收集的信息给server服务端 通过前端展示数据   二、Zabbix使用指南2.1 主机规划2.1.1 推荐配置   规模 平台 CPU&#x2F;内存 数据库 受监控的主机数 量    小型 Cent">
 <meta property="og:locale" content="zh_CN">
@@ -47,271 +48,67 @@
 <meta property="article:published_time" content="2024-06-05T03:08:52.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.347Z">
 <meta property="article:author" content="Haris">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gblog.github.io/img/image-20240605110210091.png">
   
   
   
-  <title>day67-监控架构-Zabbix(一) - Haris的小站</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
-  
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
 
 
   
-<link rel="stylesheet" href="/css/custom.css">
-
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"gblog.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-  
-
 
   
-<meta name="generator" content="Hexo 7.3.0"></head>
 
-
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Haris","sameAs":[]},"dateCreated":"2024-06-05T11:08:52+08:00","dateModified":"2026-07-10T14:20:16+08:00","datePublished":"2024-06-05T11:08:52+08:00","description":"","headline":"day67-监控架构-Zabbix(一)","mainEntityOfPage":{"@type":"WebPage","@id":"https://gblog.github.io/2024/06/05/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day67-%E7%9B%91%E6%8E%A7%E6%9E%B6%E6%9E%84-Zabbix-1/"},"publisher":{"@type":"Organization","name":"Haris","sameAs":[]},"url":"https://gblog.github.io/2024/06/05/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day67-%E7%9B%91%E6%8E%A7%E6%9E%B6%E6%9E%84-Zabbix-1/","image":[]}</script>
+  
+</head>
 <body>
-  
 
-  <header>
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="undefined" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">Haris的小站</div><div class="sub cap">null</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
+
+
+
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2025/05/06/10_%E5%AD%A6%E7%A5%9EK8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%9F%BA%E7%A1%80/"><span class="title">01-Docker基础</span></a><a class="item title" href="/2025/03/26/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/06-Docker%E8%B5%84%E6%BA%90%E9%85%8D%E9%A2%9D/"><span class="title">06-Docker资源配额</span></a><a class="item title" href="/2025/03/20/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/05-Docker%E5%AE%B9%E5%99%A8%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96/"><span class="title">05-Docker容器数据持久化</span></a><a class="item title" href="/2025/03/12/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/04-Dockerfile%E5%AE%9E%E6%88%98%E7%AF%87-%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F/"><span class="title">04-Dockerfile实战篇-构建镜像</span></a><a class="item title" href="/2025/03/04/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/03-Dockerfile%E5%9F%BA%E7%A1%80%E7%AF%87-%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/"><span class="title">03-Dockerfile基础篇-基本语法</span></a><a class="item title" href="/2025/03/03/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/02-%E8%BF%90%E8%A1%8CDocker%E5%AE%B9%E5%99%A8/"><span class="title">02-运行Docker容器</span></a><a class="item title" href="/2025/03/03/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80/"><span class="title">01-Docker基础</span></a><a class="item title" href="/2024/07/27/08_%E7%BD%91%E7%BB%9C/day03-HCIA%E8%AF%BE%E7%A8%8B-01/"><span class="title">day03-HCIA课程(一)</span></a><a class="item title" href="/2024/07/28/08_%E7%BD%91%E7%BB%9C/day02-%E7%BD%91%E5%B7%A5%E5%85%A5%E9%97%A8-02/"><span class="title">day02-网工入门（二）</span></a><a class="item title" href="/2024/07/27/08_%E7%BD%91%E7%BB%9C/day01-%E7%BD%91%E5%B7%A5%E5%85%A5%E9%97%A8-01/"><span class="title">day01-网工入门（一）</span></a></div></widget>
+</div>
+
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a> <span class="sep"></span> <a class="cap breadcrumb-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/">（二）综合架构</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-06-05T03:08:52.000Z">2024-06-05</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2026-07-10T06:20:16.347Z">2026-07-10</time></span></div></div></div>
     
-
-<div class="header-inner" style="height: 70vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>Haris的博客</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>首页</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>归档</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>分类</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="day67-监控架构-Zabbix(一)"></span>
-          
-        </div>
-
-        
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-06-05 11:08" pubdate>
-          2024年6月5日 上午
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
-        
-          3.2k 字
-        
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
-        
-        
-        
-          27 分钟
-        
-      </span>
-    
-
-    
-    
-  </div>
-
-
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>day67-监控架构-Zabbix(一)</span></h1>
         
       </div>
-
-      
     </div>
-  </div>
-</div>
-
-</div>
-
-  </header>
-
-  <main>
     
-      
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
-
-    </div>
-
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">day67-监控架构-Zabbix(一)</h1>
-            
-            
-              <div class="markdown-body">
-                
-                <h1 id="监控架构-Zabbix-01"><a href="#监控架构-Zabbix-01" class="headerlink" title="监控架构-Zabbix-01"></a>监控架构-Zabbix-01</h1><p>今日内容：</p>
+  </div>
+  </div><article class="md-text content"><h1 id="监控架构-Zabbix-01"><a href="#监控架构-Zabbix-01" class="headerlink" title="监控架构-Zabbix-01"></a>监控架构-Zabbix-01</h1><p>今日内容：</p>
 <p>- </p>
 <h1 id="一、Zabbix概述"><a href="#一、Zabbix概述" class="headerlink" title="一、Zabbix概述"></a>一、Zabbix概述</h1><p>Zabbix是一个CS(服务端&#x2F;客户端)架构的服务.  </p>
 <p>它的整体架构：</p>
@@ -320,7 +117,7 @@
 <li>agent反馈收集的信息给server服务端</li>
 <li>通过前端展示数据</li>
 </ul>
-<p><img src="/../../../img/image-20240605110210091.png" srcset="/img/loading.gif" lazyload alt="image-20240605110210091"></p>
+<p><img src="/../../../img/image-20240605110210091.png" alt="image-20240605110210091"></p>
 <h1 id="二、Zabbix使用指南"><a href="#二、Zabbix使用指南" class="headerlink" title="二、Zabbix使用指南"></a>二、Zabbix使用指南</h1><h2 id="2-1-主机规划"><a href="#2-1-主机规划" class="headerlink" title="2.1 主机规划"></a>2.1 主机规划</h2><h3 id="2-1-1-推荐配置"><a href="#2-1-1-推荐配置" class="headerlink" title="2.1.1 推荐配置"></a>2.1.1 推荐配置</h3><table>
 <thead>
 <tr>
@@ -437,52 +234,52 @@
 <p>以下操作在web01 - 10.0.0.7中执行</p>
 </blockquote>
 <p>1、准备yum repo</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">nginx的</span><br>[root@web01 ~]#cat /etc/yum.repos.d/nginx.repo <br>[nginx-stable]<br>name=nginx stable repo<br>baseurl=http://nginx.org/packages/centos/$releasever/$basearch/<br>gpgcheck=1<br>enabled=1<br>gpgkey=https://nginx.org/keys/nginx_signing.key<br>module_hotfixes=true<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">阿里源加速</span><br>curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">webtatic 要求</span><br>yum install epel-release.noarch -y<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">webtatic源</span><br>rpm -Uvh<br>https://mirror.webtatic.com/yum/el7/webtaticrelease.rpm <br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">nginx的</span></span><br><span class="line">[root@web01 ~]#cat /etc/yum.repos.d/nginx.repo </span><br><span class="line">[nginx-stable]</span><br><span class="line">name=nginx stable repo</span><br><span class="line">baseurl=http://nginx.org/packages/centos/$releasever/$basearch/</span><br><span class="line">gpgcheck=1</span><br><span class="line">enabled=1</span><br><span class="line">gpgkey=https://nginx.org/keys/nginx_signing.key</span><br><span class="line">module_hotfixes=true</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">阿里源加速</span></span><br><span class="line">curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">webtatic 要求</span></span><br><span class="line">yum install epel-release.noarch -y</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">webtatic源</span></span><br><span class="line">rpm -Uvh</span><br><span class="line">https://mirror.webtatic.com/yum/el7/webtaticrelease.rpm </span><br></pre></td></tr></table></figure>
 
 <p>2、安装Nginx和php</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">yum install php72w-cli php72w-fpm php72w-gd php72wmbstring php72w-bcmath php72w-xml php72w-ldap php72wmysqlnd -y<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install php72w-cli php72w-fpm php72w-gd php72wmbstring php72w-bcmath php72w-xml php72w-ldap php72wmysqlnd -y</span><br></pre></td></tr></table></figure>
 
 <p>3、检查安装结果</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@web01 ~]#rpm -qa | egrep &#x27;nginx|php&#x27;<br>nginx-1.26.0-1.el7.ngx.x86_64<br>php72w-cli-7.2.34-1.w7.x86_64<br>php72w-pecl-igbinary-3.1.2-1.w7.x86_64<br>php72w-gd-7.2.34-1.w7.x86_64<br>php72w-fpm-7.2.34-1.w7.x86_64<br>php72w-opcache-7.2.34-1.w7.x86_64<br>php72w-xml-7.2.34-1.w7.x86_64<br>php72w-pear-1.10.12-1.w7.noarch<br>php72w-pdo-7.2.34-1.w7.x86_64<br>php72w-pecl-memcached-3.1.5-1.w7.x86_64<br>php72w-mysqlnd-7.2.34-1.w7.x86_64<br>php72w-pecl-mongodb-1.7.4-1.w7.x86_64<br>mod_php72w-7.2.34-1.w7.x86_64<br>php72w-mbstring-7.2.34-1.w7.x86_64<br>php72w-ldap-7.2.34-1.w7.x86_64<br>php72w-common-7.2.34-1.w7.x86_64<br>php72w-process-7.2.34-1.w7.x86_64<br>php72w-devel-7.2.34-1.w7.x86_64<br>php72w-pecl-redis-3.1.6-1.w7.x86_64<br>php72w-embedded-7.2.34-1.w7.x86_64<br>php72w-bcmath-7.2.34-1.w7.x86_64<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@web01 ~]#rpm -qa | egrep &#x27;nginx|php&#x27;</span><br><span class="line">nginx-1.26.0-1.el7.ngx.x86_64</span><br><span class="line">php72w-cli-7.2.34-1.w7.x86_64</span><br><span class="line">php72w-pecl-igbinary-3.1.2-1.w7.x86_64</span><br><span class="line">php72w-gd-7.2.34-1.w7.x86_64</span><br><span class="line">php72w-fpm-7.2.34-1.w7.x86_64</span><br><span class="line">php72w-opcache-7.2.34-1.w7.x86_64</span><br><span class="line">php72w-xml-7.2.34-1.w7.x86_64</span><br><span class="line">php72w-pear-1.10.12-1.w7.noarch</span><br><span class="line">php72w-pdo-7.2.34-1.w7.x86_64</span><br><span class="line">php72w-pecl-memcached-3.1.5-1.w7.x86_64</span><br><span class="line">php72w-mysqlnd-7.2.34-1.w7.x86_64</span><br><span class="line">php72w-pecl-mongodb-1.7.4-1.w7.x86_64</span><br><span class="line">mod_php72w-7.2.34-1.w7.x86_64</span><br><span class="line">php72w-mbstring-7.2.34-1.w7.x86_64</span><br><span class="line">php72w-ldap-7.2.34-1.w7.x86_64</span><br><span class="line">php72w-common-7.2.34-1.w7.x86_64</span><br><span class="line">php72w-process-7.2.34-1.w7.x86_64</span><br><span class="line">php72w-devel-7.2.34-1.w7.x86_64</span><br><span class="line">php72w-pecl-redis-3.1.6-1.w7.x86_64</span><br><span class="line">php72w-embedded-7.2.34-1.w7.x86_64</span><br><span class="line">php72w-bcmath-7.2.34-1.w7.x86_64</span><br></pre></td></tr></table></figure>
 
 <p>4、配置nginx虚拟主机</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@web01 /]#cat /etc/nginx/conf.d/zbx.test.cn.conf <br>server &#123;<br>  listen 80;<br>  server_name zbx.test.cn;<br>  root /app/code/zbx;<br>  location / &#123;<br>    index index.php;<br>  &#125;<br>  location ~ \.php$ &#123;<br>    fastcgi_pass 127.0.0.1:9000;<br>    fastcgi_index index.php;<br>    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;<br>    include fastcgi_params;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@web01 /]#cat /etc/nginx/conf.d/zbx.test.cn.conf </span><br><span class="line">server &#123;</span><br><span class="line">  listen 80;</span><br><span class="line">  server_name zbx.test.cn;</span><br><span class="line">  root /app/code/zbx;</span><br><span class="line">  location / &#123;</span><br><span class="line">    index index.php;</span><br><span class="line">  &#125;</span><br><span class="line">  location ~ \.php$ &#123;</span><br><span class="line">    fastcgi_pass 127.0.0.1:9000;</span><br><span class="line">    fastcgi_index index.php;</span><br><span class="line">    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;</span><br><span class="line">    include fastcgi_params;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>5、配置php</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">更换用户名为www</span><br>[root@web01 /]#sed -ri &#x27;/^(user|group)/s#apache#nginx#g&#x27; /etc/php-fpm.d/www.conf<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">进行检查</span><br>[root@web01 /]#egrep &#x27;^(user|group)&#x27; /etc/php-fpm.d/www.conf <br>user = www<br>group = www<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">更换用户名为www</span></span><br><span class="line">[root@web01 /]#sed -ri &#x27;/^(user|group)/s#apache#nginx#g&#x27; /etc/php-fpm.d/www.conf</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">进行检查</span></span><br><span class="line">[root@web01 /]#egrep &#x27;^(user|group)&#x27; /etc/php-fpm.d/www.conf </span><br><span class="line">user = www</span><br><span class="line">group = www</span><br></pre></td></tr></table></figure>
 
 <p>6、创建站点目录和测试文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@web01 /]#cat &lt;&lt; EOF &gt; /app/code/zbx/index.php<br><span class="hljs-meta prompt_">&gt; </span><span class="language-bash">&lt;?php</span><br><span class="hljs-meta prompt_">&gt; </span><span class="language-bash">phpinfo();</span><br><span class="hljs-meta prompt_">&gt; </span><span class="language-bash">?&gt;</span><br><span class="hljs-meta prompt_">&gt; </span><span class="language-bash">EOF</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@web01 /]#cat &lt;&lt; EOF &gt; /app/code/zbx/index.php</span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">&lt;?php</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">phpinfo();</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">?&gt;</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">EOF</span></span><br></pre></td></tr></table></figure>
 
 <p>7、启动服务</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl enable --now nginx php-fpm<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable --now nginx php-fpm</span><br></pre></td></tr></table></figure>
 
 <p>8、配置hosts进行测试</p>
 <p><a target="_blank" rel="noopener" href="http://zbx.test.cn/">http://zbx.test.cn/</a></p>
-<p><img src="/../../../img/image-20240605115558801.png" srcset="/img/loading.gif" lazyload alt="image-20240605115558801"></p>
+<p><img src="/../../../img/image-20240605115558801.png" alt="image-20240605115558801"></p>
 <h3 id="2-2-2-部署数据库"><a href="#2-2-2-部署数据库" class="headerlink" title="2.2.2 部署数据库"></a>2.2.2 部署数据库</h3><blockquote>
 <p>以下操作在db01 - 10.0.0.51操作</p>
 </blockquote>
 <p>1、配置mariadb的repo源</p>
 <p>zabbix 6.0 不支持默认源中的mariadb（mariadb 5.5版本），需要配置repo源安装新版本</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">配置repo</span><br>[mariadb]<br>name=MariaDB<br>baseurl=http://mirrors.aliyun.com/mariadb/yum/10.5/centos7-amd64/<br>gpgkey=http://mirrors.aliyun.com/mariadb/yum/RPM-GPG-KEY-MariaDB<br>gpgcheck=1<br>enabled=1<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">安装</span><br>yum install -y mariadb-server<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">检查</span><br>[root@db01 ~]#!rpm<br>rpm -qa | grep -i mariadb<br>MariaDB-common-10.5.25-1.el7.centos.x86_64<br>MariaDB-compat-10.5.25-1.el7.centos.x86_64<br>MariaDB-client-10.5.25-1.el7.centos.x86_64<br>MariaDB-server-10.5.25-1.el7.centos.x86_64<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置repo</span></span><br><span class="line">[mariadb]</span><br><span class="line">name=MariaDB</span><br><span class="line">baseurl=http://mirrors.aliyun.com/mariadb/yum/10.5/centos7-amd64/</span><br><span class="line">gpgkey=http://mirrors.aliyun.com/mariadb/yum/RPM-GPG-KEY-MariaDB</span><br><span class="line">gpgcheck=1</span><br><span class="line">enabled=1</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装</span></span><br><span class="line">yum install -y mariadb-server</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检查</span></span><br><span class="line">[root@db01 ~]#!rpm</span><br><span class="line">rpm -qa | grep -i mariadb</span><br><span class="line">MariaDB-common-10.5.25-1.el7.centos.x86_64</span><br><span class="line">MariaDB-compat-10.5.25-1.el7.centos.x86_64</span><br><span class="line">MariaDB-client-10.5.25-1.el7.centos.x86_64</span><br><span class="line">MariaDB-server-10.5.25-1.el7.centos.x86_64</span><br></pre></td></tr></table></figure>
 
 <p>2、启动数据库服务</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl enable mariadb<br>systemctl start mariadb<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable mariadb</span><br><span class="line">systemctl start mariadb</span><br></pre></td></tr></table></figure>
 
 <p>3、数据库初始配置</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell">数据库初始化<br>mysql_secure_installation 仅1次。<br>Enter current password for root (enter for none):<br>回车<br>Switch to unix_socket authentication [Y/n] 输入n<br>Change the root password? [Y/n] 输入n 不设置root密码<br>Remove anonymous users? [Y/n] 输入Y<br>Disallow root login remotely? [Y/n] 输入Y<br>Remove test database and access to it? [Y/n] 输入Y<br>Reload privilege tables now? [Y/n] 输入Y<br>Thanks for using MariaDB! 表示完成<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">数据库初始化</span><br><span class="line">mysql_secure_installation 仅1次。</span><br><span class="line">Enter current password for root (enter for none):</span><br><span class="line">回车</span><br><span class="line">Switch to unix_socket authentication [Y/n] 输入n</span><br><span class="line">Change the root password? [Y/n] 输入n 不设置root密码</span><br><span class="line">Remove anonymous users? [Y/n] 输入Y</span><br><span class="line">Disallow root login remotely? [Y/n] 输入Y</span><br><span class="line">Remove test database and access to it? [Y/n] 输入Y</span><br><span class="line">Reload privilege tables now? [Y/n] 输入Y</span><br><span class="line">Thanks for using MariaDB! 表示完成</span><br></pre></td></tr></table></figure>
 
 <p>创建数据库和用户</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">MariaDB [(none)]&gt; create database zabbix charset utf8 collate utf8_bin;<br>Query OK, 1 row affected (0.000 sec)<br><br>MariaDB [(none)]&gt; grant all on zabbix.* to &#x27;zabbix&#x27;@&#x27;172.16.1.%&#x27; identified by &#x27;zabbix&#x27;;<br>Query OK, 0 rows affected (0.000 sec)<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [(none)]&gt; create database zabbix charset utf8 collate utf8_bin;</span><br><span class="line">Query OK, 1 row affected (0.000 sec)</span><br><span class="line"></span><br><span class="line">MariaDB [(none)]&gt; grant all on zabbix.* to &#x27;zabbix&#x27;@&#x27;172.16.1.%&#x27; identified by &#x27;zabbix&#x27;;</span><br><span class="line">Query OK, 0 rows affected (0.000 sec)</span><br></pre></td></tr></table></figure>
 
 <p>4、官网下载zabbix源码</p>
 <p><a target="_blank" rel="noopener" href="https://www.zabbix.com/cn/download_sources#60LTS">https://www.zabbix.com/cn/download_sources#60LTS</a></p>
 <p>4、导入zabbix数据库</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">解压</span><br>[root@db01 ~]#tar -vxf zabbix-6.0.30.tar.gz、<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">进入目录</span><br>cd zabbix-6.0.30/database/mysql<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">导入数据库，注意顺序</span><br>[root@db01 ~/zabbix-6.0.30/database/mysql]#mysql -uzabbix -pzabbix zabbix&lt; schema.sql <br>[root@db01 ~/zabbix-6.0.30/database/mysql]#mysql -uzabbix -pzabbix zabbix&lt; images.sql <br>[root@db01 ~/zabbix-6.0.30/database/mysql]#mysql -uzabbix -pzabbix zabbix&lt; data.sql <br>[root@db01 ~/zabbix-6.0.30/database/mysql]#mysql -uzabbix -pzabbix zabbix&lt; double.sql <br>[root@db01 ~/zabbix-6.0.30/database/mysql]#mysql -uzabbix -pzabbix zabbix&lt; history_pk_prepare.sql <br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">解压</span></span><br><span class="line">[root@db01 ~]#tar -vxf zabbix-6.0.30.tar.gz、</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">进入目录</span></span><br><span class="line">cd zabbix-6.0.30/database/mysql</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">导入数据库，注意顺序</span></span><br><span class="line">[root@db01 ~/zabbix-6.0.30/database/mysql]#mysql -uzabbix -pzabbix zabbix&lt; schema.sql </span><br><span class="line">[root@db01 ~/zabbix-6.0.30/database/mysql]#mysql -uzabbix -pzabbix zabbix&lt; images.sql </span><br><span class="line">[root@db01 ~/zabbix-6.0.30/database/mysql]#mysql -uzabbix -pzabbix zabbix&lt; data.sql </span><br><span class="line">[root@db01 ~/zabbix-6.0.30/database/mysql]#mysql -uzabbix -pzabbix zabbix&lt; double.sql </span><br><span class="line">[root@db01 ~/zabbix-6.0.30/database/mysql]#mysql -uzabbix -pzabbix zabbix&lt; history_pk_prepare.sql </span><br></pre></td></tr></table></figure>
 
 <p>5、检查</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@db01 ~/zabbix-6.0.30/database/mysql]#mysql -uzabbix -p -e &#x27;show tables from zabbix;&#x27; | wc -l<br>Enter password: <br>179<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@db01 ~/zabbix-6.0.30/database/mysql]#mysql -uzabbix -p -e &#x27;show tables from zabbix;&#x27; | wc -l</span><br><span class="line">Enter password: </span><br><span class="line">179</span><br></pre></td></tr></table></figure>
 
 
 
@@ -490,101 +287,101 @@
 <p>此操作在mn02 - 10.0.0.62操作</p>
 </blockquote>
 <p>1、安装依赖包</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">yum install -y mysql-devel pcre-devel openssl-devel zlib-devel libxml2-devel net-snmp-devel net-snmp libssh2-devel OpenIPMI-devel libevent-devel openldap-devel libcurl-devel<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y mysql-devel pcre-devel openssl-devel zlib-devel libxml2-devel net-snmp-devel net-snmp libssh2-devel OpenIPMI-devel libevent-devel openldap-devel libcurl-devel</span><br></pre></td></tr></table></figure>
 
 <p>2、coinfigure 源码</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">./configure --sysconfdir=/etc/zabbix/ --enable-server --with-mysql --with-net-snmp --with-libxml2 --with-ssh2 --with-openipmi --with-zlib --with-libpthread --with-libevent --with-openssl --with-ldap --with-libcurl --with-libpcre<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure --sysconfdir=/etc/zabbix/ --enable-server --with-mysql --with-net-snmp --with-libxml2 --with-ssh2 --with-openipmi --with-zlib --with-libpthread --with-libevent --with-openssl --with-ldap --with-libcurl --with-libpcre</span><br></pre></td></tr></table></figure>
 
 <p>3、编译，安装</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">make &amp;&amp; make install<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
 
 <p>4、检查</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn02 ~/zabbix-6.0.30]#echo $?<br>0<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@mn02 ~/zabbix-6.0.30]#echo $?</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-2-4-zabbix配置和启动"><a href="#2-2-4-zabbix配置和启动" class="headerlink" title="2.2.4 zabbix配置和启动"></a>2.2.4 zabbix配置和启动</h3><p>修改配置文件（连接数据库）</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn02 ~/zabbix-6.0.30]#grep -n &#x27;^[a-Z]&#x27; /etc/zabbix/zabbix_server.conf<br>12:ListenPort=10051<br>38:LogFile=/tmp/zabbix_server.log<br>87:DBHost=172.16.1.51<br>99:DBName=zabbix<br>115:DBUser=zabbix<br>123:DBPassword=zabbix<br>507:Timeout=4<br>593:LogSlowQueries=3000<br>708:StatsAllowedIP=127.0.0.1<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@mn02 ~/zabbix-6.0.30]#grep -n &#x27;^[a-Z]&#x27; /etc/zabbix/zabbix_server.conf</span><br><span class="line">12:ListenPort=10051</span><br><span class="line">38:LogFile=/tmp/zabbix_server.log</span><br><span class="line">87:DBHost=172.16.1.51</span><br><span class="line">99:DBName=zabbix</span><br><span class="line">115:DBUser=zabbix</span><br><span class="line">123:DBPassword=zabbix</span><br><span class="line">507:Timeout=4</span><br><span class="line">593:LogSlowQueries=3000</span><br><span class="line">708:StatsAllowedIP=127.0.0.1</span><br></pre></td></tr></table></figure>
 
 <p>创建zabbix用户</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn02 ~/zabbix-6.0.30]#useradd -s /sbin/nologin -M zabbix<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@mn02 ~/zabbix-6.0.30]#useradd -s /sbin/nologin -M zabbix</span><br></pre></td></tr></table></figure>
 
 <p>启动zabbix服务</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn02 ~/zabbix-6.0.30]#zabbix_server <br>[root@mn02 ~/zabbix-6.0.30]#ss -lntup | grep 10051<br>tcp    LISTEN     0      128       *:10051                 *:*                   users:((&quot;zabbix_server&quot;,pid=27130,fd=9),(&quot;zabbix_server&quot;,pid=27129,fd=9)...<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@mn02 ~/zabbix-6.0.30]#zabbix_server </span><br><span class="line">[root@mn02 ~/zabbix-6.0.30]#ss -lntup | grep 10051</span><br><span class="line">tcp    LISTEN     0      128       *:10051                 *:*                   users:((&quot;zabbix_server&quot;,pid=27130,fd=9),(&quot;zabbix_server&quot;,pid=27129,fd=9)...</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-2-5-systemctl配置"><a href="#2-2-5-systemctl配置" class="headerlink" title="2.2.5 systemctl配置"></a>2.2.5 systemctl配置</h3><p>书写systemctl配置文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn02 ~/zabbix-6.0.30]#cat /usr/lib/systemd/system/zabbix-serber.service<br>[Unit]<br>Description=Zabbix Server with MySQL DB<br>After=syslog.target network.target<br><br>[Service]<br>Type=simple<br>ExecStart=/usr/local/sbin/zabbix_server -f<br>User=zabbix<br><br>[Install]<br>WantedBy=multi-user.target<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@mn02 ~/zabbix-6.0.30]#cat /usr/lib/systemd/system/zabbix-serber.service</span><br><span class="line">[Unit]</span><br><span class="line">Description=Zabbix Server with MySQL DB</span><br><span class="line">After=syslog.target network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=simple</span><br><span class="line">ExecStart=/usr/local/sbin/zabbix_server -f</span><br><span class="line">User=zabbix</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
 
 <p>重新加载服务</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl daemon-reload<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl daemon-reload</span><br></pre></td></tr></table></figure>
 
 <p>关闭已经打开的zabbix服务</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">pkill zabbix<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pkill zabbix</span><br></pre></td></tr></table></figure>
 
 <p>使用systemctl控制开启</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn02 ~/zabbix-6.0.30]#systemctl enable zabbix-server<br>Created symlink from /etc/systemd/system/multi-user.target.wants/zabbix-server.service to /usr/lib/systemd/system/zabbix-server.service.<br>[root@mn02 ~/zabbix-6.0.30]#systemctl start zabbix-server<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@mn02 ~/zabbix-6.0.30]#systemctl enable zabbix-server</span><br><span class="line">Created symlink from /etc/systemd/system/multi-user.target.wants/zabbix-server.service to /usr/lib/systemd/system/zabbix-server.service.</span><br><span class="line">[root@mn02 ~/zabbix-6.0.30]#systemctl start zabbix-server</span><br></pre></td></tr></table></figure>
 
 <p>查看状态</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn02 ~/zabbix-6.0.30]#systemctl status zabbix-server<br>● zabbix-server.service - Zabbix Server with MySQL DB<br>   Loaded: loaded (/usr/lib/systemd/system/zabbix-server.service; enabled; vendor preset: disabled)<br>   Active: active (running) since Fri 2024-06-07 14:51:32 CST; 10s ago<br> Main PID: 27505 (zabbix_server)<br>   CGroup: /system.slice/zabbix-server.service<br>           ├─27505 /usr/local/sbin/zabbix_server -f<br>           ├─27506 /usr/local/sbin/zabbix_server: ha manager<br>           ├─27507 /usr/local/sbin/zabbix_server: service manage...<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@mn02 ~/zabbix-6.0.30]#systemctl status zabbix-server</span><br><span class="line">● zabbix-server.service - Zabbix Server with MySQL DB</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/zabbix-server.service; enabled; vendor preset: disabled)</span><br><span class="line">   Active: active (running) since Fri 2024-06-07 14:51:32 CST; 10s ago</span><br><span class="line"> Main PID: 27505 (zabbix_server)</span><br><span class="line">   CGroup: /system.slice/zabbix-server.service</span><br><span class="line">           ├─27505 /usr/local/sbin/zabbix_server -f</span><br><span class="line">           ├─27506 /usr/local/sbin/zabbix_server: ha manager</span><br><span class="line">           ├─27507 /usr/local/sbin/zabbix_server: service manage...</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-2-6-部署前端代码"><a href="#2-2-6-部署前端代码" class="headerlink" title="2.2.6 部署前端代码"></a>2.2.6 部署前端代码</h3><blockquote>
 <p>在web01进行部署</p>
 </blockquote>
 <p>上传源码，并拷贝ui</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@web01 /tmp/zabbix-6.0.30]#cp ui/* /app/code/zbx/<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">修改所有者</span><br>[root@web01 /app/code]#chown www.www /app/code/zbx/ -R<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@web01 /tmp/zabbix-6.0.30]#cp ui/* /app/code/zbx/</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改所有者</span></span><br><span class="line">[root@web01 /app/code]#chown www.www /app/code/zbx/ -R</span><br></pre></td></tr></table></figure>
 
 <p>测试访问：<a target="_blank" rel="noopener" href="http://zbx.test.cn/">http://zbx.test.cn:80</a></p>
-<p><img src="/../../../img/image-20240607150229575.png" srcset="/img/loading.gif" lazyload alt="image-20240607150229575"></p>
+<p><img src="/../../../img/image-20240607150229575.png" alt="image-20240607150229575"></p>
 <p>遇到错误</p>
-<p><img src="/../../../img/image-20240607150356041.png" srcset="/img/loading.gif" lazyload alt="image-20240607150356041"></p>
+<p><img src="/../../../img/image-20240607150356041.png" alt="image-20240607150356041"></p>
 <p>修改php.ini，重启服务</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@web01 /app/code/zbx]#egrep -n &#x27;^(max_.*_time|post_max)&#x27; /etc/php.ini<br>368:max_execution_time = 300<br>378:max_input_time = 600<br>656:post_max_size = 80M<br><br>[root@web01 /app/code/zbx]#systemctl restart php-fpm<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@web01 /app/code/zbx]#egrep -n &#x27;^(max_.*_time|post_max)&#x27; /etc/php.ini</span><br><span class="line">368:max_execution_time = 300</span><br><span class="line">378:max_input_time = 600</span><br><span class="line">656:post_max_size = 80M</span><br><span class="line"></span><br><span class="line">[root@web01 /app/code/zbx]#systemctl restart php-fpm</span><br></pre></td></tr></table></figure>
 
 <p>刷新一下就过了，继续下一步</p>
-<p><img src="/../../../img/image-20240607150547321.png" srcset="/img/loading.gif" lazyload alt="image-20240607150547321"></p>
+<p><img src="/../../../img/image-20240607150547321.png" alt="image-20240607150547321"></p>
 <p>填写数据库信息，取消勾选<code>数据库TLS加密</code></p>
 <blockquote>
 <p>这里重新尝试的一次，改成中文了</p>
 </blockquote>
-<p><img src="/../../../img/image-20240607152206296.png" srcset="/img/loading.gif" lazyload alt="image-20240607152206296"></p>
+<p><img src="/../../../img/image-20240607152206296.png" alt="image-20240607152206296"></p>
 <p>设置zabbix主机名和时区，点击下一步</p>
-<p><img src="/../../../img/image-20240607152421727.png" srcset="/img/loading.gif" lazyload alt="image-20240607152421727"></p>
+<p><img src="/../../../img/image-20240607152421727.png" alt="image-20240607152421727"></p>
 <p>信息汇总，点击下一步</p>
-<p><img src="/../../../img/image-20240607152439459.png" srcset="/img/loading.gif" lazyload alt="image-20240607152439459"></p>
+<p><img src="/../../../img/image-20240607152439459.png" alt="image-20240607152439459"></p>
 <p>配置完成</p>
-<p><img src="/../../../img/image-20240607152856150.png" srcset="/img/loading.gif" lazyload alt="image-20240607152856150"></p>
+<p><img src="/../../../img/image-20240607152856150.png" alt="image-20240607152856150"></p>
 <p>登录</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">默认账号<br>Admin/zabbix<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">默认账号</span><br><span class="line">Admin/zabbix</span><br></pre></td></tr></table></figure>
 
 <p>因为我们的server是分离部署的，所以进来后，首页会报错，连不上zabbix server</p>
-<p><img src="/../../../img/image-20240607153255449.png" srcset="/img/loading.gif" lazyload alt="image-20240607153255449"></p>
+<p><img src="/../../../img/image-20240607153255449.png" alt="image-20240607153255449"></p>
 <p>修改zabbix的配置文件，设置zbx server</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@web01 /app/code/zbx]#grep -n &#x27;^[$]&#x27; conf/zabbix.conf.php<br>4:$DB[&#x27;TYPE&#x27;]				= &#x27;MYSQL&#x27;;<br>5:$DB[&#x27;SERVER&#x27;]			= &#x27;172.16.1.51&#x27;;<br>6:$DB[&#x27;PORT&#x27;]				= &#x27;0&#x27;;<br>7:$DB[&#x27;DATABASE&#x27;]			= &#x27;zabbix&#x27;;<br>8:$DB[&#x27;USER&#x27;]				= &#x27;zabbix&#x27;;<br>9:$DB[&#x27;PASSWORD&#x27;]			= &#x27;zabbix&#x27;;<br>12:$DB[&#x27;SCHEMA&#x27;]			= &#x27;&#x27;;<br>15:$DB[&#x27;ENCRYPTION&#x27;]		= false;<br>16:$DB[&#x27;KEY_FILE&#x27;]			= &#x27;&#x27;;<br>17:$DB[&#x27;CERT_FILE&#x27;]		= &#x27;&#x27;;<br>18:$DB[&#x27;CA_FILE&#x27;]			= &#x27;&#x27;;<br>19:$DB[&#x27;VERIFY_HOST&#x27;]		= false;<br>20:$DB[&#x27;CIPHER_LIST&#x27;]		= &#x27;&#x27;;<br>23:$DB[&#x27;VAULT_URL&#x27;]		= &#x27;&#x27;;<br>24:$DB[&#x27;VAULT_DB_PATH&#x27;]	= &#x27;&#x27;;<br>25:$DB[&#x27;VAULT_TOKEN&#x27;]		= &#x27;&#x27;;<br>30:$DB[&#x27;DOUBLE_IEEE754&#x27;]	= true;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">添加两条</span><br>33:$ZBX_SERVER			= &#x27;172.16.1.62&#x27;;<br>34:$ZBX_SERVER_PORT		= &#x27;10051&#x27;;<br><br>36:$ZBX_SERVER_NAME		= &#x27;全链路监控zabbix主机&#x27;;<br>38:$IMAGE_FORMAT_DEFAULT	= IMAGE_FORMAT_PNG;<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@web01 /app/code/zbx]#grep -n &#x27;^[$]&#x27; conf/zabbix.conf.php</span><br><span class="line">4:$DB[&#x27;TYPE&#x27;]				= &#x27;MYSQL&#x27;;</span><br><span class="line">5:$DB[&#x27;SERVER&#x27;]			= &#x27;172.16.1.51&#x27;;</span><br><span class="line">6:$DB[&#x27;PORT&#x27;]				= &#x27;0&#x27;;</span><br><span class="line">7:$DB[&#x27;DATABASE&#x27;]			= &#x27;zabbix&#x27;;</span><br><span class="line">8:$DB[&#x27;USER&#x27;]				= &#x27;zabbix&#x27;;</span><br><span class="line">9:$DB[&#x27;PASSWORD&#x27;]			= &#x27;zabbix&#x27;;</span><br><span class="line">12:$DB[&#x27;SCHEMA&#x27;]			= &#x27;&#x27;;</span><br><span class="line">15:$DB[&#x27;ENCRYPTION&#x27;]		= false;</span><br><span class="line">16:$DB[&#x27;KEY_FILE&#x27;]			= &#x27;&#x27;;</span><br><span class="line">17:$DB[&#x27;CERT_FILE&#x27;]		= &#x27;&#x27;;</span><br><span class="line">18:$DB[&#x27;CA_FILE&#x27;]			= &#x27;&#x27;;</span><br><span class="line">19:$DB[&#x27;VERIFY_HOST&#x27;]		= false;</span><br><span class="line">20:$DB[&#x27;CIPHER_LIST&#x27;]		= &#x27;&#x27;;</span><br><span class="line">23:$DB[&#x27;VAULT_URL&#x27;]		= &#x27;&#x27;;</span><br><span class="line">24:$DB[&#x27;VAULT_DB_PATH&#x27;]	= &#x27;&#x27;;</span><br><span class="line">25:$DB[&#x27;VAULT_TOKEN&#x27;]		= &#x27;&#x27;;</span><br><span class="line">30:$DB[&#x27;DOUBLE_IEEE754&#x27;]	= true;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">添加两条</span></span><br><span class="line">33:$ZBX_SERVER			= &#x27;172.16.1.62&#x27;;</span><br><span class="line">34:$ZBX_SERVER_PORT		= &#x27;10051&#x27;;</span><br><span class="line"></span><br><span class="line">36:$ZBX_SERVER_NAME		= &#x27;全链路监控zabbix主机&#x27;;</span><br><span class="line">38:$IMAGE_FORMAT_DEFAULT	= IMAGE_FORMAT_PNG;</span><br></pre></td></tr></table></figure>
 
 <p>连接成功</p>
-<p><img src="/../../../img/image-20240607153536838.png" srcset="/img/loading.gif" lazyload alt="image-20240607153536838"></p>
+<p><img src="/../../../img/image-20240607153536838.png" alt="image-20240607153536838"></p>
 <h2 id="2-3-客户端部署-被监控端"><a href="#2-3-客户端部署-被监控端" class="headerlink" title="2.3 客户端部署-被监控端"></a>2.3 客户端部署-被监控端</h2><h3 id="2-3-1-安装客户端"><a href="#2-3-1-安装客户端" class="headerlink" title="2.3.1 安装客户端"></a>2.3.1 安装客户端</h3><blockquote>
 <p>以下操作在nfs01进行</p>
 </blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">1. 配置zbx源</span><br>rpm -ivh https://mirrors.tuna.tsinghua.edu.cn/zabbix/zabbix/6.0/rhel/7/x86_64/zabbix-release-6.0-4.el7.noarch.rpm<br><br>sed -i &#x27;s#https://epo.zabbix.com/zabbix#https://mirrors.tuna.tsinghua.edu.cn/zabbix/zabbix/#g&#x27; /etc/yum.repos.d/zabbix.repo<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">2. 安装客户端</span><br>yum install -y zabbix-agent2<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">1. 配置zbx源</span></span><br><span class="line">rpm -ivh https://mirrors.tuna.tsinghua.edu.cn/zabbix/zabbix/6.0/rhel/7/x86_64/zabbix-release-6.0-4.el7.noarch.rpm</span><br><span class="line"></span><br><span class="line">sed -i &#x27;s#https://epo.zabbix.com/zabbix#https://mirrors.tuna.tsinghua.edu.cn/zabbix/zabbix/#g&#x27; /etc/yum.repos.d/zabbix.repo</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">2. 安装客户端</span></span><br><span class="line">yum install -y zabbix-agent2</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-3-2-配置客户端"><a href="#2-3-2-配置客户端" class="headerlink" title="2.3.2 配置客户端"></a>2.3.2 配置客户端</h3><blockquote>
 <p>这里用zabbix-agent2服务，相比于zabbix-agent，更先进</p>
 </blockquote>
 <p>修改客户端配置文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@nfs01 ~]#grep &#x27;^[a-Z]&#x27; /etc/zabbix/zabbix_agent2.conf <br>PidFile=/run/zabbix/zabbix_agent2.pid<br>LogFile=/var/log/zabbix/zabbix_agent2.log<br>LogFileSize=0<br>Server=172.16.1.62	# 改了<br>ServerActive=172.16.1.62	# 改了<br>Hostname=NFS01 server #改了<br>Include=/etc/zabbix/zabbix_agent2.d/*.conf<br>PluginSocket=/run/zabbix/agent.plugin.sock<br>ControlSocket=/run/zabbix/agent.sock<br>Include=./zabbix_agent2.d/plugins.d/*.conf<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@nfs01 ~]#grep &#x27;^[a-Z]&#x27; /etc/zabbix/zabbix_agent2.conf </span><br><span class="line">PidFile=/run/zabbix/zabbix_agent2.pid</span><br><span class="line">LogFile=/var/log/zabbix/zabbix_agent2.log</span><br><span class="line">LogFileSize=0</span><br><span class="line">Server=172.16.1.62	# 改了</span><br><span class="line">ServerActive=172.16.1.62	# 改了</span><br><span class="line">Hostname=NFS01 server #改了</span><br><span class="line">Include=/etc/zabbix/zabbix_agent2.d/*.conf</span><br><span class="line">PluginSocket=/run/zabbix/agent.plugin.sock</span><br><span class="line">ControlSocket=/run/zabbix/agent.sock</span><br><span class="line">Include=./zabbix_agent2.d/plugins.d/*.conf</span><br></pre></td></tr></table></figure>
 
 <p>启动客服端服务</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl enable --now zabbix-agent2<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable --now zabbix-agent2</span><br></pre></td></tr></table></figure>
 
 <p>检查</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@nfs01 ~]#ps -ef | grep zabbix<br>zabbix     2757      1  0 15:55 ?        00:00:00 /usr/sbin/zabbix_agent2 -c /etc/zabbix/zabbix_agent2.conf<br>root       2921   1738  0 15:59 pts/0    00:00:00 grep --color=auto zabbix<br>[root@nfs01 ~]#ss -lntup | grep agent2<br>tcp    LISTEN     0      128    [::]:10050              [::]:*                   users:((&quot;zabbix_agent2&quot;,pid=2757,fd=10))<br>[root@nfs01 ~]#<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@nfs01 ~]#ps -ef | grep zabbix</span><br><span class="line">zabbix     2757      1  0 15:55 ?        00:00:00 /usr/sbin/zabbix_agent2 -c /etc/zabbix/zabbix_agent2.conf</span><br><span class="line">root       2921   1738  0 15:59 pts/0    00:00:00 grep --color=auto zabbix</span><br><span class="line">[root@nfs01 ~]#ss -lntup | grep agent2</span><br><span class="line">tcp    LISTEN     0      128    [::]:10050              [::]:*                   users:((&quot;zabbix_agent2&quot;,pid=2757,fd=10))</span><br><span class="line">[root@nfs01 ~]#</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-3-3-添加监控主机"><a href="#2-3-3-添加监控主机" class="headerlink" title="2.3.3 添加监控主机"></a>2.3.3 添加监控主机</h3><p>在zabbix首页添加监控主机 nfs01</p>
-<p><img src="/../../../img/image-20240607161916916.png" srcset="/img/loading.gif" lazyload alt="image-20240607161916916"></p>
+<p><img src="/../../../img/image-20240607161916916.png" alt="image-20240607161916916"></p>
 <h2 id="2-4-ZBX中文乱码问题"><a href="#2-4-ZBX中文乱码问题" class="headerlink" title="2.4 ZBX中文乱码问题"></a>2.4 ZBX中文乱码问题</h2><blockquote>
 <p>以下操作在zabbix-web的部署服务器进行，web01</p>
 </blockquote>
 <p>原因：zbx显示中文的字体有问题，导致显示中文异常。<br>解决：把zbx中文字体替换即可  </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">字体文件目录</span><br>cd /app/code/zbx/assets/fonts/<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">先备份原字体</span><br>[root@web01 /app/code/zbx/assets/fonts]#mv DejaVuSans.ttf  DejaVuSans.ttf.bak<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">上传一个中文的ttf字体替换zabbix自用的字体即可.</span><br>mv MSYH.TTC  DejaVuSans.ttf<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">字体文件目录</span></span><br><span class="line">cd /app/code/zbx/assets/fonts/</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">先备份原字体</span></span><br><span class="line">[root@web01 /app/code/zbx/assets/fonts]#mv DejaVuSans.ttf  DejaVuSans.ttf.bak</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">上传一个中文的ttf字体替换zabbix自用的字体即可.</span></span><br><span class="line">mv MSYH.TTC  DejaVuSans.ttf</span><br></pre></td></tr></table></figure>
 
 
 
@@ -613,7 +410,7 @@
 </tr>
 </tbody></table>
 <p>服务端配置文件详解</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn02 /]#grep &#x27;^[a-Z]&#x27; /etc/zabbix/zabbix_server.conf<br>ListenPort=10051	# 服务端口<br>LogFile=/tmp/zabbix_server.log	# 日志文件<br>DBHost=172.16.1.51	# 数据库地址<br>DBName=zabbix	# 数据库名字<br>DBUser=zabbix	# 数据库用户名<br>DBPassword=zabbix	# 数据库密码<br>Timeout=4	# 超时时间<br>LogSlowQueries=3000<br>StatsAllowedIP=127.0.0.1<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@mn02 /]#grep &#x27;^[a-Z]&#x27; /etc/zabbix/zabbix_server.conf</span><br><span class="line">ListenPort=10051	# 服务端口</span><br><span class="line">LogFile=/tmp/zabbix_server.log	# 日志文件</span><br><span class="line">DBHost=172.16.1.51	# 数据库地址</span><br><span class="line">DBName=zabbix	# 数据库名字</span><br><span class="line">DBUser=zabbix	# 数据库用户名</span><br><span class="line">DBPassword=zabbix	# 数据库密码</span><br><span class="line">Timeout=4	# 超时时间</span><br><span class="line">LogSlowQueries=3000</span><br><span class="line">StatsAllowedIP=127.0.0.1</span><br></pre></td></tr></table></figure>
 
 <h2 id="3-2-客户端配置"><a href="#3-2-客户端配置" class="headerlink" title="3.2 客户端配置"></a>3.2 客户端配置</h2><table>
 <thead>
@@ -636,7 +433,7 @@
 </tr>
 </tbody></table>
 <p>客户端配置文件详解</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@nfs01 ~]#grep &#x27;^[a-Z]&#x27; /etc/zabbix/zabbix_agent2.conf <br>PidFile=/run/zabbix/zabbix_agent2.pid<br>LogFile=/var/log/zabbix/zabbix_agent2.log<br>LogFileSize=0<br>Server=172.16.1.62	# 指定服务端地址<br>ServerActive=172.16.1.62	<br>Hostname=NFS01 server # 指定被监控主机名<br>Include=/etc/zabbix/zabbix_agent2.d/*.conf<br>PluginSocket=/run/zabbix/agent.plugin.sock<br>ControlSocket=/run/zabbix/agent.sock<br>Include=./zabbix_agent2.d/plugins.d/*.conf<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@nfs01 ~]#grep &#x27;^[a-Z]&#x27; /etc/zabbix/zabbix_agent2.conf </span><br><span class="line">PidFile=/run/zabbix/zabbix_agent2.pid</span><br><span class="line">LogFile=/var/log/zabbix/zabbix_agent2.log</span><br><span class="line">LogFileSize=0</span><br><span class="line">Server=172.16.1.62	# 指定服务端地址</span><br><span class="line">ServerActive=172.16.1.62	</span><br><span class="line">Hostname=NFS01 server # 指定被监控主机名</span><br><span class="line">Include=/etc/zabbix/zabbix_agent2.d/*.conf</span><br><span class="line">PluginSocket=/run/zabbix/agent.plugin.sock</span><br><span class="line">ControlSocket=/run/zabbix/agent.sock</span><br><span class="line">Include=./zabbix_agent2.d/plugins.d/*.conf</span><br></pre></td></tr></table></figure>
 
 <h2 id="3-3-zbx-agent-VS-zbx-zgent2"><a href="#3-3-zbx-agent-VS-zbx-zgent2" class="headerlink" title="3.3 zbx agent VS zbx zgent2"></a>3.3 zbx agent VS zbx zgent2</h2><table>
 <thead>
@@ -667,37 +464,37 @@
 <p>以监控db01 - 10.0.0.51为例</p>
 </blockquote>
 <p>安装zbx agent2</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@db01 ~]#rpm -Uvh https://mirrors.tuna.tsinghua.edu.cn/zabbix/zabbix/6.0/rhel/7/x86_64/zabbix-agent2-6.0.5-1.el7.x86_64.rpm<br>Retrieving https://mirrors.tuna.tsinghua.edu.cn/zabbix/zabbix/6.0/rhel/7/x86_64/zabbix-agent2-6.0.5-1.el7.x86_64.rpm<br>warning: /var/tmp/rpm-tmp.9WEw5L: Header V4 RSA/SHA512 Signature, key ID a14fe591: NOKEY<br>Preparing...                          ################################# [100%]<br>Updating / installing...<br>   1:zabbix-agent2-6.0.5-1.el7        ################################# [100%]<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@db01 ~]#rpm -Uvh https://mirrors.tuna.tsinghua.edu.cn/zabbix/zabbix/6.0/rhel/7/x86_64/zabbix-agent2-6.0.5-1.el7.x86_64.rpm</span><br><span class="line">Retrieving https://mirrors.tuna.tsinghua.edu.cn/zabbix/zabbix/6.0/rhel/7/x86_64/zabbix-agent2-6.0.5-1.el7.x86_64.rpm</span><br><span class="line">warning: /var/tmp/rpm-tmp.9WEw5L: Header V4 RSA/SHA512 Signature, key ID a14fe591: NOKEY</span><br><span class="line">Preparing...                          ################################# [100%]</span><br><span class="line">Updating / installing...</span><br><span class="line">   1:zabbix-agent2-6.0.5-1.el7        ################################# [100%]</span><br></pre></td></tr></table></figure>
 
 <p>配置文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@db01 ~]#grep &quot;^[z-Z]&quot; /etc/zabbix/zabbix_agent2.conf <br>PidFile=/var/run/zabbix/zabbix_agent2.pid<br>LogFile=/var/log/zabbix/zabbix_agent2.log<br>LogFileSize=0<br>Server=172.16.1.62<br>ServerActive=172.16.1.62<br>Hostname=DB01 server<br>Include=/etc/zabbix/zabbix_agent2.d/*.conf<br>ControlSocket=/tmp/agent.sock<br>Include=./zabbix_agent2.d/plugins.d/*.conf<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@db01 ~]#grep &quot;^[z-Z]&quot; /etc/zabbix/zabbix_agent2.conf </span><br><span class="line">PidFile=/var/run/zabbix/zabbix_agent2.pid</span><br><span class="line">LogFile=/var/log/zabbix/zabbix_agent2.log</span><br><span class="line">LogFileSize=0</span><br><span class="line">Server=172.16.1.62</span><br><span class="line">ServerActive=172.16.1.62</span><br><span class="line">Hostname=DB01 server</span><br><span class="line">Include=/etc/zabbix/zabbix_agent2.d/*.conf</span><br><span class="line">ControlSocket=/tmp/agent.sock</span><br><span class="line">Include=./zabbix_agent2.d/plugins.d/*.conf</span><br></pre></td></tr></table></figure>
 
 <p>启动服务</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl enable zabbix-agent2.service<br>systemctl start zabbix-agent2.service<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable zabbix-agent2.service</span><br><span class="line">systemctl start zabbix-agent2.service</span><br></pre></td></tr></table></figure>
 
 <p>检查</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@db01 ~]#ps -ef | grep zabbix<br>zabbix     1969      1  0 10:34 ?        00:00:00 /usr/sbin/zabbix_agent2 -c /etc/zabbix/zabbix_agent2.conf<br>root       1975   1778  0 10:35 pts/0    00:00:00 grep --color=auto zabbix<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@db01 ~]#ps -ef | grep zabbix</span><br><span class="line">zabbix     1969      1  0 10:34 ?        00:00:00 /usr/sbin/zabbix_agent2 -c /etc/zabbix/zabbix_agent2.conf</span><br><span class="line">root       1975   1778  0 10:35 pts/0    00:00:00 grep --color=auto zabbix</span><br></pre></td></tr></table></figure>
 
 <h2 id="9-2-web页面添加主机"><a href="#9-2-web页面添加主机" class="headerlink" title="9.2 web页面添加主机"></a>9.2 web页面添加主机</h2><p>登录zabbix页面，创建主机</p>
-<p><img src="/../../../img/image-20240618104109960.png" srcset="/img/loading.gif" lazyload alt="image-20240618104109960"></p>
+<p><img src="/../../../img/image-20240618104109960.png" alt="image-20240618104109960"></p>
 <p>刚开始图标是灰色，耐心等待</p>
-<p><img src="/../../../img/image-20240618104224235.png" srcset="/img/loading.gif" lazyload alt="image-20240618104224235"></p>
+<p><img src="/../../../img/image-20240618104224235.png" alt="image-20240618104224235"></p>
 <p>变绿即为添加成功</p>
-<p><img src="/../../../img/image-20240618104310299.png" srcset="/img/loading.gif" lazyload alt="image-20240618104310299"></p>
+<p><img src="/../../../img/image-20240618104310299.png" alt="image-20240618104310299"></p>
 <blockquote>
 <p>后期可以通过ansbile来自动添加监控，也可以通过配置自动发现来实现</p>
 </blockquote>
 <h2 id="9-3-通过模板帮助你监控任意服务"><a href="#9-3-通过模板帮助你监控任意服务" class="headerlink" title="9.3 通过模板帮助你监控任意服务"></a>9.3 通过模板帮助你监控任意服务</h2><p>zabbix提供很多监控模板供用户使用，案例使用的版本就有366个模板</p>
-<p><img src="/../../../img/image-20240618105118722.png" srcset="/img/loading.gif" lazyload alt="image-20240618105118722"></p>
+<p><img src="/../../../img/image-20240618105118722.png" alt="image-20240618105118722"></p>
 <p>可以在侧边栏进入模板页面，比如进入监控nginx的模板</p>
-<p><img src="/../../../img/image-20240618104903880.png" srcset="/img/loading.gif" lazyload alt="image-20240618104903880"></p>
+<p><img src="/../../../img/image-20240618104903880.png" alt="image-20240618104903880"></p>
 <p>这个nginx模板到底监控什么？可以点进去看，里面实际上有很多宏</p>
-<p><img src="/../../../img/image-20240618104939757.png" srcset="/img/loading.gif" lazyload alt="image-20240618104939757"></p>
+<p><img src="/../../../img/image-20240618104939757.png" alt="image-20240618104939757"></p>
 <p>可以按照自己的需求来配置宏，比如当前web服务器的nginx设置如下</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@web01 /etc/nginx/conf.d]# cat status.conf<br>server &#123;<br>  listen 8000;<br>  location / &#123;<br>    stub_status;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@web01 /etc/nginx/conf.d]# cat status.conf</span><br><span class="line">server &#123;</span><br><span class="line">  listen 8000;</span><br><span class="line">  location / &#123;</span><br><span class="line">    stub_status;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>配置宏如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">&#123;$NGINX.STUB_STATUS.HOST&#125; localhost<br>&#123;$NGINX.STUB_STATUS.PATH&#125; /<br>&#123;$NGINX.STUB_STATUS.PORT&#125; 8000<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;$NGINX.STUB_STATUS.HOST&#125; localhost</span><br><span class="line">&#123;$NGINX.STUB_STATUS.PATH&#125; /</span><br><span class="line">&#123;$NGINX.STUB_STATUS.PORT&#125; 8000</span><br></pre></td></tr></table></figure>
 
 
 
@@ -717,359 +514,742 @@
 
 
 
-
-                
-              </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
     
-      <span class="category-chain">
-        
-  <a href="/categories/%E8%BF%90%E7%BB%B4/" class="category-chain-item">运维</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/" class="category-chain-item">（二）综合架构</a>
-  
-  
 
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
 </div>
 
-
-              
-  
-
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>day67-监控架构-Zabbix(一)</div>
-      <div>https://gblog.github.io/2024/06/05/07_85期运维/03_自动化架构/day67-监控架构-Zabbix-1/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>作者</div>
-          <div>Haris</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>发布于</div>
-          <div>2024年6月5日</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>许可协议</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
-          </div>
-        </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
-  </div>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2024/06/18/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day68-%E7%9B%91%E6%8E%A7%E6%9E%B6%E6%9E%84-Zabbix-2/">day68-监控架构-Zabbix(二)</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2024/05/31/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day66-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84-%E9%98%BF%E9%87%8C%E4%BA%91%E8%BF%9B%E9%98%B6-3/">day66-综合架构-阿里云进阶（三）</a></div></section></div>
 
 
 
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2024/06/18/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day68-%E7%9B%91%E6%8E%A7%E6%9E%B6%E6%9E%84-Zabbix-2/" title="day68-监控架构-Zabbix(二)">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">day68-监控架构-Zabbix(二)</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2024/05/31/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day65-%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84-%E9%98%BF%E9%87%8C%E4%BA%91%E8%BF%9B%E9%98%B6-2/" title="day65-综合架构-阿里云进阶（二）">
-                        <span class="hidden-mobile">day65-综合架构-阿里云进阶（二）</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
 
-            
-          </article>
-        </div>
-      </div>
-    </div>
 
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
 
-    </div>
-  </div>
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">Haris</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9B%91%E6%8E%A7%E6%9E%B6%E6%9E%84-Zabbix-01"><span class="toc-text">监控架构-Zabbix-01</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81Zabbix%E6%A6%82%E8%BF%B0"><span class="toc-text">一、Zabbix概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Zabbix%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97"><span class="toc-text">二、Zabbix使用指南</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E4%B8%BB%E6%9C%BA%E8%A7%84%E5%88%92"><span class="toc-text">2.1 主机规划</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-1-%E6%8E%A8%E8%8D%90%E9%85%8D%E7%BD%AE"><span class="toc-text">2.1.1 推荐配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-2-%E7%A3%81%E7%9B%98%E5%AE%B9%E9%87%8F%E4%BC%B0%E7%AE%97"><span class="toc-text">2.1.2 磁盘容量估算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-3-%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-text">2.1.3 实验环境准备</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%83%A8%E7%BD%B2-%E7%AE%A1%E7%90%86%E7%AB%AF"><span class="toc-text">2.2 服务端部署-管理端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-1-%E9%83%A8%E7%BD%B2ngx-php%E7%8E%AF%E5%A2%83"><span class="toc-text">2.2.1 部署ngx+php环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-2-%E9%83%A8%E7%BD%B2%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">2.2.2 部署数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-3-%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85zabbix-server%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="toc-text">2.2.3 编译安装zabbix-server服务端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-4-zabbix%E9%85%8D%E7%BD%AE%E5%92%8C%E5%90%AF%E5%8A%A8"><span class="toc-text">2.2.4 zabbix配置和启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-5-systemctl%E9%85%8D%E7%BD%AE"><span class="toc-text">2.2.5 systemctl配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-6-%E9%83%A8%E7%BD%B2%E5%89%8D%E7%AB%AF%E4%BB%A3%E7%A0%81"><span class="toc-text">2.2.6 部署前端代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%83%A8%E7%BD%B2-%E8%A2%AB%E7%9B%91%E6%8E%A7%E7%AB%AF"><span class="toc-text">2.3 客户端部署-被监控端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-1-%E5%AE%89%E8%A3%85%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-text">2.3.1 安装客户端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-2-%E9%85%8D%E7%BD%AE%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-text">2.3.2 配置客户端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-3-%E6%B7%BB%E5%8A%A0%E7%9B%91%E6%8E%A7%E4%B8%BB%E6%9C%BA"><span class="toc-text">2.3.3 添加监控主机</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-4-ZBX%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98"><span class="toc-text">2.4 ZBX中文乱码问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81Zabbix%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3"><span class="toc-text">三、Zabbix配置详解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="toc-text">3.1 服务端配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="toc-text">3.2 客户端配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-zbx-agent-VS-zbx-zgent2"><span class="toc-text">3.3 zbx agent VS zbx zgent2</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E7%9B%91%E6%8E%A7%E4%BB%BB%E6%84%8F%E4%B8%BB%E6%9C%BA%E6%B5%81%E7%A8%8B"><span class="toc-text">四、监控任意主机流程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#9-1-%E9%85%8D%E7%BD%AE%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-text">9.1 配置客户端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-2-web%E9%A1%B5%E9%9D%A2%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA"><span class="toc-text">9.2 web页面添加主机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-3-%E9%80%9A%E8%BF%87%E6%A8%A1%E6%9D%BF%E5%B8%AE%E5%8A%A9%E4%BD%A0%E7%9B%91%E6%8E%A7%E4%BB%BB%E6%84%8F%E6%9C%8D%E5%8A%A1"><span class="toc-text">9.3 通过模板帮助你监控任意服务</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
 </div>
+</div><div class="scripts">
 
 
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-
-
-
-
-    
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-    
-
-    
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-  
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-    </div>
-  
-  
-  
-</div>
-
-  </footer>
-
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
-      
-        typing(text);
-      
-    })(window, document);
-  </script>
-
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
     }
+  };
 
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
 </script>
 
-
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
-
-  <script>Fluid.plugins.codeWidget();</script>
-
-
+<script type="text/javascript">
   
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
     };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
         }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
       }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
     });
   });
 </script>
 
-
-  
 <script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
   });
 </script>
 
 
-  <script>Fluid.plugins.imageCaption();</script>
+<!-- inject -->
 
-  <script  src="/js/local-search.js" ></script>
-
-
-
-
-
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
-
-
-  
-
-  <noscript>
-    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
-  </noscript>
-</body>
-</html>
+</div></body></html>

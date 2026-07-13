@@ -1,28 +1,29 @@
 
-
-<!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
-
-
+<!DOCTYPE html><html lang="zh-CN">
 
 <head>
-  <meta charset="UTF-8">
-
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
   
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="Haris">
-  <meta name="keywords" content="">
+  <meta name="generator" content="Hexo 7.3.0">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>Day62-Django-03 - Haris的小站</title>
+
   
     <meta name="description" content="“Day62 Diango 03 学习笔记” 一、路由层（接day61）1.2 路由分发1.2.1 什么是路由分发？​	将所有的url都写在Django项目总的urls.py中，写多了杂乱，不好维护 ​	但是Django有个特点：每一个应用都可以有自己的templates文件夹、urls.py、static文件夹 ​	基于上述的特点 django能够非常好的做到分组开发(每个人只写自己的app)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Day62-Django-03">
-<meta property="og:url" content="https://gblog.github.io/2022/09/12/03_Python/05_Django/day62%E7%AC%94%E8%AE%B0-Django-03/index.html">
+<meta property="og:url" content="https://gblog.github.io/2022/09/12/03_Python/05_Django/day62%E7%AC%94%E8%AE%B0-Django-03/">
 <meta property="og:site_name" content="Haris的小站">
 <meta property="og:description" content="“Day62 Diango 03 学习笔记” 一、路由层（接day61）1.2 路由分发1.2.1 什么是路由分发？​	将所有的url都写在Django项目总的urls.py中，写多了杂乱，不好维护 ​	但是Django有个特点：每一个应用都可以有自己的templates文件夹、urls.py、static文件夹 ​	基于上述的特点 django能够非常好的做到分组开发(每个人只写自己的app)">
 <meta property="og:locale" content="zh_CN">
@@ -30,303 +31,99 @@
 <meta property="article:published_time" content="2022-09-12T06:44:22.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.253Z">
 <meta property="article:author" content="Haris">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gblog.github.io/img/image-20220913193027730.png">
   
   
   
-  <title>Day62-Django-03 - Haris的小站</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
-  
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
 
 
   
-<link rel="stylesheet" href="/css/custom.css">
-
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"gblog.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-  
-
 
   
-<meta name="generator" content="Hexo 7.3.0"></head>
 
-
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Haris","sameAs":[]},"dateCreated":"2022-09-12T14:44:22+08:00","dateModified":"2026-07-10T14:20:16+08:00","datePublished":"2022-09-12T14:44:22+08:00","description":"","headline":"Day62-Django-03","mainEntityOfPage":{"@type":"WebPage","@id":"https://gblog.github.io/2022/09/12/03_Python/05_Django/day62%E7%AC%94%E8%AE%B0-Django-03/"},"publisher":{"@type":"Organization","name":"Haris","sameAs":[]},"url":"https://gblog.github.io/2022/09/12/03_Python/05_Django/day62%E7%AC%94%E8%AE%B0-Django-03/","image":[]}</script>
+  
+</head>
 <body>
-  
 
-  <header>
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="undefined" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">Haris的小站</div><div class="sub cap">null</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
+
+
+
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2025/05/06/10_%E5%AD%A6%E7%A5%9EK8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%9F%BA%E7%A1%80/"><span class="title">01-Docker基础</span></a><a class="item title" href="/2025/03/26/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/06-Docker%E8%B5%84%E6%BA%90%E9%85%8D%E9%A2%9D/"><span class="title">06-Docker资源配额</span></a><a class="item title" href="/2025/03/20/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/05-Docker%E5%AE%B9%E5%99%A8%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96/"><span class="title">05-Docker容器数据持久化</span></a><a class="item title" href="/2025/03/12/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/04-Dockerfile%E5%AE%9E%E6%88%98%E7%AF%87-%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F/"><span class="title">04-Dockerfile实战篇-构建镜像</span></a><a class="item title" href="/2025/03/04/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/03-Dockerfile%E5%9F%BA%E7%A1%80%E7%AF%87-%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/"><span class="title">03-Dockerfile基础篇-基本语法</span></a><a class="item title" href="/2025/03/03/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/02-%E8%BF%90%E8%A1%8CDocker%E5%AE%B9%E5%99%A8/"><span class="title">02-运行Docker容器</span></a><a class="item title" href="/2025/03/03/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80/"><span class="title">01-Docker基础</span></a><a class="item title" href="/2024/07/27/08_%E7%BD%91%E7%BB%9C/day03-HCIA%E8%AF%BE%E7%A8%8B-01/"><span class="title">day03-HCIA课程(一)</span></a><a class="item title" href="/2024/07/28/08_%E7%BD%91%E7%BB%9C/day02-%E7%BD%91%E5%B7%A5%E5%85%A5%E9%97%A8-02/"><span class="title">day02-网工入门（二）</span></a><a class="item title" href="/2024/07/27/08_%E7%BD%91%E7%BB%9C/day01-%E7%BD%91%E5%B7%A5%E5%85%A5%E9%97%A8-01/"><span class="title">day01-网工入门（一）</span></a></div></widget>
+</div>
+
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/Python/">Python</a> <span class="sep"></span> <a class="cap breadcrumb-link" href="/categories/Python/09-Django/">09_Django</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2022-09-12T06:44:22.000Z">2022-09-12</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2026-07-10T06:20:16.253Z">2026-07-10</time></span></div></div></div>
     
-
-<div class="header-inner" style="height: 70vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>Haris的博客</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>首页</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>归档</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>分类</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="Day62-Django-03"></span>
-          
-        </div>
-
-        
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-09-12 14:44" pubdate>
-          2022年9月12日 下午
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
-        
-          2.2k 字
-        
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
-        
-        
-        
-          19 分钟
-        
-      </span>
-    
-
-    
-    
-  </div>
-
-
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>Day62-Django-03</span></h1>
         
       </div>
-
-      
     </div>
-  </div>
-</div>
-
-</div>
-
-  </header>
-
-  <main>
     
-      
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
-
-    </div>
-
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">Day62-Django-03</h1>
-            
-            
-              <div class="markdown-body">
-                
-                <p>“Day62 Diango 03 学习笔记”</p>
+  </div>
+  </div><article class="md-text content"><p>“Day62 Diango 03 学习笔记”</p>
 <h1 id="一、路由层（接day61）"><a href="#一、路由层（接day61）" class="headerlink" title="一、路由层（接day61）"></a>一、路由层（接day61）</h1><h2 id="1-2-路由分发"><a href="#1-2-路由分发" class="headerlink" title="1.2 路由分发"></a>1.2 路由分发</h2><h3 id="1-2-1-什么是路由分发？"><a href="#1-2-1-什么是路由分发？" class="headerlink" title="1.2.1 什么是路由分发？"></a>1.2.1 什么是路由分发？</h3><p>​	将所有的url都写在Django项目总的<code>urls.py</code>中，写多了杂乱，不好维护</p>
 <p>​	但是Django有个特点：每一个应用都可以有自己的templates文件夹、urls.py、static文件夹</p>
 <p>​	基于上述的特点 django能够非常好的做到分组开发(每个人只写自己的app)</p>
 <p>利用路由分发来减轻总路由的压力，总路由统领各app里面的路由</p>
 <h3 id="1-2-2-路由分发案例"><a href="#1-2-2-路由分发案例" class="headerlink" title="1.2.2 路由分发案例"></a>1.2.2 路由分发案例</h3><p>1）新项目，创建两个app</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">python .\manage.py startapp app01<br>python .\manage.py startapp app02<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python .\manage.py startapp app01</span><br><span class="line">python .\manage.py startapp app02</span><br></pre></td></tr></table></figure>
 
 <p>2）两个app配置子路由<code>urls.py</code>文件</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># app01</span><br><span class="hljs-keyword">from</span> django.urls <span class="hljs-keyword">import</span> path<br><span class="hljs-keyword">from</span> app01 <span class="hljs-keyword">import</span> views<br><br>urlpatterns = [<br>    path(<span class="hljs-string">&#x27;reg/&#x27;</span>, views.reg),<br>]<br><br><span class="hljs-comment"># app02</span><br><span class="hljs-keyword">from</span> django.urls <span class="hljs-keyword">import</span> path<br><span class="hljs-keyword">from</span> app02 <span class="hljs-keyword">import</span> views<br><br>urlpatterns = [<br>    path(<span class="hljs-string">&#x27;reg/&#x27;</span>, views.reg),<br>]<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># app01</span></span><br><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> path</span><br><span class="line"><span class="keyword">from</span> app01 <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(<span class="string">&#x27;reg/&#x27;</span>, views.reg),</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># app02</span></span><br><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> path</span><br><span class="line"><span class="keyword">from</span> app02 <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(<span class="string">&#x27;reg/&#x27;</span>, views.reg),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 
 <p>3）两个app的views文件修改</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># app01</span><br><span class="hljs-keyword">from</span> django.shortcuts <span class="hljs-keyword">import</span> render, HttpResponse<br><br><span class="hljs-comment"># Create your views here.</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">reg</span>(<span class="hljs-params">request</span>):<br>    <span class="hljs-keyword">return</span> HttpResponse(<span class="hljs-string">&quot;app01:reg&quot;</span>)<br><br><span class="hljs-comment"># app02</span><br><span class="hljs-keyword">from</span> django.shortcuts <span class="hljs-keyword">import</span> render, HttpResponse<br><br><span class="hljs-comment"># Create your views here.</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">reg</span>(<span class="hljs-params">request</span>):<br>    <span class="hljs-keyword">return</span> HttpResponse(<span class="hljs-string">&quot;app01:reg&quot;</span>)<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># app01</span></span><br><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render, HttpResponse</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create your views here.</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">reg</span>(<span class="params">request</span>):</span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">&quot;app01:reg&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># app02</span></span><br><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render, HttpResponse</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create your views here.</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">reg</span>(<span class="params">request</span>):</span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">&quot;app01:reg&quot;</span>)</span><br></pre></td></tr></table></figure>
 
 <p>4）总路由<code>urls.py</code>配置路由分发</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.contrib <span class="hljs-keyword">import</span> admin<br><span class="hljs-keyword">from</span> django.conf.urls <span class="hljs-keyword">import</span> url, include<br><span class="hljs-comment"># 需要导入模块</span><br><span class="hljs-keyword">from</span> django.urls <span class="hljs-keyword">import</span> path, re_path<br><span class="hljs-keyword">from</span> app01 <span class="hljs-keyword">import</span> urls <span class="hljs-keyword">as</span> app01_urls<br><span class="hljs-keyword">from</span> app02 <span class="hljs-keyword">import</span> urls <span class="hljs-keyword">as</span> app02_urls<br><br>urlpatterns = [<br>    path(<span class="hljs-string">&#x27;admin/&#x27;</span>, admin.site.urls),<br>    <span class="hljs-comment"># 凡是app01开头的，都交给app01子路由处理</span><br>    re_path(<span class="hljs-string">r&#x27;^app01/&#x27;</span>, include(app01_urls)),<br>    <span class="hljs-comment"># 凡是app02开头的，都交给app02子路由处理</span><br>    re_path(<span class="hljs-string">r&#x27;^app02/&#x27;</span>, include(app02_urls)),<br>]<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url, include</span><br><span class="line"><span class="comment"># 需要导入模块</span></span><br><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> path, re_path</span><br><span class="line"><span class="keyword">from</span> app01 <span class="keyword">import</span> urls <span class="keyword">as</span> app01_urls</span><br><span class="line"><span class="keyword">from</span> app02 <span class="keyword">import</span> urls <span class="keyword">as</span> app02_urls</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(<span class="string">&#x27;admin/&#x27;</span>, admin.site.urls),</span><br><span class="line">    <span class="comment"># 凡是app01开头的，都交给app01子路由处理</span></span><br><span class="line">    re_path(<span class="string">r&#x27;^app01/&#x27;</span>, include(app01_urls)),</span><br><span class="line">    <span class="comment"># 凡是app02开头的，都交给app02子路由处理</span></span><br><span class="line">    re_path(<span class="string">r&#x27;^app02/&#x27;</span>, include(app02_urls)),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 
 <p>更推荐的写发，不需要重命名：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.contrib <span class="hljs-keyword">import</span> admin<br><span class="hljs-keyword">from</span> django.conf.urls <span class="hljs-keyword">import</span> url, include<br><span class="hljs-comment"># 需要导入模块</span><br><span class="hljs-keyword">from</span> django.urls <span class="hljs-keyword">import</span> path, re_path<br><br>urlpatterns = [<br>    path(<span class="hljs-string">&#x27;admin/&#x27;</span>, admin.site.urls),<br>    <span class="hljs-comment"># 凡是app01开头的，都交给app01子路由处理</span><br>    re_path(<span class="hljs-string">r&#x27;^app01/&#x27;</span>, include(<span class="hljs-string">&#x27;app01.urls&#x27;</span>)),<br>    <span class="hljs-comment"># 凡是app02开头的，都交给app02子路由处理</span><br>    re_path(<span class="hljs-string">r&#x27;^app02/&#x27;</span>, include(<span class="hljs-string">&#x27;app02.urls&#x27;</span>)),<br>]<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url, include</span><br><span class="line"><span class="comment"># 需要导入模块</span></span><br><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> path, re_path</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(<span class="string">&#x27;admin/&#x27;</span>, admin.site.urls),</span><br><span class="line">    <span class="comment"># 凡是app01开头的，都交给app01子路由处理</span></span><br><span class="line">    re_path(<span class="string">r&#x27;^app01/&#x27;</span>, include(<span class="string">&#x27;app01.urls&#x27;</span>)),</span><br><span class="line">    <span class="comment"># 凡是app02开头的，都交给app02子路由处理</span></span><br><span class="line">    re_path(<span class="string">r&#x27;^app02/&#x27;</span>, include(<span class="string">&#x27;app02.urls&#x27;</span>)),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 
 <p>测试访问成功：</p>
-<p><img src="/../../../img/image-20220913193027730.png" srcset="/img/loading.gif" lazyload alt="image-20220913193027730"></p>
-<h2 id="1-3-名称空间-了解"><a href="#1-3-名称空间-了解" class="headerlink" title="1.3 名称空间(了解)"></a>1.3 名称空间(了解)</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 当多个应用出现了相同的别名 我们研究反向解析会不会自动识别应用前缀</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">正常情况下的反向解析是没有办法自动识别前缀的</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br><span class="hljs-comment"># 名称空间</span><br>	<span class="hljs-comment"># 总路由</span><br>    url(<span class="hljs-string">r&#x27;^app01/&#x27;</span>,include(<span class="hljs-string">&#x27;app01.urls&#x27;</span>,namespace=<span class="hljs-string">&#x27;app01&#x27;</span>)),<br>    url(<span class="hljs-string">r&#x27;^app02/&#x27;</span>,include(<span class="hljs-string">&#x27;app02.urls&#x27;</span>,namespace=<span class="hljs-string">&#x27;app02&#x27;</span>))<br>  <span class="hljs-comment"># 解析的时候</span><br>  	<span class="hljs-comment"># app01</span><br>  	urlpatterns = [<br>    url(<span class="hljs-string">r&#x27;^reg/&#x27;</span>,views.reg,name=<span class="hljs-string">&#x27;reg&#x27;</span>)<br>		]<br>    <span class="hljs-comment"># app02</span><br>    urlpatterns = [<br>    url(<span class="hljs-string">r&#x27;^reg/&#x27;</span>,views.reg,name=<span class="hljs-string">&#x27;reg&#x27;</span>)<br>		]<br>    <br>  	reverse(<span class="hljs-string">&#x27;app01:reg&#x27;</span>)<br>    reverse(<span class="hljs-string">&#x27;app02:reg&#x27;</span>)<br>    <br>    &#123;% url <span class="hljs-string">&#x27;app01:reg&#x27;</span> %&#125;<br>    &#123;% url <span class="hljs-string">&#x27;app02:reg&#x27;</span> %&#125;<br><span class="hljs-comment"># 其实只要保证名字不冲突 就没有必要使用名称空间</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">一般情况下 有多个app的时候我们在起别名的时候会加上app的前缀</span><br><span class="hljs-string">这样的话就能够确保多个app之间名字不冲突的问题</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br>urlpatterns = [<br>    url(<span class="hljs-string">r&#x27;^reg/&#x27;</span>,views.reg,name=<span class="hljs-string">&#x27;app01_reg&#x27;</span>)<br>]<br>urlpatterns = [<br>    url(<span class="hljs-string">r&#x27;^reg/&#x27;</span>,views.reg,name=<span class="hljs-string">&#x27;app02_reg&#x27;</span>)<br>]<br></code></pre></td></tr></table></figure>
+<p><img src="/../../../img/image-20220913193027730.png" alt="image-20220913193027730"></p>
+<h2 id="1-3-名称空间-了解"><a href="#1-3-名称空间-了解" class="headerlink" title="1.3 名称空间(了解)"></a>1.3 名称空间(了解)</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 当多个应用出现了相同的别名 我们研究反向解析会不会自动识别应用前缀</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">正常情况下的反向解析是没有办法自动识别前缀的</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 名称空间</span></span><br><span class="line">	<span class="comment"># 总路由</span></span><br><span class="line">    url(<span class="string">r&#x27;^app01/&#x27;</span>,include(<span class="string">&#x27;app01.urls&#x27;</span>,namespace=<span class="string">&#x27;app01&#x27;</span>)),</span><br><span class="line">    url(<span class="string">r&#x27;^app02/&#x27;</span>,include(<span class="string">&#x27;app02.urls&#x27;</span>,namespace=<span class="string">&#x27;app02&#x27;</span>))</span><br><span class="line">  <span class="comment"># 解析的时候</span></span><br><span class="line">  	<span class="comment"># app01</span></span><br><span class="line">  	urlpatterns = [</span><br><span class="line">    url(<span class="string">r&#x27;^reg/&#x27;</span>,views.reg,name=<span class="string">&#x27;reg&#x27;</span>)</span><br><span class="line">		]</span><br><span class="line">    <span class="comment"># app02</span></span><br><span class="line">    urlpatterns = [</span><br><span class="line">    url(<span class="string">r&#x27;^reg/&#x27;</span>,views.reg,name=<span class="string">&#x27;reg&#x27;</span>)</span><br><span class="line">		]</span><br><span class="line">    </span><br><span class="line">  	reverse(<span class="string">&#x27;app01:reg&#x27;</span>)</span><br><span class="line">    reverse(<span class="string">&#x27;app02:reg&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    &#123;% url <span class="string">&#x27;app01:reg&#x27;</span> %&#125;</span><br><span class="line">    &#123;% url <span class="string">&#x27;app02:reg&#x27;</span> %&#125;</span><br><span class="line"><span class="comment"># 其实只要保证名字不冲突 就没有必要使用名称空间</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">一般情况下 有多个app的时候我们在起别名的时候会加上app的前缀</span></span><br><span class="line"><span class="string">这样的话就能够确保多个app之间名字不冲突的问题</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line">urlpatterns = [</span><br><span class="line">    url(<span class="string">r&#x27;^reg/&#x27;</span>,views.reg,name=<span class="string">&#x27;app01_reg&#x27;</span>)</span><br><span class="line">]</span><br><span class="line">urlpatterns = [</span><br><span class="line">    url(<span class="string">r&#x27;^reg/&#x27;</span>,views.reg,name=<span class="string">&#x27;app02_reg&#x27;</span>)</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 
-<h2 id="1-4-伪静态-了解"><a href="#1-4-伪静态-了解" class="headerlink" title="1.4 伪静态(了解)"></a>1.4 伪静态(了解)</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">静态网页</span><br><span class="hljs-string">	数据是写死的 万年不变</span><br><span class="hljs-string">	</span><br><span class="hljs-string">伪静态</span><br><span class="hljs-string">	将一个动态网页伪装成静态网页</span><br><span class="hljs-string">	</span><br><span class="hljs-string">	为什么要伪装呢？</span><br><span class="hljs-string">		https://www.cnblogs.com/Dominic-Ji/p/9234099.html</span><br><span class="hljs-string">		伪装的目的在于增大本网站的seo查询力度</span><br><span class="hljs-string">		并且增加搜索引擎收藏本网上的概率</span><br><span class="hljs-string">	</span><br><span class="hljs-string">	搜索引擎本质上就是一个巨大的爬虫程序</span><br><span class="hljs-string">	</span><br><span class="hljs-string">	总结:</span><br><span class="hljs-string">		无论你怎么优化 怎么处理</span><br><span class="hljs-string">		始终还是干不过RMB玩家</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br>urlpatterns = [<br>    url(<span class="hljs-string">r&#x27;^reg.html&#x27;</span>,views.reg,name=<span class="hljs-string">&#x27;app02_reg&#x27;</span>)<br>]<br></code></pre></td></tr></table></figure>
+<h2 id="1-4-伪静态-了解"><a href="#1-4-伪静态-了解" class="headerlink" title="1.4 伪静态(了解)"></a>1.4 伪静态(了解)</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">静态网页</span></span><br><span class="line"><span class="string">	数据是写死的 万年不变</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">伪静态</span></span><br><span class="line"><span class="string">	将一个动态网页伪装成静态网页</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">	为什么要伪装呢？</span></span><br><span class="line"><span class="string">		https://www.cnblogs.com/Dominic-Ji/p/9234099.html</span></span><br><span class="line"><span class="string">		伪装的目的在于增大本网站的seo查询力度</span></span><br><span class="line"><span class="string">		并且增加搜索引擎收藏本网上的概率</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">	搜索引擎本质上就是一个巨大的爬虫程序</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">	总结:</span></span><br><span class="line"><span class="string">		无论你怎么优化 怎么处理</span></span><br><span class="line"><span class="string">		始终还是干不过RMB玩家</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line">urlpatterns = [</span><br><span class="line">    url(<span class="string">r&#x27;^reg.html&#x27;</span>,views.reg,name=<span class="string">&#x27;app02_reg&#x27;</span>)</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 
-<h2 id="1-5-虚拟环境-了解"><a href="#1-5-虚拟环境-了解" class="headerlink" title="1.5 虚拟环境(了解)"></a>1.5 虚拟环境(了解)</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">在正常开发中 我们会给每一个项目配备一个该项目独有的解释器环境</span><br><span class="hljs-string">该环境内只有该项目用到的模块 用不到一概不装</span><br><span class="hljs-string"></span><br><span class="hljs-string">linux:缺什么才装什么</span><br><span class="hljs-string"></span><br><span class="hljs-string">虚拟环境</span><br><span class="hljs-string">	你每创建一个虚拟环境就类似于重新下载了一个纯净的python解释器</span><br><span class="hljs-string">	但是虚拟环境不要创建太多，是需要消耗硬盘空间的</span><br><span class="hljs-string"></span><br><span class="hljs-string">扩展:</span><br><span class="hljs-string">	每一个项目都需要用到很多模块 并且每个模块版本可能还不一样</span><br><span class="hljs-string">	那我该如何安装呢？ 一个个看一个个装？？？</span><br><span class="hljs-string">	</span><br><span class="hljs-string">	开发当中我们会给每一个项目配备一个requirements.txt文件</span><br><span class="hljs-string">	里面书写了该项目所有的模块即版本</span><br><span class="hljs-string">	你只需要直接输入一条命令即可一键安装所有模块即版本</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+<h2 id="1-5-虚拟环境-了解"><a href="#1-5-虚拟环境-了解" class="headerlink" title="1.5 虚拟环境(了解)"></a>1.5 虚拟环境(了解)</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">在正常开发中 我们会给每一个项目配备一个该项目独有的解释器环境</span></span><br><span class="line"><span class="string">该环境内只有该项目用到的模块 用不到一概不装</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">linux:缺什么才装什么</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">虚拟环境</span></span><br><span class="line"><span class="string">	你每创建一个虚拟环境就类似于重新下载了一个纯净的python解释器</span></span><br><span class="line"><span class="string">	但是虚拟环境不要创建太多，是需要消耗硬盘空间的</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">扩展:</span></span><br><span class="line"><span class="string">	每一个项目都需要用到很多模块 并且每个模块版本可能还不一样</span></span><br><span class="line"><span class="string">	那我该如何安装呢？ 一个个看一个个装？？？</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">	开发当中我们会给每一个项目配备一个requirements.txt文件</span></span><br><span class="line"><span class="string">	里面书写了该项目所有的模块即版本</span></span><br><span class="line"><span class="string">	你只需要直接输入一条命令即可一键安装所有模块即版本</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="1-6-django版本区别"><a href="#1-6-django版本区别" class="headerlink" title="1.6 django版本区别"></a>1.6 django版本区别</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">1.django1.X路由层使用的是url方法</span><br><span class="hljs-string">	而在django2.Xhe3.X版本中路由层使用的是path方法</span><br><span class="hljs-string">	url()第一个参数支持正则</span><br><span class="hljs-string">	path()第一个参数是不支持正则的 写什么就匹配什么</span><br><span class="hljs-string">	</span><br><span class="hljs-string">	</span><br><span class="hljs-string">	如果你习惯使用path那么也给你提供了另外一个方法</span><br><span class="hljs-string">		from django.urls import path, re_path</span><br><span class="hljs-string">		from django.conf.urls import url</span><br><span class="hljs-string">		</span><br><span class="hljs-string">		re_path(r&#x27;^index/&#x27;,index),</span><br><span class="hljs-string">    url(r&#x27;^login/&#x27;,login)</span><br><span class="hljs-string">  2.X和3.X里面的re_path就等价于1.X里面的url</span><br><span class="hljs-string"> </span><br><span class="hljs-string"> </span><br><span class="hljs-string">2.虽然path不支持正则 但是它的内部支持五种转换器</span><br><span class="hljs-string">	path(&#x27;index/&lt;int:id&gt;/&#x27;,index)</span><br><span class="hljs-string">	# 将第二个路由里面的内容先转成整型然后以关键字的形式传递给后面的视图函数</span><br><span class="hljs-string"></span><br><span class="hljs-string">	def index(request,id):</span><br><span class="hljs-string">    print(id,type(id))</span><br><span class="hljs-string">    return HttpResponse(&#x27;index&#x27;)</span><br><span class="hljs-string">    </span><br><span class="hljs-string">  </span><br><span class="hljs-string">  </span><br><span class="hljs-string">  str,匹配除了路径分隔符（/）之外的非空字符串，这是默认的形式</span><br><span class="hljs-string">	int,匹配正整数，包含0。</span><br><span class="hljs-string">	slug,匹配字母、数字以及横杠、下划线组成的字符串。</span><br><span class="hljs-string">	uuid,匹配格式化的uuid，如 075194d3-6885-417e-a8a8-6c931e272f00。</span><br><span class="hljs-string">	path,匹配任何非空字符串，包含了路径分隔符（/）（不能用？）</span><br><span class="hljs-string">	</span><br><span class="hljs-string">3.除了有默认的五个转换器之外 还支持自定义转换器(了解)</span><br><span class="hljs-string">	class MonthConverter:</span><br><span class="hljs-string">    regex=&#x27;\d&#123;2&#125;&#x27; # 属性名必须为regex</span><br><span class="hljs-string"></span><br><span class="hljs-string">    def to_python(self, value):</span><br><span class="hljs-string">        return int(value)</span><br><span class="hljs-string"></span><br><span class="hljs-string">    def to_url(self, value):</span><br><span class="hljs-string">        return value # 匹配的regex是两个数字，返回的结果也必须是两个数字</span><br><span class="hljs-string">	</span><br><span class="hljs-string">	</span><br><span class="hljs-string">	from django.urls import path,register_converter</span><br><span class="hljs-string">	from app01.path_converts import MonthConverter</span><br><span class="hljs-string"></span><br><span class="hljs-string">	# 先注册转换器</span><br><span class="hljs-string">	register_converter(MonthConverter,&#x27;mon&#x27;)</span><br><span class="hljs-string"></span><br><span class="hljs-string">	from app01 import views</span><br><span class="hljs-string"></span><br><span class="hljs-string"></span><br><span class="hljs-string">	urlpatterns = [</span><br><span class="hljs-string">    path(&#x27;articles/&lt;int:year&gt;/&lt;mon:month&gt;/&lt;slug:other&gt;/&#x27;, 	views.article_detail, name=&#x27;aaa&#x27;),</span><br><span class="hljs-string"></span><br><span class="hljs-string">]</span><br><span class="hljs-string"></span><br><span class="hljs-string"></span><br><span class="hljs-string">4.模型层里面1.X外键默认都是级联更新删除的</span><br><span class="hljs-string">但是到了2.X和3.X中需要你自己手动配置参数</span><br><span class="hljs-string">	models.ForeignKey(to=&#x27;Publish&#x27;)</span><br><span class="hljs-string">	</span><br><span class="hljs-string">	models.ForeignKey(to=&#x27;Publish&#x27;,on_delete=models.CASCADE...)</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+<h2 id="1-6-django版本区别"><a href="#1-6-django版本区别" class="headerlink" title="1.6 django版本区别"></a>1.6 django版本区别</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">1.django1.X路由层使用的是url方法</span></span><br><span class="line"><span class="string">	而在django2.Xhe3.X版本中路由层使用的是path方法</span></span><br><span class="line"><span class="string">	url()第一个参数支持正则</span></span><br><span class="line"><span class="string">	path()第一个参数是不支持正则的 写什么就匹配什么</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">	如果你习惯使用path那么也给你提供了另外一个方法</span></span><br><span class="line"><span class="string">		from django.urls import path, re_path</span></span><br><span class="line"><span class="string">		from django.conf.urls import url</span></span><br><span class="line"><span class="string">		</span></span><br><span class="line"><span class="string">		re_path(r&#x27;^index/&#x27;,index),</span></span><br><span class="line"><span class="string">    url(r&#x27;^login/&#x27;,login)</span></span><br><span class="line"><span class="string">  2.X和3.X里面的re_path就等价于1.X里面的url</span></span><br><span class="line"><span class="string"> </span></span><br><span class="line"><span class="string"> </span></span><br><span class="line"><span class="string">2.虽然path不支持正则 但是它的内部支持五种转换器</span></span><br><span class="line"><span class="string">	path(&#x27;index/&lt;int:id&gt;/&#x27;,index)</span></span><br><span class="line"><span class="string">	# 将第二个路由里面的内容先转成整型然后以关键字的形式传递给后面的视图函数</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">	def index(request,id):</span></span><br><span class="line"><span class="string">    print(id,type(id))</span></span><br><span class="line"><span class="string">    return HttpResponse(&#x27;index&#x27;)</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">  </span></span><br><span class="line"><span class="string">  </span></span><br><span class="line"><span class="string">  str,匹配除了路径分隔符（/）之外的非空字符串，这是默认的形式</span></span><br><span class="line"><span class="string">	int,匹配正整数，包含0。</span></span><br><span class="line"><span class="string">	slug,匹配字母、数字以及横杠、下划线组成的字符串。</span></span><br><span class="line"><span class="string">	uuid,匹配格式化的uuid，如 075194d3-6885-417e-a8a8-6c931e272f00。</span></span><br><span class="line"><span class="string">	path,匹配任何非空字符串，包含了路径分隔符（/）（不能用？）</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">3.除了有默认的五个转换器之外 还支持自定义转换器(了解)</span></span><br><span class="line"><span class="string">	class MonthConverter:</span></span><br><span class="line"><span class="string">    regex=&#x27;\d&#123;2&#125;&#x27; # 属性名必须为regex</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    def to_python(self, value):</span></span><br><span class="line"><span class="string">        return int(value)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    def to_url(self, value):</span></span><br><span class="line"><span class="string">        return value # 匹配的regex是两个数字，返回的结果也必须是两个数字</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">	from django.urls import path,register_converter</span></span><br><span class="line"><span class="string">	from app01.path_converts import MonthConverter</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">	# 先注册转换器</span></span><br><span class="line"><span class="string">	register_converter(MonthConverter,&#x27;mon&#x27;)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">	from app01 import views</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">	urlpatterns = [</span></span><br><span class="line"><span class="string">    path(&#x27;articles/&lt;int:year&gt;/&lt;mon:month&gt;/&lt;slug:other&gt;/&#x27;, 	views.article_detail, name=&#x27;aaa&#x27;),</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">]</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">4.模型层里面1.X外键默认都是级联更新删除的</span></span><br><span class="line"><span class="string">但是到了2.X和3.X中需要你自己手动配置参数</span></span><br><span class="line"><span class="string">	models.ForeignKey(to=&#x27;Publish&#x27;)</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">	models.ForeignKey(to=&#x27;Publish&#x27;,on_delete=models.CASCADE...)</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
 
-<h1 id="二、视图层"><a href="#二、视图层" class="headerlink" title="二、视图层"></a>二、视图层</h1><h2 id="2-1-三板斧"><a href="#2-1-三板斧" class="headerlink" title="2.1 三板斧"></a>2.1 三板斧</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">HttpResponse</span><br><span class="hljs-string">	返回字符串类型</span><br><span class="hljs-string">render</span><br><span class="hljs-string">	返回html页面 并且在返回给浏览器之前还可以给html文件传值</span><br><span class="hljs-string">redirect</span><br><span class="hljs-string">	重定向</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-comment"># 视图函数必须要返回一个HttpResponse对象  正确   研究三者的源码即可得处结论</span><br>The view app01.views.index didn<span class="hljs-string">&#x27;t return an HttpResponse object. It returned None instead.</span><br><span class="hljs-string"></span><br><span class="hljs-string"># render简单内部原理</span><br><span class="hljs-string">		from django.template import Template,Context</span><br><span class="hljs-string">    res = Template(&#x27;</span>&lt;h1&gt;&#123;&#123; user &#125;&#125;&lt;/h1&gt;<span class="hljs-string">&#x27;)</span><br><span class="hljs-string">    con = Context(&#123;&#x27;</span>use<span class="hljs-string">r&#x27;:&#123;&#x27;</span>username<span class="hljs-string">&#x27;:&#x27;</span>jason<span class="hljs-string">&#x27;,&#x27;</span>password<span class="hljs-string">&#x27;:123&#125;&#125;)</span><br><span class="hljs-string">    ret = res.render(con)</span><br><span class="hljs-string">    print(ret)</span><br><span class="hljs-string">    return HttpResponse(ret)</span><br><span class="hljs-string"></span><br></code></pre></td></tr></table></figure>
+<h1 id="二、视图层"><a href="#二、视图层" class="headerlink" title="二、视图层"></a>二、视图层</h1><h2 id="2-1-三板斧"><a href="#2-1-三板斧" class="headerlink" title="2.1 三板斧"></a>2.1 三板斧</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">HttpResponse</span></span><br><span class="line"><span class="string">	返回字符串类型</span></span><br><span class="line"><span class="string">render</span></span><br><span class="line"><span class="string">	返回html页面 并且在返回给浏览器之前还可以给html文件传值</span></span><br><span class="line"><span class="string">redirect</span></span><br><span class="line"><span class="string">	重定向</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="comment"># 视图函数必须要返回一个HttpResponse对象  正确   研究三者的源码即可得处结论</span></span><br><span class="line">The view app01.views.index didn<span class="string">&#x27;t return an HttpResponse object. It returned None instead.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># render简单内部原理</span></span><br><span class="line"><span class="string">		from django.template import Template,Context</span></span><br><span class="line"><span class="string">    res = Template(&#x27;</span>&lt;h1&gt;&#123;&#123; user &#125;&#125;&lt;/h1&gt;<span class="string">&#x27;)</span></span><br><span class="line"><span class="string">    con = Context(&#123;&#x27;</span>use<span class="string">r&#x27;:&#123;&#x27;</span>username<span class="string">&#x27;:&#x27;</span>jason<span class="string">&#x27;,&#x27;</span>password<span class="string">&#x27;:123&#125;&#125;)</span></span><br><span class="line"><span class="string">    ret = res.render(con)</span></span><br><span class="line"><span class="string">    print(ret)</span></span><br><span class="line"><span class="string">    return HttpResponse(ret)</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
 
-<h2 id="2-2-JsonResponse对象"><a href="#2-2-JsonResponse对象" class="headerlink" title="2.2 JsonResponse对象"></a>2.2 JsonResponse对象</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">json格式的数据有什么用？</span><br><span class="hljs-string">	前后端数据交互需要使用到json作为过渡 实现跨语言传输数据</span><br><span class="hljs-string"></span><br><span class="hljs-string">前端序列化</span><br><span class="hljs-string">	JSON.stringify()					json.dumps()</span><br><span class="hljs-string">	JSON.parse()							json.loads()</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-keyword">import</span> json<br><span class="hljs-keyword">from</span> django.http <span class="hljs-keyword">import</span> JsonResponse<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">ab_json</span>(<span class="hljs-params">request</span>):<br>    user_dict = &#123;<span class="hljs-string">&#x27;username&#x27;</span>:<span class="hljs-string">&#x27;jason好帅哦,我好喜欢!&#x27;</span>,<span class="hljs-string">&#x27;password&#x27;</span>:<span class="hljs-string">&#x27;123&#x27;</span>,<span class="hljs-string">&#x27;hobby&#x27;</span>:<span class="hljs-string">&#x27;girl&#x27;</span>&#125;<br><br>    l = [<span class="hljs-number">111</span>,<span class="hljs-number">222</span>,<span class="hljs-number">333</span>,<span class="hljs-number">444</span>,<span class="hljs-number">555</span>]<br>    <span class="hljs-comment"># 先转成json格式字符串</span><br>    <span class="hljs-comment"># json_str = json.dumps(user_dict,ensure_ascii=False)</span><br>    <span class="hljs-comment"># 将该字符串返回</span><br>    <span class="hljs-comment"># return HttpResponse(json_str)</span><br>    <span class="hljs-comment"># 读源码掌握用法</span><br>    <span class="hljs-comment"># return JsonResponse(user_dict,json_dumps_params=&#123;&#x27;ensure_ascii&#x27;:False&#125;)</span><br>    <span class="hljs-comment"># In order to allow non-dict objects to be serialized set the safe parameter to False.</span><br>    <span class="hljs-comment"># return JsonResponse(l,safe=False)  </span><br>    <span class="hljs-comment"># 默认只能序列化字典 序列化其他需要加safe参数	</span><br></code></pre></td></tr></table></figure>
+<h2 id="2-2-JsonResponse对象"><a href="#2-2-JsonResponse对象" class="headerlink" title="2.2 JsonResponse对象"></a>2.2 JsonResponse对象</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">json格式的数据有什么用？</span></span><br><span class="line"><span class="string">	前后端数据交互需要使用到json作为过渡 实现跨语言传输数据</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">前端序列化</span></span><br><span class="line"><span class="string">	JSON.stringify()					json.dumps()</span></span><br><span class="line"><span class="string">	JSON.parse()							json.loads()</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> JsonResponse</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ab_json</span>(<span class="params">request</span>):</span><br><span class="line">    user_dict = &#123;<span class="string">&#x27;username&#x27;</span>:<span class="string">&#x27;jason好帅哦,我好喜欢!&#x27;</span>,<span class="string">&#x27;password&#x27;</span>:<span class="string">&#x27;123&#x27;</span>,<span class="string">&#x27;hobby&#x27;</span>:<span class="string">&#x27;girl&#x27;</span>&#125;</span><br><span class="line"></span><br><span class="line">    l = [<span class="number">111</span>,<span class="number">222</span>,<span class="number">333</span>,<span class="number">444</span>,<span class="number">555</span>]</span><br><span class="line">    <span class="comment"># 先转成json格式字符串</span></span><br><span class="line">    <span class="comment"># json_str = json.dumps(user_dict,ensure_ascii=False)</span></span><br><span class="line">    <span class="comment"># 将该字符串返回</span></span><br><span class="line">    <span class="comment"># return HttpResponse(json_str)</span></span><br><span class="line">    <span class="comment"># 读源码掌握用法</span></span><br><span class="line">    <span class="comment"># return JsonResponse(user_dict,json_dumps_params=&#123;&#x27;ensure_ascii&#x27;:False&#125;)</span></span><br><span class="line">    <span class="comment"># In order to allow non-dict objects to be serialized set the safe parameter to False.</span></span><br><span class="line">    <span class="comment"># return JsonResponse(l,safe=False)  </span></span><br><span class="line">    <span class="comment"># 默认只能序列化字典 序列化其他需要加safe参数	</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="2-3-form表单上传文件及后端如何操作"><a href="#2-3-form表单上传文件及后端如何操作" class="headerlink" title="2.3 form表单上传文件及后端如何操作"></a>2.3 form表单上传文件及后端如何操作</h2><p>form表单上传文件类型的数据</p>
 <ol>
@@ -334,369 +131,752 @@
 <li>enctype必须换成formdata</li>
 </ol>
 <h3 id="2-3-1-案例："><a href="#2-3-1-案例：" class="headerlink" title="2.3.1 案例："></a>2.3.1 案例：</h3><p>HTML页面代码：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Title<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>	# 必须设置<br>    <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">action</span>=<span class="hljs-string">&quot;&quot;</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;post&quot;</span> <span class="hljs-attr">enctype</span>=<span class="hljs-string">&quot;multipart/form-data&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>选择文件：<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;file&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;file&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;submit&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	# 必须设置</span><br><span class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">enctype</span>=<span class="string">&quot;multipart/form-data&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>选择文件：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;file&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>views.py代码</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.shortcuts <span class="hljs-keyword">import</span> render, HttpResponse<br><br><br><span class="hljs-comment"># Create your views here.</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">reg</span>(<span class="hljs-params">request</span>):<br>    <span class="hljs-keyword">if</span> request.method == <span class="hljs-string">&quot;POST&quot;</span>:<br>        <span class="hljs-comment"># print(request.POST)  # 只能获取普通的简直对数据 文件不行</span><br>        <span class="hljs-built_in">print</span>(request.FILES)<br>        file_obj = request.FILES.get(<span class="hljs-string">&#x27;file&#x27;</span>)  <span class="hljs-comment"># 文件对象</span><br>        <span class="hljs-built_in">print</span>(file_obj.name)<br>        <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(file_obj.name, <span class="hljs-string">&#x27;wb&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>            <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> file_obj.chunks():  <span class="hljs-comment"># 推荐加上chunks方法 其实跟不加是一样的都是一行行的读取</span><br>                f.write(line)<br>    <span class="hljs-keyword">return</span> render(request, <span class="hljs-string">&#x27;index.html&#x27;</span>)<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render, HttpResponse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create your views here.</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">reg</span>(<span class="params">request</span>):</span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&quot;POST&quot;</span>:</span><br><span class="line">        <span class="comment"># print(request.POST)  # 只能获取普通的简直对数据 文件不行</span></span><br><span class="line">        <span class="built_in">print</span>(request.FILES)</span><br><span class="line">        file_obj = request.FILES.get(<span class="string">&#x27;file&#x27;</span>)  <span class="comment"># 文件对象</span></span><br><span class="line">        <span class="built_in">print</span>(file_obj.name)</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(file_obj.name, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            <span class="keyword">for</span> line <span class="keyword">in</span> file_obj.chunks():  <span class="comment"># 推荐加上chunks方法 其实跟不加是一样的都是一行行的读取</span></span><br><span class="line">                f.write(line)</span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&#x27;index.html&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>测试：页面上传文件后，会保存到项目文件夹中</p>
-<h2 id="2-4-request对象方法"><a href="#2-4-request对象方法" class="headerlink" title="2.4 request对象方法"></a>2.4 request对象方法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">request.method</span><br><span class="hljs-string">request.POST</span><br><span class="hljs-string">request.GET</span><br><span class="hljs-string">request.FILES</span><br><span class="hljs-string">request.body  # 原生的浏览器发过来的二进制数据  后面详细的讲</span><br><span class="hljs-string">request.path </span><br><span class="hljs-string">request.path_info</span><br><span class="hljs-string">request.get_full_path()  能过获取完整的url及问号后面的参数 </span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-built_in">print</span>(request.path)  <span class="hljs-comment"># /app01/ab_file/</span><br><span class="hljs-built_in">print</span>(request.path_info)  <span class="hljs-comment"># /app01/ab_file/</span><br><span class="hljs-built_in">print</span>(request.get_full_path())  <span class="hljs-comment"># /app01/ab_file/?username=jason</span><br></code></pre></td></tr></table></figure>
+<h2 id="2-4-request对象方法"><a href="#2-4-request对象方法" class="headerlink" title="2.4 request对象方法"></a>2.4 request对象方法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">request.method</span></span><br><span class="line"><span class="string">request.POST</span></span><br><span class="line"><span class="string">request.GET</span></span><br><span class="line"><span class="string">request.FILES</span></span><br><span class="line"><span class="string">request.body  # 原生的浏览器发过来的二进制数据  后面详细的讲</span></span><br><span class="line"><span class="string">request.path </span></span><br><span class="line"><span class="string">request.path_info</span></span><br><span class="line"><span class="string">request.get_full_path()  能过获取完整的url及问号后面的参数 </span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="built_in">print</span>(request.path)  <span class="comment"># /app01/ab_file/</span></span><br><span class="line"><span class="built_in">print</span>(request.path_info)  <span class="comment"># /app01/ab_file/</span></span><br><span class="line"><span class="built_in">print</span>(request.get_full_path())  <span class="comment"># /app01/ab_file/?username=jason</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="2-5-FBV与CBV"><a href="#2-5-FBV与CBV" class="headerlink" title="2.5 FBV与CBV"></a>2.5 FBV与CBV</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 视图函数既可以是函数也可以是类</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">index</span>(<span class="hljs-params">request</span>):<br>  <span class="hljs-keyword">return</span> HttpResponse(<span class="hljs-string">&#x27;index&#x27;</span>)<br><br><span class="hljs-comment"># CBV</span><br>    <span class="hljs-comment"># CBV路由</span><br>    url(<span class="hljs-string">r&#x27;^login/&#x27;</span>,views.MyLogin.as_view())<br><br><br>    <span class="hljs-keyword">from</span> django.views <span class="hljs-keyword">import</span> View<br><br><br>    <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyLogin</span>(<span class="hljs-title class_ inherited__">View</span>):<br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">get</span>(<span class="hljs-params">self,request</span>):<br>            <span class="hljs-keyword">return</span> render(request,<span class="hljs-string">&#x27;form.html&#x27;</span>)<br><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">post</span>(<span class="hljs-params">self,request</span>):<br>            <span class="hljs-keyword">return</span> HttpResponse(<span class="hljs-string">&#x27;post方法&#x27;</span>)<br>      <br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">FBV和CBV各有千秋</span><br><span class="hljs-string">CBV特点</span><br><span class="hljs-string">	能够直接根据请求方式的不同直接匹配到对应的方法执行</span><br><span class="hljs-string">	</span><br><span class="hljs-string">	内部到底是怎么实现的？</span><br><span class="hljs-string">		CBV内部源码(******)</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+<h2 id="2-5-FBV与CBV"><a href="#2-5-FBV与CBV" class="headerlink" title="2.5 FBV与CBV"></a>2.5 FBV与CBV</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 视图函数既可以是函数也可以是类</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>(<span class="params">request</span>):</span><br><span class="line">  <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;index&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># CBV</span></span><br><span class="line">    <span class="comment"># CBV路由</span></span><br><span class="line">    url(<span class="string">r&#x27;^login/&#x27;</span>,views.MyLogin.as_view())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">from</span> django.views <span class="keyword">import</span> View</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">MyLogin</span>(<span class="title class_ inherited__">View</span>):</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self,request</span>):</span><br><span class="line">            <span class="keyword">return</span> render(request,<span class="string">&#x27;form.html&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">post</span>(<span class="params">self,request</span>):</span><br><span class="line">            <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;post方法&#x27;</span>)</span><br><span class="line">      </span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">FBV和CBV各有千秋</span></span><br><span class="line"><span class="string">CBV特点</span></span><br><span class="line"><span class="string">	能够直接根据请求方式的不同直接匹配到对应的方法执行</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">	内部到底是怎么实现的？</span></span><br><span class="line"><span class="string">		CBV内部源码(******)</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
 
-
-                
-              </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
     
-      <span class="category-chain">
-        
-  <a href="/categories/Python/" class="category-chain-item">Python</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/Python/09-Django/" class="category-chain-item">09_Django</a>
-  
-  
 
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
 </div>
 
-
-              
-  
-
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>Day62-Django-03</div>
-      <div>https://gblog.github.io/2022/09/12/03_Python/05_Django/day62笔记-Django-03/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>作者</div>
-          <div>Haris</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>发布于</div>
-          <div>2022年9月12日</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>许可协议</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
-          </div>
-        </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
-  </div>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2022/09/15/03_Python/05_Django/day63%E7%AC%94%E8%AE%B0-%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95/">Day63-模板语法</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2022/09/09/03_Python/05_Django/day61%E7%AC%94%E8%AE%B0-Django-02/">Day61-Django-02</a></div></section></div>
 
 
 
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2022/09/15/03_Python/05_Django/day63%E7%AC%94%E8%AE%B0-%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95/" title="Day63-模板语法">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Day63-模板语法</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2022/09/09/03_Python/05_Django/day61%E7%AC%94%E8%AE%B0-Django-02/" title="Day61-Django-02">
-                        <span class="hidden-mobile">Day61-Django-02</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
 
-            
-          </article>
-        </div>
-      </div>
-    </div>
 
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
 
-    </div>
-  </div>
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">Haris</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%B7%AF%E7%94%B1%E5%B1%82%EF%BC%88%E6%8E%A5day61%EF%BC%89"><span class="toc-text">一、路由层（接day61）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E8%B7%AF%E7%94%B1%E5%88%86%E5%8F%91"><span class="toc-text">1.2 路由分发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-1-%E4%BB%80%E4%B9%88%E6%98%AF%E8%B7%AF%E7%94%B1%E5%88%86%E5%8F%91%EF%BC%9F"><span class="toc-text">1.2.1 什么是路由分发？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-2-%E8%B7%AF%E7%94%B1%E5%88%86%E5%8F%91%E6%A1%88%E4%BE%8B"><span class="toc-text">1.2.2 路由分发案例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-%E5%90%8D%E7%A7%B0%E7%A9%BA%E9%97%B4-%E4%BA%86%E8%A7%A3"><span class="toc-text">1.3 名称空间(了解)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-%E4%BC%AA%E9%9D%99%E6%80%81-%E4%BA%86%E8%A7%A3"><span class="toc-text">1.4 伪静态(了解)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-5-%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83-%E4%BA%86%E8%A7%A3"><span class="toc-text">1.5 虚拟环境(了解)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-6-django%E7%89%88%E6%9C%AC%E5%8C%BA%E5%88%AB"><span class="toc-text">1.6 django版本区别</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%A7%86%E5%9B%BE%E5%B1%82"><span class="toc-text">二、视图层</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E4%B8%89%E6%9D%BF%E6%96%A7"><span class="toc-text">2.1 三板斧</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-JsonResponse%E5%AF%B9%E8%B1%A1"><span class="toc-text">2.2 JsonResponse对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-form%E8%A1%A8%E5%8D%95%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%8F%8A%E5%90%8E%E7%AB%AF%E5%A6%82%E4%BD%95%E6%93%8D%E4%BD%9C"><span class="toc-text">2.3 form表单上传文件及后端如何操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-1-%E6%A1%88%E4%BE%8B%EF%BC%9A"><span class="toc-text">2.3.1 案例：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-4-request%E5%AF%B9%E8%B1%A1%E6%96%B9%E6%B3%95"><span class="toc-text">2.4 request对象方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-5-FBV%E4%B8%8ECBV"><span class="toc-text">2.5 FBV与CBV</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
 </div>
+</div><div class="scripts">
 
 
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-
-
-
-
-    
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-    
-
-    
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-  
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-    </div>
-  
-  
-  
-</div>
-
-  </footer>
-
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
-      
-        typing(text);
-      
-    })(window, document);
-  </script>
-
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
     }
+  };
 
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
 </script>
 
-
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
-
-  <script>Fluid.plugins.codeWidget();</script>
-
-
+<script type="text/javascript">
   
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
     };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
         }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
       }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
     });
   });
 </script>
 
-
-  
 <script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
   });
 </script>
 
 
-  <script>Fluid.plugins.imageCaption();</script>
+<!-- inject -->
 
-  <script  src="/js/local-search.js" ></script>
-
-
-
-
-
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
-
-
-  
-
-  <noscript>
-    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
-  </noscript>
-</body>
-</html>
+</div></body></html>

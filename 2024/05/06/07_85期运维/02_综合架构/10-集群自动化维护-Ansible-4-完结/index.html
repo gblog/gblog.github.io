@@ -1,28 +1,29 @@
 
-
-<!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
-
-
+<!DOCTYPE html><html lang="zh-CN">
 
 <head>
-  <meta charset="UTF-8">
-
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
   
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="Haris">
-  <meta name="keywords" content="">
+  <meta name="generator" content="Hexo 7.3.0">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>10-集群自动化维护-Ansible(四)-完结 - Haris的小站</title>
+
   
     <meta name="description" content="Ansible集群自动化维护（四）- 完结一、include文件包含1.1 概述应用场景： 在我们书写剧本的时候，会涉及到多个步骤，有时还会涉及到服务端和客户端。当剧本越来越大时，不容易进行分 析与阅读，这时候就需要把剧本拆分开，分成多个文件，如服务端、客户端。然后可以通过include_tasks的功能把 多个剧本文件合并在一起，让剧本变成多个方便阅读与维护   如：普通部署nfs服务的方式：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="10-集群自动化维护-Ansible(四)-完结">
-<meta property="og:url" content="https://gblog.github.io/2024/05/06/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/10-%E9%9B%86%E7%BE%A4%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BB%B4%E6%8A%A4-Ansible-4-%E5%AE%8C%E7%BB%93/index.html">
+<meta property="og:url" content="https://gblog.github.io/2024/05/06/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/10-%E9%9B%86%E7%BE%A4%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BB%B4%E6%8A%A4-Ansible-4-%E5%AE%8C%E7%BB%93/">
 <meta property="og:site_name" content="Haris的小站">
 <meta property="og:description" content="Ansible集群自动化维护（四）- 完结一、include文件包含1.1 概述应用场景： 在我们书写剧本的时候，会涉及到多个步骤，有时还会涉及到服务端和客户端。当剧本越来越大时，不容易进行分 析与阅读，这时候就需要把剧本拆分开，分成多个文件，如服务端、客户端。然后可以通过include_tasks的功能把 多个剧本文件合并在一起，让剧本变成多个方便阅读与维护   如：普通部署nfs服务的方式：">
 <meta property="og:locale" content="zh_CN">
@@ -34,708 +35,887 @@
 <meta property="article:published_time" content="2024-05-06T09:35:52.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.317Z">
 <meta property="article:author" content="Haris">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gblog.github.io/img/image-20240506170319545.png">
   
   
   
-  <title>10-集群自动化维护-Ansible(四)-完结 - Haris的小站</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
-  
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
 
 
   
-<link rel="stylesheet" href="/css/custom.css">
-
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"gblog.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-  
-
 
   
-<meta name="generator" content="Hexo 7.3.0"></head>
 
-
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Haris","sameAs":[]},"dateCreated":"2024-05-06T17:35:52+08:00","dateModified":"2026-07-10T14:20:16+08:00","datePublished":"2024-05-06T17:35:52+08:00","description":"","headline":"10-集群自动化维护-Ansible(四)-完结","mainEntityOfPage":{"@type":"WebPage","@id":"https://gblog.github.io/2024/05/06/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/10-%E9%9B%86%E7%BE%A4%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BB%B4%E6%8A%A4-Ansible-4-%E5%AE%8C%E7%BB%93/"},"publisher":{"@type":"Organization","name":"Haris","sameAs":[]},"url":"https://gblog.github.io/2024/05/06/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/10-%E9%9B%86%E7%BE%A4%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BB%B4%E6%8A%A4-Ansible-4-%E5%AE%8C%E7%BB%93/","image":[]}</script>
+  
+</head>
 <body>
-  
 
-  <header>
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="undefined" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">Haris的小站</div><div class="sub cap">null</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
+
+
+
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2025/05/06/10_%E5%AD%A6%E7%A5%9EK8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%9F%BA%E7%A1%80/"><span class="title">01-Docker基础</span></a><a class="item title" href="/2025/03/26/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/06-Docker%E8%B5%84%E6%BA%90%E9%85%8D%E9%A2%9D/"><span class="title">06-Docker资源配额</span></a><a class="item title" href="/2025/03/20/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/05-Docker%E5%AE%B9%E5%99%A8%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96/"><span class="title">05-Docker容器数据持久化</span></a><a class="item title" href="/2025/03/12/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/04-Dockerfile%E5%AE%9E%E6%88%98%E7%AF%87-%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F/"><span class="title">04-Dockerfile实战篇-构建镜像</span></a><a class="item title" href="/2025/03/04/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/03-Dockerfile%E5%9F%BA%E7%A1%80%E7%AF%87-%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/"><span class="title">03-Dockerfile基础篇-基本语法</span></a><a class="item title" href="/2025/03/03/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/02-%E8%BF%90%E8%A1%8CDocker%E5%AE%B9%E5%99%A8/"><span class="title">02-运行Docker容器</span></a><a class="item title" href="/2025/03/03/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80/"><span class="title">01-Docker基础</span></a><a class="item title" href="/2024/07/27/08_%E7%BD%91%E7%BB%9C/day03-HCIA%E8%AF%BE%E7%A8%8B-01/"><span class="title">day03-HCIA课程(一)</span></a><a class="item title" href="/2024/07/28/08_%E7%BD%91%E7%BB%9C/day02-%E7%BD%91%E5%B7%A5%E5%85%A5%E9%97%A8-02/"><span class="title">day02-网工入门（二）</span></a><a class="item title" href="/2024/07/27/08_%E7%BD%91%E7%BB%9C/day01-%E7%BD%91%E5%B7%A5%E5%85%A5%E9%97%A8-01/"><span class="title">day01-网工入门（一）</span></a></div></widget>
+</div>
+
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a> <span class="sep"></span> <a class="cap breadcrumb-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/">（二）综合架构</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-05-06T09:35:52.000Z">2024-05-06</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2026-07-10T06:20:16.317Z">2026-07-10</time></span></div></div></div>
     
-
-<div class="header-inner" style="height: 70vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>Haris的博客</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>首页</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>归档</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>分类</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="10-集群自动化维护-Ansible(四)-完结"></span>
-          
-        </div>
-
-        
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-05-06 17:35" pubdate>
-          2024年5月6日 下午
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
-        
-          1.7k 字
-        
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
-        
-        
-        
-          15 分钟
-        
-      </span>
-    
-
-    
-    
-  </div>
-
-
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>10-集群自动化维护-Ansible(四)-完结</span></h1>
         
       </div>
-
-      
     </div>
-  </div>
-</div>
-
-</div>
-
-  </header>
-
-  <main>
     
-      
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
-
-    </div>
-
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">10-集群自动化维护-Ansible(四)-完结</h1>
-            
-            
-              <div class="markdown-body">
-                
-                <h1 id="Ansible集群自动化维护（四）-完结"><a href="#Ansible集群自动化维护（四）-完结" class="headerlink" title="Ansible集群自动化维护（四）- 完结"></a>Ansible集群自动化维护（四）- 完结</h1><h1 id="一、include文件包含"><a href="#一、include文件包含" class="headerlink" title="一、include文件包含"></a>一、include文件包含</h1><h2 id="1-1-概述"><a href="#1-1-概述" class="headerlink" title="1.1 概述"></a>1.1 概述</h2><p>应用场景：</p>
+  </div>
+  </div><article class="md-text content"><h1 id="Ansible集群自动化维护（四）-完结"><a href="#Ansible集群自动化维护（四）-完结" class="headerlink" title="Ansible集群自动化维护（四）- 完结"></a>Ansible集群自动化维护（四）- 完结</h1><h1 id="一、include文件包含"><a href="#一、include文件包含" class="headerlink" title="一、include文件包含"></a>一、include文件包含</h1><h2 id="1-1-概述"><a href="#1-1-概述" class="headerlink" title="1.1 概述"></a>1.1 概述</h2><p>应用场景：</p>
 <p>在我们书写剧本的时候，会涉及到多个步骤，有时还会涉及到服务端和客户端。当剧本越来越大时，不容易进行分</p>
 <p>析与阅读，这时候就需要把剧本拆分开，分成多个文件，如服务端、客户端。然后可以通过include_tasks的功能把</p>
 <p>多个剧本文件合并在一起，让剧本变成多个方便阅读与维护  </p>
 <p>如：普通部署nfs服务的方式：</p>
-<p><img src="/../../../img/image-20240506170319545.png" srcset="/img/loading.gif" lazyload alt="image-20240506170319545"></p>
+<p><img src="/../../../img/image-20240506170319545.png" alt="image-20240506170319545"></p>
 <p>采用include的剧本</p>
-<p><img src="/../../../img/image-20240506170346946.png" srcset="/img/loading.gif" lazyload alt="image-20240506170346946"></p>
+<p><img src="/../../../img/image-20240506170346946.png" alt="image-20240506170346946"></p>
 <h2 id="1-2-实现案例"><a href="#1-2-实现案例" class="headerlink" title="1.2 实现案例"></a>1.2 实现案例</h2><p>拆分nfs部署的剧本，实现如下：</p>
 <p>部署服务端：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">服务端</span><br>[root@mn01[ /server/scripts/playbook]#cat 15-deploy-nfs-server.yml<br>    - name: 01. 安装服务<br>      yum:<br>        name: nfs-utils, rpcbind<br>        state: present<br>      # 打标签tag<br>      tags:<br>        - 01.install<br>    - name: 02. 修改配置文件<br>      lineinfile:<br>        path: /etc/exports<br>        line: &quot;/backup-nfs 172.16.1.0/24(rw, all_squash)&quot;<br>        create: true<br>      tags:<br>        - 02.conf<br>    - name: 03. 创建共享目录并修改所有者<br>      file:<br>        path: /backup-nfs<br>        owner: nfsnobody<br>        group: nfsnobody<br>        state: directory<br>      tags:<br>        - 03.dir<br>    - name: 04. 启动服务<br>      systemd:<br>        name: &quot;&#123;&#123; item &#125;&#125;&quot;<br>        state: started<br>        enabled: yes<br>      loop:<br>        - rpcbind<br>        - nfs<br>      tags:<br>        - 04.start_srv<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">服务端</span></span><br><span class="line">[root@mn01[ /server/scripts/playbook]#cat 15-deploy-nfs-server.yml</span><br><span class="line">    - name: 01. 安装服务</span><br><span class="line">      yum:</span><br><span class="line">        name: nfs-utils, rpcbind</span><br><span class="line">        state: present</span><br><span class="line">      # 打标签tag</span><br><span class="line">      tags:</span><br><span class="line">        - 01.install</span><br><span class="line">    - name: 02. 修改配置文件</span><br><span class="line">      lineinfile:</span><br><span class="line">        path: /etc/exports</span><br><span class="line">        line: &quot;/backup-nfs 172.16.1.0/24(rw, all_squash)&quot;</span><br><span class="line">        create: true</span><br><span class="line">      tags:</span><br><span class="line">        - 02.conf</span><br><span class="line">    - name: 03. 创建共享目录并修改所有者</span><br><span class="line">      file:</span><br><span class="line">        path: /backup-nfs</span><br><span class="line">        owner: nfsnobody</span><br><span class="line">        group: nfsnobody</span><br><span class="line">        state: directory</span><br><span class="line">      tags:</span><br><span class="line">        - 03.dir</span><br><span class="line">    - name: 04. 启动服务</span><br><span class="line">      systemd:</span><br><span class="line">        name: &quot;&#123;&#123; item &#125;&#125;&quot;</span><br><span class="line">        state: started</span><br><span class="line">        enabled: yes</span><br><span class="line">      loop:</span><br><span class="line">        - rpcbind</span><br><span class="line">        - nfs</span><br><span class="line">      tags:</span><br><span class="line">        - 04.start_srv</span><br></pre></td></tr></table></figure>
 
 <p>部署客户端：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn01[ /server/scripts/playbook]#cat 15-deploy-nfs-client.yml<br><span class="hljs-meta prompt_"># </span><span class="language-bash">客户端</span><br>    - name: 01. 部署nfs-utils<br>      yum:<br>        name: nfs-utils<br>        state: present<br>    - name: 02. 挂载nfs<br>      mount:<br>        src: 172.16.1.41:/backup-nfs<br>        path: /ans-upload<br>        fstype: nfs<br>        state: mounted<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/playbook]#cat 15-deploy-nfs-client.yml</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">客户端</span></span><br><span class="line">    - name: 01. 部署nfs-utils</span><br><span class="line">      yum:</span><br><span class="line">        name: nfs-utils</span><br><span class="line">        state: present</span><br><span class="line">    - name: 02. 挂载nfs</span><br><span class="line">      mount:</span><br><span class="line">        src: 172.16.1.41:/backup-nfs</span><br><span class="line">        path: /ans-upload</span><br><span class="line">        fstype: nfs</span><br><span class="line">        state: mounted</span><br></pre></td></tr></table></figure>
 
 <p>include整合</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn01[ /server/scripts/playbook]#cat 15-deploy-nfs-all.yml<br><span class="hljs-meta prompt_"># </span><span class="language-bash">服务端</span><br>- hosts: backup01<br>  tasks:<br>    - include_tasks: 15-deploy-nfs-server.yml<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">客户端</span><br>- hosts: web01<br>  tasks:<br>    - include_tasks: 15-deploy-nfs-client.yml<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/playbook]#cat 15-deploy-nfs-all.yml</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">服务端</span></span><br><span class="line">- hosts: backup01</span><br><span class="line">  tasks:</span><br><span class="line">    - include_tasks: 15-deploy-nfs-server.yml</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">客户端</span></span><br><span class="line">- hosts: web01</span><br><span class="line">  tasks:</span><br><span class="line">    - include_tasks: 15-deploy-nfs-client.yml</span><br></pre></td></tr></table></figure>
 
 
 
 <h1 id="二、Roles标准"><a href="#二、Roles标准" class="headerlink" title="二、Roles标准"></a>二、Roles标准</h1><p>Roles是一套playbook的目录结构标准，用于解决剧本文件存放比较混乱的问题。例如当剧本规模扩大，各种handlers文件、变量文件，j2文件等存放在一起，怎么定义其目录结构呢？</p>
 <h2 id="2-1-概述"><a href="#2-1-概述" class="headerlink" title="2.1 概述"></a>2.1 概述</h2><p>Roles的目录规范如下图所示：</p>
-<p><img src="/../../../img/image-20240506181106251.png" srcset="/img/loading.gif" lazyload alt="image-20240506181106251"></p>
+<p><img src="/../../../img/image-20240506181106251.png" alt="image-20240506181106251"></p>
 <p>同样以nfs剧本为例，按照Roles规则调整后的目录如图所示：</p>
-<p><img src="/../../../img/image-20240506181052793.png" srcset="/img/loading.gif" lazyload alt="image-20240506181052793"></p>
+<p><img src="/../../../img/image-20240506181052793.png" alt="image-20240506181052793"></p>
 <h2 id="2-2-实现案例"><a href="#2-2-实现案例" class="headerlink" title="2.2 实现案例"></a>2.2 实现案例</h2><p>使用Roles规则，实现nfs服务部署剧本</p>
 <h3 id="2-2-1-目录准备"><a href="#2-2-1-目录准备" class="headerlink" title="2.2.1 目录准备"></a>2.2.1 目录准备</h3><p>按照Roles规则创建目录</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn01[ /server/scripts/roles-all/roles01]#tree -F<br>.<br>├── group_vars/<br>│   └── all/	# 用于存放变量文件<br>├── hosts	# hosts文件，方便指定<br>├── nfs-server/·<br>│   ├── files/	# 存放需要下发的普通文件<br>│   ├── handlers/	# 存放handler操作<br>│   ├── tasks/·# 存放tasks任务<br>│   └── templates/	# 存放需要下发的j2文件<br>└── top.yml	# 整体调用接口<br><br>7 directories, 2 files<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/roles-all/roles01]#tree -F</span><br><span class="line">.</span><br><span class="line">├── group_vars/</span><br><span class="line">│   └── all/	# 用于存放变量文件</span><br><span class="line">├── hosts	# hosts文件，方便指定</span><br><span class="line">├── nfs-server/·</span><br><span class="line">│   ├── files/	# 存放需要下发的普通文件</span><br><span class="line">│   ├── handlers/	# 存放handler操作</span><br><span class="line">│   ├── tasks/·# 存放tasks任务</span><br><span class="line">│   └── templates/	# 存放需要下发的j2文件</span><br><span class="line">└── top.yml	# 整体调用接口</span><br><span class="line"></span><br><span class="line">7 directories, 2 files</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-2-2-添加文件"><a href="#2-2-2-添加文件" class="headerlink" title="2.2.2 添加文件"></a>2.2.2 添加文件</h3><p>创建各文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn01[ /server/scripts/roles-all/roles01]#tree -F<br>.<br>├── group_vars/<br>│   └── all/<br>├── hosts<br>├── nfs-server/<br>│   ├── files/<br>│   │   └── exports<br>│   ├── handlers/<br>│   │   └── main.yml<br>│   ├── tasks/<br>│   │   └── main.yml<br>│   └── templates/<br>│       └── motd.j2<br>└── top.yml<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/roles-all/roles01]#tree -F</span><br><span class="line">.</span><br><span class="line">├── group_vars/</span><br><span class="line">│   └── all/</span><br><span class="line">├── hosts</span><br><span class="line">├── nfs-server/</span><br><span class="line">│   ├── files/</span><br><span class="line">│   │   └── exports</span><br><span class="line">│   ├── handlers/</span><br><span class="line">│   │   └── main.yml</span><br><span class="line">│   ├── tasks/</span><br><span class="line">│   │   └── main.yml</span><br><span class="line">│   └── templates/</span><br><span class="line">│       └── motd.j2</span><br><span class="line">└── top.yml</span><br></pre></td></tr></table></figure>
 
 <p>exports文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn01[ /server/scripts/roles-all/roles01]#cat nfs-server/files/exports<br>/backup-nfs 172.16.1.0/24(rw,all_squash)<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/roles-all/roles01]#cat nfs-server/files/exports</span><br><span class="line">/backup-nfs 172.16.1.0/24(rw,all_squash)</span><br></pre></td></tr></table></figure>
 
 <p>handler&#x2F;main.yml文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn01[ /server/scripts/roles-all/roles01]#cat nfs-server/handlers/main.yml<br>- name: restart nfs server<br>  systemd:<br>    name: nfs<br>    state: reloaded<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/roles-all/roles01]#cat nfs-server/handlers/main.yml</span><br><span class="line">- name: restart nfs server</span><br><span class="line">  systemd:</span><br><span class="line">    name: nfs</span><br><span class="line">    state: reloaded</span><br></pre></td></tr></table></figure>
 
 <p>tasks&#x2F;main.yml文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn01[ /server/scripts/roles-all/roles01]#cat nfs-server/tasks/main.yml<br>    - name: 01. 部署nfs-utils<br>      yum:<br>        name: nfs-utils,rpcbind<br>        state: installed<br>      tags:<br>        - 01-install-nfs<br>    - name: 02. 修改配置文件<br>      copy:<br>        src: exports<br>        dest: /etc/exports<br>        backup: yes<br>      tags:<br>        - 02-conf<br>      notify:<br>        - restart nfs server<br><br>    - name: 03. 共享目录<br>      file:<br>        path: /backup-nfs/<br>        owner: nfsnobody<br>        group: nfsnobody<br>        state: directory<br>      tags:<br>         - 03-mkdir<br>    - name: 04. 启动服务 rpc nfs<br>      systemd:<br>        name: &quot;&#123;&#123; item &#125;&#125;&quot;<br>        enabled: yes<br>        state: started<br>      loop:<br>        - rpcbind<br>        - nfs<br>      tags:<br>        - 04-start-service<br>    - name: 05 分发motd<br>      template:<br>        src: motd.j2<br>        dest: /etc/motd<br>        backup: yes<br>      tags:<br>        - 05-motd<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/roles-all/roles01]#cat nfs-server/tasks/main.yml</span><br><span class="line">    - name: 01. 部署nfs-utils</span><br><span class="line">      yum:</span><br><span class="line">        name: nfs-utils,rpcbind</span><br><span class="line">        state: installed</span><br><span class="line">      tags:</span><br><span class="line">        - 01-install-nfs</span><br><span class="line">    - name: 02. 修改配置文件</span><br><span class="line">      copy:</span><br><span class="line">        src: exports</span><br><span class="line">        dest: /etc/exports</span><br><span class="line">        backup: yes</span><br><span class="line">      tags:</span><br><span class="line">        - 02-conf</span><br><span class="line">      notify:</span><br><span class="line">        - restart nfs server</span><br><span class="line"></span><br><span class="line">    - name: 03. 共享目录</span><br><span class="line">      file:</span><br><span class="line">        path: /backup-nfs/</span><br><span class="line">        owner: nfsnobody</span><br><span class="line">        group: nfsnobody</span><br><span class="line">        state: directory</span><br><span class="line">      tags:</span><br><span class="line">         - 03-mkdir</span><br><span class="line">    - name: 04. 启动服务 rpc nfs</span><br><span class="line">      systemd:</span><br><span class="line">        name: &quot;&#123;&#123; item &#125;&#125;&quot;</span><br><span class="line">        enabled: yes</span><br><span class="line">        state: started</span><br><span class="line">      loop:</span><br><span class="line">        - rpcbind</span><br><span class="line">        - nfs</span><br><span class="line">      tags:</span><br><span class="line">        - 04-start-service</span><br><span class="line">    - name: 05 分发motd</span><br><span class="line">      template:</span><br><span class="line">        src: motd.j2</span><br><span class="line">        dest: /etc/motd</span><br><span class="line">        backup: yes</span><br><span class="line">      tags:</span><br><span class="line">        - 05-motd</span><br></pre></td></tr></table></figure>
 
 <p>templates&#x2F;motd.j2文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn01[ /server/scripts/roles-all/roles01]#cat nfs-server/templates/motd.j2<br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">######################################</span></span><br>welcome to oldboy elastic linux system<br>操作需谨慎,删根弹指间<br>主机名: &#123;&#123; ansible_hostname &#125;&#125;<br>ip地址: &#123;&#123; ansible_default_ipv4.address &#125;&#125;<br>内存大小: &#123;&#123; ansible_memtotal_mb &#125;&#125;<br>CPU数量: &#123;&#123; ansible_processor_vcpus &#125;&#125;<br>核心总数: &#123;&#123; ansible_processor_cores &#125;&#125;<br>发行版本: &#123;&#123; ansible_distribution &#125;&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/roles-all/roles01]#cat nfs-server/templates/motd.j2</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">######################################</span></span></span><br><span class="line">welcome to oldboy elastic linux system</span><br><span class="line">操作需谨慎,删根弹指间</span><br><span class="line">主机名: &#123;&#123; ansible_hostname &#125;&#125;</span><br><span class="line">ip地址: &#123;&#123; ansible_default_ipv4.address &#125;&#125;</span><br><span class="line">内存大小: &#123;&#123; ansible_memtotal_mb &#125;&#125;</span><br><span class="line">CPU数量: &#123;&#123; ansible_processor_vcpus &#125;&#125;</span><br><span class="line">核心总数: &#123;&#123; ansible_processor_cores &#125;&#125;</span><br><span class="line">发行版本: &#123;&#123; ansible_distribution &#125;&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-2-3-运行调试"><a href="#2-2-3-运行调试" class="headerlink" title="2.2.3 运行调试"></a>2.2.3 运行调试</h3><p>运行如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn01[ /server/scripts/roles-all/roles01]#ansible-playbook -i hosts top.yml<br> _________________<br>&lt; PLAY [backup01] &gt;<br> -----------------<br>        \   ^__^<br>         \  (oo)\_______<br>            (__)\       )\/\<br>                ||----w |<br>                ||     ||<br><br> ________________________<br>&lt; TASK [Gathering Facts] &gt;<br> ------------------------<br>        \   ^__^<br>         \  (oo)\_______<br>            (__)\       )\/\<br>                ||----w |<br>                ||     ||<br><br>ok: [172.16.1.41]<br> _____________________________________<br>&lt; TASK [nfs-server : 01. 部署nfs-utils] &gt;<br> -------------------------------------<br>        \   ^__^<br>         \  (oo)\_______<br>            (__)\       )\/\<br>                ||----w |<br>                ||     ||<br><br>ok: [172.16.1.41]<br> ________________________________<br>&lt; TASK [nfs-server : 02. 修改配置文件] &gt;<br> --------------------------------<br>        \   ^__^<br>         \  (oo)\_______<br>            (__)\       )\/\<br>                ||----w |<br>                ||     ||<br><br>changed: [172.16.1.41]<br> ______________________________<br>&lt; TASK [nfs-server : 03. 共享目录] &gt;<br> ------------------------------<br>        \   ^__^<br>         \  (oo)\_______<br>            (__)\       )\/\<br>                ||----w |<br>                ||     ||<br><br>ok: [172.16.1.41]<br> ______________________________________<br>&lt; TASK [nfs-server : 04. 启动服务 rpc nfs] &gt;<br> --------------------------------------<br>        \   ^__^<br>         \  (oo)\_______<br>            (__)\       )\/\<br>                ||----w |<br>                ||     ||<br><br>ok: [172.16.1.41] =&gt; (item=rpcbind)<br>ok: [172.16.1.41] =&gt; (item=nfs)<br> _______________________________<br>&lt; TASK [nfs-server : 05 分发motd] &gt;<br> -------------------------------<br>        \   ^__^<br>         \  (oo)\_______<br>            (__)\       )\/\<br>                ||----w |<br>                ||     ||<br><br>ok: [172.16.1.41]<br> ___________________________________________________<br>&lt; RUNNING HANDLER [nfs-server : restart nfs server] &gt;<br> ---------------------------------------------------<br>        \   ^__^<br>         \  (oo)\_______<br>            (__)\       )\/\<br>                ||----w |<br>                ||     ||<br><br>changed: [172.16.1.41]<br> ____________<br>&lt; PLAY RECAP &gt;<br> ------------<br>        \   ^__^<br>         \  (oo)\_______<br>            (__)\       )\/\<br>                ||----w |<br>                ||     ||<br><br>172.16.1.41                : ok=7    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/roles-all/roles01]#ansible-playbook -i hosts top.yml</span><br><span class="line"> _________________</span><br><span class="line">&lt; PLAY [backup01] &gt;</span><br><span class="line"> -----------------</span><br><span class="line">        \   ^__^</span><br><span class="line">         \  (oo)\_______</span><br><span class="line">            (__)\       )\/\</span><br><span class="line">                ||----w |</span><br><span class="line">                ||     ||</span><br><span class="line"></span><br><span class="line"> ________________________</span><br><span class="line">&lt; TASK [Gathering Facts] &gt;</span><br><span class="line"> ------------------------</span><br><span class="line">        \   ^__^</span><br><span class="line">         \  (oo)\_______</span><br><span class="line">            (__)\       )\/\</span><br><span class="line">                ||----w |</span><br><span class="line">                ||     ||</span><br><span class="line"></span><br><span class="line">ok: [172.16.1.41]</span><br><span class="line"> _____________________________________</span><br><span class="line">&lt; TASK [nfs-server : 01. 部署nfs-utils] &gt;</span><br><span class="line"> -------------------------------------</span><br><span class="line">        \   ^__^</span><br><span class="line">         \  (oo)\_______</span><br><span class="line">            (__)\       )\/\</span><br><span class="line">                ||----w |</span><br><span class="line">                ||     ||</span><br><span class="line"></span><br><span class="line">ok: [172.16.1.41]</span><br><span class="line"> ________________________________</span><br><span class="line">&lt; TASK [nfs-server : 02. 修改配置文件] &gt;</span><br><span class="line"> --------------------------------</span><br><span class="line">        \   ^__^</span><br><span class="line">         \  (oo)\_______</span><br><span class="line">            (__)\       )\/\</span><br><span class="line">                ||----w |</span><br><span class="line">                ||     ||</span><br><span class="line"></span><br><span class="line">changed: [172.16.1.41]</span><br><span class="line"> ______________________________</span><br><span class="line">&lt; TASK [nfs-server : 03. 共享目录] &gt;</span><br><span class="line"> ------------------------------</span><br><span class="line">        \   ^__^</span><br><span class="line">         \  (oo)\_______</span><br><span class="line">            (__)\       )\/\</span><br><span class="line">                ||----w |</span><br><span class="line">                ||     ||</span><br><span class="line"></span><br><span class="line">ok: [172.16.1.41]</span><br><span class="line"> ______________________________________</span><br><span class="line">&lt; TASK [nfs-server : 04. 启动服务 rpc nfs] &gt;</span><br><span class="line"> --------------------------------------</span><br><span class="line">        \   ^__^</span><br><span class="line">         \  (oo)\_______</span><br><span class="line">            (__)\       )\/\</span><br><span class="line">                ||----w |</span><br><span class="line">                ||     ||</span><br><span class="line"></span><br><span class="line">ok: [172.16.1.41] =&gt; (item=rpcbind)</span><br><span class="line">ok: [172.16.1.41] =&gt; (item=nfs)</span><br><span class="line"> _______________________________</span><br><span class="line">&lt; TASK [nfs-server : 05 分发motd] &gt;</span><br><span class="line"> -------------------------------</span><br><span class="line">        \   ^__^</span><br><span class="line">         \  (oo)\_______</span><br><span class="line">            (__)\       )\/\</span><br><span class="line">                ||----w |</span><br><span class="line">                ||     ||</span><br><span class="line"></span><br><span class="line">ok: [172.16.1.41]</span><br><span class="line"> ___________________________________________________</span><br><span class="line">&lt; RUNNING HANDLER [nfs-server : restart nfs server] &gt;</span><br><span class="line"> ---------------------------------------------------</span><br><span class="line">        \   ^__^</span><br><span class="line">         \  (oo)\_______</span><br><span class="line">            (__)\       )\/\</span><br><span class="line">                ||----w |</span><br><span class="line">                ||     ||</span><br><span class="line"></span><br><span class="line">changed: [172.16.1.41]</span><br><span class="line"> ____________</span><br><span class="line">&lt; PLAY RECAP &gt;</span><br><span class="line"> ------------</span><br><span class="line">        \   ^__^</span><br><span class="line">         \  (oo)\_______</span><br><span class="line">            (__)\       )\/\</span><br><span class="line">                ||----w |</span><br><span class="line">                ||     ||</span><br><span class="line"></span><br><span class="line">172.16.1.41                : ok=7    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0</span><br></pre></td></tr></table></figure>
 
 <h2 id="2-3-加入变量"><a href="#2-3-加入变量" class="headerlink" title="2.3 加入变量"></a>2.3 加入变量</h2><p>使用<code>group_vars</code>文件夹，加入变量</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">路径、用户、uid、gid、域名/端口<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">路径、用户、uid、gid、域名/端口</span><br></pre></td></tr></table></figure>
 
 <p>添加变量文件：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn01[ /server/scripts/roles-all/roles01]#cat group_vars/all/main.yml<br>nfs_share_dir: /backup-nfs-v3/<br>nfs_user: nfsnobody<br>nfs_user_id: 65534<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/roles-all/roles01]#cat group_vars/all/main.yml</span><br><span class="line">nfs_share_dir: /backup-nfs-v3/</span><br><span class="line">nfs_user: nfsnobody</span><br><span class="line">nfs_user_id: 65534</span><br></pre></td></tr></table></figure>
 
 <p>下发文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn01[ /server/scripts/roles-all/roles01]#cat nfs-server/templates/exports.j2<br>&#123;&#123; nfs_share_dir &#125;&#125; 172.16.1.0/24(rw,all_squash,anonuid=&#123;&#123;nfs_user_id&#125;&#125;,anongid=&#123;&#123;nfs_user_id&#125;&#125;)<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/roles-all/roles01]#cat nfs-server/templates/exports.j2</span><br><span class="line">&#123;&#123; nfs_share_dir &#125;&#125; 172.16.1.0/24(rw,all_squash,anonuid=&#123;&#123;nfs_user_id&#125;&#125;,anongid=&#123;&#123;nfs_user_id&#125;&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>主任务文件（**<font color=red>注意调用需要双引号</font>**）</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn01[ /server/scripts/roles-all/roles01]#cat nfs-server/tasks/main.yml<br>    - name: 01. 部署nfs-utils<br>      yum:<br>        name: nfs-utils,rpcbind<br>        state: installed<br>      tags:<br>        - 01-install-nfs<br>    - name: 02. 修改配置文件<br>      # 改动1，下发exports文件改用变量<br>      template:<br>        src: exports.j2<br>        dest: /etc/exports<br>        backup: yes<br>      tags:<br>        - 02-conf<br>      notify:<br>        - restart nfs server<br><br>    - name: 03. 共享目录<br>      file:<br>        # 改动2, 共享目录改用变量<br>        path: &quot;&#123;&#123; nfs_share_dir &#125;&#125;&quot;<br>        owner: &quot;&#123;&#123; nfs_user &#125;&#125;&quot;<br>        group: &quot;&#123;&#123; nfs_user &#125;&#125;&quot;<br>        state: directory<br>      tags:<br>         - 03-mkdir<br>    - name: 04. 启动服务 rpc nfs<br>      systemd:<br>        name: &quot;&#123;&#123; item &#125;&#125;&quot;<br>        enabled: yes<br>        state: started<br>      loop:<br>        - rpcbind<br>        - nfs<br>      tags:<br>        - 04-start-service<br>    - name: 05 分发motd<br>      template:<br>        src: motd.j2<br>        dest: /etc/motd<br>        backup: yes<br>      tags:<br>        - 05-motd<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/roles-all/roles01]#cat nfs-server/tasks/main.yml</span><br><span class="line">    - name: 01. 部署nfs-utils</span><br><span class="line">      yum:</span><br><span class="line">        name: nfs-utils,rpcbind</span><br><span class="line">        state: installed</span><br><span class="line">      tags:</span><br><span class="line">        - 01-install-nfs</span><br><span class="line">    - name: 02. 修改配置文件</span><br><span class="line">      # 改动1，下发exports文件改用变量</span><br><span class="line">      template:</span><br><span class="line">        src: exports.j2</span><br><span class="line">        dest: /etc/exports</span><br><span class="line">        backup: yes</span><br><span class="line">      tags:</span><br><span class="line">        - 02-conf</span><br><span class="line">      notify:</span><br><span class="line">        - restart nfs server</span><br><span class="line"></span><br><span class="line">    - name: 03. 共享目录</span><br><span class="line">      file:</span><br><span class="line">        # 改动2, 共享目录改用变量</span><br><span class="line">        path: &quot;&#123;&#123; nfs_share_dir &#125;&#125;&quot;</span><br><span class="line">        owner: &quot;&#123;&#123; nfs_user &#125;&#125;&quot;</span><br><span class="line">        group: &quot;&#123;&#123; nfs_user &#125;&#125;&quot;</span><br><span class="line">        state: directory</span><br><span class="line">      tags:</span><br><span class="line">         - 03-mkdir</span><br><span class="line">    - name: 04. 启动服务 rpc nfs</span><br><span class="line">      systemd:</span><br><span class="line">        name: &quot;&#123;&#123; item &#125;&#125;&quot;</span><br><span class="line">        enabled: yes</span><br><span class="line">        state: started</span><br><span class="line">      loop:</span><br><span class="line">        - rpcbind</span><br><span class="line">        - nfs</span><br><span class="line">      tags:</span><br><span class="line">        - 04-start-service</span><br><span class="line">    - name: 05 分发motd</span><br><span class="line">      template:</span><br><span class="line">        src: motd.j2</span><br><span class="line">        dest: /etc/motd</span><br><span class="line">        backup: yes</span><br><span class="line">      tags:</span><br><span class="line">        - 05-motd</span><br></pre></td></tr></table></figure>
 
 <p>执行：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn01[ /server/scripts/roles-all/roles01]#ansible-playbook -i hosts top.yml<br> _________________<br>&lt; PLAY [backup01] &gt;<br> -----------------<br>        \   ^__^<br>         \  (oo)\_______<br>            (__)\       )\/\<br>                ||----w |<br>                ||     ||<br><br> ________________________<br>&lt; TASK [Gathering Facts] &gt;<br> ------------------------<br>        \   ^__^<br>         \  (oo)\_______<br>            (__)\       )\/\<br>                ||----w |<br>                ||     ||<br><br>ok: [172.16.1.41]<br> _____________________________________<br>&lt; TASK [nfs-server : 01. 部署nfs-utils] &gt;<br> -------------------------------------<br>        \   ^__^<br>         \  (oo)\_______<br>            (__)\       )\/\<br>                ||----w |<br>                ||     ||<br><br>ok: [172.16.1.41]<br> ________________________________<br>&lt; TASK [nfs-server : 02. 修改配置文件] &gt;<br> --------------------------------<br>        \   ^__^<br>         \  (oo)\_______<br>            (__)\       )\/\<br>                ||----w |<br>                ||     ||<br><br>changed: [172.16.1.41]<br> ______________________________<br>&lt; TASK [nfs-server : 03. 共享目录] &gt;<br> ------------------------------<br>        \   ^__^<br>         \  (oo)\_______<br>            (__)\       )\/\<br>                ||----w |<br>                ||     ||<br><br>ok: [172.16.1.41]<br> ______________________________________<br>&lt; TASK [nfs-server : 04. 启动服务 rpc nfs] &gt;<br> --------------------------------------<br>        \   ^__^<br>         \  (oo)\_______<br>            (__)\       )\/\<br>                ||----w |<br>                ||     ||<br><br>ok: [172.16.1.41] =&gt; (item=rpcbind)<br>ok: [172.16.1.41] =&gt; (item=nfs)<br> _______________________________<br>&lt; TASK [nfs-server : 05 分发motd] &gt;<br> -------------------------------<br>        \   ^__^<br>         \  (oo)\_______<br>            (__)\       )\/\<br>                ||----w |<br>                ||     ||<br><br>ok: [172.16.1.41]<br> ___________________________________________________<br>&lt; RUNNING HANDLER [nfs-server : restart nfs server] &gt;<br> ---------------------------------------------------<br>        \   ^__^<br>         \  (oo)\_______<br>            (__)\       )\/\<br>                ||----w |<br>                ||     ||<br><br>changed: [172.16.1.41]<br> ____________<br>&lt; PLAY RECAP &gt;<br> ------------<br>        \   ^__^<br>         \  (oo)\_______<br>            (__)\       )\/\<br>                ||----w |<br>                ||     ||<br><br>172.16.1.41                : ok=7    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/roles-all/roles01]#ansible-playbook -i hosts top.yml</span><br><span class="line"> _________________</span><br><span class="line">&lt; PLAY [backup01] &gt;</span><br><span class="line"> -----------------</span><br><span class="line">        \   ^__^</span><br><span class="line">         \  (oo)\_______</span><br><span class="line">            (__)\       )\/\</span><br><span class="line">                ||----w |</span><br><span class="line">                ||     ||</span><br><span class="line"></span><br><span class="line"> ________________________</span><br><span class="line">&lt; TASK [Gathering Facts] &gt;</span><br><span class="line"> ------------------------</span><br><span class="line">        \   ^__^</span><br><span class="line">         \  (oo)\_______</span><br><span class="line">            (__)\       )\/\</span><br><span class="line">                ||----w |</span><br><span class="line">                ||     ||</span><br><span class="line"></span><br><span class="line">ok: [172.16.1.41]</span><br><span class="line"> _____________________________________</span><br><span class="line">&lt; TASK [nfs-server : 01. 部署nfs-utils] &gt;</span><br><span class="line"> -------------------------------------</span><br><span class="line">        \   ^__^</span><br><span class="line">         \  (oo)\_______</span><br><span class="line">            (__)\       )\/\</span><br><span class="line">                ||----w |</span><br><span class="line">                ||     ||</span><br><span class="line"></span><br><span class="line">ok: [172.16.1.41]</span><br><span class="line"> ________________________________</span><br><span class="line">&lt; TASK [nfs-server : 02. 修改配置文件] &gt;</span><br><span class="line"> --------------------------------</span><br><span class="line">        \   ^__^</span><br><span class="line">         \  (oo)\_______</span><br><span class="line">            (__)\       )\/\</span><br><span class="line">                ||----w |</span><br><span class="line">                ||     ||</span><br><span class="line"></span><br><span class="line">changed: [172.16.1.41]</span><br><span class="line"> ______________________________</span><br><span class="line">&lt; TASK [nfs-server : 03. 共享目录] &gt;</span><br><span class="line"> ------------------------------</span><br><span class="line">        \   ^__^</span><br><span class="line">         \  (oo)\_______</span><br><span class="line">            (__)\       )\/\</span><br><span class="line">                ||----w |</span><br><span class="line">                ||     ||</span><br><span class="line"></span><br><span class="line">ok: [172.16.1.41]</span><br><span class="line"> ______________________________________</span><br><span class="line">&lt; TASK [nfs-server : 04. 启动服务 rpc nfs] &gt;</span><br><span class="line"> --------------------------------------</span><br><span class="line">        \   ^__^</span><br><span class="line">         \  (oo)\_______</span><br><span class="line">            (__)\       )\/\</span><br><span class="line">                ||----w |</span><br><span class="line">                ||     ||</span><br><span class="line"></span><br><span class="line">ok: [172.16.1.41] =&gt; (item=rpcbind)</span><br><span class="line">ok: [172.16.1.41] =&gt; (item=nfs)</span><br><span class="line"> _______________________________</span><br><span class="line">&lt; TASK [nfs-server : 05 分发motd] &gt;</span><br><span class="line"> -------------------------------</span><br><span class="line">        \   ^__^</span><br><span class="line">         \  (oo)\_______</span><br><span class="line">            (__)\       )\/\</span><br><span class="line">                ||----w |</span><br><span class="line">                ||     ||</span><br><span class="line"></span><br><span class="line">ok: [172.16.1.41]</span><br><span class="line"> ___________________________________________________</span><br><span class="line">&lt; RUNNING HANDLER [nfs-server : restart nfs server] &gt;</span><br><span class="line"> ---------------------------------------------------</span><br><span class="line">        \   ^__^</span><br><span class="line">         \  (oo)\_______</span><br><span class="line">            (__)\       )\/\</span><br><span class="line">                ||----w |</span><br><span class="line">                ||     ||</span><br><span class="line"></span><br><span class="line">changed: [172.16.1.41]</span><br><span class="line"> ____________</span><br><span class="line">&lt; PLAY RECAP &gt;</span><br><span class="line"> ------------</span><br><span class="line">        \   ^__^</span><br><span class="line">         \  (oo)\_______</span><br><span class="line">            (__)\       )\/\</span><br><span class="line">                ||----w |</span><br><span class="line">                ||     ||</span><br><span class="line"></span><br><span class="line">172.16.1.41                : ok=7    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0</span><br></pre></td></tr></table></figure>
 
 
 
 <h1 id="三、Ansible文件加密-Vault"><a href="#三、Ansible文件加密-Vault" class="headerlink" title="三、Ansible文件加密-Vault"></a>三、Ansible文件加密-Vault</h1><p>使用方法如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">进行加密</span><br>ansible-vault encrypt 文件#enable<br><span class="hljs-meta prompt_">#</span><span class="language-bash">进行使用</span><br>ansible或ansible-playbook --ask-vault-pass 即可<br><span class="hljs-meta prompt_">#</span><span class="language-bash">彻底解密</span><br>ansible-vault decrypt hosts#<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">进行加密</span></span><br><span class="line">ansible-vault encrypt 文件#enable</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">进行使用</span></span><br><span class="line">ansible或ansible-playbook --ask-vault-pass 即可</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">彻底解密</span></span><br><span class="line">ansible-vault decrypt hosts#</span><br></pre></td></tr></table></figure>
 
 <p>如果加密后是不能查看内容和执行的</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn01[ /server/scripts/roles-all/roles01]#ansible-playbook top.yml<br>ERROR! Attempting to decrypt but no vault secrets found<br>[root@mn01[ /server/scripts/roles-all/roles01]#cat top.yml<br><span class="hljs-meta prompt_">$</span><span class="language-bash">ANSIBLE_VAULT;1.1;AES256</span><br>38323232336535376538333039623035306130393831336563633134656661303166336434303231<br>3166623337343664653963646664326566303663653762620a353936373566316436613837313534<br>64343932663833343364326137316633626437303130366663666263616366303361666433393330<br>3438343536306431300a636331333662386364626362636537303164623865353139613333346261<br>63313066396361623839333461623365626136353434313663316564333735613037656437353136<br>31383531613666613038353365636231326637333036626131316263366439643266643735393634<br>653233353234353535663538326538366138<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/roles-all/roles01]#ansible-playbook top.yml</span><br><span class="line">ERROR! Attempting to decrypt but no vault secrets found</span><br><span class="line">[root@mn01[ /server/scripts/roles-all/roles01]#cat top.yml</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">ANSIBLE_VAULT;1.1;AES256</span></span><br><span class="line">38323232336535376538333039623035306130393831336563633134656661303166336434303231</span><br><span class="line">3166623337343664653963646664326566303663653762620a353936373566316436613837313534</span><br><span class="line">64343932663833343364326137316633626437303130366663666263616366303361666433393330</span><br><span class="line">3438343536306431300a636331333662386364626362636537303164623865353139613333346261</span><br><span class="line">63313066396361623839333461623365626136353434313663316564333735613037656437353136</span><br><span class="line">31383531613666613038353365636231326637333036626131316263366439643266643735393634</span><br><span class="line">653233353234353535663538326538366138</span><br></pre></td></tr></table></figure>
 
 
 
 <h1 id="四、Glaxy-别人的Roles"><a href="#四、Glaxy-别人的Roles" class="headerlink" title="四、Glaxy-别人的Roles"></a>四、Glaxy-别人的Roles</h1><p>可以从Glaxy网站下载别人做好的Roles，并安装</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs she">ansible-galaxy collection install nginxinc.nginx_core<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible-galaxy collection install nginxinc.nginx_core</span><br></pre></td></tr></table></figure>
 
 
 
 <h1 id="五、优化性能和安全性"><a href="#五、优化性能和安全性" class="headerlink" title="五、优化性能和安全性"></a>五、优化性能和安全性</h1><p>如图：</p>
-<p><img src="/../../../img/image-20240506221240923.png" srcset="/img/loading.gif" lazyload alt="image-20240506221240923"></p>
+<p><img src="/../../../img/image-20240506221240923.png" alt="image-20240506221240923"></p>
 <p>其中安全–配置sudo的方法：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs shell">管理端:<br>[root@m01 /server/scripts/playbook]# egrep -v &#x27;^$|#&#x27; /etc/ansible/ansible.cfg<br>[defaults]<br>sudo_user = ans Վˁ被管理端上具有sudo权限的用户<br>nopasswd: ALL<br>remote_user = ans Վˁ被管理端使用的用户,不指定默认是当<br>前用户/root<br>remote_port = 22 Վˁ被管理端ssh端口号<br>host_key_checking = False<br>log_path = /var/log/ansible.log<br>[inventory]<br>[privilege_escalation]<br>become=True Վˁ开启sudo功能<br>become_method=sudo Վˁ使用sudo命令<br>become_user=root Վˁ普通用户切换为root<br>[paramiko_connection]<br>[ssh_connection]<br>[persistent_connection]<br>[accelerate]<br>[selinux]<br>[colors]<br>[diff]<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">被管理端:</span><br>ans ALL=(ALL) NOPASSWD: ALL` 密码是1,ssh端口是 22<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">重新分发密钥给ans普通用户.</span><br>ssh-copy-id ans@10.0.0.7<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">测试</span><br>ansible -i hosts web -m ping<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">管理端:</span><br><span class="line">[root@m01 /server/scripts/playbook]# egrep -v &#x27;^$|#&#x27; /etc/ansible/ansible.cfg</span><br><span class="line">[defaults]</span><br><span class="line">sudo_user = ans Վˁ被管理端上具有sudo权限的用户</span><br><span class="line">nopasswd: ALL</span><br><span class="line">remote_user = ans Վˁ被管理端使用的用户,不指定默认是当</span><br><span class="line">前用户/root</span><br><span class="line">remote_port = 22 Վˁ被管理端ssh端口号</span><br><span class="line">host_key_checking = False</span><br><span class="line">log_path = /var/log/ansible.log</span><br><span class="line">[inventory]</span><br><span class="line">[privilege_escalation]</span><br><span class="line">become=True Վˁ开启sudo功能</span><br><span class="line">become_method=sudo Վˁ使用sudo命令</span><br><span class="line">become_user=root Վˁ普通用户切换为root</span><br><span class="line">[paramiko_connection]</span><br><span class="line">[ssh_connection]</span><br><span class="line">[persistent_connection]</span><br><span class="line">[accelerate]</span><br><span class="line">[selinux]</span><br><span class="line">[colors]</span><br><span class="line">[diff]</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">被管理端:</span></span><br><span class="line">ans ALL=(ALL) NOPASSWD: ALL` 密码是1,ssh端口是 22</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">重新分发密钥给ans普通用户.</span></span><br><span class="line">ssh-copy-id ans@10.0.0.7</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">测试</span></span><br><span class="line">ansible -i hosts web -m ping</span><br></pre></td></tr></table></figure>
 
 
 
 <p>参考脑图：<a target="_blank" rel="noopener" href="https://www.processon.com/view/link/61addd266376896056c1b1b2">https://www.processon.com/view/link/61addd266376896056c1b1b2</a></p>
-
-                
-              </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
     
-      <span class="category-chain">
-        
-  <a href="/categories/%E8%BF%90%E7%BB%B4/" class="category-chain-item">运维</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/" class="category-chain-item">（二）综合架构</a>
-  
-  
 
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
 </div>
 
-
-              
-  
-
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>10-集群自动化维护-Ansible(四)-完结</div>
-      <div>https://gblog.github.io/2024/05/06/07_85期运维/02_综合架构/10-集群自动化维护-Ansible-4-完结/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>作者</div>
-          <div>Haris</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>发布于</div>
-          <div>2024年5月6日</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>许可协议</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
-          </div>
-        </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
-  </div>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2024/05/07/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/12-web%E9%9B%86%E7%BE%A4-Nginx-2/">12-Web集群-Nginx(二)</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2024/05/06/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/09-%E9%9B%86%E7%BE%A4%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BB%B4%E6%8A%A4-Ansible-3/">09-集群自动化维护-Ansible(三)</a></div></section></div>
 
 
 
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2024/05/07/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/12-web%E9%9B%86%E7%BE%A4-Nginx-2/" title="12-Web集群-Nginx(二)">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">12-Web集群-Nginx(二)</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2024/05/06/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/09-%E9%9B%86%E7%BE%A4%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BB%B4%E6%8A%A4-Ansible-3/" title="09-集群自动化维护-Ansible(三)">
-                        <span class="hidden-mobile">09-集群自动化维护-Ansible(三)</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
 
-            
-          </article>
-        </div>
-      </div>
-    </div>
 
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
 
-    </div>
-  </div>
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">Haris</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Ansible%E9%9B%86%E7%BE%A4%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BB%B4%E6%8A%A4%EF%BC%88%E5%9B%9B%EF%BC%89-%E5%AE%8C%E7%BB%93"><span class="toc-text">Ansible集群自动化维护（四）- 完结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81include%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB"><span class="toc-text">一、include文件包含</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E6%A6%82%E8%BF%B0"><span class="toc-text">1.1 概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E5%AE%9E%E7%8E%B0%E6%A1%88%E4%BE%8B"><span class="toc-text">1.2 实现案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Roles%E6%A0%87%E5%87%86"><span class="toc-text">二、Roles标准</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E6%A6%82%E8%BF%B0"><span class="toc-text">2.1 概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E5%AE%9E%E7%8E%B0%E6%A1%88%E4%BE%8B"><span class="toc-text">2.2 实现案例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-1-%E7%9B%AE%E5%BD%95%E5%87%86%E5%A4%87"><span class="toc-text">2.2.1 目录准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-2-%E6%B7%BB%E5%8A%A0%E6%96%87%E4%BB%B6"><span class="toc-text">2.2.2 添加文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-3-%E8%BF%90%E8%A1%8C%E8%B0%83%E8%AF%95"><span class="toc-text">2.2.3 运行调试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-%E5%8A%A0%E5%85%A5%E5%8F%98%E9%87%8F"><span class="toc-text">2.3 加入变量</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81Ansible%E6%96%87%E4%BB%B6%E5%8A%A0%E5%AF%86-Vault"><span class="toc-text">三、Ansible文件加密-Vault</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Glaxy-%E5%88%AB%E4%BA%BA%E7%9A%84Roles"><span class="toc-text">四、Glaxy-别人的Roles</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E4%BC%98%E5%8C%96%E6%80%A7%E8%83%BD%E5%92%8C%E5%AE%89%E5%85%A8%E6%80%A7"><span class="toc-text">五、优化性能和安全性</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
 </div>
+</div><div class="scripts">
 
 
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-
-
-
-
-    
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-    
-
-    
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-  
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-    </div>
-  
-  
-  
-</div>
-
-  </footer>
-
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
-      
-        typing(text);
-      
-    })(window, document);
-  </script>
-
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
     }
+  };
 
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
 </script>
 
-
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
-
-  <script>Fluid.plugins.codeWidget();</script>
-
-
+<script type="text/javascript">
   
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
     };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
         }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
       }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
     });
   });
 </script>
 
-
-  
 <script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
   });
 </script>
 
 
-  <script>Fluid.plugins.imageCaption();</script>
+<!-- inject -->
 
-  <script  src="/js/local-search.js" ></script>
-
-
-
-
-
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
-
-
-  
-
-  <noscript>
-    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
-  </noscript>
-</body>
-</html>
+</div></body></html>

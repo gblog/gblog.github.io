@@ -1,28 +1,29 @@
 
-
-<!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
-
-
+<!DOCTYPE html><html lang="zh-CN">
 
 <head>
-  <meta charset="UTF-8">
-
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
   
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="Haris">
-  <meta name="keywords" content="">
+  <meta name="generator" content="Hexo 7.3.0">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>Day63-模板语法 - Haris的小站</title>
+
   
     <meta name="description" content="“Day63 模板语法 学习笔记” 一、模板语法什么是模板语法？ 模板语法是一种写在HTML中的标记语法，常用有两种方式： 12&#123;&#123;  &#125;&#125;	# 双括号形式，主要用于变量相关&#123;%  %&#125;  # 括号+%形式，主要用于逻辑相关  作用：   将后端定义的变量传递给前端 处理后端传过来的数据  1.1 模板语法传值1.1.1 传递基本数据类型">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Day63-模板语法">
-<meta property="og:url" content="https://gblog.github.io/2022/09/15/03_Python/05_Django/day63%E7%AC%94%E8%AE%B0-%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95/index.html">
+<meta property="og:url" content="https://gblog.github.io/2022/09/15/03_Python/05_Django/day63%E7%AC%94%E8%AE%B0-%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95/">
 <meta property="og:site_name" content="Haris的小站">
 <meta property="og:description" content="“Day63 模板语法 学习笔记” 一、模板语法什么是模板语法？ 模板语法是一种写在HTML中的标记语法，常用有两种方式： 12&#123;&#123;  &#125;&#125;	# 双括号形式，主要用于变量相关&#123;%  %&#125;  # 括号+%形式，主要用于逻辑相关  作用：   将后端定义的变量传递给前端 处理后端传过来的数据  1.1 模板语法传值1.1.1 传递基本数据类型">
 <meta property="og:locale" content="zh_CN">
@@ -34,274 +35,70 @@
 <meta property="article:published_time" content="2022-09-15T06:44:22.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.255Z">
 <meta property="article:author" content="Haris">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gblog.github.io/img/image-20220915143537762.png">
   
   
   
-  <title>Day63-模板语法 - Haris的小站</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
-  
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
 
 
   
-<link rel="stylesheet" href="/css/custom.css">
-
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"gblog.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-  
-
 
   
-<meta name="generator" content="Hexo 7.3.0"></head>
 
-
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Haris","sameAs":[]},"dateCreated":"2022-09-15T14:44:22+08:00","dateModified":"2026-07-10T14:20:16+08:00","datePublished":"2022-09-15T14:44:22+08:00","description":"","headline":"Day63-模板语法","mainEntityOfPage":{"@type":"WebPage","@id":"https://gblog.github.io/2022/09/15/03_Python/05_Django/day63%E7%AC%94%E8%AE%B0-%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95/"},"publisher":{"@type":"Organization","name":"Haris","sameAs":[]},"url":"https://gblog.github.io/2022/09/15/03_Python/05_Django/day63%E7%AC%94%E8%AE%B0-%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95/","image":[]}</script>
+  
+</head>
 <body>
-  
 
-  <header>
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="undefined" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">Haris的小站</div><div class="sub cap">null</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
+
+
+
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2025/05/06/10_%E5%AD%A6%E7%A5%9EK8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%9F%BA%E7%A1%80/"><span class="title">01-Docker基础</span></a><a class="item title" href="/2025/03/26/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/06-Docker%E8%B5%84%E6%BA%90%E9%85%8D%E9%A2%9D/"><span class="title">06-Docker资源配额</span></a><a class="item title" href="/2025/03/20/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/05-Docker%E5%AE%B9%E5%99%A8%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96/"><span class="title">05-Docker容器数据持久化</span></a><a class="item title" href="/2025/03/12/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/04-Dockerfile%E5%AE%9E%E6%88%98%E7%AF%87-%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F/"><span class="title">04-Dockerfile实战篇-构建镜像</span></a><a class="item title" href="/2025/03/04/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/03-Dockerfile%E5%9F%BA%E7%A1%80%E7%AF%87-%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/"><span class="title">03-Dockerfile基础篇-基本语法</span></a><a class="item title" href="/2025/03/03/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/02-%E8%BF%90%E8%A1%8CDocker%E5%AE%B9%E5%99%A8/"><span class="title">02-运行Docker容器</span></a><a class="item title" href="/2025/03/03/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80/"><span class="title">01-Docker基础</span></a><a class="item title" href="/2024/07/27/08_%E7%BD%91%E7%BB%9C/day03-HCIA%E8%AF%BE%E7%A8%8B-01/"><span class="title">day03-HCIA课程(一)</span></a><a class="item title" href="/2024/07/28/08_%E7%BD%91%E7%BB%9C/day02-%E7%BD%91%E5%B7%A5%E5%85%A5%E9%97%A8-02/"><span class="title">day02-网工入门（二）</span></a><a class="item title" href="/2024/07/27/08_%E7%BD%91%E7%BB%9C/day01-%E7%BD%91%E5%B7%A5%E5%85%A5%E9%97%A8-01/"><span class="title">day01-网工入门（一）</span></a></div></widget>
+</div>
+
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/Python/">Python</a> <span class="sep"></span> <a class="cap breadcrumb-link" href="/categories/Python/09-Django/">09_Django</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2022-09-15T06:44:22.000Z">2022-09-15</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2026-07-10T06:20:16.255Z">2026-07-10</time></span></div></div></div>
     
-
-<div class="header-inner" style="height: 70vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>Haris的博客</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>首页</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>归档</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>分类</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="Day63-模板语法"></span>
-          
-        </div>
-
-        
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-09-15 14:44" pubdate>
-          2022年9月15日 下午
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
-        
-          3.3k 字
-        
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
-        
-        
-        
-          28 分钟
-        
-      </span>
-    
-
-    
-    
-  </div>
-
-
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>Day63-模板语法</span></h1>
         
       </div>
-
-      
     </div>
-  </div>
-</div>
-
-</div>
-
-  </header>
-
-  <main>
     
-      
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
-
-    </div>
-
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">Day63-模板语法</h1>
-            
-            
-              <div class="markdown-body">
-                
-                <p>“Day63 模板语法 学习笔记”</p>
+  </div>
+  </div><article class="md-text content"><p>“Day63 模板语法 学习笔记”</p>
 <h1 id="一、模板语法"><a href="#一、模板语法" class="headerlink" title="一、模板语法"></a>一、模板语法</h1><p>什么是模板语法？</p>
 <p>模板语法是一种写在HTML中的标记语法，常用有两种方式：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;&#123;  &#125;&#125;	<span class="hljs-comment"># 双括号形式，主要用于变量相关</span><br>&#123;%  %&#125;  <span class="hljs-comment"># 括号+%形式，主要用于逻辑相关</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;  &#125;&#125;	<span class="comment"># 双括号形式，主要用于变量相关</span></span><br><span class="line">&#123;%  %&#125;  <span class="comment"># 括号+%形式，主要用于逻辑相关</span></span><br></pre></td></tr></table></figure>
 
 <p>作用： </p>
 <ul>
@@ -311,108 +108,108 @@
 <h2 id="1-1-模板语法传值"><a href="#1-1-模板语法传值" class="headerlink" title="1.1 模板语法传值"></a>1.1 模板语法传值</h2><h3 id="1-1-1-传递基本数据类型"><a href="#1-1-1-传递基本数据类型" class="headerlink" title="1.1.1 传递基本数据类型"></a>1.1.1 传递基本数据类型</h3><p>模板语法可接收后端传递过来的所有基本数据类型。</p>
 <p>案例如下：</p>
 <p>后端<code>views.py</code>定义变量，并传递给前端</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.shortcuts <span class="hljs-keyword">import</span> render<br><br><br><span class="hljs-comment"># Create your views here.</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">index</span>(<span class="hljs-params">request</span>):<br>    <span class="hljs-comment"># 传递基本数据类型</span><br>    n = <span class="hljs-number">123</span>	<span class="hljs-comment"># 整型</span><br>    f = <span class="hljs-number">11.11</span>	<span class="hljs-comment"># 浮点</span><br>    s = <span class="hljs-string">&#x27;我是谁，我在哪？&#x27;</span>	<span class="hljs-comment"># 字符串</span><br>    b = <span class="hljs-literal">True</span>	<span class="hljs-comment"># 布尔</span><br>    l = [<span class="hljs-string">&#x27;小一&#x27;</span>, <span class="hljs-string">&#x27;小儿&#x27;</span>, <span class="hljs-string">&#x27;小啊啊&#x27;</span>]	<span class="hljs-comment"># 列表</span><br>    t = (<span class="hljs-string">&#x27;锄禾&#x27;</span>, <span class="hljs-string">&#x27;日&#x27;</span>, <span class="hljs-string">&#x27;当午&#x27;</span>)	<span class="hljs-comment"># 元组</span><br>    d = &#123;<span class="hljs-string">&#x27;aa&#x27;</span>: <span class="hljs-string">&#x27;A&#x27;</span>, <span class="hljs-string">&#x27;bb&#x27;</span>: <span class="hljs-string">&#x27;B&#x27;</span>&#125;	<span class="hljs-comment"># 字典</span><br>    s = &#123;<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;左右&#x27;</span>, <span class="hljs-number">3</span>&#125;	<span class="hljs-comment"># 集合</span><br><br>    <span class="hljs-comment"># 返回Index页面, 并将变量传递给前端</span><br><br>    <span class="hljs-comment"># 传递的方法一：一个个传</span><br>    <span class="hljs-comment"># (可以给变量起别名，比如将&#x27;s&#x27;改名为&#x27;my_set&#x27;, 前端使用&#123;&#123; my_set &#125;&#125;调用)</span><br>    <span class="hljs-comment"># return render(request, &#x27;index.html&#x27;, &#123;&#x27;n&#x27;: n, &#x27;my_set&#x27;: s&#125;)</span><br><br>    <span class="hljs-comment"># 传递方法二：传所有</span><br>    <span class="hljs-keyword">return</span> render(request, <span class="hljs-string">&#x27;index.html&#x27;</span>, <span class="hljs-built_in">locals</span>())<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create your views here.</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>(<span class="params">request</span>):</span><br><span class="line">    <span class="comment"># 传递基本数据类型</span></span><br><span class="line">    n = <span class="number">123</span>	<span class="comment"># 整型</span></span><br><span class="line">    f = <span class="number">11.11</span>	<span class="comment"># 浮点</span></span><br><span class="line">    s = <span class="string">&#x27;我是谁，我在哪？&#x27;</span>	<span class="comment"># 字符串</span></span><br><span class="line">    b = <span class="literal">True</span>	<span class="comment"># 布尔</span></span><br><span class="line">    l = [<span class="string">&#x27;小一&#x27;</span>, <span class="string">&#x27;小儿&#x27;</span>, <span class="string">&#x27;小啊啊&#x27;</span>]	<span class="comment"># 列表</span></span><br><span class="line">    t = (<span class="string">&#x27;锄禾&#x27;</span>, <span class="string">&#x27;日&#x27;</span>, <span class="string">&#x27;当午&#x27;</span>)	<span class="comment"># 元组</span></span><br><span class="line">    d = &#123;<span class="string">&#x27;aa&#x27;</span>: <span class="string">&#x27;A&#x27;</span>, <span class="string">&#x27;bb&#x27;</span>: <span class="string">&#x27;B&#x27;</span>&#125;	<span class="comment"># 字典</span></span><br><span class="line">    s = &#123;<span class="number">1</span>, <span class="string">&#x27;左右&#x27;</span>, <span class="number">3</span>&#125;	<span class="comment"># 集合</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 返回Index页面, 并将变量传递给前端</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 传递的方法一：一个个传</span></span><br><span class="line">    <span class="comment"># (可以给变量起别名，比如将&#x27;s&#x27;改名为&#x27;my_set&#x27;, 前端使用&#123;&#123; my_set &#125;&#125;调用)</span></span><br><span class="line">    <span class="comment"># return render(request, &#x27;index.html&#x27;, &#123;&#x27;n&#x27;: n, &#x27;my_set&#x27;: s&#125;)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 传递方法二：传所有</span></span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&#x27;index.html&#x27;</span>, <span class="built_in">locals</span>())</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>前端使用<code>模板语法</code>调用</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Title<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>&#123;#接收基本数据类型#&#125;<br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>&#123;&#123; n &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>&#123;&#123; f &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>&#123;&#123; s &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>&#123;&#123; b &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>&#123;&#123; l &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>&#123;&#123; d &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>&#123;&#123; t &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>&#123;&#123; se &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">&#123;#接收基本数据类型#&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; n &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; f &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; s &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; b &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; l &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; d &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; t &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; se &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>HTML页面输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-number">123</span><br><br><span class="hljs-number">11.11</span><br><br>&#123;<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;左右&#x27;</span>, <span class="hljs-number">3</span>&#125;<br><br><span class="hljs-literal">True</span><br><br>[<span class="hljs-string">&#x27;小一&#x27;</span>, <span class="hljs-string">&#x27;小儿&#x27;</span>, <span class="hljs-string">&#x27;小啊啊&#x27;</span>]<br><br>&#123;<span class="hljs-string">&#x27;aa&#x27;</span>: <span class="hljs-string">&#x27;A&#x27;</span>, <span class="hljs-string">&#x27;bb&#x27;</span>: <span class="hljs-string">&#x27;B&#x27;</span>&#125;<br><br>(<span class="hljs-string">&#x27;锄禾&#x27;</span>, <span class="hljs-string">&#x27;日&#x27;</span>, <span class="hljs-string">&#x27;当午&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">123</span></span><br><span class="line"></span><br><span class="line"><span class="number">11.11</span></span><br><span class="line"></span><br><span class="line">&#123;<span class="number">1</span>, <span class="string">&#x27;左右&#x27;</span>, <span class="number">3</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="literal">True</span></span><br><span class="line"></span><br><span class="line">[<span class="string">&#x27;小一&#x27;</span>, <span class="string">&#x27;小儿&#x27;</span>, <span class="string">&#x27;小啊啊&#x27;</span>]</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">&#x27;aa&#x27;</span>: <span class="string">&#x27;A&#x27;</span>, <span class="string">&#x27;bb&#x27;</span>: <span class="string">&#x27;B&#x27;</span>&#125;</span><br><span class="line"></span><br><span class="line">(<span class="string">&#x27;锄禾&#x27;</span>, <span class="string">&#x27;日&#x27;</span>, <span class="string">&#x27;当午&#x27;</span>)</span><br></pre></td></tr></table></figure>
 
 <h3 id="1-1-2-传递类方法"><a href="#1-1-2-传递类方法" class="headerlink" title="1.1.2 传递类方法"></a>1.1.2 传递类方法</h3><p>模板语法可接收后端传递过来的类方法返回值，但是调用类方法<code>不能传参数</code></p>
 <p>案例如下：</p>
 <p>后端<code>views.py</code>定义变量</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.shortcuts <span class="hljs-keyword">import</span> render<br><br><span class="hljs-comment"># Create your views here.</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">index</span>(<span class="hljs-params">request</span>):<br>    <span class="hljs-comment"># 定义类</span><br>    <span class="hljs-keyword">class</span> <span class="hljs-title class_">My_Class</span>(<span class="hljs-title class_ inherited__">object</span>):	<br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_self</span>(<span class="hljs-params">self</span>):	<span class="hljs-comment"># 普通类方法</span><br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;self&#x27;</span><br><br><span class="hljs-meta">        @staticmethod	</span><span class="hljs-comment"># 静态方法</span><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_func</span>():<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;func&#x27;</span><br><br><span class="hljs-meta">        @classmethod	</span><span class="hljs-comment"># 类方法</span><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_class</span>(<span class="hljs-params">self</span>):<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;class&#x27;</span><br><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">__str__</span>(<span class="hljs-params">self</span>):	<span class="hljs-comment"># 魔法方法</span><br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;__str__显示&quot;</span><br><br>    <span class="hljs-comment"># 实例化</span><br>    obj = My_Class()<br><br>    <span class="hljs-comment"># 传递所有</span><br>    <span class="hljs-keyword">return</span> render(request, <span class="hljs-string">&#x27;index.html&#x27;</span>, <span class="hljs-built_in">locals</span>())<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create your views here.</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>(<span class="params">request</span>):</span><br><span class="line">    <span class="comment"># 定义类</span></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">My_Class</span>(<span class="title class_ inherited__">object</span>):	</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">get_self</span>(<span class="params">self</span>):	<span class="comment"># 普通类方法</span></span><br><span class="line">            <span class="keyword">return</span> <span class="string">&#x27;self&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">        @staticmethod	</span><span class="comment"># 静态方法</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">get_func</span>():</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&#x27;func&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">        @classmethod	</span><span class="comment"># 类方法</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">get_class</span>(<span class="params">self</span>):</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&#x27;class&#x27;</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):	<span class="comment"># 魔法方法</span></span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;__str__显示&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 实例化</span></span><br><span class="line">    obj = My_Class()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 传递所有</span></span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&#x27;index.html&#x27;</span>, <span class="built_in">locals</span>())</span><br></pre></td></tr></table></figure>
 
 <p>前端使用<code>模板语法</code>调用</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Title<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>&#123;#接收基本数据类型#&#125;<br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>&#123;&#123; obj &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>&#123;&#123; obj.get_self &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>&#123;&#123; obj.get_func &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>&#123;&#123; obj.get_class &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">&#123;#接收基本数据类型#&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; obj &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; obj.get_self &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; obj.get_func &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; obj.get_class &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>HTML页面输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">__str__显示<br><br><span class="hljs-variable language_">self</span><br><br>func<br><br><span class="hljs-keyword">class</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">__str__显示</span><br><span class="line"></span><br><span class="line"><span class="variable language_">self</span></span><br><span class="line"></span><br><span class="line">func</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="1-1-3-通过-获取值"><a href="#1-1-3-通过-获取值" class="headerlink" title="1.1.3 通过.获取值"></a>1.1.3 通过<code>.</code>获取值</h3><p>Django模版语法的取值是<code>固定的格式</code>，只能采用“句点符” <code>.</code></p>
 <p>案例如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># views.py</span><br><span class="hljs-keyword">from</span> django.shortcuts <span class="hljs-keyword">import</span> render<br><br><span class="hljs-comment"># Create your views here.</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">index</span>(<span class="hljs-params">request</span>):<br>    my_dict = &#123;<span class="hljs-string">&#x27;aa&#x27;</span>: <span class="hljs-string">&#x27;A&#x27;</span>, <span class="hljs-string">&#x27;bb&#x27;</span>: [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;牛逼Plus&#x27;</span>]&#125;	<br><br>    <span class="hljs-comment"># 传递方法二：传所有</span><br>    <span class="hljs-keyword">return</span> render(request, <span class="hljs-string">&#x27;index.html&#x27;</span>, <span class="hljs-built_in">locals</span>())<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># views.py</span></span><br><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create your views here.</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>(<span class="params">request</span>):</span><br><span class="line">    my_dict = &#123;<span class="string">&#x27;aa&#x27;</span>: <span class="string">&#x27;A&#x27;</span>, <span class="string">&#x27;bb&#x27;</span>: [<span class="number">1</span>, <span class="number">2</span>, <span class="string">&#x27;牛逼Plus&#x27;</span>]&#125;	</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 传递方法二：传所有</span></span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&#x27;index.html&#x27;</span>, <span class="built_in">locals</span>())</span><br></pre></td></tr></table></figure>
 
 <p>怎么通过模板语法，从里面拿到”牛逼Plus”?</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>&#123;&#123; my_dict.bb.2 &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; my_dict.bb.2 &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>先拿到字典键’bb’的值，再从里面取下标为2的值。即可以点键也可以点索引 还可以两者混用</p>
 <h2 id="1-2-模板语法过滤器"><a href="#1-2-模板语法过滤器" class="headerlink" title="1.2 模板语法过滤器"></a>1.2 模板语法过滤器</h2><p>可以理解为<code>shell中的管道</code>，对数据进行二次处理。</p>
 <p>Django内置有60多种过滤器，这里介绍10个左右</p>
 <p>案例如下：</p>
 <p>变量定义与传递<code>views.py</code></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.shortcuts <span class="hljs-keyword">import</span> render<br><span class="hljs-keyword">from</span> datetime <span class="hljs-keyword">import</span> datetime<br><br><span class="hljs-comment"># Create your views here.</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">index</span>(<span class="hljs-params">request</span>):<br>    <span class="hljs-comment"># 定义变量</span><br>    aa = <span class="hljs-string">&#x27;str12345&#x27;</span><br>    bb = <span class="hljs-literal">False</span><br>    cc = <span class="hljs-number">1000000</span><br>    dd = datetime.now()<br>    ee = [<span class="hljs-string">&#x27;1&#x27;</span>, <span class="hljs-string">&#x27;2&#x27;</span>, <span class="hljs-string">&#x27;3&#x27;</span>, <span class="hljs-string">&#x27;4&#x27;</span>, <span class="hljs-string">&#x27;5&#x27;</span>]<br>    ff = <span class="hljs-string">&#x27;长空 破浪 会 有时&#x27;</span><br>    gg = <span class="hljs-string">&#x27;abcd1234&#x27;</span><br>    hh = <span class="hljs-string">&#x27;&lt;h1&gt;你好&lt;/h1&gt;&#x27;</span><br>    <span class="hljs-comment"># 传递变量</span><br>    <span class="hljs-keyword">return</span> render(request, <span class="hljs-string">&#x27;index.html&#x27;</span>, <span class="hljs-built_in">locals</span>())<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create your views here.</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>(<span class="params">request</span>):</span><br><span class="line">    <span class="comment"># 定义变量</span></span><br><span class="line">    aa = <span class="string">&#x27;str12345&#x27;</span></span><br><span class="line">    bb = <span class="literal">False</span></span><br><span class="line">    cc = <span class="number">1000000</span></span><br><span class="line">    dd = datetime.now()</span><br><span class="line">    ee = [<span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;3&#x27;</span>, <span class="string">&#x27;4&#x27;</span>, <span class="string">&#x27;5&#x27;</span>]</span><br><span class="line">    ff = <span class="string">&#x27;长空 破浪 会 有时&#x27;</span></span><br><span class="line">    gg = <span class="string">&#x27;abcd1234&#x27;</span></span><br><span class="line">    hh = <span class="string">&#x27;&lt;h1&gt;你好&lt;/h1&gt;&#x27;</span></span><br><span class="line">    <span class="comment"># 传递变量</span></span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&#x27;index.html&#x27;</span>, <span class="built_in">locals</span>())</span><br></pre></td></tr></table></figure>
 
 <p>HTML获取值</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Title<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>&#123;#过滤器的使用#&#125;<br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>统计长度：&#123;&#123; aa | length &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>设置默认值：&#123;&#123; bb | default:&#x27;默认值&#x27; &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>文件大小：&#123; cc | filesizeformat &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>日期格式化：&#123;&#123; dd | date:&#x27;Y-m-d H:i:s&#x27; &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>切片操作：&#123;&#123; ee | slice:&#x27;0:4:2&#x27; &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>切取单词（按空格分割）:&#123;&#123; ff | truncatewords:3 &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>切取字符： &#123;&#123; gg | truncatechars:4 &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>拼接操作(分隔符)：&#123;&#123; gg | join:&quot;$&quot; &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>拼接操作(加法-用于数字)：&#123;&#123; bb | add:20 &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>拼接操作(加法-用于字符串)：&#123;&#123; ff | add:gg &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>转义：&#123;&#123; hh | safe &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">&#123;#过滤器的使用#&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>统计长度：&#123;&#123; aa | length &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>设置默认值：&#123;&#123; bb | default:&#x27;默认值&#x27; &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>文件大小：&#123; cc | filesizeformat &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>日期格式化：&#123;&#123; dd | date:&#x27;Y-m-d H:i:s&#x27; &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>切片操作：&#123;&#123; ee | slice:&#x27;0:4:2&#x27; &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>切取单词（按空格分割）:&#123;&#123; ff | truncatewords:3 &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>切取字符： &#123;&#123; gg | truncatechars:4 &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>拼接操作(分隔符)：&#123;&#123; gg | join:&quot;$&quot; &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>拼接操作(加法-用于数字)：&#123;&#123; bb | add:20 &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>拼接操作(加法-用于字符串)：&#123;&#123; ff | add:gg &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>转义：&#123;&#123; hh | safe &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>测试访问：</p>
-<p><img src="/../../../img/image-20220915143537762.png" srcset="/img/loading.gif" lazyload alt="image-20220915143537762"></p>
+<p><img src="/../../../img/image-20220915143537762.png" alt="image-20220915143537762"></p>
 <h3 id="1-2-1-转义补充"><a href="#1-2-1-转义补充" class="headerlink" title="1.2.1 转义补充"></a>1.2.1 转义补充</h3><p>除了前端可以使用<code>|safe</code>过滤器转义，Django后端也可以转义</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 后端views.py</span><br><span class="hljs-keyword">from</span> django.utils.safestring <span class="hljs-keyword">import</span> mark_safe<br>ii = <span class="hljs-string">&#x27;&lt;h2&gt;我是后端的转义&lt;/h2&gt;&#x27;</span><br>res = mark_safe(ii)<br><br><span class="hljs-comment"># 前端调用</span><br>&#123;&#123; res &#125;&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 后端views.py</span></span><br><span class="line"><span class="keyword">from</span> django.utils.safestring <span class="keyword">import</span> mark_safe</span><br><span class="line">ii = <span class="string">&#x27;&lt;h2&gt;我是后端的转义&lt;/h2&gt;&#x27;</span></span><br><span class="line">res = mark_safe(ii)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 前端调用</span></span><br><span class="line">&#123;&#123; res &#125;&#125;</span><br></pre></td></tr></table></figure>
 
 <p>页面效果：</p>
-<p><img src="/../../../img/image-20220915143944351.png" srcset="/img/loading.gif" lazyload alt="image-20220915143944351"></p>
+<p><img src="/../../../img/image-20220915143944351.png" alt="image-20220915143944351"></p>
 <h2 id="1-3-标签"><a href="#1-3-标签" class="headerlink" title="1.3 标签"></a>1.3 标签</h2><h3 id="1-3-1-for循环"><a href="#1-3-1-for循环" class="headerlink" title="1.3.1 for循环"></a>1.3.1 for循环</h3><p>后端：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 后端</span><br>my_list = [<span class="hljs-string">&#x27;11&#x27;</span>, <span class="hljs-string">&#x27;22&#x27;</span>, <span class="hljs-string">&#x27;33&#x27;</span>, <span class="hljs-string">&#x27;44&#x27;</span>]<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 后端</span></span><br><span class="line">my_list = [<span class="string">&#x27;11&#x27;</span>, <span class="string">&#x27;22&#x27;</span>, <span class="string">&#x27;33&#x27;</span>, <span class="string">&#x27;44&#x27;</span>]</span><br></pre></td></tr></table></figure>
 
 <p>前端：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs html">&#123;% for i in my_list %&#125;<br>    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>&#123;&#123; forloop &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>	# 显示本次循环的信息<br>    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>&#123;&#123; i &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>	# 输出值<br>&#123;% endfor %&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;% for i in my_list %&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; forloop &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span>	# 显示本次循环的信息</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; i &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span>	# 输出值</span><br><span class="line">&#123;% endfor %&#125;</span><br></pre></td></tr></table></figure>
 
 <p>结果</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;<span class="hljs-string">&#x27;parentloop&#x27;</span>: &#123;&#125;, <span class="hljs-string">&#x27;counter0&#x27;</span>: <span class="hljs-number">0</span>, <span class="hljs-string">&#x27;counter&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;revcounter&#x27;</span>: <span class="hljs-number">4</span>, <span class="hljs-string">&#x27;revcounter0&#x27;</span>: <span class="hljs-number">3</span>, <span class="hljs-string">&#x27;first&#x27;</span>: <span class="hljs-literal">True</span>, <span class="hljs-string">&#x27;last&#x27;</span>: <span class="hljs-literal">False</span>&#125;<br><span class="hljs-number">11</span><br>&#123;<span class="hljs-string">&#x27;parentloop&#x27;</span>: &#123;&#125;, <span class="hljs-string">&#x27;counter0&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;counter&#x27;</span>: <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;revcounter&#x27;</span>: <span class="hljs-number">3</span>, <span class="hljs-string">&#x27;revcounter0&#x27;</span>: <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;first&#x27;</span>: <span class="hljs-literal">False</span>, <span class="hljs-string">&#x27;last&#x27;</span>: <span class="hljs-literal">False</span>&#125;<br><span class="hljs-number">22</span><br>&#123;<span class="hljs-string">&#x27;parentloop&#x27;</span>: &#123;&#125;, <span class="hljs-string">&#x27;counter0&#x27;</span>: <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;counter&#x27;</span>: <span class="hljs-number">3</span>, <span class="hljs-string">&#x27;revcounter&#x27;</span>: <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;revcounter0&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;first&#x27;</span>: <span class="hljs-literal">False</span>, <span class="hljs-string">&#x27;last&#x27;</span>: <span class="hljs-literal">False</span>&#125;<br><span class="hljs-number">33</span><br>&#123;<span class="hljs-string">&#x27;parentloop&#x27;</span>: &#123;&#125;, <span class="hljs-string">&#x27;counter0&#x27;</span>: <span class="hljs-number">3</span>, <span class="hljs-string">&#x27;counter&#x27;</span>: <span class="hljs-number">4</span>, <span class="hljs-string">&#x27;revcounter&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;revcounter0&#x27;</span>: <span class="hljs-number">0</span>, <span class="hljs-string">&#x27;first&#x27;</span>: <span class="hljs-literal">False</span>, <span class="hljs-string">&#x27;last&#x27;</span>: <span class="hljs-literal">True</span>&#125;<br><span class="hljs-number">44</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">&#x27;parentloop&#x27;</span>: &#123;&#125;, <span class="string">&#x27;counter0&#x27;</span>: <span class="number">0</span>, <span class="string">&#x27;counter&#x27;</span>: <span class="number">1</span>, <span class="string">&#x27;revcounter&#x27;</span>: <span class="number">4</span>, <span class="string">&#x27;revcounter0&#x27;</span>: <span class="number">3</span>, <span class="string">&#x27;first&#x27;</span>: <span class="literal">True</span>, <span class="string">&#x27;last&#x27;</span>: <span class="literal">False</span>&#125;</span><br><span class="line"><span class="number">11</span></span><br><span class="line">&#123;<span class="string">&#x27;parentloop&#x27;</span>: &#123;&#125;, <span class="string">&#x27;counter0&#x27;</span>: <span class="number">1</span>, <span class="string">&#x27;counter&#x27;</span>: <span class="number">2</span>, <span class="string">&#x27;revcounter&#x27;</span>: <span class="number">3</span>, <span class="string">&#x27;revcounter0&#x27;</span>: <span class="number">2</span>, <span class="string">&#x27;first&#x27;</span>: <span class="literal">False</span>, <span class="string">&#x27;last&#x27;</span>: <span class="literal">False</span>&#125;</span><br><span class="line"><span class="number">22</span></span><br><span class="line">&#123;<span class="string">&#x27;parentloop&#x27;</span>: &#123;&#125;, <span class="string">&#x27;counter0&#x27;</span>: <span class="number">2</span>, <span class="string">&#x27;counter&#x27;</span>: <span class="number">3</span>, <span class="string">&#x27;revcounter&#x27;</span>: <span class="number">2</span>, <span class="string">&#x27;revcounter0&#x27;</span>: <span class="number">1</span>, <span class="string">&#x27;first&#x27;</span>: <span class="literal">False</span>, <span class="string">&#x27;last&#x27;</span>: <span class="literal">False</span>&#125;</span><br><span class="line"><span class="number">33</span></span><br><span class="line">&#123;<span class="string">&#x27;parentloop&#x27;</span>: &#123;&#125;, <span class="string">&#x27;counter0&#x27;</span>: <span class="number">3</span>, <span class="string">&#x27;counter&#x27;</span>: <span class="number">4</span>, <span class="string">&#x27;revcounter&#x27;</span>: <span class="number">1</span>, <span class="string">&#x27;revcounter0&#x27;</span>: <span class="number">0</span>, <span class="string">&#x27;first&#x27;</span>: <span class="literal">False</span>, <span class="string">&#x27;last&#x27;</span>: <span class="literal">True</span>&#125;</span><br><span class="line"><span class="number">44</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="1-3-2-if判断"><a href="#1-3-2-if判断" class="headerlink" title="1.3.2 if判断"></a>1.3.2 if判断</h3><p>后端：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">old_zhao = <span class="hljs-literal">False</span><br>old_wang = <span class="hljs-literal">True</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">old_zhao = <span class="literal">False</span></span><br><span class="line">old_wang = <span class="literal">True</span></span><br></pre></td></tr></table></figure>
 
 <p>前端：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs html">&#123;% if old_zhao %&#125;<br>    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>今晚不行<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>&#123;% elif old_wang %&#125;<br>    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>可以可以！<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>&#123;% else %&#125;<br>    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>也还凑合<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>&#123;% endif %&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;% if old_zhao %&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>今晚不行<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;% elif old_wang %&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>可以可以！<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;% else %&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>也还凑合<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
 
 <p>页面输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">可以可以！<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可以可以！</span><br></pre></td></tr></table></figure>
 
 <h3 id="1-3-3-标签混用"><a href="#1-3-3-标签混用" class="headerlink" title="1.3.3 标签混用"></a>1.3.3 标签混用</h3><p>前端：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs html">&#123;% for foo in my_list %&#125;<br>    &#123;% if forloop.first %&#125;<br>        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>这是我的第一次<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>    &#123;% elif forloop.last %&#125;<br>        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>最后一次，下不为例<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>    &#123;% else %&#125;<br>        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>&#123;&#123; foo &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>    &#123;% endif %&#125;<br>    &#123;%  empty %&#125;<br>        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>for循环的可迭代对象内部没有元素 根本没法循环<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>&#123;% endfor %&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;% for foo in my_list %&#125;</span><br><span class="line">    &#123;% if forloop.first %&#125;</span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>这是我的第一次<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    &#123;% elif forloop.last %&#125;</span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>最后一次，下不为例<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    &#123;% else %&#125;</span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; foo &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    &#123;% endif %&#125;</span><br><span class="line">    &#123;%  empty %&#125;</span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>for循环的可迭代对象内部没有元素 根本没法循环<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;% endfor %&#125;</span><br></pre></td></tr></table></figure>
 
 <p>页面输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">这是我的第一次<br><br><span class="hljs-number">22</span><br><br><span class="hljs-number">33</span><br><br>最后一次，下不为例<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">这是我的第一次</span><br><span class="line"></span><br><span class="line"><span class="number">22</span></span><br><span class="line"></span><br><span class="line"><span class="number">33</span></span><br><span class="line"></span><br><span class="line">最后一次，下不为例</span><br></pre></td></tr></table></figure>
 
 <h3 id="1-3-4-处理字典"><a href="#1-3-4-处理字典" class="headerlink" title="1.3.4 处理字典"></a>1.3.4 处理字典</h3><p>后端定义字典：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">my_dic = &#123;<span class="hljs-string">&#x27;烟&#x27;</span>: <span class="hljs-string">&#x27;芙蓉王&#x27;</span>, <span class="hljs-string">&#x27;酒&#x27;</span>: <span class="hljs-string">&#x27;茅台&#x27;</span>, <span class="hljs-string">&#x27;家电&#x27;</span>: [<span class="hljs-string">&#x27;冰箱&#x27;</span>, <span class="hljs-string">&#x27;洗衣机&#x27;</span>, <span class="hljs-string">&#x27;热水器&#x27;</span>]&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">my_dic = &#123;<span class="string">&#x27;烟&#x27;</span>: <span class="string">&#x27;芙蓉王&#x27;</span>, <span class="string">&#x27;酒&#x27;</span>: <span class="string">&#x27;茅台&#x27;</span>, <span class="string">&#x27;家电&#x27;</span>: [<span class="string">&#x27;冰箱&#x27;</span>, <span class="string">&#x27;洗衣机&#x27;</span>, <span class="string">&#x27;热水器&#x27;</span>]&#125;</span><br></pre></td></tr></table></figure>
 
 <p>前端：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;<span class="hljs-comment">#输出键#&#125;</span><br>&#123;% <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> my_dic.keys %&#125;<br>    &lt;p&gt;&#123;&#123; i &#125;&#125;&lt;/p&gt;<br>&#123;% endfor %&#125;<br><br>&lt;p&gt;--------&lt;/p&gt;<br><br>&#123;<span class="hljs-comment">#输出值#&#125;</span><br>&#123;% <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> my_dic.values %&#125;<br>    &lt;p&gt;&#123;&#123; i &#125;&#125;&lt;/p&gt;<br>&#123;% endfor %&#125;<br><br>&lt;p&gt;--------&lt;/p&gt;<br><br>&#123;<span class="hljs-comment">#输出键值对#&#125;</span><br>&#123;% <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> my_dic.items %&#125;<br>    &lt;p&gt;&#123;&#123; i &#125;&#125;&lt;/p&gt;<br>&#123;% endfor %&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="comment">#输出键#&#125;</span></span><br><span class="line">&#123;% <span class="keyword">for</span> i <span class="keyword">in</span> my_dic.keys %&#125;</span><br><span class="line">    &lt;p&gt;&#123;&#123; i &#125;&#125;&lt;/p&gt;</span><br><span class="line">&#123;% endfor %&#125;</span><br><span class="line"></span><br><span class="line">&lt;p&gt;--------&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&#123;<span class="comment">#输出值#&#125;</span></span><br><span class="line">&#123;% <span class="keyword">for</span> i <span class="keyword">in</span> my_dic.values %&#125;</span><br><span class="line">    &lt;p&gt;&#123;&#123; i &#125;&#125;&lt;/p&gt;</span><br><span class="line">&#123;% endfor %&#125;</span><br><span class="line"></span><br><span class="line">&lt;p&gt;--------&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&#123;<span class="comment">#输出键值对#&#125;</span></span><br><span class="line">&#123;% <span class="keyword">for</span> i <span class="keyword">in</span> my_dic.items %&#125;</span><br><span class="line">    &lt;p&gt;&#123;&#123; i &#125;&#125;&lt;/p&gt;</span><br><span class="line">&#123;% endfor %&#125;</span><br></pre></td></tr></table></figure>
 
 <p>页面输出：</p>
-<p><img src="/../../../img/image-20220915214232918.png" srcset="/img/loading.gif" lazyload alt="image-20220915214232918"></p>
+<p><img src="/../../../img/image-20220915214232918.png" alt="image-20220915214232918"></p>
 <h3 id="1-3-5-with起别名"><a href="#1-3-5-with起别名" class="headerlink" title="1.3.5 with起别名"></a>1.3.5 with起别名</h3><p>我们过滤<em>1.3.4</em>节的字典，比如从里面获取’热水器’这个值，一般的写法是：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;&#123; my_dic.家电<span class="hljs-number">.2</span> &#125;&#125;<br><br><span class="hljs-comment"># 补充：没看错，家电确实不要加&#x27;引号&#x27;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; my_dic.家电<span class="number">.2</span> &#125;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 补充：没看错，家电确实不要加&#x27;引号&#x27;</span></span><br></pre></td></tr></table></figure>
 
 <p>如果觉得这么写太长，可以给它取个别名：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html">&#123;% with my_dic.家电.2 as 别名 %&#125;<br>    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>&#123;&#123; 别名 &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>&#123;% endwith %&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% with my_dic.家电.2 as 别名 %&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; 别名 &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;% endwith %&#125;</span><br></pre></td></tr></table></figure>
 
 <p>照样输出<code>热水器</code></p>
 <h2 id="1-4-自定义过滤器、标签、Inclusion-tag"><a href="#1-4-自定义过滤器、标签、Inclusion-tag" class="headerlink" title="1.4 自定义过滤器、标签、Inclusion_tag"></a>1.4 自定义过滤器、标签、Inclusion_tag</h2><h3 id="1-4-1-准备工作"><a href="#1-4-1-准备工作" class="headerlink" title="1.4.1 准备工作"></a>1.4.1 准备工作</h3><p>无论是自定义过滤器、标签还是inclusion_tag，都需要进行如下准备工作：</p>
 <p>1、在应用下创建名叫<code>templatetags</code>的文件夹（必须这个名字）</p>
 <p>2、在该文件夹内，创建任意的<code>py</code>文件</p>
 <p>3、在<code>py</code>文件中，需要导入模块</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django <span class="hljs-keyword">import</span> template<br>register = template.Library()<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> template</span><br><span class="line">register = template.Library()</span><br></pre></td></tr></table></figure>
 
 <h3 id="1-4-1-自定义过滤器"><a href="#1-4-1-自定义过滤器" class="headerlink" title="1.4.1 自定义过滤器"></a>1.4.1 自定义过滤器</h3><p>后端定义过滤器，实现两个数相加的功能</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 导入模块</span><br><span class="hljs-keyword">from</span> django <span class="hljs-keyword">import</span> template<br><br>register = template.Library()<br><br><br><span class="hljs-comment"># 自定义过滤器</span><br><span class="hljs-meta">@register.filter(<span class="hljs-params">name=<span class="hljs-string">&quot;baby&quot;</span></span>)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">my_sum</span>(<span class="hljs-params">x, y</span>):<br>    <span class="hljs-keyword">return</span> x + y<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 导入模块</span></span><br><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> template</span><br><span class="line"></span><br><span class="line">register = template.Library()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 自定义过滤器</span></span><br><span class="line"><span class="meta">@register.filter(<span class="params">name=<span class="string">&quot;baby&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">my_sum</span>(<span class="params">x, y</span>):</span><br><span class="line">    <span class="keyword">return</span> x + y</span><br></pre></td></tr></table></figure>
 
 <p>前端调用</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs html">&#123;% load my_temp %&#125;	# 加载模块<br>&#123;&#123; cc|baby:666 &#125;&#125;	<br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;% load my_temp %&#125;	# 加载模块</span><br><span class="line">&#123;&#123; cc|baby:666 &#125;&#125;	</span><br></pre></td></tr></table></figure>
 
 <h3 id="1-4-2-自定义标签"><a href="#1-4-2-自定义标签" class="headerlink" title="1.4.2 自定义标签"></a>1.4.2 自定义标签</h3><p>后端定义</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 自定义标签</span><br><span class="hljs-meta">@register.simple_tag(<span class="hljs-params">name=<span class="hljs-string">&#x27;plus&#x27;</span></span>)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">index</span>(<span class="hljs-params">a, b, c, d</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;%s-%s-%s-%s&#x27;</span> % (a, b, c, d)<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 自定义标签</span></span><br><span class="line"><span class="meta">@register.simple_tag(<span class="params">name=<span class="string">&#x27;plus&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>(<span class="params">a, b, c, d</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;%s-%s-%s-%s&#x27;</span> % (a, b, c, d)</span><br></pre></td></tr></table></figure>
 
 <p>前端调用</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">&lt;p&gt;&#123;% plus <span class="hljs-string">&#x27;goodman&#x27;</span> <span class="hljs-number">332</span> <span class="hljs-number">678</span> <span class="hljs-string">&#x27;NB&#x27;</span> %&#125;&lt;/p&gt;<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;&#123;% plus <span class="string">&#x27;goodman&#x27;</span> <span class="number">332</span> <span class="number">678</span> <span class="string">&#x27;NB&#x27;</span> %&#125;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
 
 <p>页面输出</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">goodman-<span class="hljs-number">332</span>-<span class="hljs-number">678</span>-NB<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">goodman-<span class="number">332</span>-<span class="number">678</span>-NB</span><br></pre></td></tr></table></figure>
 
 <h3 id="1-4-3-自定义inclusion-tag"><a href="#1-4-3-自定义inclusion-tag" class="headerlink" title="1.4.3 自定义inclusion_tag"></a>1.4.3 自定义inclusion_tag</h3><p>作用：</p>
 <p>当html页面某一个地方的页面（<code>局部页面</code>）需要传参数才能够<code>动态的渲染</code>出来，并且在多</p>
@@ -425,381 +222,764 @@
 <li>之后将渲染好的结果放到调用的位置</li>
 </ul>
 <p>图解：</p>
-<p><img src="/../../../img/image-20220915223520493.png" srcset="/img/loading.gif" lazyload alt="image-20220915223520493"></p>
+<p><img src="/../../../img/image-20220915223520493.png" alt="image-20220915223520493"></p>
 <p><strong>案例：</strong></p>
 <p>后端定义：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@register.inclusion_tag(<span class="hljs-params"><span class="hljs-string">&#x27;left_menu.html&#x27;</span></span>)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">left</span>(<span class="hljs-params">n</span>):<br>    data = [<span class="hljs-string">&#x27;第&#123;&#125;项&#x27;</span>.<span class="hljs-built_in">format</span>(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n)]<br>    <span class="hljs-comment"># 第一种</span><br>    <span class="hljs-comment"># return &#123;&#x27;data&#x27;:data&#125;  # 将data传递给left_menu.html</span><br>    <span class="hljs-comment"># 第二种</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">locals</span>()  <span class="hljs-comment"># 将data传递给left_menu.html</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@register.inclusion_tag(<span class="params"><span class="string">&#x27;left_menu.html&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">left</span>(<span class="params">n</span>):</span><br><span class="line">    data = [<span class="string">&#x27;第&#123;&#125;项&#x27;</span>.<span class="built_in">format</span>(i) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n)]</span><br><span class="line">    <span class="comment"># 第一种</span></span><br><span class="line">    <span class="comment"># return &#123;&#x27;data&#x27;:data&#125;  # 将data传递给left_menu.html</span></span><br><span class="line">    <span class="comment"># 第二种</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">locals</span>()  <span class="comment"># 将data传递给left_menu.html</span></span><br></pre></td></tr></table></figure>
 
 <p>局部页面：<code>left_menu.html</code>定义</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span><br>    &#123;% for foo in data %&#125;<br>        <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>&#123;&#123; foo &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>    &#123;% endfor %&#125;<br><span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    &#123;% for foo in data %&#125;</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;&#123; foo &#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    &#123;% endfor %&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>主页面调用（既将局部页面插入主页面）：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">&#123;% left 5 %&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% left 5 %&#125;</span><br></pre></td></tr></table></figure>
 
 <p>效果（主页面中插入了left_menu.html页面）：</p>
-<p><img src="/../../../img/image-20220915224735224.png" srcset="/img/loading.gif" lazyload alt="image-20220915224735224"></p>
+<p><img src="/../../../img/image-20220915224735224.png" alt="image-20220915224735224"></p>
 <h2 id="1-5-模板的继承-TODO"><a href="#1-5-模板的继承-TODO" class="headerlink" title="1.5 模板的继承(TODO)"></a>1.5 模板的继承(TODO)</h2><p>这里有个例子要做（TODO）</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">你们有没有见过一些网站</span><br><span class="hljs-string">	这些网站页面整体都大差不差 只是某一些局部在做变化	</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-comment"># 模版的继承 你自己先选好一个你要想继承的模版页面</span><br>&#123;% extends <span class="hljs-string">&#x27;home.html&#x27;</span> %&#125;<br><br><span class="hljs-comment"># 继承了之后子页面跟模版页面长的是一模一样的 你需要在模版页面上提前划定可以被修改的区域</span><br>&#123;% block content %&#125;<br>	模版内容<br>&#123;% endblock %&#125;<br><br><span class="hljs-comment"># 子页面继承父页面的</span><br>&#123;% block.<span class="hljs-built_in">super</span> %&#125;<br><br><span class="hljs-comment"># 子页面就可以声明想要修改哪块划定了的区域</span><br>&#123;% block content %&#125;<br>	子页面内容	<br>&#123;% endblock %&#125;<br><br><br><span class="hljs-comment"># 一般情况下模版页面上应该至少有三块可以被修改的区域</span><br>	<span class="hljs-number">1.</span>css区域<br>  <span class="hljs-number">2.</span>html区域<br>  <span class="hljs-number">3.j</span>s区域<br>  &#123;% block css %&#125;<br><br>	&#123;% endblock %&#125;<br>  <br>  &#123;% block content %&#125;<br><br>	&#123;% endblock %&#125;<br>  <br>  &#123;% block js %&#125;<br><br>	&#123;% endblock %&#125;<br>  <span class="hljs-comment"># 每一个子页面就都可以有自己独有的css代码 html代码 js代码</span><br>  <br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">一般情况下 模版的页面上划定的区域越多 那么该模版的扩展性就越高</span><br><span class="hljs-string">但是如果太多 那还不如自己直接写</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">你们有没有见过一些网站</span></span><br><span class="line"><span class="string">	这些网站页面整体都大差不差 只是某一些局部在做变化	</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="comment"># 模版的继承 你自己先选好一个你要想继承的模版页面</span></span><br><span class="line">&#123;% extends <span class="string">&#x27;home.html&#x27;</span> %&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 继承了之后子页面跟模版页面长的是一模一样的 你需要在模版页面上提前划定可以被修改的区域</span></span><br><span class="line">&#123;% block content %&#125;</span><br><span class="line">	模版内容</span><br><span class="line">&#123;% endblock %&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 子页面继承父页面的</span></span><br><span class="line">&#123;% block.<span class="built_in">super</span> %&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 子页面就可以声明想要修改哪块划定了的区域</span></span><br><span class="line">&#123;% block content %&#125;</span><br><span class="line">	子页面内容	</span><br><span class="line">&#123;% endblock %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 一般情况下模版页面上应该至少有三块可以被修改的区域</span></span><br><span class="line">	<span class="number">1.</span>css区域</span><br><span class="line">  <span class="number">2.</span>html区域</span><br><span class="line">  <span class="number">3.j</span>s区域</span><br><span class="line">  &#123;% block css %&#125;</span><br><span class="line"></span><br><span class="line">	&#123;% endblock %&#125;</span><br><span class="line">  </span><br><span class="line">  &#123;% block content %&#125;</span><br><span class="line"></span><br><span class="line">	&#123;% endblock %&#125;</span><br><span class="line">  </span><br><span class="line">  &#123;% block js %&#125;</span><br><span class="line"></span><br><span class="line">	&#123;% endblock %&#125;</span><br><span class="line">  <span class="comment"># 每一个子页面就都可以有自己独有的css代码 html代码 js代码</span></span><br><span class="line">  </span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">一般情况下 模版的页面上划定的区域越多 那么该模版的扩展性就越高</span></span><br><span class="line"><span class="string">但是如果太多 那还不如自己直接写</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="1-6-模板的导入"><a href="#1-6-模板的导入" class="headerlink" title="1.6 模板的导入"></a>1.6 模板的导入</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs html">&quot;&quot;&quot;<br>将页面的某一个局部当成模块的形式<br>哪个地方需要就可以直接导入使用即可<br>&quot;&quot;&quot;<br>&#123;% include &#x27;wasai.html&#x27; %&#125;<br></code></pre></td></tr></table></figure>
-
-
-
-<h1 id="二、CBV源码分析"><a href="#二、CBV源码分析" class="headerlink" title="二、CBV源码分析"></a>二、CBV源码分析</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 你自己不要修改源码 除了bug很难找</span><br><br><span class="hljs-comment"># 突破口在urls.py</span><br>url(<span class="hljs-string">r&#x27;^login/&#x27;</span>,views.MyLogin.as_view())<br><span class="hljs-comment"># url(r&#x27;^login/&#x27;,views.view)  FBV一模一样</span><br><span class="hljs-comment"># CBV与FBV在路由匹配上本质是一样的 都是路由 对应 函数内存地址</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">函数名/方法名 加括号执行优先级最高</span><br><span class="hljs-string">猜测</span><br><span class="hljs-string">    as_view()</span><br><span class="hljs-string">        要么是被@staicmethod修饰的静态方法</span><br><span class="hljs-string">        要么是被@classmethod修饰的类方法  正确</span><br><span class="hljs-string">        </span><br><span class="hljs-string">    @classonlymethod</span><br><span class="hljs-string">    def as_view(cls, **initkwargs):</span><br><span class="hljs-string">        pass</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br><span class="hljs-meta">    @classonlymethod</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">as_view</span>(<span class="hljs-params">cls, **initkwargs</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        cls就是我们自己写的类   MyCBV</span><br><span class="hljs-string">        Main entry point for a request-response process.</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">view</span>(<span class="hljs-params">request, *args, **kwargs</span>):<br>            <span class="hljs-variable language_">self</span> = cls(**initkwargs)  <span class="hljs-comment"># cls是我们自己写的类</span><br>            <span class="hljs-comment"># self = MyLogin(**initkwargs)  产生一个我们自己写的类的对象</span><br>            <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>.dispatch(request, *args, **kwargs)<br>            <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">            以后你们会经常需要看源码 但是在看python源码的时候 一定要时刻提醒自己面向对象属性方法查找顺序</span><br><span class="hljs-string">                先从对象自己找</span><br><span class="hljs-string">                再去产生对象的类里面找</span><br><span class="hljs-string">                之后再去父类找</span><br><span class="hljs-string">                ...</span><br><span class="hljs-string">            总结:看源码只要看到了self点一个东西 一定要问你自己当前这个self到底是谁</span><br><span class="hljs-string">            &quot;&quot;&quot;</span><br>        <span class="hljs-keyword">return</span> view<br>      <br>		<span class="hljs-comment"># CBV的精髓</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">dispatch</span>(<span class="hljs-params">self, request, *args, **kwargs</span>):<br>        <span class="hljs-comment"># 获取当前请求的小写格式 然后比对当前请求方式是否合法</span><br>        <span class="hljs-comment"># get请求为例</span><br>        <span class="hljs-comment"># post请求</span><br>        <span class="hljs-keyword">if</span> request.method.lower() <span class="hljs-keyword">in</span> <span class="hljs-variable language_">self</span>.http_method_names:<br>            handler = <span class="hljs-built_in">getattr</span>(<span class="hljs-variable language_">self</span>, request.method.lower(), <span class="hljs-variable language_">self</span>.http_method_not_allowed)<br>            <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">            反射:通过字符串来操作对象的属性或者方法</span><br><span class="hljs-string">                handler = getattr(自己写的类产生的对象,&#x27;get&#x27;,当找不到get属性或者方法的时候就会用第三个参数)</span><br><span class="hljs-string">                handler = 我们自己写的类里面的get方法</span><br><span class="hljs-string">            &quot;&quot;&quot;</span><br>        <span class="hljs-keyword">else</span>:<br>            handler = <span class="hljs-variable language_">self</span>.http_method_not_allowed<br>        <span class="hljs-keyword">return</span> handler(request, *args, **kwargs)<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        自动调用get方法</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br><br><span class="hljs-comment"># 要求掌握到不看源码也能够描述出CBV的内部执行流程(******)</span><br></code></pre></td></tr></table></figure>
+<h2 id="1-6-模板的导入"><a href="#1-6-模板的导入" class="headerlink" title="1.6 模板的导入"></a>1.6 模板的导入</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&quot;&quot;&quot;</span><br><span class="line">将页面的某一个局部当成模块的形式</span><br><span class="line">哪个地方需要就可以直接导入使用即可</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">&#123;% include &#x27;wasai.html&#x27; %&#125;</span><br></pre></td></tr></table></figure>
 
 
-                
-              </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
 
-<span class="category-chains">
-  
-  
+<h1 id="二、CBV源码分析"><a href="#二、CBV源码分析" class="headerlink" title="二、CBV源码分析"></a>二、CBV源码分析</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 你自己不要修改源码 除了bug很难找</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 突破口在urls.py</span></span><br><span class="line">url(<span class="string">r&#x27;^login/&#x27;</span>,views.MyLogin.as_view())</span><br><span class="line"><span class="comment"># url(r&#x27;^login/&#x27;,views.view)  FBV一模一样</span></span><br><span class="line"><span class="comment"># CBV与FBV在路由匹配上本质是一样的 都是路由 对应 函数内存地址</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">函数名/方法名 加括号执行优先级最高</span></span><br><span class="line"><span class="string">猜测</span></span><br><span class="line"><span class="string">    as_view()</span></span><br><span class="line"><span class="string">        要么是被@staicmethod修饰的静态方法</span></span><br><span class="line"><span class="string">        要么是被@classmethod修饰的类方法  正确</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">    @classonlymethod</span></span><br><span class="line"><span class="string">    def as_view(cls, **initkwargs):</span></span><br><span class="line"><span class="string">        pass</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @classonlymethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">as_view</span>(<span class="params">cls, **initkwargs</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        cls就是我们自己写的类   MyCBV</span></span><br><span class="line"><span class="string">        Main entry point for a request-response process.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">view</span>(<span class="params">request, *args, **kwargs</span>):</span><br><span class="line">            <span class="variable language_">self</span> = cls(**initkwargs)  <span class="comment"># cls是我们自己写的类</span></span><br><span class="line">            <span class="comment"># self = MyLogin(**initkwargs)  产生一个我们自己写的类的对象</span></span><br><span class="line">            <span class="keyword">return</span> <span class="variable language_">self</span>.dispatch(request, *args, **kwargs)</span><br><span class="line">            <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">            以后你们会经常需要看源码 但是在看python源码的时候 一定要时刻提醒自己面向对象属性方法查找顺序</span></span><br><span class="line"><span class="string">                先从对象自己找</span></span><br><span class="line"><span class="string">                再去产生对象的类里面找</span></span><br><span class="line"><span class="string">                之后再去父类找</span></span><br><span class="line"><span class="string">                ...</span></span><br><span class="line"><span class="string">            总结:看源码只要看到了self点一个东西 一定要问你自己当前这个self到底是谁</span></span><br><span class="line"><span class="string">            &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> view</span><br><span class="line">      </span><br><span class="line">		<span class="comment"># CBV的精髓</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">dispatch</span>(<span class="params">self, request, *args, **kwargs</span>):</span><br><span class="line">        <span class="comment"># 获取当前请求的小写格式 然后比对当前请求方式是否合法</span></span><br><span class="line">        <span class="comment"># get请求为例</span></span><br><span class="line">        <span class="comment"># post请求</span></span><br><span class="line">        <span class="keyword">if</span> request.method.lower() <span class="keyword">in</span> <span class="variable language_">self</span>.http_method_names:</span><br><span class="line">            handler = <span class="built_in">getattr</span>(<span class="variable language_">self</span>, request.method.lower(), <span class="variable language_">self</span>.http_method_not_allowed)</span><br><span class="line">            <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">            反射:通过字符串来操作对象的属性或者方法</span></span><br><span class="line"><span class="string">                handler = getattr(自己写的类产生的对象,&#x27;get&#x27;,当找不到get属性或者方法的时候就会用第三个参数)</span></span><br><span class="line"><span class="string">                handler = 我们自己写的类里面的get方法</span></span><br><span class="line"><span class="string">            &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            handler = <span class="variable language_">self</span>.http_method_not_allowed</span><br><span class="line">        <span class="keyword">return</span> handler(request, *args, **kwargs)</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        自动调用get方法</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 要求掌握到不看源码也能够描述出CBV的内部执行流程(******)</span></span><br></pre></td></tr></table></figure>
+
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
     
-      <span class="category-chain">
-        
-  <a href="/categories/Python/" class="category-chain-item">Python</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/Python/09-Django/" class="category-chain-item">09_Django</a>
-  
-  
 
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
 </div>
 
-
-              
-  
-
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>Day63-模板语法</div>
-      <div>https://gblog.github.io/2022/09/15/03_Python/05_Django/day63笔记-模板语法/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>作者</div>
-          <div>Haris</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>发布于</div>
-          <div>2022年9月15日</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>许可协议</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
-          </div>
-        </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
-  </div>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2022/09/15/03_Python/05_Django/day64%E7%AC%94%E8%AE%B0-DjangoORM%E8%BF%9B%E9%98%B6-01/">Day64-DjangoORM进阶-01</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2022/09/12/03_Python/05_Django/day62%E7%AC%94%E8%AE%B0-Django-03/">Day62-Django-03</a></div></section></div>
 
 
 
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2022/09/15/03_Python/05_Django/day64%E7%AC%94%E8%AE%B0-DjangoORM%E8%BF%9B%E9%98%B6-01/" title="Day64-DjangoORM进阶-01">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Day64-DjangoORM进阶-01</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2022/09/12/03_Python/05_Django/day62%E7%AC%94%E8%AE%B0-Django-03/" title="Day62-Django-03">
-                        <span class="hidden-mobile">Day62-Django-03</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
 
-            
-          </article>
-        </div>
-      </div>
-    </div>
 
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
 
-    </div>
-  </div>
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">Haris</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95"><span class="toc-text">一、模板语法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95%E4%BC%A0%E5%80%BC"><span class="toc-text">1.1 模板语法传值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-1-%E4%BC%A0%E9%80%92%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-text">1.1.1 传递基本数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-2-%E4%BC%A0%E9%80%92%E7%B1%BB%E6%96%B9%E6%B3%95"><span class="toc-text">1.1.2 传递类方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-3-%E9%80%9A%E8%BF%87-%E8%8E%B7%E5%8F%96%E5%80%BC"><span class="toc-text">1.1.3 通过.获取值</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="toc-text">1.2 模板语法过滤器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-1-%E8%BD%AC%E4%B9%89%E8%A1%A5%E5%85%85"><span class="toc-text">1.2.1 转义补充</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-%E6%A0%87%E7%AD%BE"><span class="toc-text">1.3 标签</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-1-for%E5%BE%AA%E7%8E%AF"><span class="toc-text">1.3.1 for循环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-2-if%E5%88%A4%E6%96%AD"><span class="toc-text">1.3.2 if判断</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-3-%E6%A0%87%E7%AD%BE%E6%B7%B7%E7%94%A8"><span class="toc-text">1.3.3 标签混用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-4-%E5%A4%84%E7%90%86%E5%AD%97%E5%85%B8"><span class="toc-text">1.3.4 处理字典</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-5-with%E8%B5%B7%E5%88%AB%E5%90%8D"><span class="toc-text">1.3.5 with起别名</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BF%87%E6%BB%A4%E5%99%A8%E3%80%81%E6%A0%87%E7%AD%BE%E3%80%81Inclusion-tag"><span class="toc-text">1.4 自定义过滤器、标签、Inclusion_tag</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-1-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-text">1.4.1 准备工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-1-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="toc-text">1.4.1 自定义过滤器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-2-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%87%E7%AD%BE"><span class="toc-text">1.4.2 自定义标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-3-%E8%87%AA%E5%AE%9A%E4%B9%89inclusion-tag"><span class="toc-text">1.4.3 自定义inclusion_tag</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-5-%E6%A8%A1%E6%9D%BF%E7%9A%84%E7%BB%A7%E6%89%BF-TODO"><span class="toc-text">1.5 模板的继承(TODO)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-6-%E6%A8%A1%E6%9D%BF%E7%9A%84%E5%AF%BC%E5%85%A5"><span class="toc-text">1.6 模板的导入</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81CBV%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-text">二、CBV源码分析</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
 </div>
+</div><div class="scripts">
 
 
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-
-
-
-
-    
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-    
-
-    
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-  
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-    </div>
-  
-  
-  
-</div>
-
-  </footer>
-
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
-      
-        typing(text);
-      
-    })(window, document);
-  </script>
-
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
     }
+  };
 
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
 </script>
 
-
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
-
-  <script>Fluid.plugins.codeWidget();</script>
-
-
+<script type="text/javascript">
   
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
     };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
         }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
       }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
     });
   });
 </script>
 
-
-  
 <script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
   });
 </script>
 
 
-  <script>Fluid.plugins.imageCaption();</script>
+<!-- inject -->
 
-  <script  src="/js/local-search.js" ></script>
-
-
-
-
-
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
-
-
-  
-
-  <noscript>
-    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
-  </noscript>
-</body>
-</html>
+</div></body></html>

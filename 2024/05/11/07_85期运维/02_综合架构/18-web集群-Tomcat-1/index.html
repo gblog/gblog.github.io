@@ -1,28 +1,29 @@
 
-
-<!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
-
-
+<!DOCTYPE html><html lang="zh-CN">
 
 <head>
-  <meta charset="UTF-8">
-
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
   
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="Haris">
-  <meta name="keywords" content="">
+  <meta name="generator" content="Hexo 7.3.0">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>17-Web集群-Tomcat(一) - Haris的小站</title>
+
   
     <meta name="description" content="Web集群-Tomcat（一）今日内容：  JAVA容器介绍 JAVA环境介绍 Tomcat上手  一、JAVA容器什么是java容器？  用于存放java代码的环境，就叫java容器 web中间件，很多就是java容器，见下表     java容器     Tomcat 最常用，较重，功能完善.   Jetty 轻量，功能较少.   Weblogic 用于Oracle数据库环境使用，Weblog">
 <meta property="og:type" content="article">
 <meta property="og:title" content="17-Web集群-Tomcat(一)">
-<meta property="og:url" content="https://gblog.github.io/2024/05/11/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/18-web%E9%9B%86%E7%BE%A4-Tomcat-1/index.html">
+<meta property="og:url" content="https://gblog.github.io/2024/05/11/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/18-web%E9%9B%86%E7%BE%A4-Tomcat-1/">
 <meta property="og:site_name" content="Haris的小站">
 <meta property="og:description" content="Web集群-Tomcat（一）今日内容：  JAVA容器介绍 JAVA环境介绍 Tomcat上手  一、JAVA容器什么是java容器？  用于存放java代码的环境，就叫java容器 web中间件，很多就是java容器，见下表     java容器     Tomcat 最常用，较重，功能完善.   Jetty 轻量，功能较少.   Weblogic 用于Oracle数据库环境使用，Weblog">
 <meta property="og:locale" content="zh_CN">
@@ -46,271 +47,67 @@
 <meta property="article:published_time" content="2024-05-11T07:23:52.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.329Z">
 <meta property="article:author" content="Haris">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gblog.github.io/img/image-20240511160105925.png">
   
   
   
-  <title>17-Web集群-Tomcat(一) - Haris的小站</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
-  
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
 
 
   
-<link rel="stylesheet" href="/css/custom.css">
-
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"gblog.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-  
-
 
   
-<meta name="generator" content="Hexo 7.3.0"></head>
 
-
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Haris","sameAs":[]},"dateCreated":"2024-05-11T15:23:52+08:00","dateModified":"2026-07-10T14:20:16+08:00","datePublished":"2024-05-11T15:23:52+08:00","description":"","headline":"17-Web集群-Tomcat(一)","mainEntityOfPage":{"@type":"WebPage","@id":"https://gblog.github.io/2024/05/11/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/18-web%E9%9B%86%E7%BE%A4-Tomcat-1/"},"publisher":{"@type":"Organization","name":"Haris","sameAs":[]},"url":"https://gblog.github.io/2024/05/11/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/18-web%E9%9B%86%E7%BE%A4-Tomcat-1/","image":[]}</script>
+  
+</head>
 <body>
-  
 
-  <header>
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="undefined" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">Haris的小站</div><div class="sub cap">null</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
+
+
+
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2025/05/06/10_%E5%AD%A6%E7%A5%9EK8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%9F%BA%E7%A1%80/"><span class="title">01-Docker基础</span></a><a class="item title" href="/2025/03/26/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/06-Docker%E8%B5%84%E6%BA%90%E9%85%8D%E9%A2%9D/"><span class="title">06-Docker资源配额</span></a><a class="item title" href="/2025/03/20/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/05-Docker%E5%AE%B9%E5%99%A8%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96/"><span class="title">05-Docker容器数据持久化</span></a><a class="item title" href="/2025/03/12/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/04-Dockerfile%E5%AE%9E%E6%88%98%E7%AF%87-%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F/"><span class="title">04-Dockerfile实战篇-构建镜像</span></a><a class="item title" href="/2025/03/04/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/03-Dockerfile%E5%9F%BA%E7%A1%80%E7%AF%87-%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/"><span class="title">03-Dockerfile基础篇-基本语法</span></a><a class="item title" href="/2025/03/03/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/02-%E8%BF%90%E8%A1%8CDocker%E5%AE%B9%E5%99%A8/"><span class="title">02-运行Docker容器</span></a><a class="item title" href="/2025/03/03/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80/"><span class="title">01-Docker基础</span></a><a class="item title" href="/2024/07/27/08_%E7%BD%91%E7%BB%9C/day03-HCIA%E8%AF%BE%E7%A8%8B-01/"><span class="title">day03-HCIA课程(一)</span></a><a class="item title" href="/2024/07/28/08_%E7%BD%91%E7%BB%9C/day02-%E7%BD%91%E5%B7%A5%E5%85%A5%E9%97%A8-02/"><span class="title">day02-网工入门（二）</span></a><a class="item title" href="/2024/07/27/08_%E7%BD%91%E7%BB%9C/day01-%E7%BD%91%E5%B7%A5%E5%85%A5%E9%97%A8-01/"><span class="title">day01-网工入门（一）</span></a></div></widget>
+</div>
+
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a> <span class="sep"></span> <a class="cap breadcrumb-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/">（二）综合架构</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-05-11T07:23:52.000Z">2024-05-11</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2026-07-10T06:20:16.329Z">2026-07-10</time></span></div></div></div>
     
-
-<div class="header-inner" style="height: 70vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>Haris的博客</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>首页</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>归档</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>分类</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="17-Web集群-Tomcat(一)"></span>
-          
-        </div>
-
-        
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-05-11 15:23" pubdate>
-          2024年5月11日 下午
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
-        
-          4k 字
-        
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
-        
-        
-        
-          34 分钟
-        
-      </span>
-    
-
-    
-    
-  </div>
-
-
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>17-Web集群-Tomcat(一)</span></h1>
         
       </div>
-
-      
     </div>
-  </div>
-</div>
-
-</div>
-
-  </header>
-
-  <main>
     
-      
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
-
-    </div>
-
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">17-Web集群-Tomcat(一)</h1>
-            
-            
-              <div class="markdown-body">
-                
-                <h1 id="Web集群-Tomcat（一）"><a href="#Web集群-Tomcat（一）" class="headerlink" title="Web集群-Tomcat（一）"></a>Web集群-Tomcat（一）</h1><p>今日内容：</p>
+  </div>
+  </div><article class="md-text content"><h1 id="Web集群-Tomcat（一）"><a href="#Web集群-Tomcat（一）" class="headerlink" title="Web集群-Tomcat（一）"></a>Web集群-Tomcat（一）</h1><p>今日内容：</p>
 <ul>
 <li>JAVA容器介绍</li>
 <li>JAVA环境介绍</li>
@@ -352,7 +149,7 @@
 <li>JDK: Java Development Kit，java开发环境 , jvm+jre+额外功能</li>
 </ul>
 <p>图示如下：</p>
-<p><img src="/../../../img/image-20240511160105925.png" srcset="/img/loading.gif" lazyload alt="image-20240511160105925"></p>
+<p><img src="/../../../img/image-20240511160105925.png" alt="image-20240511160105925"></p>
 <blockquote>
 <p>提示：</p>
 <p>未来部署JDK即可，主要版本JDK1.8 或称 JDK8</p>
@@ -386,22 +183,22 @@
 <h2 id="3-2-部署JDK"><a href="#3-2-部署JDK" class="headerlink" title="3.2 部署JDK"></a>3.2 部署JDK</h2><p>版本：JDK-8u411</p>
 <p>下载：<a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/downloads/#java8">https://www.oracle.com/java/technologies/downloads/#java8</a></p>
 <p>部署</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">解压</span><br>tar -vxf jdk-8u411-linux-x64.tar.gz -C /app/tools/<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">创建软连接</span><br>ln -s /app/tools/jdk1.8.0_411/ /app/tools/jdk<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">配置JAVA环境变量</span><br>[root@web03[ /app/tools]#tail -n 4 /etc/profile<br><span class="hljs-meta prompt_"># </span><span class="language-bash">JDK环境</span><br>export JAVA_HOME=/app/tools/jdk<br>export PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH<br>export CLASSPATH=.$CLASSPATH:$JAVA_HOME/lib:$JAVA_HOME/jre/lib:$JAVA_HOME/lib/tools.jar<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">生效</span><br>source /etc/profile<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">测试java命令</span><br>[root@web03[ /app/tools]#java -version<br>java version &quot;1.8.0_411&quot;<br>Java(TM) SE Runtime Environment (build 1.8.0_411-b09)<br>Java HotSpot(TM) 64-Bit Server VM (build 25.411-b09, mixed mode)<br>[root@web03[ /app/tools]#which java<br>/app/tools/jdk/bin/java<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">解压</span></span><br><span class="line">tar -vxf jdk-8u411-linux-x64.tar.gz -C /app/tools/</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建软连接</span></span><br><span class="line">ln -s /app/tools/jdk1.8.0_411/ /app/tools/jdk</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置JAVA环境变量</span></span><br><span class="line">[root@web03[ /app/tools]#tail -n 4 /etc/profile</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">JDK环境</span></span><br><span class="line">export JAVA_HOME=/app/tools/jdk</span><br><span class="line">export PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH</span><br><span class="line">export CLASSPATH=.$CLASSPATH:$JAVA_HOME/lib:$JAVA_HOME/jre/lib:$JAVA_HOME/lib/tools.jar</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">生效</span></span><br><span class="line">source /etc/profile</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">测试java命令</span></span><br><span class="line">[root@web03[ /app/tools]#java -version</span><br><span class="line">java version &quot;1.8.0_411&quot;</span><br><span class="line">Java(TM) SE Runtime Environment (build 1.8.0_411-b09)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.411-b09, mixed mode)</span><br><span class="line">[root@web03[ /app/tools]#which java</span><br><span class="line">/app/tools/jdk/bin/java</span><br></pre></td></tr></table></figure>
 
 
 
 <h2 id="3-3-部署Tomcat"><a href="#3-3-部署Tomcat" class="headerlink" title="3.3 部署Tomcat"></a>3.3 部署Tomcat</h2><p>版本：9.0.89</p>
 <p>下载：<a target="_blank" rel="noopener" href="https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.89/bin/apache-tomcat-9.0.89.tar.gz">https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.89/bin/apache-tomcat-9.0.89.tar.gz</a></p>
 <p>部署</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs shell">tar -vxf apache-tomcat-9.0.89.tar.gz -C /app/tools/<br>ln -s /app/tools/apache-tomcat-9.0.89 /app/tools/tomcat<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">测试</span><br>[root@web03[ /app/tools]#tomcat/bin/version.sh<br>Using CATALINA_BASE:   /app/tools/tomcat<br>Using CATALINA_HOME:   /app/tools/tomcat<br>Using CATALINA_TMPDIR: /app/tools/tomcat/temp<br>Using JRE_HOME:        /app/tools/jdk<br>Using CLASSPATH:       /app/tools/tomcat/bin/bootstrap.jar:/app/tools/tomcat/bin/tomcat-juli.jar<br>Using CATALINA_OPTS:<br>Server version: Apache Tomcat/9.0.89<br>Server built:   May 3 2024 20:22:11 UTC<br>Server number:  9.0.89.0<br>OS Name:        Linux<br>OS Version:     3.10.0-1160.el7.x86_64<br>Architecture:   amd64<br>JVM Version:    1.8.0_411-b09<br>JVM Vendor:     Oracle Corporation<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">tar -vxf apache-tomcat-9.0.89.tar.gz -C /app/tools/</span><br><span class="line">ln -s /app/tools/apache-tomcat-9.0.89 /app/tools/tomcat</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">测试</span></span><br><span class="line">[root@web03[ /app/tools]#tomcat/bin/version.sh</span><br><span class="line">Using CATALINA_BASE:   /app/tools/tomcat</span><br><span class="line">Using CATALINA_HOME:   /app/tools/tomcat</span><br><span class="line">Using CATALINA_TMPDIR: /app/tools/tomcat/temp</span><br><span class="line">Using JRE_HOME:        /app/tools/jdk</span><br><span class="line">Using CLASSPATH:       /app/tools/tomcat/bin/bootstrap.jar:/app/tools/tomcat/bin/tomcat-juli.jar</span><br><span class="line">Using CATALINA_OPTS:</span><br><span class="line">Server version: Apache Tomcat/9.0.89</span><br><span class="line">Server built:   May 3 2024 20:22:11 UTC</span><br><span class="line">Server number:  9.0.89.0</span><br><span class="line">OS Name:        Linux</span><br><span class="line">OS Version:     3.10.0-1160.el7.x86_64</span><br><span class="line">Architecture:   amd64</span><br><span class="line">JVM Version:    1.8.0_411-b09</span><br><span class="line">JVM Vendor:     Oracle Corporation</span><br></pre></td></tr></table></figure>
 
 <p>启动Tomcat</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">启动</span><br>[root@web03[ /app/tools]#tomcat/bin/startup.sh<br>Using CATALINA_BASE:   /app/tools/tomcat<br>Using CATALINA_HOME:   /app/tools/tomcat<br>Using CATALINA_TMPDIR: /app/tools/tomcat/temp<br>Using JRE_HOME:        /app/tools/jdk<br>Using CLASSPATH:       /app/tools/tomcat/bin/bootstrap.jar:/app/tools/tomcat/bin/tomcat-juli.jar<br>Using CATALINA_OPTS:<br>Tomcat started.<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">查看进程信息, 默认在8080端口监听</span><br>[root@web03[ /app/tools]#ss -lntup | grep java<br>tcp    LISTEN     0      100    [::]:8080               [::]:*                   users:((&quot;java&quot;,pid=2585,fd=57))<br>tcp    LISTEN     0      1        [::ffff:127.0.0.1]:8005               [::]:*                   users:((&quot;java&quot;,pid=2585,fd=65))<br><br><br>[root@web03[ /app/tools]#ps -ef | grep java<br>root       2585      1  9 16:27 pts/0    00:00:02 /app/tools/jdk/bin/java -Djava.util.logging.config.file=/app/tools/tomcat/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djdk.tls.ephemeralDHKeySize=2048 -Djava.protocol.handler.pkgs=org.apache.catalina.webresources -Dorg.apache.catalina.security.SecurityListener.UMASK=0027 -Dignore.endorsed.dirs= -classpath /app/tools/tomcat/bin/bootstrap.jar:/app/tools/tomcat/bin/tomcat-juli.jar -Dcatalina.base=/app/tools/tomcat -Dcatalina.home=/app/tools/tomcat -Djava.io.tmpdir=/app/tools/tomcat/temp org.apache.catalina.startup.Bootstrap start<br>root       2628   2312  0 16:27 pts/0    00:00:00 grep --color=auto java<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动</span></span><br><span class="line">[root@web03[ /app/tools]#tomcat/bin/startup.sh</span><br><span class="line">Using CATALINA_BASE:   /app/tools/tomcat</span><br><span class="line">Using CATALINA_HOME:   /app/tools/tomcat</span><br><span class="line">Using CATALINA_TMPDIR: /app/tools/tomcat/temp</span><br><span class="line">Using JRE_HOME:        /app/tools/jdk</span><br><span class="line">Using CLASSPATH:       /app/tools/tomcat/bin/bootstrap.jar:/app/tools/tomcat/bin/tomcat-juli.jar</span><br><span class="line">Using CATALINA_OPTS:</span><br><span class="line">Tomcat started.</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看进程信息, 默认在8080端口监听</span></span><br><span class="line">[root@web03[ /app/tools]#ss -lntup | grep java</span><br><span class="line">tcp    LISTEN     0      100    [::]:8080               [::]:*                   users:((&quot;java&quot;,pid=2585,fd=57))</span><br><span class="line">tcp    LISTEN     0      1        [::ffff:127.0.0.1]:8005               [::]:*                   users:((&quot;java&quot;,pid=2585,fd=65))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@web03[ /app/tools]#ps -ef | grep java</span><br><span class="line">root       2585      1  9 16:27 pts/0    00:00:02 /app/tools/jdk/bin/java -Djava.util.logging.config.file=/app/tools/tomcat/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djdk.tls.ephemeralDHKeySize=2048 -Djava.protocol.handler.pkgs=org.apache.catalina.webresources -Dorg.apache.catalina.security.SecurityListener.UMASK=0027 -Dignore.endorsed.dirs= -classpath /app/tools/tomcat/bin/bootstrap.jar:/app/tools/tomcat/bin/tomcat-juli.jar -Dcatalina.base=/app/tools/tomcat -Dcatalina.home=/app/tools/tomcat -Djava.io.tmpdir=/app/tools/tomcat/temp org.apache.catalina.startup.Bootstrap start</span><br><span class="line">root       2628   2312  0 16:27 pts/0    00:00:00 grep --color=auto java</span><br></pre></td></tr></table></figure>
 
 <p>测试访问：<a target="_blank" rel="noopener" href="http://10.0.0.9:8080/">http://10.0.0.9:8080/</a></p>
-<p><img src="/../../../img/image-20240511163252296.png" srcset="/img/loading.gif" lazyload alt="image-20240511163252296"></p>
+<p><img src="/../../../img/image-20240511163252296.png" alt="image-20240511163252296"></p>
 <h1 id="四、Tomcat目录结构"><a href="#四、Tomcat目录结构" class="headerlink" title="四、Tomcat目录结构"></a>四、Tomcat目录结构</h1><h2 id="4-1-目录概述"><a href="#4-1-目录概述" class="headerlink" title="4.1 目录概述"></a>4.1 目录概述</h2><p>Tomcat下有如下目录：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@web03[ /app/tools]#ll tomcat/<br>total 132<br>drwxr-x---. 2 root root  4096 May 11 16:25 bin<br>-rw-r-----. 1 root root 20913 May  4 04:22 BUILDING.txt<br>drwx------. 3 root root   254 May 11 16:27 conf<br>-rw-r-----. 1 root root  6210 May  4 04:22 CONTRIBUTING.md<br>drwxr-x---. 2 root root  4096 May 11 16:25 lib<br>-rw-r-----. 1 root root 57092 May  4 04:22 LICENSE<br>drwxr-x---. 2 root root   197 May 11 16:27 logs<br>-rw-r-----. 1 root root  2333 May  4 04:22 NOTICE<br>-rw-r-----. 1 root root  3283 May  4 04:22 README.md<br>-rw-r-----. 1 root root  6901 May  4 04:22 RELEASE-NOTES<br>-rw-r-----. 1 root root 16505 May  4 04:22 RUNNING.txt<br>drwxr-x---. 2 root root    30 May 11 16:25 temp<br>drwxr-x---. 7 root root    81 May  4 04:22 webapps<br>drwxr-x---. 3 root root    22 May 11 16:27 work<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@web03[ /app/tools]#ll tomcat/</span><br><span class="line">total 132</span><br><span class="line">drwxr-x---. 2 root root  4096 May 11 16:25 bin</span><br><span class="line">-rw-r-----. 1 root root 20913 May  4 04:22 BUILDING.txt</span><br><span class="line">drwx------. 3 root root   254 May 11 16:27 conf</span><br><span class="line">-rw-r-----. 1 root root  6210 May  4 04:22 CONTRIBUTING.md</span><br><span class="line">drwxr-x---. 2 root root  4096 May 11 16:25 lib</span><br><span class="line">-rw-r-----. 1 root root 57092 May  4 04:22 LICENSE</span><br><span class="line">drwxr-x---. 2 root root   197 May 11 16:27 logs</span><br><span class="line">-rw-r-----. 1 root root  2333 May  4 04:22 NOTICE</span><br><span class="line">-rw-r-----. 1 root root  3283 May  4 04:22 README.md</span><br><span class="line">-rw-r-----. 1 root root  6901 May  4 04:22 RELEASE-NOTES</span><br><span class="line">-rw-r-----. 1 root root 16505 May  4 04:22 RUNNING.txt</span><br><span class="line">drwxr-x---. 2 root root    30 May 11 16:25 temp</span><br><span class="line">drwxr-x---. 7 root root    81 May  4 04:22 webapps</span><br><span class="line">drwxr-x---. 3 root root    22 May 11 16:27 work</span><br></pre></td></tr></table></figure>
 
 <p>重要目录的概述如下</p>
 <table>
@@ -496,14 +293,14 @@
 </tbody></table>
 <h2 id="4-5-webapps目录"><a href="#4-5-webapps目录" class="headerlink" title="4.5 webapps目录"></a>4.5 webapps目录</h2><p>站点目录<br>war包，自动解压，自动部署  </p>
 <h1 id="五、Tomcat日常管理与访问"><a href="#五、Tomcat日常管理与访问" class="headerlink" title="五、Tomcat日常管理与访问"></a>五、Tomcat日常管理与访问</h1><h2 id="5-1-日常启动与维护"><a href="#5-1-日常启动与维护" class="headerlink" title="5.1 日常启动与维护"></a>5.1 日常启动与维护</h2><p>启动tomcat查看日志</p>
-<p><img src="/../../../img/image-20240511163938313.png" srcset="/img/loading.gif" lazyload alt="image-20240511163938313"></p>
+<p><img src="/../../../img/image-20240511163938313.png" alt="image-20240511163938313"></p>
 <p>浏览器测试访问：<a target="_blank" rel="noopener" href="http://10.0.0.9:8080/">http://10.0.0.9:8080/</a>  </p>
 <h2 id="5-2-systemctl管理配置文件介绍"><a href="#5-2-systemctl管理配置文件介绍" class="headerlink" title="5.2 systemctl管理配置文件介绍"></a>5.2 systemctl管理配置文件介绍</h2><p>如果纯靠手动执行<code>startup.sh</code>脚本来维护tomcat，有些费时费力，可以把这些工作写成systemctl服务，用服务来自动管理。</p>
 <p>服务管理指令存放：<code>/usr/lib/systemd/system/xxxx.service</code>，</p>
 <p>分为3个部分：Unit、Service、Install</p>
 <p>修改或设置systemctl配置要进行重新加载配置  </p>
 <p>比如sshd服务的配置</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@web03[ /app/tools]#cat /usr/lib/systemd/system/sshd.service<br>[Unit]<br>Description=OpenSSH server daemon<br>Documentation=man:sshd(8) man:sshd_config(5)<br>After=network.target sshd-keygen.service<br>Wants=sshd-keygen.service<br><br>[Service]<br>Type=notify<br>EnvironmentFile=/etc/sysconfig/sshd<br>ExecStart=/usr/sbin/sshd -D $OPTIONS<br>ExecReload=/bin/kill -HUP $MAINPID<br>KillMode=process<br>Restart=on-failure<br>RestartSec=42s<br><br>[Install]<br>WantedBy=multi-user.target<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@web03[ /app/tools]#cat /usr/lib/systemd/system/sshd.service</span><br><span class="line">[Unit]</span><br><span class="line">Description=OpenSSH server daemon</span><br><span class="line">Documentation=man:sshd(8) man:sshd_config(5)</span><br><span class="line">After=network.target sshd-keygen.service</span><br><span class="line">Wants=sshd-keygen.service</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=notify</span><br><span class="line">EnvironmentFile=/etc/sysconfig/sshd</span><br><span class="line">ExecStart=/usr/sbin/sshd -D $OPTIONS</span><br><span class="line">ExecReload=/bin/kill -HUP $MAINPID</span><br><span class="line">KillMode=process</span><br><span class="line">Restart=on-failure</span><br><span class="line">RestartSec=42s</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
 
 <p>各项解释如下：</p>
 <table>
@@ -559,16 +356,16 @@
 </tr>
 </tbody></table>
 <h2 id="5-3-创建systemctl文件"><a href="#5-3-创建systemctl文件" class="headerlink" title="5.3 创建systemctl文件"></a>5.3 创建systemctl文件</h2><p>创建环境变量文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@web03[ /etc/sysconfig]#cat /etc/sysconfig/tomcat<br>JAVA_HOME=/app/tools/jdk<br>PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:/usr/bin/:/usr/sbin/:/usr/local/bin/:/usr/local/sbin/<br>CLASSPATH=.$CLASSPATH:$JAVA_HOME/lib:$JAVA_HOME/jre/lib:$JAVA_HOME/lib/tools.jar<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@web03[ /etc/sysconfig]#cat /etc/sysconfig/tomcat</span><br><span class="line">JAVA_HOME=/app/tools/jdk</span><br><span class="line">PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:/usr/bin/:/usr/sbin/:/usr/local/bin/:/usr/local/sbin/</span><br><span class="line">CLASSPATH=.$CLASSPATH:$JAVA_HOME/lib:$JAVA_HOME/jre/lib:$JAVA_HOME/lib/tools.jar</span><br></pre></td></tr></table></figure>
 
 <p>创建tomcat systemctl文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@web03[ /usr/lib/systemd/system]#cat tomcat.service<br>[Unit]<br>Description=Tomcat java web container<br>After=network.target<br><br>[Service]<br>Type=forking<br>EnvironmentFile=/etc/sysconfig/tomcat<br>ExecStart=/app/tools/tomcat/bin/startup.sh<br>ExecStop=/app/tools/tomcat/bin/shutdown.sh<br>ExecReload=/app/tools/tomcat/bin/shutdown.sh &amp;&amp; sleep 1 &amp;&amp; /app/tools/tomcat/bin/startup.sh<br><br>[Install]<br>WantedBy=multi-user.target<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@web03[ /usr/lib/systemd/system]#cat tomcat.service</span><br><span class="line">[Unit]</span><br><span class="line">Description=Tomcat java web container</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=forking</span><br><span class="line">EnvironmentFile=/etc/sysconfig/tomcat</span><br><span class="line">ExecStart=/app/tools/tomcat/bin/startup.sh</span><br><span class="line">ExecStop=/app/tools/tomcat/bin/shutdown.sh</span><br><span class="line">ExecReload=/app/tools/tomcat/bin/shutdown.sh &amp;&amp; sleep 1 &amp;&amp; /app/tools/tomcat/bin/startup.sh</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
 
 <p>重新加载配置（重要，不能忘记！！）</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl daemon-reload<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl daemon-reload</span><br></pre></td></tr></table></figure>
 
 <p>测试</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@web03[ /usr/lib/systemd/system]#systemctl enable tomcat.service<br>Created symlink from /etc/systemd/system/multi-user.target.wants/tomcat.service to /usr/lib/systemd/system/tomcat.service.<br>[root@web03[ /usr/lib/systemd/system]#systemctl start tomcat.service<br>[root@web03[ /usr/lib/systemd/system]#systemctl status tomcat.service<br>● tomcat.service - Tomcat java web container<br>   Loaded: loaded (/usr/lib/systemd/system/tomcat.service; enabled; vendor preset: disabled)<br>   Active: inactive (dead) since Sat 2024-05-11 16:52:52 CST; 637ms ago<br>  Process: 2956 ExecStop=/app/tools/tomcat/bin/shutdown.sh (code=exited, status=0/SUCCESS)<br>  Process: 2931 ExecStart=/app/tools/tomcat/bin/startup.sh (code=exited, status=0/SUCCESS)<br> Main PID: 2939 (code=exited, status=0/SUCCESS)<br><br>May 11 16:52:49 web03 systemd[1]: Starting Tomcat java web container...<br>May 11 16:52:49 web03 startup.sh[2931]: Tomcat started.<br>May 11 16:52:49 web03 systemd[1]: Started Tomcat java web container.<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@web03[ /usr/lib/systemd/system]#systemctl enable tomcat.service</span><br><span class="line">Created symlink from /etc/systemd/system/multi-user.target.wants/tomcat.service to /usr/lib/systemd/system/tomcat.service.</span><br><span class="line">[root@web03[ /usr/lib/systemd/system]#systemctl start tomcat.service</span><br><span class="line">[root@web03[ /usr/lib/systemd/system]#systemctl status tomcat.service</span><br><span class="line">● tomcat.service - Tomcat java web container</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/tomcat.service; enabled; vendor preset: disabled)</span><br><span class="line">   Active: inactive (dead) since Sat 2024-05-11 16:52:52 CST; 637ms ago</span><br><span class="line">  Process: 2956 ExecStop=/app/tools/tomcat/bin/shutdown.sh (code=exited, status=0/SUCCESS)</span><br><span class="line">  Process: 2931 ExecStart=/app/tools/tomcat/bin/startup.sh (code=exited, status=0/SUCCESS)</span><br><span class="line"> Main PID: 2939 (code=exited, status=0/SUCCESS)</span><br><span class="line"></span><br><span class="line">May 11 16:52:49 web03 systemd[1]: Starting Tomcat java web container...</span><br><span class="line">May 11 16:52:49 web03 startup.sh[2931]: Tomcat started.</span><br><span class="line">May 11 16:52:49 web03 systemd[1]: Started Tomcat java web container.</span><br></pre></td></tr></table></figure>
 
 
 
@@ -593,18 +390,18 @@
 </tr>
 </tbody></table>
 <h3 id="5-4-1-运行war包案例"><a href="#5-4-1-运行war包案例" class="headerlink" title="5.4.1 运行war包案例"></a>5.4.1 运行war包案例</h3><p>上传memtest.war包，放在webapps目录，然后访问即可</p>
-  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@web03[ /app/tools/tomcat/webapps]#ls<br>docs  examples  host-manager  manager  memtest.war  ROOT<br></code></pre></td></tr></table></figure>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@web03[ /app/tools/tomcat/webapps]#ls</span><br><span class="line">docs  examples  host-manager  manager  memtest.war  ROOT</span><br></pre></td></tr></table></figure>
 
 <p>测试访问：<a target="_blank" rel="noopener" href="http://10.0.0.9:8080/memtest/meminfo.jsp">http://10.0.0.9:8080/memtest/meminfo.jsp</a></p>
-<p><img src="/../../../img/image-20240511170000316.png" srcset="/img/loading.gif" lazyload alt="image-20240511170000316"></p>
+<p><img src="/../../../img/image-20240511170000316.png" alt="image-20240511170000316"></p>
 <h3 id="5-4-2-运行jar包案例"><a href="#5-4-2-运行jar包案例" class="headerlink" title="5.4.2 运行jar包案例"></a>5.4.2 运行jar包案例</h3><blockquote>
 <p>JAR包如果内置了Tomcat，直接指定端口运行即可</p>
 </blockquote>
 <p>下载程序包：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">wget http://file.nginxwebui.cn/nginxWebUI-3.4.0.jar<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://file.nginxwebui.cn/nginxWebUI-3.4.0.jar</span><br></pre></td></tr></table></figure>
 
 <p>部署</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">nohup java -jar -Dfile.encoding=UTF-8 /home/nginxWebUI/nginxWebUI-4.0.8.jar --server.port=8081 --project.home=/home/nginxWebUI/ &gt; /dev/null &amp;<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup java -jar -Dfile.encoding=UTF-8 /home/nginxWebUI/nginxWebUI-4.0.8.jar --server.port=8081 --project.home=/home/nginxWebUI/ &gt; /dev/null &amp;</span><br></pre></td></tr></table></figure>
 
 <p>参数说明</p>
 <table>
@@ -628,7 +425,7 @@
 </tr>
 </tbody></table>
 <p>测试访问：<a target="_blank" rel="noopener" href="http://10.0.0.9:8081/adminPage/login">http://10.0.0.9:8081/adminPage/login</a></p>
-<p><img src="/../../../img/image-20240511171222761.png" srcset="/img/loading.gif" lazyload alt="image-20240511171222761"></p>
+<p><img src="/../../../img/image-20240511171222761.png" alt="image-20240511171222761"></p>
 <h2 id="5-6-Tomcat管理端（熟悉即可）"><a href="#5-6-Tomcat管理端（熟悉即可）" class="headerlink" title="5.6 Tomcat管理端（熟悉即可）"></a>5.6 Tomcat管理端（熟悉即可）</h2><p>tomcat管理端：</p>
 <ul>
 <li>用于web页面管理与查看tomcat信息的功能。</li>
@@ -640,20 +437,20 @@
 <li>修改安全配置，默认只能127访问，去掉此限制</li>
 </ol>
 <p>修改配置文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@web03[ /app/tools/tomcat/conf]#cat tomcat-users.xml<br>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>&lt;tomcat-users xmlns=&quot;http://tomcat.apache.org/xml&quot;<br>              xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;<br>              xsi:schemaLocation=&quot;http://tomcat.apache.org/xml tomcat-users.xsd&quot;<br>              version=&quot;1.0&quot;&gt;<br>&lt;!-- 添加  --&gt;<br>&lt;role rolename=&quot;manager-gui&quot;/&gt;<br>&lt;role rolename=&quot;admin-gui&quot;/&gt;<br>&lt;user username=&quot;lidao996&quot; password=&quot;1&quot; roles=&quot;manager-gui,admin-gui&quot;/&gt;<br>&lt;/tomcat-users&gt;<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@web03[ /app/tools/tomcat/conf]#cat tomcat-users.xml</span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;tomcat-users xmlns=&quot;http://tomcat.apache.org/xml&quot;</span><br><span class="line">              xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">              xsi:schemaLocation=&quot;http://tomcat.apache.org/xml tomcat-users.xsd&quot;</span><br><span class="line">              version=&quot;1.0&quot;&gt;</span><br><span class="line">&lt;!-- 添加  --&gt;</span><br><span class="line">&lt;role rolename=&quot;manager-gui&quot;/&gt;</span><br><span class="line">&lt;role rolename=&quot;admin-gui&quot;/&gt;</span><br><span class="line">&lt;user username=&quot;lidao996&quot; password=&quot;1&quot; roles=&quot;manager-gui,admin-gui&quot;/&gt;</span><br><span class="line">&lt;/tomcat-users&gt;</span><br></pre></td></tr></table></figure>
 
 <p>去掉只能127网段访问的限制，否则10网段访问将报403错误</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sed -i &#x27;s#127#\\d+#g&#x27; ./host-manager/META-INF/context.xml ./host-manager/WEB-INF/manager.xml  ./manager/META-INF/context.xml<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -i &#x27;s#127#\\d+#g&#x27; ./host-manager/META-INF/context.xml ./host-manager/WEB-INF/manager.xml  ./manager/META-INF/context.xml</span><br></pre></td></tr></table></figure>
 
 <p>重启服务</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl restart tomcat<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart tomcat</span><br></pre></td></tr></table></figure>
 
 <p>测试访问：<a target="_blank" rel="noopener" href="http://10.0.0.9:8080/manager/status">http://10.0.0.9:8080/manager/status</a></p>
-<p><img src="/../../../img/image-20240513103228645.png" srcset="/img/loading.gif" lazyload alt="image-20240513103228645"></p>
+<p><img src="/../../../img/image-20240513103228645.png" alt="image-20240513103228645"></p>
 <p>输入配置的账号密码，成功进入</p>
-<p><img src="/../../../img/image-20240513103255698.png" srcset="/img/loading.gif" lazyload alt="image-20240513103255698"></p>
+<p><img src="/../../../img/image-20240513103255698.png" alt="image-20240513103255698"></p>
 <h1 id="六、Tomcat集群"><a href="#六、Tomcat集群" class="headerlink" title="六、Tomcat集群"></a>六、Tomcat集群</h1><h2 id="6-1-Tomcat配置文件详解"><a href="#6-1-Tomcat配置文件详解" class="headerlink" title="6.1 Tomcat配置文件详解"></a>6.1 Tomcat配置文件详解</h2><p>主配置文件：<code>conf/server.xml</code></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 8085 shutdown端口，连接这个端口输入shutdown字符，就可以关闭tomcat --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">Server</span> <span class="hljs-attr">port</span>=<span class="hljs-string">&quot;8005&quot;</span> <span class="hljs-attr">shutdown</span>=<span class="hljs-string">&quot;SHUTDOWN&quot;</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- 管理端认证功能 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">GlobalNamingResources</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">Resource</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;UserDatabase&quot;</span> <span class="hljs-attr">auth</span>=<span class="hljs-string">&quot;Container&quot;</span></span><br><span class="hljs-tag">              <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;org.apache.catalina.UserDatabase&quot;</span></span><br><span class="hljs-tag">              <span class="hljs-attr">description</span>=<span class="hljs-string">&quot;User database that can be updated and saved&quot;</span></span><br><span class="hljs-tag">              <span class="hljs-attr">factory</span>=<span class="hljs-string">&quot;org.apache.catalina.users.MemoryUserDatabaseFactory&quot;</span></span><br><span class="hljs-tag">              <span class="hljs-attr">pathname</span>=<span class="hljs-string">&quot;conf/tomcat-users.xml&quot;</span> /&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">GlobalNamingResources</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- 8080端口 处理用户Http请求 --&gt;</span><br> <span class="hljs-tag">&lt;<span class="hljs-name">Connector</span> <span class="hljs-attr">port</span>=<span class="hljs-string">&quot;8080&quot;</span> <span class="hljs-attr">protocol</span>=<span class="hljs-string">&quot;HTTP/1.1&quot;</span></span><br><span class="hljs-tag">               <span class="hljs-attr">connectionTimeout</span>=<span class="hljs-string">&quot;20000&quot;</span></span><br><span class="hljs-tag">               <span class="hljs-attr">redirectPort</span>=<span class="hljs-string">&quot;8443&quot;</span></span><br><span class="hljs-tag">               <span class="hljs-attr">maxParameterCount</span>=<span class="hljs-string">&quot;1000&quot;</span></span><br><span class="hljs-tag">               /&gt;</span><br><br><span class="hljs-comment">&lt;!--  Engine部署，指定默认的虚拟主机，这里指定localhost为默认虚拟主机 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">Engine</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;Catalina&quot;</span> <span class="hljs-attr">defaultHost</span>=<span class="hljs-string">&quot;localhost&quot;</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- Host部分，虚拟主机的配置, name就是域名 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">Host</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;localhost&quot;</span>  <span class="hljs-attr">appBase</span>=<span class="hljs-string">&quot;webapps&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">unpackWARs</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">autoDeploy</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">Valve</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;org.apache.catalina.valves.AccessLogValve&quot;</span> <span class="hljs-attr">directory</span>=<span class="hljs-string">&quot;logs&quot;</span></span><br><span class="hljs-tag">               <span class="hljs-attr">prefix</span>=<span class="hljs-string">&quot;localhost_access_log&quot;</span> <span class="hljs-attr">suffix</span>=<span class="hljs-string">&quot;.txt&quot;</span></span><br><span class="hljs-tag">               <span class="hljs-attr">pattern</span>=<span class="hljs-string">&quot;%h %l %u %t <span class="hljs-symbol">&amp;quot;</span>%r<span class="hljs-symbol">&amp;quot;</span> %s %b&quot;</span> /&gt;</span><br><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">Host</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- 日志记录部分 --&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">Valve</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;org.apache.catalina.valves.AccessLogValve&quot;</span> <span class="hljs-attr">directory</span>=<span class="hljs-string">&quot;logs&quot;</span></span><br><span class="hljs-tag">               <span class="hljs-attr">prefix</span>=<span class="hljs-string">&quot;localhost_access_log&quot;</span> <span class="hljs-attr">suffix</span>=<span class="hljs-string">&quot;.txt&quot;</span></span><br><span class="hljs-tag">               <span class="hljs-attr">pattern</span>=<span class="hljs-string">&quot;%h %l %u %t <span class="hljs-symbol">&amp;quot;</span>%r<span class="hljs-symbol">&amp;quot;</span> %s %b&quot;</span> /&gt;</span><br><br></code></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 8085 shutdown端口，连接这个端口输入shutdown字符，就可以关闭tomcat --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">Server</span> <span class="attr">port</span>=<span class="string">&quot;8005&quot;</span> <span class="attr">shutdown</span>=<span class="string">&quot;SHUTDOWN&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 管理端认证功能 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">GlobalNamingResources</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Resource</span> <span class="attr">name</span>=<span class="string">&quot;UserDatabase&quot;</span> <span class="attr">auth</span>=<span class="string">&quot;Container&quot;</span></span></span><br><span class="line"><span class="tag">              <span class="attr">type</span>=<span class="string">&quot;org.apache.catalina.UserDatabase&quot;</span></span></span><br><span class="line"><span class="tag">              <span class="attr">description</span>=<span class="string">&quot;User database that can be updated and saved&quot;</span></span></span><br><span class="line"><span class="tag">              <span class="attr">factory</span>=<span class="string">&quot;org.apache.catalina.users.MemoryUserDatabaseFactory&quot;</span></span></span><br><span class="line"><span class="tag">              <span class="attr">pathname</span>=<span class="string">&quot;conf/tomcat-users.xml&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">GlobalNamingResources</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 8080端口 处理用户Http请求 --&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">Connector</span> <span class="attr">port</span>=<span class="string">&quot;8080&quot;</span> <span class="attr">protocol</span>=<span class="string">&quot;HTTP/1.1&quot;</span></span></span><br><span class="line"><span class="tag">               <span class="attr">connectionTimeout</span>=<span class="string">&quot;20000&quot;</span></span></span><br><span class="line"><span class="tag">               <span class="attr">redirectPort</span>=<span class="string">&quot;8443&quot;</span></span></span><br><span class="line"><span class="tag">               <span class="attr">maxParameterCount</span>=<span class="string">&quot;1000&quot;</span></span></span><br><span class="line"><span class="tag">               /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--  Engine部署，指定默认的虚拟主机，这里指定localhost为默认虚拟主机 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">Engine</span> <span class="attr">name</span>=<span class="string">&quot;Catalina&quot;</span> <span class="attr">defaultHost</span>=<span class="string">&quot;localhost&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- Host部分，虚拟主机的配置, name就是域名 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">Host</span> <span class="attr">name</span>=<span class="string">&quot;localhost&quot;</span>  <span class="attr">appBase</span>=<span class="string">&quot;webapps&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">unpackWARs</span>=<span class="string">&quot;true&quot;</span> <span class="attr">autoDeploy</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Valve</span> <span class="attr">className</span>=<span class="string">&quot;org.apache.catalina.valves.AccessLogValve&quot;</span> <span class="attr">directory</span>=<span class="string">&quot;logs&quot;</span></span></span><br><span class="line"><span class="tag">               <span class="attr">prefix</span>=<span class="string">&quot;localhost_access_log&quot;</span> <span class="attr">suffix</span>=<span class="string">&quot;.txt&quot;</span></span></span><br><span class="line"><span class="tag">               <span class="attr">pattern</span>=<span class="string">&quot;%h %l %u %t <span class="symbol">&amp;quot;</span>%r<span class="symbol">&amp;quot;</span> %s %b&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;/<span class="name">Host</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 日志记录部分 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">Valve</span> <span class="attr">className</span>=<span class="string">&quot;org.apache.catalina.valves.AccessLogValve&quot;</span> <span class="attr">directory</span>=<span class="string">&quot;logs&quot;</span></span></span><br><span class="line"><span class="tag">               <span class="attr">prefix</span>=<span class="string">&quot;localhost_access_log&quot;</span> <span class="attr">suffix</span>=<span class="string">&quot;.txt&quot;</span></span></span><br><span class="line"><span class="tag">               <span class="attr">pattern</span>=<span class="string">&quot;%h %l %u %t <span class="symbol">&amp;quot;</span>%r<span class="symbol">&amp;quot;</span> %s %b&quot;</span> /&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>Tomcat配置于nginx配置的对比</p>
 <table>
@@ -766,7 +563,7 @@
 </tr>
 </tbody></table>
 <p>建议配置</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml">pattern=&quot;%h %l %u %t <span class="hljs-symbol">&amp;quot;</span>%r<span class="hljs-symbol">&amp;quot;</span> %s %b <span class="hljs-symbol">&amp;quot;</span>% &#123;Referer&#125;i<span class="hljs-symbol">&amp;quot;</span> <span class="hljs-symbol">&amp;quot;</span>%&#123;User-Agent&#125;i<span class="hljs-symbol">&amp;quot;</span> <span class="hljs-symbol">&amp;quot;</span>% &#123;X-Forwarded-For&#125;i<span class="hljs-symbol">&amp;quot;</span>&quot; /&gt;<br></code></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pattern=&quot;%h %l %u %t <span class="symbol">&amp;quot;</span>%r<span class="symbol">&amp;quot;</span> %s %b <span class="symbol">&amp;quot;</span>% &#123;Referer&#125;i<span class="symbol">&amp;quot;</span> <span class="symbol">&amp;quot;</span>%&#123;User-Agent&#125;i<span class="symbol">&amp;quot;</span> <span class="symbol">&amp;quot;</span>% &#123;X-Forwarded-For&#125;i<span class="symbol">&amp;quot;</span>&quot; /&gt;</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>其中<code>&amp;quot;</code>表示双引号</p>
@@ -793,44 +590,44 @@
 <li>修改Tomcat配置</li>
 </ul>
 <p>1、代码准备：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">上传zrlog的war包到webapps文件夹中</span><br>[root@web03[ /app/tools/tomcat/webapps]#mv /root/zrlog-2.2.1-efbe9f9-release.war zrlog.war<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">上传zrlog的war包到webapps文件夹中</span></span><br><span class="line">[root@web03[ /app/tools/tomcat/webapps]#mv /root/zrlog-2.2.1-efbe9f9-release.war zrlog.war</span><br></pre></td></tr></table></figure>
 
 <p>2、创建数据库、用户</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">创建数据库</span><br>MariaDB [(none)]&gt; create database zrlog;<br>Query OK, 1 row affected (0.00 sec)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">创建对应用户</span><br>MariaDB [(none)]&gt; grant all on zrlog.* to &#x27;zrlog&#x27;@&#x27;172.16.1.%&#x27; identified by &#x27;redhat123&#x27;;<br>Query OK, 0 rows affected (0.00 sec)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">查看</span><br>MariaDB [(none)]&gt; show databases;<br>+--------------------+<br>| Database           |<br>+--------------------+<br>| information_schema |<br>| mysql              |<br>| performance_schema |<br>| wordpress          |<br>| zrlog              |<br>+--------------------+<br>5 rows in set (0.01 sec)<br>MariaDB [(none)]&gt; select user,host from mysql.user;<br>+------------+------------+<br>| user       | host       |<br>+------------+------------+<br>| root       | 127.0.0.1  |<br>| phpmyadmin | 172.16.1.% |<br>| wordpress  | 172.16.1.% |<br>| wp         | 172.16.1.% |<br>| zrlog      | 172.16.1.% |<br>| root       | ::1        |<br>| root       | localhost  |<br>| wordpress  | localhost  |<br>+------------+------------+<br>8 rows in set (0.00 sec)<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建数据库</span></span><br><span class="line">MariaDB [(none)]&gt; create database zrlog;</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建对应用户</span></span><br><span class="line">MariaDB [(none)]&gt; grant all on zrlog.* to &#x27;zrlog&#x27;@&#x27;172.16.1.%&#x27; identified by &#x27;redhat123&#x27;;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看</span></span><br><span class="line">MariaDB [(none)]&gt; show databases;</span><br><span class="line">+--------------------+</span><br><span class="line">| Database           |</span><br><span class="line">+--------------------+</span><br><span class="line">| information_schema |</span><br><span class="line">| mysql              |</span><br><span class="line">| performance_schema |</span><br><span class="line">| wordpress          |</span><br><span class="line">| zrlog              |</span><br><span class="line">+--------------------+</span><br><span class="line">5 rows in set (0.01 sec)</span><br><span class="line">MariaDB [(none)]&gt; select user,host from mysql.user;</span><br><span class="line">+------------+------------+</span><br><span class="line">| user       | host       |</span><br><span class="line">+------------+------------+</span><br><span class="line">| root       | 127.0.0.1  |</span><br><span class="line">| phpmyadmin | 172.16.1.% |</span><br><span class="line">| wordpress  | 172.16.1.% |</span><br><span class="line">| wp         | 172.16.1.% |</span><br><span class="line">| zrlog      | 172.16.1.% |</span><br><span class="line">| root       | ::1        |</span><br><span class="line">| root       | localhost  |</span><br><span class="line">| wordpress  | localhost  |</span><br><span class="line">+------------+------------+</span><br><span class="line">8 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p>测试访问：</p>
 <blockquote>
 <p>以上配置并没有未站点配置域名，zrlog.olboy这个域名是通过配置hosts解析设置的，只是为方便站点理解</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">&gt;</span><span class="language-bash">10.0.0.9 zrlog.oldboylinux.cn</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">10.0.0.9 zrlog.oldboylinux.cn</span></span><br></pre></td></tr></table></figure>
 </blockquote>
 <p>前台：<a target="_blank" rel="noopener" href="http://zrlog.oldboylinux.cn:8080/zrlog/">http://zrlog.oldboylinux.cn:8080/zrlog/</a></p>
-<p><img src="/../../../img/image-20240513114215670.png" srcset="/img/loading.gif" lazyload alt="image-20240513114215670"></p>
-<p><img src="/../../../img/image-20240513114343742.png" srcset="/img/loading.gif" lazyload alt="image-20240513114343742"></p>
+<p><img src="/../../../img/image-20240513114215670.png" alt="image-20240513114215670"></p>
+<p><img src="/../../../img/image-20240513114343742.png" alt="image-20240513114343742"></p>
 <p>后台管理：<a target="_blank" rel="noopener" href="http://zrlog.oldboylinux.cn:8080/zrlog/admin/">http://zrlog.oldboylinux.cn:8080/zrlog/admin/</a>  </p>
-<p><img src="/../../../img/image-20240513114715123.png" srcset="/img/loading.gif" lazyload alt="image-20240513114715123"></p>
+<p><img src="/../../../img/image-20240513114715123.png" alt="image-20240513114715123"></p>
 <h2 id="6-5-Tomcat的ROOT文件夹"><a href="#6-5-Tomcat的ROOT文件夹" class="headerlink" title="6.5 Tomcat的ROOT文件夹"></a>6.5 Tomcat的ROOT文件夹</h2><p>实现目标：想直接访问到网站，而不是加上网站路径</p>
 <p>比如：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">现在访问zrlog</span><br>http://zrlog.oldboylinux.cn:8080/zrlog/<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">我想要的</span><br>http://zrlog.oldboylinux.cn:8080<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">现在访问zrlog</span></span><br><span class="line">http://zrlog.oldboylinux.cn:8080/zrlog/</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">我想要的</span></span><br><span class="line">http://zrlog.oldboylinux.cn:8080</span><br></pre></td></tr></table></figure>
 
 <p>原理：当访问站点不加上路径时，会直接访问ROOT下面的内容</p>
 <p>实现直接访问zrlog：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">先删除原有的ROOT文件夹（重命名也可以）</span><br>mv ROOT ROOT.old<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">把zrlog.war该名称ROOT.war</span> <br>mv zrlog.war ROOT.war<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">会新部署生成ROOT文件夹，老的zrlog可以删了</span><br>rm zrlog -fr<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">查看</span><br>[root@web03[ /app/tools/tomcat/webapps]#ls<br>docs  examples  host-manager  manager  memtest  memtest.war  ROOT  ROOT.old  ROOT.war <br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">先删除原有的ROOT文件夹（重命名也可以）</span></span><br><span class="line">mv ROOT ROOT.old</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">把zrlog.war该名称ROOT.war</span> </span><br><span class="line">mv zrlog.war ROOT.war</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">会新部署生成ROOT文件夹，老的zrlog可以删了</span></span><br><span class="line">rm zrlog -fr</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看</span></span><br><span class="line">[root@web03[ /app/tools/tomcat/webapps]#ls</span><br><span class="line">docs  examples  host-manager  manager  memtest  memtest.war  ROOT  ROOT.old  ROOT.war </span><br></pre></td></tr></table></figure>
 
 <p>测试访问：<a target="_blank" rel="noopener" href="http://zrlog.oldboylinux.cn:8080/">http://zrlog.oldboylinux.cn:8080/</a></p>
 <p>直接跳到zrlog的安装界面，说明成功</p>
-<p><img src="/../../../img/image-20240513134404186.png" srcset="/img/loading.gif" lazyload alt="image-20240513134404186"></p>
+<p><img src="/../../../img/image-20240513134404186.png" alt="image-20240513134404186"></p>
 <blockquote>
 <p>补充：</p>
 <p>如果zrlog已经配置完了，后续如何修改数据库的地址？</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">&gt;</span><span class="language-bash">[root@web03[ /app/tools/tomcat/webapps]#<span class="hljs-built_in">cat</span> ROOT/WEB-INF/db.properties</span><br><span class="hljs-meta prompt_">&gt;</span><span class="language-bash"><span class="hljs-comment">#This is a database configuration file</span></span><br><span class="hljs-meta prompt_">&gt;</span><span class="language-bash"><span class="hljs-comment">#Mon May 13 13:44:21 CST 2024</span></span><br><span class="hljs-meta prompt_">&gt;</span><span class="language-bash">driverClass=com.mysql.cj.jdbc.Driver</span><br><span class="hljs-meta prompt_">&gt;</span><span class="language-bash">user=zrlog</span><br><span class="hljs-meta prompt_">&gt;</span><span class="language-bash">password=redhat123</span><br><span class="hljs-meta prompt_">&gt;</span><span class="language-bash">jdbcUrl=jdbc\:mysql\://172.16.1.51\:3306/zrlog?characterEncoding\=UTF-8&amp;allowPublicKeyRetrieval\=<span class="hljs-literal">true</span>&amp;useSSL\=<span class="hljs-literal">false</span>&amp;serverTimezone\=GMT</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">[root@web03[ /app/tools/tomcat/webapps]#<span class="built_in">cat</span> ROOT/WEB-INF/db.properties</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"><span class="comment">#This is a database configuration file</span></span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"><span class="comment">#Mon May 13 13:44:21 CST 2024</span></span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">driverClass=com.mysql.cj.jdbc.Driver</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">user=zrlog</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">password=redhat123</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">jdbcUrl=jdbc\:mysql\://172.16.1.51\:3306/zrlog?characterEncoding\=UTF-8&amp;allowPublicKeyRetrieval\=<span class="literal">true</span>&amp;useSSL\=<span class="literal">false</span>&amp;serverTimezone\=GMT</span></span><br></pre></td></tr></table></figure>
 </blockquote>
 <h2 id="6-6-Tomcat接入Nginx"><a href="#6-6-Tomcat接入Nginx" class="headerlink" title="6.6 Tomcat接入Nginx"></a>6.6 Tomcat接入Nginx</h2><p>Tomca接入Nginx，其原理是</p>
 <p>用户 –访问—&gt; nginx —转发—&gt; Tomcat</p>
 <p>Nginx虚拟主机：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@web03[ /etc/nginx/conf.d]#cat zrlog.oldboylinux.cn.conf<br>server &#123;<br>  listen 80;<br>  server_name zrlog.oldboylinux.cn;<br>  error_log  /var/log/nginx/zrlog-error.log notice;<br>  access_log /var/log/nginx/zrlog-access.log main;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">  # </span><span class="language-bash">location转发</span><br>  location / &#123;<br>    proxy_pass http://127.0.0.1:8080;<br>    proxy_set_header Host $http_host;<br>    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@web03[ /etc/nginx/conf.d]#cat zrlog.oldboylinux.cn.conf</span><br><span class="line">server &#123;</span><br><span class="line">  listen 80;</span><br><span class="line">  server_name zrlog.oldboylinux.cn;</span><br><span class="line">  error_log  /var/log/nginx/zrlog-error.log notice;</span><br><span class="line">  access_log /var/log/nginx/zrlog-access.log main;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">location转发</span></span><br><span class="line">  location / &#123;</span><br><span class="line">    proxy_pass http://127.0.0.1:8080;</span><br><span class="line">    proxy_set_header Host $http_host;</span><br><span class="line">    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>设置Hosts，测试访问：<a target="_blank" rel="noopener" href="http://zrlog.oldboylinux.cn/%EF%BC%8C%E8%BD%AC%E5%8F%91%E6%88%90%E5%8A%9F">http://zrlog.oldboylinux.cn/，转发成功</a></p>
-<p><img src="/../../../img/image-20240513140124888.png" srcset="/img/loading.gif" lazyload alt="image-20240513140124888"></p>
+<p><img src="/../../../img/image-20240513140124888.png" alt="image-20240513140124888"></p>
 <h2 id="6-7-Tomcat-Ngx动静分离"><a href="#6-7-Tomcat-Ngx动静分离" class="headerlink" title="6.7  Tomcat + Ngx动静分离"></a>6.7  Tomcat + Ngx动静分离</h2><p>什么是动静分离：</p>
 <ul>
 <li>动态资源和静态资源都单独存放</li>
@@ -841,9 +638,9 @@
 <p>前提：需要开发拆分代码，把静态资源拆分出来单独存放.  </p>
 </blockquote>
 <p>图示：没有动静分离，Ngx一股脑全抛给Tomcat</p>
-<p><img src="/../../../img/image-20240513140438636.png" srcset="/img/loading.gif" lazyload alt="image-20240513140438636"></p>
+<p><img src="/../../../img/image-20240513140438636.png" alt="image-20240513140438636"></p>
 <p>图示：有动静分离，Nginx处理静态资源，Tomcat处理动态资源</p>
-<p><img src="/../../../img/image-20240513140505383.png" srcset="/img/loading.gif" lazyload alt="image-20240513140505383"></p>
+<p><img src="/../../../img/image-20240513140505383.png" alt="image-20240513140505383"></p>
 <h2 id="6-8-Tomcat创建多个实例"><a href="#6-8-Tomcat创建多个实例" class="headerlink" title="6.8 Tomcat创建多个实例"></a>6.8 Tomcat创建多个实例</h2><p>目标：在同一台Linux主机上运行多个Tomcat实例</p>
 <p>原因：可以充分利用服务器资源</p>
 <p>步骤：</p>
@@ -853,13 +650,13 @@
 <li>启动</li>
 </ul>
 <p>创建多个Tomcat目录</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">tar xf apache-tomcat-9.0.65.tar.gz<br>cp -r apache-tomcat-9.0.65 tomcat-8081<br>cp -r apache-tomcat-9.0.65 tomcat-8082<br>mv tomcat-808* /app/tools/<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tar xf apache-tomcat-9.0.65.tar.gz</span><br><span class="line">cp -r apache-tomcat-9.0.65 tomcat-8081</span><br><span class="line">cp -r apache-tomcat-9.0.65 tomcat-8082</span><br><span class="line">mv tomcat-808* /app/tools/</span><br></pre></td></tr></table></figure>
 
 <p>修改配置</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">sed -i &#x27;s#8005#8006#g&#x27; tomcat-8081/conf/server.xml<br>sed -i &#x27;s#8080#8081#g&#x27; tomcat-8081/conf/server.xml<br>sed -i &#x27;s#8005#8007#g&#x27; tomcat-8082/conf/server.xml<br>sed -i &#x27;s#8080#8082#g&#x27; tomcat-8082/conf/server.xml<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sed -i &#x27;s#8005#8006#g&#x27; tomcat-8081/conf/server.xml</span><br><span class="line">sed -i &#x27;s#8080#8081#g&#x27; tomcat-8081/conf/server.xml</span><br><span class="line">sed -i &#x27;s#8005#8007#g&#x27; tomcat-8082/conf/server.xml</span><br><span class="line">sed -i &#x27;s#8080#8082#g&#x27; tomcat-8082/conf/server.xml</span><br></pre></td></tr></table></figure>
 
 <p>手动启动</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs she">echo java oldboylinux 8081 &gt;/app/tools/tomcat-<br>8081/webapps/ROOT/lidaojsp<br>echo java oldboylinux 8082 &gt;/app/tools/tomcat-<br>8082/webapps/ROOT/lidao.jsp<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">echo java oldboylinux 8081 &gt;/app/tools/tomcat-</span><br><span class="line">8081/webapps/ROOT/lidaojsp</span><br><span class="line">echo java oldboylinux 8082 &gt;/app/tools/tomcat-</span><br><span class="line">8082/webapps/ROOT/lidao.jsp</span><br></pre></td></tr></table></figure>
 
 <p>测试访问</p>
 <blockquote>
@@ -872,7 +669,7 @@
 <li>需要我们开启java远程监控功能(JMX remote)</li>
 </ul>
 <h3 id="6-9-2-配置步骤"><a href="#6-9-2-配置步骤" class="headerlink" title="6.9.2 配置步骤"></a>6.9.2 配置步骤</h3><p>tomcat配置中修改tomcat启动的选项，开启jmx远程监控功能。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">备份文件</span><br>[root@web03[ /app/tools/tomcat]#cp bin/catalina.sh bin/catalina.sh.bak<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">编辑catalina.sh，125行之后加</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">从tomcat 8.5开始 配置的每一行要通过\进行续行</span><br>CATALINA_OPTS=&quot;$CATALINA_OPTS \<br> -Dcom.sun.management.jmxremote \<br> -Dcom.sun.management.jmxremote.port=12345 \<br> -Dcom.sun.management.jmxremote.authenticate=false \<br> -Dcom.sun.management.jmxremote.ssl=false \<br> -Djava.rmi.server.hostname=10.0.0.9&quot; \<br><span class="hljs-meta prompt_"> </span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">重启tomcat生效</span><br>systemctl restart tomcat<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">备份文件</span></span><br><span class="line">[root@web03[ /app/tools/tomcat]#cp bin/catalina.sh bin/catalina.sh.bak</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">编辑catalina.sh，125行之后加</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">从tomcat 8.5开始 配置的每一行要通过\进行续行</span></span><br><span class="line">CATALINA_OPTS=&quot;$CATALINA_OPTS \</span><br><span class="line"> -Dcom.sun.management.jmxremote \</span><br><span class="line"> -Dcom.sun.management.jmxremote.port=12345 \</span><br><span class="line"> -Dcom.sun.management.jmxremote.authenticate=false \</span><br><span class="line"> -Dcom.sun.management.jmxremote.ssl=false \</span><br><span class="line"> -Djava.rmi.server.hostname=10.0.0.9&quot; \</span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">重启tomcat生效</span></span><br><span class="line">systemctl restart tomcat</span><br></pre></td></tr></table></figure>
 
 <p>选项说明</p>
 <table>
@@ -913,7 +710,7 @@
 <ul>
 <li>可以看到tomcat配置的监控信息</li>
 </ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@web03[ /app/tools/tomcat]#ps -ef | grep java<br>root      13476      1  2 14:19 ?        00:00:05 /app/tools/jdk/bin/java -Djava.util.logging.config.file=/app/tools/tomcat/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djdk.tls.ephemeralDHKeySize=2048 -Djava.protocol.handler.pkgs=org.apache.catalina.webresources -Dorg.apache.catalina.security.SecurityListener.UMASK=0027 -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=12345 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=10.0.0.9 -Dignore.endorsed.dirs= -classpath /app/tools/tomcat/bin/bootstrap.jar:/app/tools/tomcat/bin/tomcat-juli.jar -Dcatalina.base=/app/tools/tomcat -Dcatalina.home=/app/tools/tomcat -Djava.io.tmpdir=/app/tools/tomcat/temp org.apache.catalina.startup.Bootstrap start<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@web03[ /app/tools/tomcat]#ps -ef | grep java</span><br><span class="line">root      13476      1  2 14:19 ?        00:00:05 /app/tools/jdk/bin/java -Djava.util.logging.config.file=/app/tools/tomcat/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djdk.tls.ephemeralDHKeySize=2048 -Djava.protocol.handler.pkgs=org.apache.catalina.webresources -Dorg.apache.catalina.security.SecurityListener.UMASK=0027 -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=12345 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=10.0.0.9 -Dignore.endorsed.dirs= -classpath /app/tools/tomcat/bin/bootstrap.jar:/app/tools/tomcat/bin/tomcat-juli.jar -Dcatalina.base=/app/tools/tomcat -Dcatalina.home=/app/tools/tomcat -Djava.io.tmpdir=/app/tools/tomcat/temp org.apache.catalina.startup.Bootstrap start</span><br></pre></td></tr></table></figure>
 
 
 
@@ -922,364 +719,747 @@
 <p>C:\Program Files\Java\jdk1.8.0_201\bin\jconsole.exe  </p>
 </blockquote>
 <p>执行：</p>
-<p><img src="/../../../img/image-20240513142656034.png" srcset="/img/loading.gif" lazyload alt="image-20240513142656034"></p>
+<p><img src="/../../../img/image-20240513142656034.png" alt="image-20240513142656034"></p>
 <p>选择不安全连接</p>
-<p><img src="/../../../img/image-20240513142716314.png" srcset="/img/loading.gif" lazyload alt="image-20240513142716314"></p>
+<p><img src="/../../../img/image-20240513142716314.png" alt="image-20240513142716314"></p>
 <p>连接成功</p>
-<p><img src="/../../../img/image-20240513142730577.png" srcset="/img/loading.gif" lazyload alt="image-20240513142730577"></p>
-
-                
-              </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
+<p><img src="/../../../img/image-20240513142730577.png" alt="image-20240513142730577"></p>
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
     
-      <span class="category-chain">
-        
-  <a href="/categories/%E8%BF%90%E7%BB%B4/" class="category-chain-item">运维</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/" class="category-chain-item">（二）综合架构</a>
-  
-  
 
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
 </div>
 
-
-              
-  
-
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>17-Web集群-Tomcat(一)</div>
-      <div>https://gblog.github.io/2024/05/11/07_85期运维/02_综合架构/18-web集群-Tomcat-1/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>作者</div>
-          <div>Haris</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>发布于</div>
-          <div>2024年5月11日</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>许可协议</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
-          </div>
-        </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
-  </div>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2024/05/13/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/19-web%E9%9B%86%E7%BE%A4-Tomcat-2-%E5%AE%8C%E7%BB%93/">17-Web集群-Tomcat(二)</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2024/05/10/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/17-web%E9%9B%86%E7%BE%A4-Nginx-7-%E5%AE%8C%E7%BB%93/">17-Web集群-Nginx(七)</a></div></section></div>
 
 
 
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2024/05/13/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/19-web%E9%9B%86%E7%BE%A4-Tomcat-2-%E5%AE%8C%E7%BB%93/" title="17-Web集群-Tomcat(二)">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">17-Web集群-Tomcat(二)</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2024/05/10/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/02_%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/17-web%E9%9B%86%E7%BE%A4-Nginx-7-%E5%AE%8C%E7%BB%93/" title="17-Web集群-Nginx(七)">
-                        <span class="hidden-mobile">17-Web集群-Nginx(七)</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
 
-            
-          </article>
-        </div>
-      </div>
-    </div>
 
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
 
-    </div>
-  </div>
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">Haris</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Web%E9%9B%86%E7%BE%A4-Tomcat%EF%BC%88%E4%B8%80%EF%BC%89"><span class="toc-text">Web集群-Tomcat（一）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81JAVA%E5%AE%B9%E5%99%A8"><span class="toc-text">一、JAVA容器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81JAVA%E7%8E%AF%E5%A2%83"><span class="toc-text">二、JAVA环境</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81Tomcat%E6%9E%81%E9%80%9F%E4%B8%8A%E6%89%8B"><span class="toc-text">三、Tomcat极速上手</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-text">3.1 环境准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E9%83%A8%E7%BD%B2JDK"><span class="toc-text">3.2 部署JDK</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-%E9%83%A8%E7%BD%B2Tomcat"><span class="toc-text">3.3 部署Tomcat</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Tomcat%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-text">四、Tomcat目录结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-%E7%9B%AE%E5%BD%95%E6%A6%82%E8%BF%B0"><span class="toc-text">4.1 目录概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-bin%E7%9B%AE%E5%BD%95"><span class="toc-text">4.2 bin目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-3-conf%E7%9B%AE%E5%BD%95"><span class="toc-text">4.3 conf目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-4-logs%E7%9B%AE%E5%BD%95"><span class="toc-text">4.4 logs目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-5-webapps%E7%9B%AE%E5%BD%95"><span class="toc-text">4.5 webapps目录</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81Tomcat%E6%97%A5%E5%B8%B8%E7%AE%A1%E7%90%86%E4%B8%8E%E8%AE%BF%E9%97%AE"><span class="toc-text">五、Tomcat日常管理与访问</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1-%E6%97%A5%E5%B8%B8%E5%90%AF%E5%8A%A8%E4%B8%8E%E7%BB%B4%E6%8A%A4"><span class="toc-text">5.1 日常启动与维护</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2-systemctl%E7%AE%A1%E7%90%86%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BB%8B%E7%BB%8D"><span class="toc-text">5.2 systemctl管理配置文件介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-3-%E5%88%9B%E5%BB%BAsystemctl%E6%96%87%E4%BB%B6"><span class="toc-text">5.3 创建systemctl文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-4-%E8%BF%90%E8%A1%8C%E7%AB%99%E7%82%B9%E4%BB%A3%E7%A0%81"><span class="toc-text">5.4 运行站点代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-1-%E8%BF%90%E8%A1%8Cwar%E5%8C%85%E6%A1%88%E4%BE%8B"><span class="toc-text">5.4.1 运行war包案例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-2-%E8%BF%90%E8%A1%8Cjar%E5%8C%85%E6%A1%88%E4%BE%8B"><span class="toc-text">5.4.2 运行jar包案例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-6-Tomcat%E7%AE%A1%E7%90%86%E7%AB%AF%EF%BC%88%E7%86%9F%E6%82%89%E5%8D%B3%E5%8F%AF%EF%BC%89"><span class="toc-text">5.6 Tomcat管理端（熟悉即可）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AD%E3%80%81Tomcat%E9%9B%86%E7%BE%A4"><span class="toc-text">六、Tomcat集群</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#6-1-Tomcat%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%A6%E8%A7%A3"><span class="toc-text">6.1 Tomcat配置文件详解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-2-tomcat%E8%AE%BF%E9%97%AE%E6%97%A5%E5%BF%97%E6%A0%BC%E5%BC%8F"><span class="toc-text">6.2 tomcat访问日志格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-3-Tomcat%E4%B8%8E%E7%94%A8%E6%88%B7%E8%AF%B7%E6%B1%82"><span class="toc-text">6.3 Tomcat与用户请求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-4-%E6%A1%88%E4%BE%8B-%E9%83%A8%E7%BD%B2zrlog%E5%BA%94%E7%94%A8"><span class="toc-text">6.4 案例-部署zrlog应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-5-Tomcat%E7%9A%84ROOT%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="toc-text">6.5 Tomcat的ROOT文件夹</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-6-Tomcat%E6%8E%A5%E5%85%A5Nginx"><span class="toc-text">6.6 Tomcat接入Nginx</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-7-Tomcat-Ngx%E5%8A%A8%E9%9D%99%E5%88%86%E7%A6%BB"><span class="toc-text">6.7  Tomcat + Ngx动静分离</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-8-Tomcat%E5%88%9B%E5%BB%BA%E5%A4%9A%E4%B8%AA%E5%AE%9E%E4%BE%8B"><span class="toc-text">6.8 Tomcat创建多个实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-9-%E7%9B%91%E6%8E%A7%E5%8A%9F%E8%83%BD"><span class="toc-text">6.9 监控功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-9-1-%E7%9B%91%E6%8E%A7%E6%A6%82%E8%BF%B0"><span class="toc-text">6.9.1 监控概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-9-2-%E9%85%8D%E7%BD%AE%E6%AD%A5%E9%AA%A4"><span class="toc-text">6.9.2 配置步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-9-3-%E9%AA%8C%E8%AF%81"><span class="toc-text">6.9.3 验证</span></a></li></ol></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
 </div>
+</div><div class="scripts">
 
 
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-
-
-
-
-    
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-    
-
-    
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-  
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-    </div>
-  
-  
-  
-</div>
-
-  </footer>
-
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
-      
-        typing(text);
-      
-    })(window, document);
-  </script>
-
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
     }
+  };
 
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
 </script>
 
-
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
-
-  <script>Fluid.plugins.codeWidget();</script>
-
-
+<script type="text/javascript">
   
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
     };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
         }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
       }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
     });
   });
 </script>
 
-
-  
 <script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
   });
 </script>
 
 
-  <script>Fluid.plugins.imageCaption();</script>
+<!-- inject -->
 
-  <script  src="/js/local-search.js" ></script>
-
-
-
-
-
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
-
-
-  
-
-  <noscript>
-    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
-  </noscript>
-</body>
-</html>
+</div></body></html>

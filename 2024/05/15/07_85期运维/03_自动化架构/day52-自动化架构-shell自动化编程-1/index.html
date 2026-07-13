@@ -1,28 +1,29 @@
 
-
-<!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
-
-
+<!DOCTYPE html><html lang="zh-CN">
 
 <head>
-  <meta charset="UTF-8">
-
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
   
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="Haris">
-  <meta name="keywords" content="">
+  <meta name="generator" content="Hexo 7.3.0">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>day52-自动化架构-shell自动化编程（一） - Haris的小站</title>
+
   
     <meta name="description" content="自动化架构-shell自动化编程（一）今日内容：  课程内容概览 Shell编程概述 Shell语言分类 Shell编程环境准备 Shell脚本的执行方式 Shell变量（重要）  目标：  能够书写超过100行的脚本:  系统巡检，系统加固，系统优化(初始化)，ngx优化，tomcat优化.   总计完成书读写5000行脚本(读写).  一、课程内容 Shell概述，编程语言 Shell环境准备">
 <meta property="og:type" content="article">
 <meta property="og:title" content="day52-自动化架构-shell自动化编程（一）">
-<meta property="og:url" content="https://gblog.github.io/2024/05/15/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day52-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84-shell%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BC%96%E7%A8%8B-1/index.html">
+<meta property="og:url" content="https://gblog.github.io/2024/05/15/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day52-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84-shell%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BC%96%E7%A8%8B-1/">
 <meta property="og:site_name" content="Haris的小站">
 <meta property="og:description" content="自动化架构-shell自动化编程（一）今日内容：  课程内容概览 Shell编程概述 Shell语言分类 Shell编程环境准备 Shell脚本的执行方式 Shell变量（重要）  目标：  能够书写超过100行的脚本:  系统巡检，系统加固，系统优化(初始化)，ngx优化，tomcat优化.   总计完成书读写5000行脚本(读写).  一、课程内容 Shell概述，编程语言 Shell环境准备">
 <meta property="og:locale" content="zh_CN">
@@ -32,271 +33,67 @@
 <meta property="article:published_time" content="2024-05-15T07:23:52.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.331Z">
 <meta property="article:author" content="Haris">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gblog.github.io/img/image-20240515193051950.png">
   
   
   
-  <title>day52-自动化架构-shell自动化编程（一） - Haris的小站</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
-  
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
 
 
   
-<link rel="stylesheet" href="/css/custom.css">
-
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"gblog.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-  
-
 
   
-<meta name="generator" content="Hexo 7.3.0"></head>
 
-
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Haris","sameAs":[]},"dateCreated":"2024-05-15T15:23:52+08:00","dateModified":"2026-07-10T14:20:16+08:00","datePublished":"2024-05-15T15:23:52+08:00","description":"","headline":"day52-自动化架构-shell自动化编程（一）","mainEntityOfPage":{"@type":"WebPage","@id":"https://gblog.github.io/2024/05/15/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day52-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84-shell%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BC%96%E7%A8%8B-1/"},"publisher":{"@type":"Organization","name":"Haris","sameAs":[]},"url":"https://gblog.github.io/2024/05/15/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day52-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84-shell%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BC%96%E7%A8%8B-1/","image":[]}</script>
+  
+</head>
 <body>
-  
 
-  <header>
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="undefined" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">Haris的小站</div><div class="sub cap">null</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
+
+
+
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2025/05/06/10_%E5%AD%A6%E7%A5%9EK8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%9F%BA%E7%A1%80/"><span class="title">01-Docker基础</span></a><a class="item title" href="/2025/03/26/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/06-Docker%E8%B5%84%E6%BA%90%E9%85%8D%E9%A2%9D/"><span class="title">06-Docker资源配额</span></a><a class="item title" href="/2025/03/20/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/05-Docker%E5%AE%B9%E5%99%A8%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96/"><span class="title">05-Docker容器数据持久化</span></a><a class="item title" href="/2025/03/12/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/04-Dockerfile%E5%AE%9E%E6%88%98%E7%AF%87-%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F/"><span class="title">04-Dockerfile实战篇-构建镜像</span></a><a class="item title" href="/2025/03/04/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/03-Dockerfile%E5%9F%BA%E7%A1%80%E7%AF%87-%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/"><span class="title">03-Dockerfile基础篇-基本语法</span></a><a class="item title" href="/2025/03/03/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/02-%E8%BF%90%E8%A1%8CDocker%E5%AE%B9%E5%99%A8/"><span class="title">02-运行Docker容器</span></a><a class="item title" href="/2025/03/03/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80/"><span class="title">01-Docker基础</span></a><a class="item title" href="/2024/07/27/08_%E7%BD%91%E7%BB%9C/day03-HCIA%E8%AF%BE%E7%A8%8B-01/"><span class="title">day03-HCIA课程(一)</span></a><a class="item title" href="/2024/07/28/08_%E7%BD%91%E7%BB%9C/day02-%E7%BD%91%E5%B7%A5%E5%85%A5%E9%97%A8-02/"><span class="title">day02-网工入门（二）</span></a><a class="item title" href="/2024/07/27/08_%E7%BD%91%E7%BB%9C/day01-%E7%BD%91%E5%B7%A5%E5%85%A5%E9%97%A8-01/"><span class="title">day01-网工入门（一）</span></a></div></widget>
+</div>
+
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a> <span class="sep"></span> <a class="cap breadcrumb-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/">（二）综合架构</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-05-15T07:23:52.000Z">2024-05-15</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2026-07-10T06:20:16.331Z">2026-07-10</time></span></div></div></div>
     
-
-<div class="header-inner" style="height: 70vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>Haris的博客</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>首页</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>归档</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>分类</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="day52-自动化架构-shell自动化编程（一）"></span>
-          
-        </div>
-
-        
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-05-15 15:23" pubdate>
-          2024年5月15日 下午
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
-        
-          4.4k 字
-        
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
-        
-        
-        
-          37 分钟
-        
-      </span>
-    
-
-    
-    
-  </div>
-
-
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>day52-自动化架构-shell自动化编程（一）</span></h1>
         
       </div>
-
-      
     </div>
-  </div>
-</div>
-
-</div>
-
-  </header>
-
-  <main>
     
-      
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
-
-    </div>
-
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">day52-自动化架构-shell自动化编程（一）</h1>
-            
-            
-              <div class="markdown-body">
-                
-                <h1 id="自动化架构-shell自动化编程（一）"><a href="#自动化架构-shell自动化编程（一）" class="headerlink" title="自动化架构-shell自动化编程（一）"></a>自动化架构-shell自动化编程（一）</h1><p>今日内容：</p>
+  </div>
+  </div><article class="md-text content"><h1 id="自动化架构-shell自动化编程（一）"><a href="#自动化架构-shell自动化编程（一）" class="headerlink" title="自动化架构-shell自动化编程（一）"></a>自动化架构-shell自动化编程（一）</h1><p>今日内容：</p>
 <ol>
 <li>课程内容概览</li>
 <li>Shell编程概述</li>
@@ -398,10 +195,10 @@
 <h2 id="4-2-vim设置"><a href="#4-2-vim设置" class="headerlink" title="4.2 vim设置"></a>4.2 vim设置</h2><p>通过vimrc文件，达到控制vim创建、编辑文件的动作</p>
 <p>修改当前用户：~&#x2F;.vimrc</p>
 <p>修改所有用户：&#x2F;etc&#x2F;vimrc</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">加到文件最后面</span><br><br>&quot;添加设置&quot;<br>set ignorecase  <br>autocmd BufNewFile *.py,*.cc,*.sh,*.java exec &quot;:call SetTitle()&quot;<br><br>func SetTitle()<br>if expand(&quot;%:e&quot;) == &#x27;sh&#x27;<br>  call setline(1, &quot;#!/bin/bash&quot;)<br>  call setline(2,&quot;##############################################################&quot;)<br>  call setline(3, &quot;# File Name:&quot;.expand(&quot;%&quot;))<br>  call setline(4, &quot;# Version:V1.0&quot;)<br>  call setline(5, &quot;# Author:Haris Gong&quot;)<br>  call setline(6, &quot;# Organization:gsproj.github.io&quot;)<br>  call setline(7, &quot;# Desc:&quot;)<br>  call setline(8,&quot;##############################################################&quot;)<br>endif<br>endfunc<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">加到文件最后面</span></span><br><span class="line"></span><br><span class="line">&quot;添加设置&quot;</span><br><span class="line">set ignorecase  </span><br><span class="line">autocmd BufNewFile *.py,*.cc,*.sh,*.java exec &quot;:call SetTitle()&quot;</span><br><span class="line"></span><br><span class="line">func SetTitle()</span><br><span class="line">if expand(&quot;%:e&quot;) == &#x27;sh&#x27;</span><br><span class="line">  call setline(1, &quot;#!/bin/bash&quot;)</span><br><span class="line">  call setline(2,&quot;##############################################################&quot;)</span><br><span class="line">  call setline(3, &quot;# File Name:&quot;.expand(&quot;%&quot;))</span><br><span class="line">  call setline(4, &quot;# Version:V1.0&quot;)</span><br><span class="line">  call setline(5, &quot;# Author:Haris Gong&quot;)</span><br><span class="line">  call setline(6, &quot;# Organization:gsproj.github.io&quot;)</span><br><span class="line">  call setline(7, &quot;# Desc:&quot;)</span><br><span class="line">  call setline(8,&quot;##############################################################&quot;)</span><br><span class="line">endif</span><br><span class="line">endfunc</span><br></pre></td></tr></table></figure>
 
 <p>实现效果：编辑文件的时候会自动加上头部信息</p>
-<p><img src="/../../../img/image-20240515193051950.png" srcset="/img/loading.gif" lazyload alt="image-20240515193051950"></p>
+<p><img src="/../../../img/image-20240515193051950.png" alt="image-20240515193051950"></p>
 <h1 id="五、Shell脚本的执行方式"><a href="#五、Shell脚本的执行方式" class="headerlink" title="五、Shell脚本的执行方式"></a>五、Shell脚本的执行方式</h1><p>分为四种方式：</p>
 <ul>
 <li>通过sh或bash<ul>
@@ -425,7 +222,7 @@
 <blockquote>
 <p>补充：<code>#!</code>符号的含义</p>
 <p>并非注释的意思，写在脚本开头，用于指定脚本默认的命令解释器</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">&gt;</span><span class="language-bash"><span class="hljs-comment"># 默认bash解释器</span></span><br><span class="hljs-meta prompt_">&gt;</span><span class="language-bash"><span class="hljs-meta">#!/bin/bash</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">&gt;</span><span class="language-bash"><span class="hljs-comment"># 默认python解释器</span></span><br><span class="hljs-meta prompt_">&gt;</span><span class="language-bash"><span class="hljs-meta">#!/usr/bin/python2 或 #!/usr/bin/env python2</span></span><br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"><span class="comment"># 默认bash解释器</span></span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"><span class="meta">#!/bin/bash</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"><span class="comment"># 默认python解释器</span></span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"><span class="meta">#!/usr/bin/python2 或 #!/usr/bin/env python2</span></span></span><br></pre></td></tr></table></figure>
 </blockquote>
 <h1 id="六、Shell变量（重要）"><a href="#六、Shell变量（重要）" class="headerlink" title="六、Shell变量（重要）"></a>六、Shell变量（重要）</h1><h2 id="6-1-变量分类"><a href="#6-1-变量分类" class="headerlink" title="6.1 变量分类"></a>6.1 变量分类</h2><p>shell变量分为三种：</p>
 <table>
@@ -453,7 +250,7 @@
 </tr>
 </tbody></table>
 <h3 id="6-1-1-普通变量"><a href="#6-1-1-普通变量" class="headerlink" title="6.1.1 普通变量"></a>6.1.1 普通变量</h3><p>定义和使用：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">定义普通变量</span><br>day=sat<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">使用</span><br>echo $&#123;day&#125;	# 输出sat<br>echo $day	# 输出sat<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">定义普通变量</span></span><br><span class="line">day=sat</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用</span></span><br><span class="line">echo $&#123;day&#125;	# 输出sat</span><br><span class="line">echo $day	# 输出sat</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>提示：</p>
@@ -469,7 +266,7 @@
 <li>export</li>
 <li>declare</li>
 </ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">如：</span><br>[root@mn01[ /server/scripts/devops-shell]#env<br>XDG_SESSION_ID=1<br>HOSTNAME=mn01<br>SELINUX_ROLE_REQUESTED=<br>TERM=xterm<br>SHELL=/bin/bash<br>HISTSIZE=1000<br>SSH_CLIENT=10.0.0.1 53251 22<br>SELINUX_USE_CURRENT_RANGE=<br>SSH_TTY=/dev/pts/0<br>USER=root<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如：</span></span><br><span class="line">[root@mn01[ /server/scripts/devops-shell]#env</span><br><span class="line">XDG_SESSION_ID=1</span><br><span class="line">HOSTNAME=mn01</span><br><span class="line">SELINUX_ROLE_REQUESTED=</span><br><span class="line">TERM=xterm</span><br><span class="line">SHELL=/bin/bash</span><br><span class="line">HISTSIZE=1000</span><br><span class="line">SSH_CLIENT=10.0.0.1 53251 22</span><br><span class="line">SELINUX_USE_CURRENT_RANGE=</span><br><span class="line">SSH_TTY=/dev/pts/0</span><br><span class="line">USER=root</span><br></pre></td></tr></table></figure>
 
 <h4 id="2）常用环境变量"><a href="#2）常用环境变量" class="headerlink" title="2）常用环境变量"></a>2）常用环境变量</h4><table>
 <thead>
@@ -554,7 +351,7 @@
 </tr>
 </tbody></table>
 <h4 id="3）修改环境变量"><a href="#3）修改环境变量" class="headerlink" title="3）修改环境变量"></a>3）修改环境变量</h4><p>案例：把当前系统语言改为中文，字符集改为UTF-8</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">修改环境变量</span><br>export LANG=zh_CN.UTF-8<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">永久的就是写入到 /etc/profile</span><br>source /etc/profile<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">查看是否修改</span><br>env |grep LANG<br>LANG=zh_CN.UTF-8<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改环境变量</span></span><br><span class="line">export LANG=zh_CN.UTF-8</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">永久的就是写入到 /etc/profile</span></span><br><span class="line">source /etc/profile</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看是否修改</span></span><br><span class="line">env |grep LANG</span><br><span class="line">LANG=zh_CN.UTF-8</span><br></pre></td></tr></table></figure>
 
 <h4 id="4）环境变量相关文件及目录"><a href="#4）环境变量相关文件及目录" class="headerlink" title="4）环境变量相关文件及目录"></a>4）环境变量相关文件及目录</h4><table>
 <thead>
@@ -600,21 +397,21 @@
 <li>系统负载:0.32, 0.23, 0.25</li>
 </ul>
 <p>获取指标的命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">主机名: hostname<br>ip地址: hostname -I<br>内存总数：free -h |awk &#x27;NR==2&#123;print $2&#125;&#x27;<br>可用内存: free -h |awk &#x27;NR==2&#123;print $NF&#125;&#x27;<br>系统负载：uptime |sed &#x27;s#^.*age: ##g&#x27;<br>系统负载：uptime |awk &#x27;&#123;print $(NF-2),$(NF-1),$NF&#125;&#x27;<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">主机名: hostname</span><br><span class="line">ip地址: hostname -I</span><br><span class="line">内存总数：free -h |awk &#x27;NR==2&#123;print $2&#125;&#x27;</span><br><span class="line">可用内存: free -h |awk &#x27;NR==2&#123;print $NF&#125;&#x27;</span><br><span class="line">系统负载：uptime |sed &#x27;s#^.*age: ##g&#x27;</span><br><span class="line">系统负载：uptime |awk &#x27;&#123;print $(NF-2),$(NF-1),$NF&#125;&#x27;</span><br></pre></td></tr></table></figure>
 
 <p>脚本实现</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#############################################################</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">File Name:02_sys_login_info.sh</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Version:V1.0</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Author:Haris Gong</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Organization:gsproj.github.io</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Desc: 用户登录系统后显示的基本信息</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#############################################################</span></span><br><br>sys_hostname=`hostname`<br>sys_ip_addrs=`hostname -I`<br>sys_mem_total=`free -h | awk &#x27;NR==2&#123;print $2&#125;&#x27;`<br>sys_mem_free=`free -h | awk &#x27;NR==2&#123;print $NF&#125;&#x27;`<br>sys_load=`uptime | awk &#x27;&#123;print $(NF-2),$(NF-1),$NF&#125;&#x27;`<br><br>cat &lt;&lt;EOF<br>主机名：$sys_hostname<br>ip地址：$sys_ip_addrs<br>总内存：$sys_mem_total<br>可用内存：$sys_mem_free<br>系统负载：$sys_load<br>EOF<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#############################################################</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">File Name:02_sys_login_info.sh</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Version:V1.0</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Author:Haris Gong</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Organization:gsproj.github.io</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Desc: 用户登录系统后显示的基本信息</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#############################################################</span></span></span><br><span class="line"></span><br><span class="line">sys_hostname=`hostname`</span><br><span class="line">sys_ip_addrs=`hostname -I`</span><br><span class="line">sys_mem_total=`free -h | awk &#x27;NR==2&#123;print $2&#125;&#x27;`</span><br><span class="line">sys_mem_free=`free -h | awk &#x27;NR==2&#123;print $NF&#125;&#x27;`</span><br><span class="line">sys_load=`uptime | awk &#x27;&#123;print $(NF-2),$(NF-1),$NF&#125;&#x27;`</span><br><span class="line"></span><br><span class="line">cat &lt;&lt;EOF</span><br><span class="line">主机名：$sys_hostname</span><br><span class="line">ip地址：$sys_ip_addrs</span><br><span class="line">总内存：$sys_mem_total</span><br><span class="line">可用内存：$sys_mem_free</span><br><span class="line">系统负载：$sys_load</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
 
 <p>自动执行</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">软连接</span><br>ln -s /server/scripts/devops-shell/02_sys_login_info.sh  /etc/profile.d/02_sys_login_info.sh<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">增加执行权限</span><br>chmod +x ./02_sys_login_info.sh<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">软连接</span></span><br><span class="line">ln -s /server/scripts/devops-shell/02_sys_login_info.sh  /etc/profile.d/02_sys_login_info.sh</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">增加执行权限</span></span><br><span class="line">chmod +x ./02_sys_login_info.sh</span><br></pre></td></tr></table></figure>
 
 <p>测试重新登录</p>
-<p><img src="/../../../img/image-20240516104057984.png" srcset="/img/loading.gif" lazyload alt="image-20240516104057984"></p>
+<p><img src="/../../../img/image-20240516104057984.png" alt="image-20240516104057984"></p>
 <blockquote>
 <p>提示：脚本的小bug:希望只有登录后提示，切换用户的时候不要提示。  </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">&gt;</span><span class="language-bash"><span class="hljs-comment"># 判断两个变量是否存在即可,存在表示远程登录.不存在就切换用户</span></span><br><span class="hljs-meta prompt_">&gt;</span><span class="language-bash">SSH_CLIENT=10.0.0.1 3399 22</span><br><span class="hljs-meta prompt_">&gt;</span><span class="language-bash">SSH_TTY=/dev/pts/0</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"><span class="comment"># 判断两个变量是否存在即可,存在表示远程登录.不存在就切换用户</span></span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">SSH_CLIENT=10.0.0.1 3399 22</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">SSH_TTY=/dev/pts/0</span></span><br></pre></td></tr></table></figure>
 </blockquote>
-<h4 id="6）环境变量文件的加载顺序"><a href="#6）环境变量文件的加载顺序" class="headerlink" title="6）环境变量文件的加载顺序"></a>6）环境变量文件的加载顺序</h4><p><img src="/../../../img/image-20240516105105049.png" srcset="/img/loading.gif" lazyload alt="image-20240516105105049"></p>
+<h4 id="6）环境变量文件的加载顺序"><a href="#6）环境变量文件的加载顺序" class="headerlink" title="6）环境变量文件的加载顺序"></a>6）环境变量文件的加载顺序</h4><p><img src="/../../../img/image-20240516105105049.png" alt="image-20240516105105049"></p>
 <h3 id="6-1-3-特殊变量"><a href="#6-1-3-特殊变量" class="headerlink" title="6.1.3 特殊变量"></a>6.1.3 特殊变量</h3><p>linux shell编程中有各种各样的特殊变量,方便对参数,命令结果,进行判断与对比</p>
 <ul>
 <li>位置相关的特殊变量：重要</li>
@@ -657,21 +454,21 @@
 </tr>
 </tbody></table>
 <p>如：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#############################################################</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">File Name:03_post_param.sh</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Version:V1.0</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Author:Haris Gong</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Organization:gsproj.github.io</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Desc: 位置变量基本使用</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#############################################################</span></span><br><br><br>echo &quot;脚本名是：$0&quot;<br>echo &quot;总共有$#个参数&quot;<br>echo &quot;第一个参数是：$1&quot;<br>echo &quot;第二个参数是：$2&quot;<br>echo &quot;第三个参数是：$3&quot;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">循环输出</span><br>for i in $*	# 或者$@<br>do<br>echo $i<br>done<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#############################################################</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">File Name:03_post_param.sh</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Version:V1.0</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Author:Haris Gong</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Organization:gsproj.github.io</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Desc: 位置变量基本使用</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#############################################################</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">echo &quot;脚本名是：$0&quot;</span><br><span class="line">echo &quot;总共有$#个参数&quot;</span><br><span class="line">echo &quot;第一个参数是：$1&quot;</span><br><span class="line">echo &quot;第二个参数是：$2&quot;</span><br><span class="line">echo &quot;第三个参数是：$3&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">循环输出</span></span><br><span class="line">for i in $*	# 或者$@</span><br><span class="line">do</span><br><span class="line">echo $i</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
 
 <p>执行</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn01[ /server/scripts/devops-shell]#bash 03_post_param.sh aa bb cc<br>脚本名是：03_post_param.sh<br>总共有3个参数<br>第一个参数是：aa<br>第二个参数是：bb<br>第三个参数是：cc<br>aa<br>bb<br>cc<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/devops-shell]#bash 03_post_param.sh aa bb cc</span><br><span class="line">脚本名是：03_post_param.sh</span><br><span class="line">总共有3个参数</span><br><span class="line">第一个参数是：aa</span><br><span class="line">第二个参数是：bb</span><br><span class="line">第三个参数是：cc</span><br><span class="line">aa</span><br><span class="line">bb</span><br><span class="line">cc</span><br></pre></td></tr></table></figure>
 
 <h5 id="1）案例01-查询用户"><a href="#1）案例01-查询用户" class="headerlink" title="1）案例01-查询用户"></a>1）案例01-查询用户</h5><p>执行脚本，输入用户名，判断用户是否存在</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#############################################################</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">File Name:04_check_user.sh</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Version:V1.0</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Author:Haris Gong</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Organization:gsproj.github.io</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Desc: 检查用户是否存在 bash 04_check_user.sh username</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#############################################################</span></span><br><br>if (( $# == 0 ));then<br>  echo &quot;Error! 请输出参数&quot;<br>  exit<br>fi<br><br>echo &quot;正在查询用户...&quot;<br>id $1<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#############################################################</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">File Name:04_check_user.sh</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Version:V1.0</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Author:Haris Gong</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Organization:gsproj.github.io</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Desc: 检查用户是否存在 bash 04_check_user.sh username</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#############################################################</span></span></span><br><span class="line"></span><br><span class="line">if (( $# == 0 ));then</span><br><span class="line">  echo &quot;Error! 请输出参数&quot;</span><br><span class="line">  exit</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">echo &quot;正在查询用户...&quot;</span><br><span class="line">id $1</span><br></pre></td></tr></table></figure>
 
 <p>执行：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn01[ /server/scripts/devops-shell]#bash 04_check_user.sh<br>Error! 请输出参数<br>[root@mn01[ /server/scripts/devops-shell]#bash 04_check_user.sh gs<br>正在查询用户...<br>id: gs: no such user<br>[root@mn01[ /server/scripts/devops-shell]#bash 04_check_user.sh root<br>正在查询用户...<br>uid=0(root) gid=0(root) groups=0(root)<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/devops-shell]#bash 04_check_user.sh</span><br><span class="line">Error! 请输出参数</span><br><span class="line">[root@mn01[ /server/scripts/devops-shell]#bash 04_check_user.sh gs</span><br><span class="line">正在查询用户...</span><br><span class="line">id: gs: no such user</span><br><span class="line">[root@mn01[ /server/scripts/devops-shell]#bash 04_check_user.sh root</span><br><span class="line">正在查询用户...</span><br><span class="line">uid=0(root) gid=0(root) groups=0(root)</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>注意：如果<code>$n &gt; 9</code>怎么办？</p>
 <p>大于9后,<code>$10</code>会表示为<code>$1 + 0</code> 第1个参数+0</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">&gt;</span><span class="language-bash"><span class="hljs-comment"># 错误的用法</span></span><br><span class="hljs-meta prompt_">&gt;</span><span class="language-bash"><span class="hljs-variable">$10</span> <span class="hljs-comment"># 参数aa, 输出aa0</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">&gt;</span><span class="language-bash"><span class="hljs-comment"># 正确的用法</span></span><br><span class="hljs-meta prompt_">&gt;</span><span class="language-bash"><span class="hljs-variable">$&#123;10&#125;</span>  <span class="hljs-comment"># 获取第十个参数</span></span><br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"><span class="comment"># 错误的用法</span></span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"><span class="variable">$10</span> <span class="comment"># 参数aa, 输出aa0</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"><span class="comment"># 正确的用法</span></span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"><span class="variable">$&#123;10&#125;</span>  <span class="comment"># 获取第十个参数</span></span></span><br></pre></td></tr></table></figure>
 </blockquote>
 <h5 id="2）案例02-和-的区别"><a href="#2）案例02-和-的区别" class="headerlink" title="2）案例02-$*和$@的区别"></a>2）案例02-<code>$*</code>和<code>$@</code>的区别</h5><table>
 <thead>
@@ -693,7 +490,7 @@
 </tr>
 </tbody></table>
 <p>演示结果</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn01[ /server/scripts/devops-shell]#set &quot;test&quot; aa bb cc<br>[root@mn01[ /server/scripts/devops-shell]#for i in &quot;$@&quot;; do echo $i; done<br>test<br>aa<br>bb<br>cc<br>[root@mn01[ /server/scripts/devops-shell]#for i in &quot;$*&quot;; do echo $i; done<br>test aa bb cc<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/devops-shell]#set &quot;test&quot; aa bb cc</span><br><span class="line">[root@mn01[ /server/scripts/devops-shell]#for i in &quot;$@&quot;; do echo $i; done</span><br><span class="line">test</span><br><span class="line">aa</span><br><span class="line">bb</span><br><span class="line">cc</span><br><span class="line">[root@mn01[ /server/scripts/devops-shell]#for i in &quot;$*&quot;; do echo $i; done</span><br><span class="line">test aa bb cc</span><br></pre></td></tr></table></figure>
 
 <h5 id="3）位置变量小结"><a href="#3）位置变量小结" class="headerlink" title="3）位置变量小结"></a>3）位置变量小结</h5><table>
 <thead>
@@ -770,7 +567,7 @@
 </tr>
 </tbody></table>
 <p>如：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">执行命令</span><br>[root@mn01[ /server/scripts/devops-shell]#echo &quot;123456&quot;<br>123456<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">判断执行成功返回0</span><br>[root@mn01[ /server/scripts/devops-shell]#echo $?<br>0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">判断执行不成功，返回非0</span><br>[root@mn01[ /server/scripts/devops-shell]#eeds &quot;123456&quot;<br>-bash: eeds: command not found<br>[root@mn01[ /server/scripts/devops-shell]#echo $?<br>127<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">执行命令</span></span><br><span class="line">[root@mn01[ /server/scripts/devops-shell]#echo &quot;123456&quot;</span><br><span class="line">123456</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">判断执行成功返回0</span></span><br><span class="line">[root@mn01[ /server/scripts/devops-shell]#echo $?</span><br><span class="line">0</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">判断执行不成功，返回非0</span></span><br><span class="line">[root@mn01[ /server/scripts/devops-shell]#eeds &quot;123456&quot;</span><br><span class="line">-bash: eeds: command not found</span><br><span class="line">[root@mn01[ /server/scripts/devops-shell]#echo $?</span><br><span class="line">127</span><br></pre></td></tr></table></figure>
 
 
 
@@ -844,17 +641,17 @@
 <td>把word替换为replace 替换全部</td>
 </tr>
 </tbody></table>
-<h5 id="1）统计字符串长度"><a href="#1）统计字符串长度" class="headerlink" title="1）统计字符串长度"></a>1）统计字符串长度</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn01[ /server/scripts/devops-shell]#str=&quot;good morning&quot;<br>[root@mn01[ /server/scripts/devops-shell]#echo $&#123;#str&#125;<br>12<br></code></pre></td></tr></table></figure>
+<h5 id="1）统计字符串长度"><a href="#1）统计字符串长度" class="headerlink" title="1）统计字符串长度"></a>1）统计字符串长度</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/devops-shell]#str=&quot;good morning&quot;</span><br><span class="line">[root@mn01[ /server/scripts/devops-shell]#echo $&#123;#str&#125;</span><br><span class="line">12</span><br></pre></td></tr></table></figure>
 
-<h5 id="2）删除变量中的内容（仅影响输出）"><a href="#2）删除变量中的内容（仅影响输出）" class="headerlink" title="2）删除变量中的内容（仅影响输出）"></a>2）删除变量中的内容（仅影响输出）</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn01[ /server/scripts/devops-shell]#str=&quot;helloworld&quot;<br>[root@mn01[ /server/scripts/devops-shell]#echo $&#123;str#he&#125;<br>lloworld<br>[root@mn01[ /server/scripts/devops-shell]#echo $&#123;str#ow&#125;<br>helloworld<br>[root@mn01[ /server/scripts/devops-shell]#echo $&#123;str#o&#125;<br>helloworld<br>[root@mn01[ /server/scripts/devops-shell]#echo $&#123;str#hello&#125;<br>world<br>[root@mn01[ /server/scripts/devops-shell]#echo $&#123;str#*o&#125;<br>world<br>[root@mn01[ /server/scripts/devops-shell]#echo $&#123;str##*o&#125;<br>rld<br>[root@mn01[ /server/scripts/devops-shell]#echo $&#123;str#*l&#125;<br>loworld<br>[root@mn01[ /server/scripts/devops-shell]#echo $&#123;str##*l&#125;<br>d<br></code></pre></td></tr></table></figure>
+<h5 id="2）删除变量中的内容（仅影响输出）"><a href="#2）删除变量中的内容（仅影响输出）" class="headerlink" title="2）删除变量中的内容（仅影响输出）"></a>2）删除变量中的内容（仅影响输出）</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/devops-shell]#str=&quot;helloworld&quot;</span><br><span class="line">[root@mn01[ /server/scripts/devops-shell]#echo $&#123;str#he&#125;</span><br><span class="line">lloworld</span><br><span class="line">[root@mn01[ /server/scripts/devops-shell]#echo $&#123;str#ow&#125;</span><br><span class="line">helloworld</span><br><span class="line">[root@mn01[ /server/scripts/devops-shell]#echo $&#123;str#o&#125;</span><br><span class="line">helloworld</span><br><span class="line">[root@mn01[ /server/scripts/devops-shell]#echo $&#123;str#hello&#125;</span><br><span class="line">world</span><br><span class="line">[root@mn01[ /server/scripts/devops-shell]#echo $&#123;str#*o&#125;</span><br><span class="line">world</span><br><span class="line">[root@mn01[ /server/scripts/devops-shell]#echo $&#123;str##*o&#125;</span><br><span class="line">rld</span><br><span class="line">[root@mn01[ /server/scripts/devops-shell]#echo $&#123;str#*l&#125;</span><br><span class="line">loworld</span><br><span class="line">[root@mn01[ /server/scripts/devops-shell]#echo $&#123;str##*l&#125;</span><br><span class="line">d</span><br></pre></td></tr></table></figure>
 
 <p>巧用，取文件名和路径名</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn01[ /server/scripts/devops-shell]#dir=/etc/sysconfig/network-scripts/ifcfg-ens33<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">取文件名</span><br>[root@mn01[ /server/scripts/devops-shell]#echo $&#123;dir##*/&#125;<br>ifcfg-ens33<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">取路径名</span><br>[root@mn01[ /server/scripts/devops-shell]#echo $&#123;dir%/*&#125;<br>/etc/sysconfig/network-scripts<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/devops-shell]#dir=/etc/sysconfig/network-scripts/ifcfg-ens33</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">取文件名</span></span><br><span class="line">[root@mn01[ /server/scripts/devops-shell]#echo $&#123;dir##*/&#125;</span><br><span class="line">ifcfg-ens33</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">取路径名</span></span><br><span class="line">[root@mn01[ /server/scripts/devops-shell]#echo $&#123;dir%/*&#125;</span><br><span class="line">/etc/sysconfig/network-scripts</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>提示：</p>
 <p>也可用dirname和basename命令来获取</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">&gt;</span><span class="language-bash">[root@mn01[ /server/scripts/devops-shell]#<span class="hljs-built_in">dirname</span> <span class="hljs-variable">$dir</span></span><br><span class="hljs-meta prompt_">&gt;</span><span class="language-bash">/etc/sysconfig/network-scripts</span><br><span class="hljs-meta prompt_">&gt;</span><span class="language-bash">[root@mn01[ /server/scripts/devops-shell]#<span class="hljs-built_in">basename</span> <span class="hljs-variable">$dir</span></span><br><span class="hljs-meta prompt_">&gt;</span><span class="language-bash">ifcfg-ens33</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">[root@mn01[ /server/scripts/devops-shell]#<span class="built_in">dirname</span> <span class="variable">$dir</span></span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">/etc/sysconfig/network-scripts</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">[root@mn01[ /server/scripts/devops-shell]#<span class="built_in">basename</span> <span class="variable">$dir</span></span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">ifcfg-ens33</span></span><br></pre></td></tr></table></figure>
 </blockquote>
 <h5 id="3）截取（切片）"><a href="#3）截取（切片）" class="headerlink" title="3）截取（切片）"></a>3）截取（切片）</h5><table>
 <thead>
@@ -888,23 +685,23 @@
 </tr>
 </tbody></table>
 <p>案例：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">var=oldboy<br><br>echo $&#123;var:3&#125;	# 3、4、5<br>boy<br><br>echo $&#123;var:3:2&#125;	# 截取3、4<br>bo<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var=oldboy</span><br><span class="line"></span><br><span class="line">echo $&#123;var:3&#125;	# 3、4、5</span><br><span class="line">boy</span><br><span class="line"></span><br><span class="line">echo $&#123;var:3:2&#125;	# 截取3、4</span><br><span class="line">bo</span><br></pre></td></tr></table></figure>
 
-<h5 id="4）替换"><a href="#4）替换" class="headerlink" title="4）替换"></a>4）替换</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn01[ /server/scripts/devops-shell]#var=oldboylidao996<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">/替换一个</span><br>[root@mn01[ /server/scripts/devops-shell]#echo $&#123;var/o/-&#125;<br>-ldboylidao996<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">//替换全部</span><br>[root@mn01[ /server/scripts/devops-shell]#echo $&#123;var//o/-&#125;<br>-ldb-ylida-996<br></code></pre></td></tr></table></figure>
+<h5 id="4）替换"><a href="#4）替换" class="headerlink" title="4）替换"></a>4）替换</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/devops-shell]#var=oldboylidao996</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">/替换一个</span></span><br><span class="line">[root@mn01[ /server/scripts/devops-shell]#echo $&#123;var/o/-&#125;</span><br><span class="line">-ldboylidao996</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">//替换全部</span></span><br><span class="line">[root@mn01[ /server/scripts/devops-shell]#echo $&#123;var//o/-&#125;</span><br><span class="line">-ldb-ylida-996</span><br></pre></td></tr></table></figure>
 
 <h5 id="5）案例-面试题"><a href="#5）案例-面试题" class="headerlink" title="5）案例-面试题"></a>5）案例-面试题</h5><p>I am oldboy teacher welcome to oldboy training class.</p>
 <p>要求：bash for 循环打印这句话中字母书不大于6的单词  </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#############################################################</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">File Name:05_count_word.sh</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Version:V1.0</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Author:Haris Gong</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Organization:gsproj.github.io</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Desc:</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#############################################################</span></span><br><br>str=&quot;I am oldboy teacher welcome to oldboy training class.&quot;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">去掉.号</span><br>str_del=`echo $str | sed &#x27;s#\.##g&#x27;`<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">循环</span><br>for word in $&#123;str_del&#125;<br>do<br>  if [ $&#123;#word&#125; -le 6 ]; then<br>    echo &quot;单词字符&lt;=6: $&#123;word&#125;&quot;<br>  fi<br>done<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#############################################################</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">File Name:05_count_word.sh</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Version:V1.0</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Author:Haris Gong</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Organization:gsproj.github.io</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Desc:</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#############################################################</span></span></span><br><span class="line"></span><br><span class="line">str=&quot;I am oldboy teacher welcome to oldboy training class.&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">去掉.号</span></span><br><span class="line">str_del=`echo $str | sed &#x27;s#\.##g&#x27;`</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">循环</span></span><br><span class="line">for word in $&#123;str_del&#125;</span><br><span class="line">do</span><br><span class="line">  if [ $&#123;#word&#125; -le 6 ]; then</span><br><span class="line">    echo &quot;单词字符&lt;=6: $&#123;word&#125;&quot;</span><br><span class="line">  fi</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
 
 <p>执行</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn01[ /server/scripts/devops-shell]#bash 05_count_word.sh<br>单词字符&lt;=6: I<br>单词字符&lt;=6: am<br>单词字符&lt;=6: oldboy<br>单词字符&lt;=6: to<br>单词字符&lt;=6: oldboy<br>单词字符&lt;=6: class<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/devops-shell]#bash 05_count_word.sh</span><br><span class="line">单词字符&lt;=6: I</span><br><span class="line">单词字符&lt;=6: am</span><br><span class="line">单词字符&lt;=6: oldboy</span><br><span class="line">单词字符&lt;=6: to</span><br><span class="line">单词字符&lt;=6: oldboy</span><br><span class="line">单词字符&lt;=6: class</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>if各种判断条件：</p>
 <p># eq 等于<br># ne 不等于<br># lt less than 小于<br># le less equal  小于等于<br># gt great than 大于<br># ge great equal 大于等于 </p>
 </blockquote>
 <p>改用awk实现</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@db02[ /]#echo $str | sed &#x27;s#\.##g&#x27; | xargs -n1 | awk -F &quot;[ .]&quot; &#x27;length($1) &lt;= 6&#x27;<br>I<br>am<br>oldboy<br>to<br>oldboy<br>class<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">或者</span><br>[root@db02[ /]#echo $str | awk -F&quot;[ .]&quot; -vRS=&quot;[ .]&quot; &#x27;length()&lt;=6&#x27;<br>I<br>am<br>oldboy<br>to<br>oldboy<br>class<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@db02[ /]#echo $str | sed &#x27;s#\.##g&#x27; | xargs -n1 | awk -F &quot;[ .]&quot; &#x27;length($1) &lt;= 6&#x27;</span><br><span class="line">I</span><br><span class="line">am</span><br><span class="line">oldboy</span><br><span class="line">to</span><br><span class="line">oldboy</span><br><span class="line">class</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或者</span></span><br><span class="line">[root@db02[ /]#echo $str | awk -F&quot;[ .]&quot; -vRS=&quot;[ .]&quot; &#x27;length()&lt;=6&#x27;</span><br><span class="line">I</span><br><span class="line">am</span><br><span class="line">oldboy</span><br><span class="line">to</span><br><span class="line">oldboy</span><br><span class="line">class</span><br></pre></td></tr></table></figure>
 
 
 
@@ -934,7 +731,7 @@
 </tr>
 </tbody></table>
 <p>实验：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">没定义，没赋值</span><br>[root@mn01[ /]#echo $name<br><span class="hljs-meta prompt_"># </span><span class="language-bash">默认值，仅输出</span><br>[root@mn01[ /]#echo $&#123;name:-xiaoming&#125;<br>xiaoming<br><span class="hljs-meta prompt_"># </span><span class="language-bash">变量值未改</span><br>[root@mn01[ /]#echo $name<br><span class="hljs-meta prompt_"># </span><span class="language-bash">默认值，错误输出</span><br>[root@mn01[ /]#echo $&#123;name:?xiaohuang&#125;<br>-bash: name: xiaohuang<br><span class="hljs-meta prompt_"># </span><span class="language-bash">默认值，赋值，并输出</span><br>[root@mn01[ /]#echo $&#123;name:=xiaohuang&#125;<br>xiaohuang<br><span class="hljs-meta prompt_"># </span><span class="language-bash">变量值已修改</span><br>[root@mn01[ /]#echo $name<br>xiaohuang<br><span class="hljs-meta prompt_"># </span><span class="language-bash">有变量值，则改为默认值，仅输出</span><br>[root@mn01[ /]#echo $&#123;name:+test&#125;<br>test<br><span class="hljs-meta prompt_"># </span><span class="language-bash">变量值未改</span><br>[root@mn01[ /]#echo $name<br>xiaohuang<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">没定义，没赋值</span></span><br><span class="line">[root@mn01[ /]#echo $name</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">默认值，仅输出</span></span><br><span class="line">[root@mn01[ /]#echo $&#123;name:-xiaoming&#125;</span><br><span class="line">xiaoming</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">变量值未改</span></span><br><span class="line">[root@mn01[ /]#echo $name</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">默认值，错误输出</span></span><br><span class="line">[root@mn01[ /]#echo $&#123;name:?xiaohuang&#125;</span><br><span class="line">-bash: name: xiaohuang</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">默认值，赋值，并输出</span></span><br><span class="line">[root@mn01[ /]#echo $&#123;name:=xiaohuang&#125;</span><br><span class="line">xiaohuang</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">变量值已修改</span></span><br><span class="line">[root@mn01[ /]#echo $name</span><br><span class="line">xiaohuang</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">有变量值，则改为默认值，仅输出</span></span><br><span class="line">[root@mn01[ /]#echo $&#123;name:+test&#125;</span><br><span class="line">test</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">变量值未改</span></span><br><span class="line">[root@mn01[ /]#echo $name</span><br><span class="line">xiaohuang</span><br></pre></td></tr></table></figure>
 
 <h4 id="6-1-3-8-特殊变量小节"><a href="#6-1-3-8-特殊变量小节" class="headerlink" title="6.1.3.8 特殊变量小节"></a>6.1.3.8 特殊变量小节</h4><p>为了shell编程增光添彩，整体要认识。  </p>
 <table>
@@ -1023,373 +820,756 @@
 </tbody></table>
 <p>实验：</p>
 <p>基本用法</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn01[ /]#read -p &quot;请输入密码: &quot; pass<br>请输入密码: 34567<br>[root@mn01[ /]#echo $pass<br>34567<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /]#read -p &quot;请输入密码: &quot; pass</span><br><span class="line">请输入密码: 34567</span><br><span class="line">[root@mn01[ /]#echo $pass</span><br><span class="line">34567</span><br></pre></td></tr></table></figure>
 
 <p>不显示用户输入</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn01[ /]#read -s -p &quot;请输入密码: &quot; pass<br>请输入密码: <br>[root@mn01[ /]#echo $pass<br>123456<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /]#read -s -p &quot;请输入密码: &quot; pass</span><br><span class="line">请输入密码: </span><br><span class="line">[root@mn01[ /]#echo $pass</span><br><span class="line">123456</span><br></pre></td></tr></table></figure>
 
 <p>同时两个变量赋值</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn01[ /]#read -p &quot;请输入两个参数: &quot; num1 num2<br>请输入两个参数: koko1 koko2<br>[root@mn01[ /]#echo $num1 $num2<br>koko1 koko2<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /]#read -p &quot;请输入两个参数: &quot; num1 num2</span><br><span class="line">请输入两个参数: koko1 koko2</span><br><span class="line">[root@mn01[ /]#echo $num1 $num2</span><br><span class="line">koko1 koko2</span><br></pre></td></tr></table></figure>
 
 <h4 id="2）案例"><a href="#2）案例" class="headerlink" title="2）案例"></a>2）案例</h4><p>用户输入一个字符串，然后进行显示</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn01[ /server/scripts/devops-shell]#cat 06_show_pass.sh<br><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#############################################################</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">File Name:06_show_pass.sh</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Version:V1.0</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Author:Haris Gong</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Organization:gsproj.github.io</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Desc:</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#############################################################</span></span><br><br><br>read -s -p &quot;请输入密码:&quot; pass<br>pass_rev=`echo $pass |rev`<br>echo &quot;正在猜测你的密码.....&quot;<br>echo &quot;马上破解成功&quot;<br>echo &quot;$pass_rev&quot;<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/devops-shell]#cat 06_show_pass.sh</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#############################################################</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">File Name:06_show_pass.sh</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Version:V1.0</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Author:Haris Gong</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Organization:gsproj.github.io</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Desc:</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#############################################################</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">read -s -p &quot;请输入密码:&quot; pass</span><br><span class="line">pass_rev=`echo $pass |rev`</span><br><span class="line">echo &quot;正在猜测你的密码.....&quot;</span><br><span class="line">echo &quot;马上破解成功&quot;</span><br><span class="line">echo &quot;$pass_rev&quot;</span><br></pre></td></tr></table></figure>
 
 <p>测试</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn01[ /server/scripts/devops-shell]#bash 06_show_pass.sh<br>请输入密码:正在猜测你的密码.....<br>马上破解成功<br>987654	# 输入的456789，反转了<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@mn01[ /server/scripts/devops-shell]#bash 06_show_pass.sh</span><br><span class="line">请输入密码:正在猜测你的密码.....</span><br><span class="line">马上破解成功</span><br><span class="line">987654	# 输入的456789，反转了</span><br></pre></td></tr></table></figure>
 
-
-                
-              </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
     
-      <span class="category-chain">
-        
-  <a href="/categories/%E8%BF%90%E7%BB%B4/" class="category-chain-item">运维</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/" class="category-chain-item">（二）综合架构</a>
-  
-  
 
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
 </div>
 
-
-              
-  
-
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>day52-自动化架构-shell自动化编程（一）</div>
-      <div>https://gblog.github.io/2024/05/15/07_85期运维/03_自动化架构/day52-自动化架构-shell自动化编程-1/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>作者</div>
-          <div>Haris</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>发布于</div>
-          <div>2024年5月15日</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>许可协议</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
-          </div>
-        </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
-  </div>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2024/05/16/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day53-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84-shell%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BC%96%E7%A8%8B-2/">day53-自动化架构-shell自动化编程（二）</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2024/05/13/08_%E7%BD%91%E7%BB%9C/ACL/">网络-ACL</a></div></section></div>
 
 
 
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2024/05/16/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day53-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84-shell%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BC%96%E7%A8%8B-2/" title="day53-自动化架构-shell自动化编程（二）">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">day53-自动化架构-shell自动化编程（二）</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2024/05/13/08_%E7%BD%91%E7%BB%9C/ACL/" title="网络-ACL">
-                        <span class="hidden-mobile">网络-ACL</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
 
-            
-          </article>
-        </div>
-      </div>
-    </div>
 
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
 
-    </div>
-  </div>
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">Haris</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84-shell%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BC%96%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89"><span class="toc-text">自动化架构-shell自动化编程（一）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9"><span class="toc-text">一、课程内容</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Shell%E7%BC%96%E7%A8%8B%E6%A6%82%E8%BF%B0"><span class="toc-text">二、Shell编程概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%88%86%E7%B1%BB"><span class="toc-text">三、编程语言分类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Shell%E7%BC%96%E7%A8%8B%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-text">四、Shell编程环境准备</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-%E4%B8%BB%E6%9C%BA%E7%8E%AF%E5%A2%83"><span class="toc-text">4.1 主机环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-vim%E8%AE%BE%E7%BD%AE"><span class="toc-text">4.2 vim设置</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81Shell%E8%84%9A%E6%9C%AC%E7%9A%84%E6%89%A7%E8%A1%8C%E6%96%B9%E5%BC%8F"><span class="toc-text">五、Shell脚本的执行方式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AD%E3%80%81Shell%E5%8F%98%E9%87%8F%EF%BC%88%E9%87%8D%E8%A6%81%EF%BC%89"><span class="toc-text">六、Shell变量（重要）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#6-1-%E5%8F%98%E9%87%8F%E5%88%86%E7%B1%BB"><span class="toc-text">6.1 变量分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-1-%E6%99%AE%E9%80%9A%E5%8F%98%E9%87%8F"><span class="toc-text">6.1.1 普通变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-2-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-text">6.1.2 环境变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%EF%BC%89%E6%9F%A5%E7%9C%8B%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%9A%84%E4%B8%89%E4%B8%AA%E5%91%BD%E4%BB%A4"><span class="toc-text">1）查看环境变量的三个命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%EF%BC%89%E5%B8%B8%E7%94%A8%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-text">2）常用环境变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3%EF%BC%89%E4%BF%AE%E6%94%B9%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-text">3）修改环境变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4%EF%BC%89%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%9B%B8%E5%85%B3%E6%96%87%E4%BB%B6%E5%8F%8A%E7%9B%AE%E5%BD%95"><span class="toc-text">4）环境变量相关文件及目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5%EF%BC%89%E6%A1%88%E4%BE%8B"><span class="toc-text">5）案例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6%EF%BC%89%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E6%96%87%E4%BB%B6%E7%9A%84%E5%8A%A0%E8%BD%BD%E9%A1%BA%E5%BA%8F"><span class="toc-text">6）环境变量文件的加载顺序</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-3-%E7%89%B9%E6%AE%8A%E5%8F%98%E9%87%8F"><span class="toc-text">6.1.3 特殊变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#6-1-3-4-%E7%89%B9%E6%AE%8A%E5%8F%98%E9%87%8F-%E4%BD%8D%E7%BD%AE%E5%8F%98%E9%87%8F"><span class="toc-text">6.1.3.4 特殊变量-位置变量</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%EF%BC%89%E6%A1%88%E4%BE%8B01-%E6%9F%A5%E8%AF%A2%E7%94%A8%E6%88%B7"><span class="toc-text">1）案例01-查询用户</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%EF%BC%89%E6%A1%88%E4%BE%8B02-%E5%92%8C-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">2）案例02-$*和$@的区别</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3%EF%BC%89%E4%BD%8D%E7%BD%AE%E5%8F%98%E9%87%8F%E5%B0%8F%E7%BB%93"><span class="toc-text">3）位置变量小结</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-1-3-5-%E7%89%B9%E6%AE%8A%E5%8F%98%E9%87%8F-%E7%8A%B6%E6%80%81%E5%8F%98%E9%87%8F"><span class="toc-text">6.1.3.5 特殊变量-状态变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-1-3-6-%E7%89%B9%E6%AE%8A%E5%8F%98%E9%87%8F-%E5%8F%98%E9%87%8F%E5%AD%90%E4%B8%B2"><span class="toc-text">6.1.3.6 特殊变量-变量子串</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%EF%BC%89%E7%BB%9F%E8%AE%A1%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6"><span class="toc-text">1）统计字符串长度</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%EF%BC%89%E5%88%A0%E9%99%A4%E5%8F%98%E9%87%8F%E4%B8%AD%E7%9A%84%E5%86%85%E5%AE%B9%EF%BC%88%E4%BB%85%E5%BD%B1%E5%93%8D%E8%BE%93%E5%87%BA%EF%BC%89"><span class="toc-text">2）删除变量中的内容（仅影响输出）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3%EF%BC%89%E6%88%AA%E5%8F%96%EF%BC%88%E5%88%87%E7%89%87%EF%BC%89"><span class="toc-text">3）截取（切片）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4%EF%BC%89%E6%9B%BF%E6%8D%A2"><span class="toc-text">4）替换</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5%EF%BC%89%E6%A1%88%E4%BE%8B-%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="toc-text">5）案例-面试题</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-1-3-7-%E7%89%B9%E6%AE%8A%E5%8F%98%E9%87%8F-%E5%8F%98%E9%87%8F%E6%89%A9%E5%B1%95%EF%BC%88%E8%AE%BE%E7%BD%AE%E9%BB%98%E8%AE%A4%E5%80%BC%EF%BC%89"><span class="toc-text">6.1.3.7 特殊变量-变量扩展（设置默认值）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-1-3-8-%E7%89%B9%E6%AE%8A%E5%8F%98%E9%87%8F%E5%B0%8F%E8%8A%82"><span class="toc-text">6.1.3.8 特殊变量小节</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-2-%E5%8F%98%E9%87%8F%E8%B5%8B%E5%80%BC"><span class="toc-text">6.2 变量赋值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-1-%E5%8F%98%E9%87%8F%E8%B5%8B%E5%80%BC%E8%AF%AD%E5%8F%A5"><span class="toc-text">6.2.1 变量赋值语句</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%EF%BC%89%E9%80%9A%E8%BF%87read%E6%96%B9%E5%BC%8F%E8%8E%B7%E5%8F%96"><span class="toc-text">1）通过read方式获取</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%EF%BC%89%E6%A1%88%E4%BE%8B"><span class="toc-text">2）案例</span></a></li></ol></li></ol></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
 </div>
+</div><div class="scripts">
 
 
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-
-
-
-
-    
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-    
-
-    
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-  
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-    </div>
-  
-  
-  
-</div>
-
-  </footer>
-
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
-      
-        typing(text);
-      
-    })(window, document);
-  </script>
-
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
     }
+  };
 
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
 </script>
 
-
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
-
-  <script>Fluid.plugins.codeWidget();</script>
-
-
+<script type="text/javascript">
   
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
     };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
         }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
       }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
     });
   });
 </script>
 
-
-  
 <script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
   });
 </script>
 
 
-  <script>Fluid.plugins.imageCaption();</script>
+<!-- inject -->
 
-  <script  src="/js/local-search.js" ></script>
-
-
-
-
-
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
-
-
-  
-
-  <noscript>
-    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
-  </noscript>
-</body>
-</html>
+</div></body></html>

@@ -1,28 +1,29 @@
 
-
-<!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
-
-
+<!DOCTYPE html><html lang="zh-CN">
 
 <head>
-  <meta charset="UTF-8">
-
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
   
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="Haris">
-  <meta name="keywords" content="">
+  <meta name="generator" content="Hexo 7.3.0">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>day68-监控架构-Zabbix(二) - Haris的小站</title>
+
   
     <meta name="description" content="监控架构-Zabbix-02今日内容：  Zabbix自定义监控配置 监控告警配置（邮箱告警、企业微信告警）  一、自定义监控（核心）1.1 概述zabbix模板提供的模板非常丰富，包含 CPU、磁盘、网络、负载等各个方面，为什么还需要自定义模板呢？ 自定义模板的应用场景  模板中没有我们需要的监控项 默认模板监控项过多，不需要这么多  1.2 自定义监控全流程流程概括：  客户端：书写命令或脚本">
 <meta property="og:type" content="article">
 <meta property="og:title" content="day68-监控架构-Zabbix(二)">
-<meta property="og:url" content="https://gblog.github.io/2024/06/18/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day68-%E7%9B%91%E6%8E%A7%E6%9E%B6%E6%9E%84-Zabbix-2/index.html">
+<meta property="og:url" content="https://gblog.github.io/2024/06/18/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day68-%E7%9B%91%E6%8E%A7%E6%9E%B6%E6%9E%84-Zabbix-2/">
 <meta property="og:site_name" content="Haris的小站">
 <meta property="og:description" content="监控架构-Zabbix-02今日内容：  Zabbix自定义监控配置 监控告警配置（邮箱告警、企业微信告警）  一、自定义监控（核心）1.1 概述zabbix模板提供的模板非常丰富，包含 CPU、磁盘、网络、负载等各个方面，为什么还需要自定义模板呢？ 自定义模板的应用场景  模板中没有我们需要的监控项 默认模板监控项过多，不需要这么多  1.2 自定义监控全流程流程概括：  客户端：书写命令或脚本">
 <meta property="og:locale" content="zh_CN">
@@ -88,271 +89,67 @@
 <meta property="article:published_time" content="2024-06-18T03:08:52.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.349Z">
 <meta property="article:author" content="Haris">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gblog.github.io/img/image-20240618112656304.png">
   
   
   
-  <title>day68-监控架构-Zabbix(二) - Haris的小站</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
-  
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
 
 
   
-<link rel="stylesheet" href="/css/custom.css">
-
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"gblog.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-  
-
 
   
-<meta name="generator" content="Hexo 7.3.0"></head>
 
-
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Haris","sameAs":[]},"dateCreated":"2024-06-18T11:08:52+08:00","dateModified":"2026-07-10T14:20:16+08:00","datePublished":"2024-06-18T11:08:52+08:00","description":"","headline":"day68-监控架构-Zabbix(二)","mainEntityOfPage":{"@type":"WebPage","@id":"https://gblog.github.io/2024/06/18/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day68-%E7%9B%91%E6%8E%A7%E6%9E%B6%E6%9E%84-Zabbix-2/"},"publisher":{"@type":"Organization","name":"Haris","sameAs":[]},"url":"https://gblog.github.io/2024/06/18/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day68-%E7%9B%91%E6%8E%A7%E6%9E%B6%E6%9E%84-Zabbix-2/","image":[]}</script>
+  
+</head>
 <body>
-  
 
-  <header>
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="undefined" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">Haris的小站</div><div class="sub cap">null</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
+
+
+
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2025/05/06/10_%E5%AD%A6%E7%A5%9EK8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%9F%BA%E7%A1%80/"><span class="title">01-Docker基础</span></a><a class="item title" href="/2025/03/26/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/06-Docker%E8%B5%84%E6%BA%90%E9%85%8D%E9%A2%9D/"><span class="title">06-Docker资源配额</span></a><a class="item title" href="/2025/03/20/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/05-Docker%E5%AE%B9%E5%99%A8%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96/"><span class="title">05-Docker容器数据持久化</span></a><a class="item title" href="/2025/03/12/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/04-Dockerfile%E5%AE%9E%E6%88%98%E7%AF%87-%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F/"><span class="title">04-Dockerfile实战篇-构建镜像</span></a><a class="item title" href="/2025/03/04/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/03-Dockerfile%E5%9F%BA%E7%A1%80%E7%AF%87-%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/"><span class="title">03-Dockerfile基础篇-基本语法</span></a><a class="item title" href="/2025/03/03/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/02-%E8%BF%90%E8%A1%8CDocker%E5%AE%B9%E5%99%A8/"><span class="title">02-运行Docker容器</span></a><a class="item title" href="/2025/03/03/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80/"><span class="title">01-Docker基础</span></a><a class="item title" href="/2024/07/27/08_%E7%BD%91%E7%BB%9C/day03-HCIA%E8%AF%BE%E7%A8%8B-01/"><span class="title">day03-HCIA课程(一)</span></a><a class="item title" href="/2024/07/28/08_%E7%BD%91%E7%BB%9C/day02-%E7%BD%91%E5%B7%A5%E5%85%A5%E9%97%A8-02/"><span class="title">day02-网工入门（二）</span></a><a class="item title" href="/2024/07/27/08_%E7%BD%91%E7%BB%9C/day01-%E7%BD%91%E5%B7%A5%E5%85%A5%E9%97%A8-01/"><span class="title">day01-网工入门（一）</span></a></div></widget>
+</div>
+
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a> <span class="sep"></span> <a class="cap breadcrumb-link" href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/">（二）综合架构</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-06-18T03:08:52.000Z">2024-06-18</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2026-07-10T06:20:16.349Z">2026-07-10</time></span></div></div></div>
     
-
-<div class="header-inner" style="height: 70vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>Haris的博客</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>首页</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>归档</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>分类</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="day68-监控架构-Zabbix(二)"></span>
-          
-        </div>
-
-        
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-06-18 11:08" pubdate>
-          2024年6月18日 上午
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
-        
-          3.3k 字
-        
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
-        
-        
-        
-          28 分钟
-        
-      </span>
-    
-
-    
-    
-  </div>
-
-
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>day68-监控架构-Zabbix(二)</span></h1>
         
       </div>
-
-      
     </div>
-  </div>
-</div>
-
-</div>
-
-  </header>
-
-  <main>
     
-      
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
-
-    </div>
-
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">day68-监控架构-Zabbix(二)</h1>
-            
-            
-              <div class="markdown-body">
-                
-                <h1 id="监控架构-Zabbix-02"><a href="#监控架构-Zabbix-02" class="headerlink" title="监控架构-Zabbix-02"></a>监控架构-Zabbix-02</h1><p>今日内容：</p>
+  </div>
+  </div><article class="md-text content"><h1 id="监控架构-Zabbix-02"><a href="#监控架构-Zabbix-02" class="headerlink" title="监控架构-Zabbix-02"></a>监控架构-Zabbix-02</h1><p>今日内容：</p>
 <ul>
 <li>Zabbix自定义监控配置</li>
 <li>监控告警配置（邮箱告警、企业微信告警）</li>
@@ -408,27 +205,27 @@
 </tr>
 </tbody></table>
 <h3 id="1-2-1-客户端配置"><a href="#1-2-1-客户端配置" class="headerlink" title="1.2.1 客户端配置"></a>1.2.1 客户端配置</h3><h4 id="a-通过命令、脚本取出对应的值"><a href="#a-通过命令、脚本取出对应的值" class="headerlink" title="a)  通过命令、脚本取出对应的值"></a>a)  通过命令、脚本取出对应的值</h4><p>监控3306端口是否存在？Linux中的命令操作</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@db01 ~]#ss -lntup | grep -w 80 | wc -l<br>1<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@db01 ~]#ss -lntup | grep -w 80 | wc -l</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
 
 <h4 id="b-创建键值与重启"><a href="#b-创建键值与重启" class="headerlink" title="b)  创建键值与重启"></a>b)  创建键值与重启</h4><p>创建键值文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@db01 ~]#cat /etc/zabbix/zabbix_agent2.d/database.conf <br><span class="hljs-meta prompt_">#</span><span class="language-bash">UserParameter=key,cmd</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">UserParameter=check.databse,sh /server/scripts/xxx.sh</span><br>UserParameter=check.database,ss -lntup|grep -w 3306|wc -l<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@db01 ~]#cat /etc/zabbix/zabbix_agent2.d/database.conf </span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">UserParameter=key,cmd</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">UserParameter=check.databse,sh /server/scripts/xxx.sh</span></span><br><span class="line">UserParameter=check.database,ss -lntup|grep -w 3306|wc -l</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>UserParameter&#x3D;key,cmd<br>UserParameter&#x3D;固定写法，表示要自定义键值<br>key表示键值名字，命名最好就是 单词+”.” (点)<br>cmd表示命令或脚本  </p>
 </blockquote>
 <p>重启客户端</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl restart zabbix-agent2.service<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart zabbix-agent2.service</span><br></pre></td></tr></table></figure>
 
 <p>本地测试</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@db01 /]#zabbix_agent2 -t check.database<br>check.database                                [s|1]<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@db01 /]#zabbix_agent2 -t check.database</span><br><span class="line">check.database                                [s|1]</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>自定义创建的conf文件，zabbix客户端配置是如何知道的？</p>
 <p>因为客户端配置文件里自带了include代码行</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">&gt;</span><span class="language-bash">Include=/etc/zabbix/zabbix_agent2.d/*.conf</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">Include=/etc/zabbix/zabbix_agent2.d/*.conf</span></span><br></pre></td></tr></table></figure>
 </blockquote>
 <h3 id="1-2-2-服务端配置"><a href="#1-2-2-服务端配置" class="headerlink" title="1.2.2 服务端配置"></a>1.2.2 服务端配置</h3><p>安装工具并手动测试</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">yum install -y zabbix-get<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y zabbix-get</span><br></pre></td></tr></table></figure>
 
 <p>zabbix-get工具用于向客户端要指定键值的数据  </p>
 <p>选项说明：</p>
@@ -438,45 +235,45 @@
 <li>-k	指定键值</li>
 </ul>
 <p>测试</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn02 /]#zabbix_get -s 172.16.1.51 -p 10050 -k check.database<br>1<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@mn02 /]#zabbix_get -s 172.16.1.51 -p 10050 -k check.database</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
 
 
 
 <h3 id="1-2-3-web页面配置"><a href="#1-2-3-web页面配置" class="headerlink" title="1.2.3 web页面配置"></a>1.2.3 web页面配置</h3><h4 id="a-配置监控选项"><a href="#a-配置监控选项" class="headerlink" title="a)  配置监控选项"></a>a)  配置监控选项</h4><p>进入监控项配置页面</p>
-<p><img src="/../../../img/image-20240618112656304.png" srcset="/img/loading.gif" lazyload alt="image-20240618112656304"></p>
+<p><img src="/../../../img/image-20240618112656304.png" alt="image-20240618112656304"></p>
 <p>创建监控项</p>
-<p><img src="/../../../img/image-20240618112714346.png" srcset="/img/loading.gif" lazyload alt="image-20240618112714346"></p>
+<p><img src="/../../../img/image-20240618112714346.png" alt="image-20240618112714346"></p>
 <p>填写信息，并提交</p>
-<p><img src="/../../../img/image-20240618112907699.png" srcset="/img/loading.gif" lazyload alt="image-20240618112907699"></p>
+<p><img src="/../../../img/image-20240618112907699.png" alt="image-20240618112907699"></p>
 <p>也可以进行测试</p>
-<p><img src="/../../../img/image-20240618112959091.png" srcset="/img/loading.gif" lazyload alt="image-20240618112959091"></p>
+<p><img src="/../../../img/image-20240618112959091.png" alt="image-20240618112959091"></p>
 <p>添加监控项完成，查看添加的监控项  </p>
-<p><img src="/../../../img/image-20240618113029256.png" srcset="/img/loading.gif" lazyload alt="image-20240618113029256"></p>
+<p><img src="/../../../img/image-20240618113029256.png" alt="image-20240618113029256"></p>
 <h4 id="b-web页面查看"><a href="#b-web页面查看" class="headerlink" title="b) web页面查看"></a>b) web页面查看</h4><p>可以在[最新数据]项中以图表的方式查看</p>
-<p><img src="/../../../img/image-20240618113232394.png" srcset="/img/loading.gif" lazyload alt="image-20240618113232394"></p>
+<p><img src="/../../../img/image-20240618113232394.png" alt="image-20240618113232394"></p>
 <p>查看</p>
-<p><img src="/../../../img/image-20240618113249951.png" srcset="/img/loading.gif" lazyload alt="image-20240618113249951"></p>
+<p><img src="/../../../img/image-20240618113249951.png" alt="image-20240618113249951"></p>
 <h4 id="c-web页面-触发器"><a href="#c-web页面-触发器" class="headerlink" title="c) web页面-触发器"></a>c) web页面-触发器</h4><p>根据监控项获取的数值（内容），决定是否要告警、是否要提示异常。<br>trigger扳机  </p>
 <p>进入触发器设置页面</p>
-<p><img src="/../../../img/image-20240618113453869.png" srcset="/img/loading.gif" lazyload alt="image-20240618113453869"></p>
+<p><img src="/../../../img/image-20240618113453869.png" alt="image-20240618113453869"></p>
 <p>点击“创建触发器”</p>
-<p><img src="/../../../img/image-20240618113518040.png" srcset="/img/loading.gif" lazyload alt="image-20240618113518040"></p>
-<p><img src="/../../../img/image-20240618113738276.png" srcset="/img/loading.gif" lazyload alt="image-20240618113738276"></p>
-<p>表达式添加<img src="/../../../img/image-20240618113708802.png" srcset="/img/loading.gif" lazyload alt="image-20240618113708802"></p>
+<p><img src="/../../../img/image-20240618113518040.png" alt="image-20240618113518040"></p>
+<p><img src="/../../../img/image-20240618113738276.png" alt="image-20240618113738276"></p>
+<p>表达式添加<img src="/../../../img/image-20240618113708802.png" alt="image-20240618113708802"></p>
 <p>添加完可以看到</p>
-<p><img src="/../../../img/image-20240618113813948.png" srcset="/img/loading.gif" lazyload alt="image-20240618113813948"></p>
+<p><img src="/../../../img/image-20240618113813948.png" alt="image-20240618113813948"></p>
 <h4 id="d-web页面-添加图形"><a href="#d-web页面-添加图形" class="headerlink" title="d) web页面-添加图形"></a>d) web页面-添加图形</h4><p>进入图形配置页面</p>
-<p><img src="/../../../img/image-20240618114107588.png" srcset="/img/loading.gif" lazyload alt="image-20240618114107588"></p>
+<p><img src="/../../../img/image-20240618114107588.png" alt="image-20240618114107588"></p>
 <p>创建图形</p>
-<p><img src="/../../../img/image-20240618114123354.png" srcset="/img/loading.gif" lazyload alt="image-20240618114123354"></p>
+<p><img src="/../../../img/image-20240618114123354.png" alt="image-20240618114123354"></p>
 <p>填写信息</p>
-<p><img src="/../../../img/image-20240618114220247.png" srcset="/img/loading.gif" lazyload alt="image-20240618114220247"></p>
+<p><img src="/../../../img/image-20240618114220247.png" alt="image-20240618114220247"></p>
 <p>查看图形</p>
-<p><img src="/../../../img/image-20240618114349960.png" srcset="/img/loading.gif" lazyload alt="image-20240618114349960"></p>
+<p><img src="/../../../img/image-20240618114349960.png" alt="image-20240618114349960"></p>
 <p>图形显示出来了，但是中文乱码</p>
-<p><img src="/../../../img/image-20240618114416100.png" srcset="/img/loading.gif" lazyload alt="image-20240618114416100"></p>
+<p><img src="/../../../img/image-20240618114416100.png" alt="image-20240618114416100"></p>
 <p>解决中文乱码问题后</p>
-<p><img src="/../../../img/image-20240618115227439.png" srcset="/img/loading.gif" lazyload alt="image-20240618115227439"></p>
+<p><img src="/../../../img/image-20240618115227439.png" alt="image-20240618115227439"></p>
 <h2 id="1-3-常用键值与触发器函数"><a href="#1-3-常用键值与触发器函数" class="headerlink" title="1.3 常用键值与触发器函数"></a>1.3 常用键值与触发器函数</h2><h3 id="1-3-1-键值"><a href="#1-3-1-键值" class="headerlink" title="1.3.1 键值"></a>1.3.1 键值</h3><p>在监控项中，键值用于获取数据</p>
 <p>常用键值如下：</p>
 <table>
@@ -517,16 +314,16 @@
 </tbody></table>
 <p>键值案例:</p>
 <p>1、过滤僵尸进程数量</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn02 /usr/share]#zabbix_get -s 172.16.1.51 -p 10050 -k proc.num[,,zomb]0<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@mn02 /usr/share]#zabbix_get -s 172.16.1.51 -p 10050 -k proc.num[,,zomb]0</span><br></pre></td></tr></table></figure>
 
 <p>2、查看网卡流出流入的流量</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn02 /usr/share]#zabbix_get -s 172.16.1.51 -p 10050 -k net.if.in[ens33,]<br>6740169<br>[root@mn02 /usr/share]#zabbix_get -s 172.16.1.51 -p 10050 -k net.if.out[ens33,]<br>962137<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@mn02 /usr/share]#zabbix_get -s 172.16.1.51 -p 10050 -k net.if.in[ens33,]</span><br><span class="line">6740169</span><br><span class="line">[root@mn02 /usr/share]#zabbix_get -s 172.16.1.51 -p 10050 -k net.if.out[ens33,]</span><br><span class="line">962137</span><br></pre></td></tr></table></figure>
 
 <p>3、查看mysql进程数量</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn02 /usr/share]#zabbix_get -s 172.16.1.51 -p 10050 -k proc.num[mariadbd]<br>1<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@mn02 /usr/share]#zabbix_get -s 172.16.1.51 -p 10050 -k proc.num[mariadbd]</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
 
 <p>4、查看3306端口是否开启</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn02 /usr/share]#zabbix_get -s 172.16.1.51 -p 10050 -k net.tcp.port[,3306]<br>1<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@mn02 /usr/share]#zabbix_get -s 172.16.1.51 -p 10050 -k net.tcp.port[,3306]</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>以上只是部分，如果需要了解更多可以网上查询</p>
@@ -569,12 +366,12 @@
 </tr>
 </tbody></table>
 <p>案例：分析模板自带的触发器：&#x2F;etc&#x2F;passwd文件的变化情况，检查是否有用户增加或删减</p>
-<p><img src="/../../../img/image-20240619152156362.png" srcset="/img/loading.gif" lazyload alt="image-20240619152156362"></p>
+<p><img src="/../../../img/image-20240619152156362.png" alt="image-20240619152156362"></p>
 <p>里面是这么写的</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">last(/db01/vfs.file.cksum[/etc/passwd,sha256],#1)&lt;&gt;last(/db01/vfs.file.cksum[/etc/passwd,sha256],#2)<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">last(/db01/vfs.file.cksum[/etc/passwd,sha256],#1)&lt;&gt;last(/db01/vfs.file.cksum[/etc/passwd,sha256],#2)</span><br></pre></td></tr></table></figure>
 
 <p>作用是什么？</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">检查倒数第一个/etc/passwd的md5值（最近的倒数第一个）</span><br>last(/db01/vfs.file.cksum[/etc/passwd,sha256],#1)<br><span class="hljs-meta prompt_"># </span><span class="language-bash">检查倒数第2个/etc/passwd的md5值（最近的倒数第二个）</span><br>&lt;&gt;last(/db01/vfs.file.cksum[/etc/passwd,sha256],#2)<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检查倒数第一个/etc/passwd的md5值（最近的倒数第一个）</span></span><br><span class="line">last(/db01/vfs.file.cksum[/etc/passwd,sha256],#1)</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检查倒数第2个/etc/passwd的md5值（最近的倒数第二个）</span></span><br><span class="line">&lt;&gt;last(/db01/vfs.file.cksum[/etc/passwd,sha256],#2)</span><br></pre></td></tr></table></figure>
 
 <p>倒数第1个md5的值和倒数第2个md5的值如果不相等了，则报警.</p>
 <h4 id="1-3-2-1-案例：检查swap值"><a href="#1-3-2-1-案例：检查swap值" class="headerlink" title="1.3.2.1 案例：检查swap值"></a>1.3.2.1 案例：检查swap值</h4><p>需求：</p>
@@ -583,60 +380,60 @@
 <li>条件2：swap当前的使用量大于0(没有直接可以使用的监控项，这里调整为当前swap空闲率小于100)</li>
 </ul>
 <p>如何表示？</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">1、找出满足要求的键值</span><br>system.swap.size[,total]) #取出swap总数<br>last(/web01/system.swap.size[,used]) #swap使用大小<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">2、条件1:swap总量大于0</span><br>last(/web01/system.swap.size[,total])&gt;0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">3、条件2：swap使用量大于0（空闲率小于100）</span><br>last(/web01/system.swap.size[,pfree])&lt;100<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">4、条件3：与和或</span><br>-a ==&gt; and<br>-o ==&gt; or<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">1、找出满足要求的键值</span></span><br><span class="line">system.swap.size[,total]) #取出swap总数</span><br><span class="line">last(/web01/system.swap.size[,used]) #swap使用大小</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">2、条件1:swap总量大于0</span></span><br><span class="line">last(/web01/system.swap.size[,total])&gt;0</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">3、条件2：swap使用量大于0（空闲率小于100）</span></span><br><span class="line">last(/web01/system.swap.size[,pfree])&lt;100</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">4、条件3：与和或</span></span><br><span class="line">-a ==&gt; and</span><br><span class="line">-o ==&gt; or</span><br></pre></td></tr></table></figure>
 
 <p>完整表达式如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">last(/web01/system.swap.size[,total])&gt;0 and last(/web01/system.swap.size[,used])&gt;0<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">last(/web01/system.swap.size[,total])&gt;0 and last(/web01/system.swap.size[,used])&gt;0</span><br></pre></td></tr></table></figure>
 
 <p>创建触发器，进入触发器配置页面</p>
-<p><img src="/../../../img/image-20240619152950813.png" srcset="/img/loading.gif" lazyload alt="image-20240619152950813"></p>
+<p><img src="/../../../img/image-20240619152950813.png" alt="image-20240619152950813"></p>
 <p>为web01创建触发器</p>
-<p><img src="/../../../img/image-20240619153015348.png" srcset="/img/loading.gif" lazyload alt="image-20240619153015348"></p>
+<p><img src="/../../../img/image-20240619153015348.png" alt="image-20240619153015348"></p>
 <p>填写表达式</p>
-<p><img src="/../../../img/image-20240619153320441.png" srcset="/img/loading.gif" lazyload alt="image-20240619153320441"></p>
+<p><img src="/../../../img/image-20240619153320441.png" alt="image-20240619153320441"></p>
 <h4 id="1-3-2-2-其他案例"><a href="#1-3-2-2-其他案例" class="headerlink" title="1.3.2.2 其他案例"></a>1.3.2.2 其他案例</h4><p>检查内存是否够用</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">max(/Zabbix server/vm.memory.size[available],5m)<br>&lt;&#123;$MEMORY.AVAILABLE.MIN&#125; and last(/Zabbix server/vm.memory.size[total])&gt;0<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">max(/Zabbix server/vm.memory.size[available],5m)</span><br><span class="line">&lt;&#123;$MEMORY.AVAILABLE.MIN&#125; and last(/Zabbix server/vm.memory.size[total])&gt;0</span><br></pre></td></tr></table></figure>
 
 
 
 <h2 id="1-4-自定义监控-参数案例"><a href="#1-4-自定义监控-参数案例" class="headerlink" title="1.4 自定义监控- 参数案例"></a>1.4 自定义监控- 参数案例</h2><p>目标：检查指定用户是否存在异地登录。<br>最简单想法：检查指定用户登录的ip地址。进行对比。  </p>
 <p>1、命令选择</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">w、who只能显示当前、自此时此刻的登录情况，不适用<br>lastlog 适合<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">w、who只能显示当前、自此时此刻的登录情况，不适用</span><br><span class="line">lastlog 适合</span><br></pre></td></tr></table></figure>
 
 <p>2、键值</p>
 <p>实现取出指定用户登录的IP地址</p>
 <p>服务器：web页面触发器作对比</p>
 <h3 id="1-4-1-客户端配置"><a href="#1-4-1-客户端配置" class="headerlink" title="1.4.1 客户端配置"></a>1.4.1 客户端配置</h3><p>命令获取登录的ip地址</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@web01 /app/code/zbx/assets/fonts]#lastlog | grep root | awk &#x27;&#123;print $3&#125;&#x27;<br>10.0.0.1<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@web01 /app/code/zbx/assets/fonts]#lastlog | grep root | awk &#x27;&#123;print $3&#125;&#x27;</span><br><span class="line">10.0.0.1</span><br></pre></td></tr></table></figure>
 
 <p>书写键值</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@web01 /app/code/zbx/assets/fonts]#cat /etc/zabbix/zabbix_agent2.d/web.conf <br>UserParameter=ngx.port,ss -lntup |grep -w 80|wc -l<br>UserParameter=user.login[*],lastlog -u &quot;$1&quot; |awk &#x27;NR==2&#123;print $3&#125;&#x27;<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@web01 /app/code/zbx/assets/fonts]#cat /etc/zabbix/zabbix_agent2.d/web.conf </span><br><span class="line">UserParameter=ngx.port,ss -lntup |grep -w 80|wc -l</span><br><span class="line">UserParameter=user.login[*],lastlog -u &quot;$1&quot; |awk &#x27;NR==2&#123;print $3&#125;&#x27;</span><br></pre></td></tr></table></figure>
 
 <p>里面的<code>$1</code>传递参数如何运作？</p>
-<p><img src="/../../../img/image-20240619154505001.png" srcset="/img/loading.gif" lazyload alt="image-20240619154505001"></p>
+<p><img src="/../../../img/image-20240619154505001.png" alt="image-20240619154505001"></p>
 <p>重启服务</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl restart zabbix-agent2.service<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart zabbix-agent2.service</span><br></pre></td></tr></table></figure>
 
 
 
 <h3 id="1-4-2-服务端测试"><a href="#1-4-2-服务端测试" class="headerlink" title="1.4.2 服务端测试"></a>1.4.2 服务端测试</h3><p>命令测试</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@mn02 /usr/share]#zabbix_get -s 172.16.1.7 -k user.login[root]<br>root             pts/1    10.0.0.1         Wed Jun 19 15:17:51 +0800 2024<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@mn02 /usr/share]#zabbix_get -s 172.16.1.7 -k user.login[root]</span><br><span class="line">root             pts/1    10.0.0.1         Wed Jun 19 15:17:51 +0800 2024</span><br></pre></td></tr></table></figure>
 
 
 
 <h3 id="1-4-3-web界面配置"><a href="#1-4-3-web界面配置" class="headerlink" title="1.4.3 web界面配置"></a>1.4.3 web界面配置</h3><p>为web01配置监控项，注意使用<code>字符</code>类型</p>
-<p><img src="/../../../img/image-20240619155112017.png" srcset="/img/loading.gif" lazyload alt="image-20240619155112017"></p>
+<p><img src="/../../../img/image-20240619155112017.png" alt="image-20240619155112017"></p>
 <p>测试可以正常获取值</p>
-<p><img src="/../../../img/image-20240619155150760.png" srcset="/img/loading.gif" lazyload alt="image-20240619155150760"></p>
+<p><img src="/../../../img/image-20240619155150760.png" alt="image-20240619155150760"></p>
 <p>配置触发器</p>
-<p><img src="/../../../img/image-20240619155315495.png" srcset="/img/loading.gif" lazyload alt="image-20240619155315495"></p>
+<p><img src="/../../../img/image-20240619155315495.png" alt="image-20240619155315495"></p>
 <h3 id="1-4-4-测试"><a href="#1-4-4-测试" class="headerlink" title="1.4.4 测试"></a>1.4.4 测试</h3><p>使用db01登录web01服务器，之前一直都是用10.0.0.1登录的，这里换了10.0.0.51登录，会报警吗？</p>
 <p>可见产生一条警告</p>
-<p><img src="/../../../img/image-20240619155608270.png" srcset="/img/loading.gif" lazyload alt="image-20240619155608270"></p>
+<p><img src="/../../../img/image-20240619155608270.png" alt="image-20240619155608270"></p>
 <p>按照我们设定的预期报错</p>
-<p><img src="/../../../img/image-20240619155716751.png" srcset="/img/loading.gif" lazyload alt="image-20240619155716751"></p>
+<p><img src="/../../../img/image-20240619155716751.png" alt="image-20240619155716751"></p>
 <p>可以看到新登录的IP为10.0.0.51，报警有效</p>
-<p><img src="/../../../img/image-20240619155742997.png" srcset="/img/loading.gif" lazyload alt="image-20240619155742997"></p>
+<p><img src="/../../../img/image-20240619155742997.png" alt="image-20240619155742997"></p>
 <h2 id="1-5-使用模板"><a href="#1-5-使用模板" class="headerlink" title="1.5 使用模板"></a>1.5 使用模板</h2><p>通过创建自定义模板实现：监控项、触发器、图形的批量使用</p>
 <p>步骤：</p>
 <ol>
@@ -648,26 +445,26 @@
 <li>客户端配置自定义键值</li>
 </ol>
 <h3 id="1-5-1-创建模板"><a href="#1-5-1-创建模板" class="headerlink" title="1.5.1 创建模板"></a>1.5.1 创建模板</h3><p>1、进入创建模板页面</p>
-<p><img src="/../../../img/image-20240619160850620.png" srcset="/img/loading.gif" lazyload alt="image-20240619160850620"></p>
+<p><img src="/../../../img/image-20240619160850620.png" alt="image-20240619160850620"></p>
 <p>2、填写信息</p>
-<p><img src="/../../../img/image-20240619161115893.png" srcset="/img/loading.gif" lazyload alt="image-20240619161115893"></p>
+<p><img src="/../../../img/image-20240619161115893.png" alt="image-20240619161115893"></p>
 <p>3、检查创建完毕</p>
-<p><img src="/../../../img/image-20240619161219562.png" srcset="/img/loading.gif" lazyload alt="image-20240619161219562"></p>
+<p><img src="/../../../img/image-20240619161219562.png" alt="image-20240619161219562"></p>
 <h3 id="1-5-2-添加自定义监控项"><a href="#1-5-2-添加自定义监控项" class="headerlink" title="1.5.2 添加自定义监控项"></a>1.5.2 添加自定义监控项</h3><p>可以从主机中复制，进入主机监控项页面</p>
-<p><img src="/../../../img/image-20240619161354521.png" srcset="/img/loading.gif" lazyload alt="image-20240619161354521"></p>
+<p><img src="/../../../img/image-20240619161354521.png" alt="image-20240619161354521"></p>
 <p>勾选需要复制的项，再点击“复制”</p>
-<p><img src="/../../../img/image-20240619161425952.png" srcset="/img/loading.gif" lazyload alt="image-20240619161425952"></p>
+<p><img src="/../../../img/image-20240619161425952.png" alt="image-20240619161425952"></p>
 <p>选择“模板”，再选择已创建的模板</p>
-<p><img src="/../../../img/image-20240619161503425.png" srcset="/img/loading.gif" lazyload alt="image-20240619161503425"></p>
+<p><img src="/../../../img/image-20240619161503425.png" alt="image-20240619161503425"></p>
 <p>提示复制成功</p>
-<p><img src="/../../../img/image-20240619161530739.png" srcset="/img/loading.gif" lazyload alt="image-20240619161530739"></p>
+<p><img src="/../../../img/image-20240619161530739.png" alt="image-20240619161530739"></p>
 <p>检查模板的监控项，复制的已经加进去了</p>
-<p><img src="/../../../img/image-20240619161609669.png" srcset="/img/loading.gif" lazyload alt="image-20240619161609669"></p>
+<p><img src="/../../../img/image-20240619161609669.png" alt="image-20240619161609669"></p>
 <h3 id="1-5-3-添加自定义触发器和图形"><a href="#1-5-3-添加自定义触发器和图形" class="headerlink" title="1.5.3 添加自定义触发器和图形"></a>1.5.3 添加自定义触发器和图形</h3><p>跟监控项一样的操作，从主机中复制过去就行</p>
-<p><img src="/../../../img/image-20240619161737657.png" srcset="/img/loading.gif" lazyload alt="image-20240619161737657"></p>
-<p><img src="/../../../img/image-20240619161805750.png" srcset="/img/loading.gif" lazyload alt="image-20240619161805750"></p>
+<p><img src="/../../../img/image-20240619161737657.png" alt="image-20240619161737657"></p>
+<p><img src="/../../../img/image-20240619161805750.png" alt="image-20240619161805750"></p>
 <h3 id="1-5-4-模板关联主机"><a href="#1-5-4-模板关联主机" class="headerlink" title="1.5.4 模板关联主机"></a>1.5.4 模板关联主机</h3><p>批量选择要添加模板的主机，批量更新</p>
-<p><img src="/../../../img/image-20240619162105769.png" srcset="/img/loading.gif" lazyload alt="image-20240619162105769"></p>
+<p><img src="/../../../img/image-20240619162105769.png" alt="image-20240619162105769"></p>
 <h3 id="1-5-5-配置linux客户端键值"><a href="#1-5-5-配置linux客户端键值" class="headerlink" title="1.5.5 配置linux客户端键值"></a>1.5.5 配置linux客户端键值</h3><p>分发键值配置文件到db01和nfs01等客户端服务器，重启zbx agent2服务即可</p>
 <h1 id="二、监控告警"><a href="#二、监控告警" class="headerlink" title="二、监控告警"></a>二、监控告警</h1><h2 id="2-1-告警分类"><a href="#2-1-告警分类" class="headerlink" title="2.1 告警分类"></a>2.1 告警分类</h2><p>常用的告警方式</p>
 <table>
@@ -711,26 +508,26 @@
 <li>发件条件：配置动作</li>
 </ul>
 <h3 id="2-2-1-个人邮箱准备"><a href="#2-2-1-个人邮箱准备" class="headerlink" title="2.2.1 个人邮箱准备"></a>2.2.1 个人邮箱准备</h3><p>如QQ邮箱，生成授权码</p>
-<p><img src="/../../../img/image-20240619165311773.png" srcset="/img/loading.gif" lazyload alt="image-20240619165311773"></p>
+<p><img src="/../../../img/image-20240619165311773.png" alt="image-20240619165311773"></p>
 <h3 id="2-2-2-Zabbix配置发件人"><a href="#2-2-2-Zabbix配置发件人" class="headerlink" title="2.2.2 Zabbix配置发件人"></a>2.2.2 Zabbix配置发件人</h3><p>进入”报警媒介类型”设置界面，选择“Email”，也可以点击右上角“创建媒介类型”</p>
-<p><img src="/../../../img/image-20240619165501188.png" srcset="/img/loading.gif" lazyload alt="image-20240619165501188"></p>
+<p><img src="/../../../img/image-20240619165501188.png" alt="image-20240619165501188"></p>
 <p>配置邮件告警</p>
-<p><img src="/../../../img/image-20240619165745223.png" srcset="/img/loading.gif" lazyload alt="image-20240619165745223"></p>
+<p><img src="/../../../img/image-20240619165745223.png" alt="image-20240619165745223"></p>
 <p>告警消息的模板Message templates设置</p>
-<p>**<img src="/../../../img/image-20240619165940108.png" srcset="/img/loading.gif" lazyload alt="image-20240619165940108"></p>
+<p>**<img src="/../../../img/image-20240619165940108.png" alt="image-20240619165940108"></p>
 <p>测试发送一封邮件</p>
-<p><img src="/../../../img/image-20240619170427864.png" srcset="/img/loading.gif" lazyload alt="image-20240619170427864"></p>
+<p><img src="/../../../img/image-20240619170427864.png" alt="image-20240619170427864"></p>
 <p>生效</p>
-<p><img src="/../../../img/image-20240619170444469.png" srcset="/img/loading.gif" lazyload alt="image-20240619170444469"></p>
+<p><img src="/../../../img/image-20240619170444469.png" alt="image-20240619170444469"></p>
 <h3 id="2-2-3-配置收件人"><a href="#2-2-3-配置收件人" class="headerlink" title="2.2.3 配置收件人"></a>2.2.3 配置收件人</h3><p>在Zabbix管理员设置中，添加报警媒介</p>
-<p><img src="/../../../img/image-20240619170705301.png" srcset="/img/loading.gif" lazyload alt="image-20240619170705301"></p>
+<p><img src="/../../../img/image-20240619170705301.png" alt="image-20240619170705301"></p>
 <p>添加完成，记得点“更新”</p>
-<p><img src="/../../../img/image-20240619170718488.png" srcset="/img/loading.gif" lazyload alt="image-20240619170718488"></p>
+<p><img src="/../../../img/image-20240619170718488.png" alt="image-20240619170718488"></p>
 <h3 id="2-2-4-设置邮件触发条件"><a href="#2-2-4-设置邮件触发条件" class="headerlink" title="2.2.4 设置邮件触发条件"></a>2.2.4 设置邮件触发条件</h3><p>什么情况下给用户发邮件？</p>
 <p>配置触发器动作，启用即可</p>
-<p><img src="/../../../img/image-20240619170910116.png" srcset="/img/loading.gif" lazyload alt="image-20240619170910116"></p>
+<p><img src="/../../../img/image-20240619170910116.png" alt="image-20240619170910116"></p>
 <h3 id="2-2-5-测试，制造故障"><a href="#2-2-5-测试，制造故障" class="headerlink" title="2.2.5 测试，制造故障"></a>2.2.5 测试，制造故障</h3><p>使用10.0.0.51登录10.0.0.7，制造故障，邮件正常收到</p>
-<p><img src="/../../../img/image-20240619171350213.png" srcset="/img/loading.gif" lazyload alt="image-20240619171350213"></p>
+<p><img src="/../../../img/image-20240619171350213.png" alt="image-20240619171350213"></p>
 <h2 id="2-3-企业微信告警配置（了解）"><a href="#2-3-企业微信告警配置（了解）" class="headerlink" title="2.3 企业微信告警配置（了解）"></a>2.3 企业微信告警配置（了解）</h2><p>流程：</p>
 <ul>
 <li>准备企业微信</li>
@@ -741,384 +538,767 @@
 <li>动作：已经完成</li>
 </ul>
 <h3 id="2-3-1-准备企业微信"><a href="#2-3-1-准备企业微信" class="headerlink" title="2.3.1 准备企业微信"></a>2.3.1 准备企业微信</h3><p>企业微信ID准备</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">1.企业微信 <span class="hljs-built_in">id</span>号</span><br>企业ID ww6ac68d5d41044330<br><span class="hljs-meta prompt_">#</span><span class="language-bash">2.创建1个报警机器人(应用)</span><br>机器人的id(应用id)<br>AgentId<br>1000005<br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#应用密码</span></span><br>Ss7VFx8Mkzm8XABMNqVRp31zxNnxhbJ_rJzz8sPDgk4<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">1.企业微信 <span class="built_in">id</span>号</span></span><br><span class="line">企业ID ww6ac68d5d41044330</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">2.创建1个报警机器人(应用)</span></span><br><span class="line">机器人的id(应用id)</span><br><span class="line">AgentId</span><br><span class="line">1000005</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#应用密码</span></span></span><br><span class="line">Ss7VFx8Mkzm8XABMNqVRp31zxNnxhbJ_rJzz8sPDgk4</span><br></pre></td></tr></table></figure>
 
 <p>微信报警脚本准备</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#1.企业微信 id号</span><br>企业ID<br>ww6ac68d5d41044330<br><br><span class="hljs-comment">#2.创建1个报警机器人(应用)</span><br><span class="hljs-comment">##机器人的id(应用id)  </span><br>AgentId<br><span class="hljs-number">1000005</span><br><br><span class="hljs-comment">##应用密码  </span><br>Ss7VFx8Mkzm8XABMNqVRp31zxNnxhbJ_rJzz8sPDgk4<br><span class="hljs-comment">#修改微信报警的脚本</span><br>vim /usr/local/share/zabbix/alertscripts/wechat.py<br><br><span class="hljs-comment">#!/usr/bin/env python</span><br><span class="hljs-comment">#-*- coding: utf-8 -*-</span><br><span class="hljs-comment">#author: oldboy-linux</span><br><span class="hljs-comment">#date: 2021</span><br><span class="hljs-comment">#description: Zabbix Wechat Alerts Scripts</span><br><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">import</span> sys<br><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> json<br><span class="hljs-keyword">import</span> logging<br>logging.basicConfig(level = logging.DEBUG, <span class="hljs-built_in">format</span> = <span class="hljs-string">&#x27;%(asctime)s, %(filename)s, %(levelname)s, %(message)s&#x27;</span>,<br>                datefmt = <span class="hljs-string">&#x27;%a, %d %b %Y %H:%M:%S&#x27;</span>,<br>                filename = os.path.join(<span class="hljs-string">&#x27;/tmp&#x27;</span>,<span class="hljs-string">&#x27;wechat.log&#x27;</span>),<br>                filemode = <span class="hljs-string">&#x27;a&#x27;</span>)<br>               <br><span class="hljs-comment">#id和secret需要修改</span><br>corpid=<span class="hljs-string">&#x27;wxd074861951c67ba6&#x27;</span><br>appsecret=<span class="hljs-string">&#x27;QtraZrI936DZ0jZ3aSWTZ-lFVheAMgLmq3toM4B9U1A&#x27;</span><br>agentid=<span class="hljs-number">1</span><br><span class="hljs-comment">#获取accesstoken</span><br>token_url=<span class="hljs-string">&#x27;https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=&#x27;</span> + corpid + <span class="hljs-string">&#x27;&amp;corpsecret=&#x27;</span> + appsecret<br>req=requests.get(token_url)<br>accesstoken=req.json()[<span class="hljs-string">&#x27;access_token&#x27;</span>]<br><span class="hljs-comment">#发送消息</span><br>msgsend_url=<span class="hljs-string">&#x27;https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=&#x27;</span> + accesstoken<br><br><span class="hljs-comment">#脚本参数</span><br><span class="hljs-comment">#touser=sys.argv[1]</span><br>toparty=sys.argv[<span class="hljs-number">1</span>]<br>subject=sys.argv[<span class="hljs-number">2</span>]<br><span class="hljs-comment">#toparty=&#x27;3|4|5|6&#x27;</span><br>message=sys.argv[<span class="hljs-number">2</span>] + <span class="hljs-string">&quot;\n\n&quot;</span> +sys.argv[<span class="hljs-number">3</span>]<br>params=&#123;<br><span class="hljs-comment">#       &quot;touser&quot;: touser,</span><br>       <span class="hljs-string">&quot;toparty&quot;</span>: toparty,<br>        <span class="hljs-string">&quot;msgtype&quot;</span>: <span class="hljs-string">&quot;text&quot;</span>,<br>        <span class="hljs-string">&quot;agentid&quot;</span>: agentid,<br>        <span class="hljs-string">&quot;text&quot;</span>: &#123;<br>                <span class="hljs-string">&quot;content&quot;</span>: message<br>       &#125;,<br>        <span class="hljs-string">&quot;safe&quot;</span>:<span class="hljs-number">0</span><br>&#125;<br>req=requests.post(msgsend_url, data=json.dumps(params))<br><br><span class="hljs-comment"># 书写日志/tmp/wechat.log</span><br>logging.info(<span class="hljs-string">&#x27;sendto:&#x27;</span> + toparty + <span class="hljs-string">&#x27;;;subject:&#x27;</span> + subject + <span class="hljs-string">&#x27;;;message:&#x27;</span> + message)<br><br>chmod +x /usr/lib/zabbix/alertscripts/wechat.py<br><br><span class="hljs-comment">#安装python环境</span><br>yum install -y python3 python3-pip<br>通过pip3 命令安装requests依赖.<br>pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple requests<br><br><span class="hljs-comment">#测试</span><br>python3 wechat.py 用户的<span class="hljs-built_in">id</span>或组<span class="hljs-built_in">id</span> 标题 内容 <span class="hljs-string">&#x27;下雨了&#x27;</span>  <span class="hljs-string">&#x27;打雷下雨收衣服&#x27;</span><br>Traceback (most recent call last):<br>File <span class="hljs-string">&quot;/usr/lib/zabbix/alertscripts/wechat.py&quot;</span>, line <span class="hljs-number">7</span>, <span class="hljs-keyword">in</span> &lt;module&gt;<br>   <span class="hljs-keyword">import</span> requests<br>ImportError: No module named requests<br>pip install -i https://pypi.tuna.tsinghua.edu.cn/simple some-package<br>pip install requests<br><br><span class="hljs-comment">#web页面 发件人:报警媒介类型</span><br>&#123;ALERT.SENDTO&#125;  <span class="hljs-comment">#发给谁</span><br>&#123;ALERT.SUBJECT&#125; <span class="hljs-comment">#报警标题</span><br>&#123;ALERT.MESSAGE&#125; <span class="hljs-comment">#报警内容</span><br><br>故障目前已经解决时间: &#123;EVENT.RECOVERY.TIME&#125; 日期<br>&#123;EVENT.RECOVERY.DATE&#125;<br>故障名称: &#123;EVENT.NAME&#125;<br>故障经历多久: &#123;EVENT.DURATION&#125;<br>故障主机: &#123;HOST.NAME&#125;<br>故障级别: &#123;EVENT.SEVERITY&#125;<br>故障ID: &#123;EVENT.ID&#125;<br>&#123;TRIGGER.URL&#125;<br><span class="hljs-comment">#web页面 收件人:接收用户</span><br><span class="hljs-comment">#Web页面 配置--&gt;动作</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.企业微信 id号</span></span><br><span class="line">企业ID</span><br><span class="line">ww6ac68d5d41044330</span><br><span class="line"></span><br><span class="line"><span class="comment">#2.创建1个报警机器人(应用)</span></span><br><span class="line"><span class="comment">##机器人的id(应用id)  </span></span><br><span class="line">AgentId</span><br><span class="line"><span class="number">1000005</span></span><br><span class="line"></span><br><span class="line"><span class="comment">##应用密码  </span></span><br><span class="line">Ss7VFx8Mkzm8XABMNqVRp31zxNnxhbJ_rJzz8sPDgk4</span><br><span class="line"><span class="comment">#修改微信报警的脚本</span></span><br><span class="line">vim /usr/local/share/zabbix/alertscripts/wechat.py</span><br><span class="line"></span><br><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment">#-*- coding: utf-8 -*-</span></span><br><span class="line"><span class="comment">#author: oldboy-linux</span></span><br><span class="line"><span class="comment">#date: 2021</span></span><br><span class="line"><span class="comment">#description: Zabbix Wechat Alerts Scripts</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line">logging.basicConfig(level = logging.DEBUG, <span class="built_in">format</span> = <span class="string">&#x27;%(asctime)s, %(filename)s, %(levelname)s, %(message)s&#x27;</span>,</span><br><span class="line">                datefmt = <span class="string">&#x27;%a, %d %b %Y %H:%M:%S&#x27;</span>,</span><br><span class="line">                filename = os.path.join(<span class="string">&#x27;/tmp&#x27;</span>,<span class="string">&#x27;wechat.log&#x27;</span>),</span><br><span class="line">                filemode = <span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">               </span><br><span class="line"><span class="comment">#id和secret需要修改</span></span><br><span class="line">corpid=<span class="string">&#x27;wxd074861951c67ba6&#x27;</span></span><br><span class="line">appsecret=<span class="string">&#x27;QtraZrI936DZ0jZ3aSWTZ-lFVheAMgLmq3toM4B9U1A&#x27;</span></span><br><span class="line">agentid=<span class="number">1</span></span><br><span class="line"><span class="comment">#获取accesstoken</span></span><br><span class="line">token_url=<span class="string">&#x27;https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=&#x27;</span> + corpid + <span class="string">&#x27;&amp;corpsecret=&#x27;</span> + appsecret</span><br><span class="line">req=requests.get(token_url)</span><br><span class="line">accesstoken=req.json()[<span class="string">&#x27;access_token&#x27;</span>]</span><br><span class="line"><span class="comment">#发送消息</span></span><br><span class="line">msgsend_url=<span class="string">&#x27;https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=&#x27;</span> + accesstoken</span><br><span class="line"></span><br><span class="line"><span class="comment">#脚本参数</span></span><br><span class="line"><span class="comment">#touser=sys.argv[1]</span></span><br><span class="line">toparty=sys.argv[<span class="number">1</span>]</span><br><span class="line">subject=sys.argv[<span class="number">2</span>]</span><br><span class="line"><span class="comment">#toparty=&#x27;3|4|5|6&#x27;</span></span><br><span class="line">message=sys.argv[<span class="number">2</span>] + <span class="string">&quot;\n\n&quot;</span> +sys.argv[<span class="number">3</span>]</span><br><span class="line">params=&#123;</span><br><span class="line"><span class="comment">#       &quot;touser&quot;: touser,</span></span><br><span class="line">       <span class="string">&quot;toparty&quot;</span>: toparty,</span><br><span class="line">        <span class="string">&quot;msgtype&quot;</span>: <span class="string">&quot;text&quot;</span>,</span><br><span class="line">        <span class="string">&quot;agentid&quot;</span>: agentid,</span><br><span class="line">        <span class="string">&quot;text&quot;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;content&quot;</span>: message</span><br><span class="line">       &#125;,</span><br><span class="line">        <span class="string">&quot;safe&quot;</span>:<span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line">req=requests.post(msgsend_url, data=json.dumps(params))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 书写日志/tmp/wechat.log</span></span><br><span class="line">logging.info(<span class="string">&#x27;sendto:&#x27;</span> + toparty + <span class="string">&#x27;;;subject:&#x27;</span> + subject + <span class="string">&#x27;;;message:&#x27;</span> + message)</span><br><span class="line"></span><br><span class="line">chmod +x /usr/lib/zabbix/alertscripts/wechat.py</span><br><span class="line"></span><br><span class="line"><span class="comment">#安装python环境</span></span><br><span class="line">yum install -y python3 python3-pip</span><br><span class="line">通过pip3 命令安装requests依赖.</span><br><span class="line">pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple requests</span><br><span class="line"></span><br><span class="line"><span class="comment">#测试</span></span><br><span class="line">python3 wechat.py 用户的<span class="built_in">id</span>或组<span class="built_in">id</span> 标题 内容 <span class="string">&#x27;下雨了&#x27;</span>  <span class="string">&#x27;打雷下雨收衣服&#x27;</span></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">File <span class="string">&quot;/usr/lib/zabbix/alertscripts/wechat.py&quot;</span>, line <span class="number">7</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">   <span class="keyword">import</span> requests</span><br><span class="line">ImportError: No module named requests</span><br><span class="line">pip install -i https://pypi.tuna.tsinghua.edu.cn/simple some-package</span><br><span class="line">pip install requests</span><br><span class="line"></span><br><span class="line"><span class="comment">#web页面 发件人:报警媒介类型</span></span><br><span class="line">&#123;ALERT.SENDTO&#125;  <span class="comment">#发给谁</span></span><br><span class="line">&#123;ALERT.SUBJECT&#125; <span class="comment">#报警标题</span></span><br><span class="line">&#123;ALERT.MESSAGE&#125; <span class="comment">#报警内容</span></span><br><span class="line"></span><br><span class="line">故障目前已经解决时间: &#123;EVENT.RECOVERY.TIME&#125; 日期</span><br><span class="line">&#123;EVENT.RECOVERY.DATE&#125;</span><br><span class="line">故障名称: &#123;EVENT.NAME&#125;</span><br><span class="line">故障经历多久: &#123;EVENT.DURATION&#125;</span><br><span class="line">故障主机: &#123;HOST.NAME&#125;</span><br><span class="line">故障级别: &#123;EVENT.SEVERITY&#125;</span><br><span class="line">故障ID: &#123;EVENT.ID&#125;</span><br><span class="line">&#123;TRIGGER.URL&#125;</span><br><span class="line"><span class="comment">#web页面 收件人:接收用户</span></span><br><span class="line"><span class="comment">#Web页面 配置--&gt;动作</span></span><br></pre></td></tr></table></figure>
 
 <p>需要去企业微信后台,开通白名单  </p>
-<p><img src="/../../../img/image-20240619172914240.png" srcset="/img/loading.gif" lazyload alt="image-20240619172914240"></p>
-<p><img src="/../../../img/image-20240619172930025.png" srcset="/img/loading.gif" lazyload alt="image-20240619172930025"></p>
-<p><img src="/../../../img/image-20240619172938289.png" srcset="/img/loading.gif" lazyload alt="image-20240619172938289"></p>
-<p><img src="/../../../img/image-20240619172944777.png" srcset="/img/loading.gif" lazyload alt="image-20240619172944777"></p>
+<p><img src="/../../../img/image-20240619172914240.png" alt="image-20240619172914240"></p>
+<p><img src="/../../../img/image-20240619172930025.png" alt="image-20240619172930025"></p>
+<p><img src="/../../../img/image-20240619172938289.png" alt="image-20240619172938289"></p>
+<p><img src="/../../../img/image-20240619172944777.png" alt="image-20240619172944777"></p>
 <p>错误提示</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell">故障提示：<br>python3 wechat-v2-lidao996.py lidao996  &quot;webisdown&quot; &quot;nginx is down&quot;<br>Traceback (most recent call last):<br> File &quot;wechat-v2-lidao996.py&quot;, line 7, in &lt;module&gt;<br>   import requests<br>ModuleNotFoundError: No module named &#x27;requests&#x27;<br>故障解决：<br>pip3 install requests -i https://pypi.tuna.tsinghua.edu.cn/simple<br>新的安装方法:<br>python3 -m pip install requests -i https://pypi.tuna.tsinghua.edu.cn/simple<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">故障提示：</span><br><span class="line">python3 wechat-v2-lidao996.py lidao996  &quot;webisdown&quot; &quot;nginx is down&quot;</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line"> File &quot;wechat-v2-lidao996.py&quot;, line 7, in &lt;module&gt;</span><br><span class="line">   import requests</span><br><span class="line">ModuleNotFoundError: No module named &#x27;requests&#x27;</span><br><span class="line">故障解决：</span><br><span class="line">pip3 install requests -i https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line">新的安装方法:</span><br><span class="line">python3 -m pip install requests -i https://pypi.tuna.tsinghua.edu.cn/simple</span><br></pre></td></tr></table></figure>
 
-<h3 id="2-3-2-配置发件人"><a href="#2-3-2-配置发件人" class="headerlink" title="2.3.2 配置发件人"></a>2.3.2 配置发件人</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">&#123;ALERT.SENDTO&#125;<br>&#123;ALERT.SUBJECT&#125;<br>&#123;ALERT.MESSAGE&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="2-3-2-配置发件人"><a href="#2-3-2-配置发件人" class="headerlink" title="2.3.2 配置发件人"></a>2.3.2 配置发件人</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;ALERT.SENDTO&#125;</span><br><span class="line">&#123;ALERT.SUBJECT&#125;</span><br><span class="line">&#123;ALERT.MESSAGE&#125;</span><br></pre></td></tr></table></figure>
 
 <p>添加报警媒介类型</p>
-<p><img src="/../../../img/image-20240619173115608.png" srcset="/img/loading.gif" lazyload alt="image-20240619173115608"></p>
+<p><img src="/../../../img/image-20240619173115608.png" alt="image-20240619173115608"></p>
 <p>添加报警内容模板</p>
-<p><img src="/../../../img/image-20240619173139714.png" srcset="/img/loading.gif" lazyload alt="image-20240619173139714"></p>
+<p><img src="/../../../img/image-20240619173139714.png" alt="image-20240619173139714"></p>
 <p>测试发件人</p>
-<p><img src="/../../../img/image-20240619173157973.png" srcset="/img/loading.gif" lazyload alt="image-20240619173157973"></p>
+<p><img src="/../../../img/image-20240619173157973.png" alt="image-20240619173157973"></p>
 <h3 id="2-3-3-配置收件人"><a href="#2-3-3-配置收件人" class="headerlink" title="2.3.3 配置收件人"></a>2.3.3 配置收件人</h3><p>添加报警媒介</p>
-<p><img src="/../../../img/image-20240619173307720.png" srcset="/img/loading.gif" lazyload alt="image-20240619173307720"></p>
+<p><img src="/../../../img/image-20240619173307720.png" alt="image-20240619173307720"></p>
 <p>设置企业微信告警</p>
-<p><img src="/../../../img/image-20240619173320019.png" srcset="/img/loading.gif" lazyload alt="image-20240619173320019"></p>
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3>
-                
-              </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
+<p><img src="/../../../img/image-20240619173320019.png" alt="image-20240619173320019"></p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3></article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
     
-      <span class="category-chain">
-        
-  <a href="/categories/%E8%BF%90%E7%BB%B4/" class="category-chain-item">运维</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E8%BF%90%E7%BB%B4/%EF%BC%88%E4%BA%8C%EF%BC%89%E7%BB%BC%E5%90%88%E6%9E%B6%E6%9E%84/" class="category-chain-item">（二）综合架构</a>
-  
-  
 
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
 </div>
 
-
-              
-  
-
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>day68-监控架构-Zabbix(二)</div>
-      <div>https://gblog.github.io/2024/06/18/07_85期运维/03_自动化架构/day68-监控架构-Zabbix-2/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>作者</div>
-          <div>Haris</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>发布于</div>
-          <div>2024年6月18日</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>许可协议</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
-          </div>
-        </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
-  </div>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2024/06/20/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day69-%E7%9B%91%E6%8E%A7%E6%9E%B6%E6%9E%84-Zabbix-3/">day69-监控架构-Zabbix(三)</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2024/06/05/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day67-%E7%9B%91%E6%8E%A7%E6%9E%B6%E6%9E%84-Zabbix-1/">day67-监控架构-Zabbix(一)</a></div></section></div>
 
 
 
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2024/06/20/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day69-%E7%9B%91%E6%8E%A7%E6%9E%B6%E6%9E%84-Zabbix-3/" title="day69-监控架构-Zabbix(三)">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">day69-监控架构-Zabbix(三)</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2024/06/05/07_85%E6%9C%9F%E8%BF%90%E7%BB%B4/03_%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%B6%E6%9E%84/day67-%E7%9B%91%E6%8E%A7%E6%9E%B6%E6%9E%84-Zabbix-1/" title="day67-监控架构-Zabbix(一)">
-                        <span class="hidden-mobile">day67-监控架构-Zabbix(一)</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
 
-            
-          </article>
-        </div>
-      </div>
-    </div>
 
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
 
-    </div>
-  </div>
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">Haris</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9B%91%E6%8E%A7%E6%9E%B6%E6%9E%84-Zabbix-02"><span class="toc-text">监控架构-Zabbix-02</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9B%91%E6%8E%A7%EF%BC%88%E6%A0%B8%E5%BF%83%EF%BC%89"><span class="toc-text">一、自定义监控（核心）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E6%A6%82%E8%BF%B0"><span class="toc-text">1.1 概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9B%91%E6%8E%A7%E5%85%A8%E6%B5%81%E7%A8%8B"><span class="toc-text">1.2 自定义监控全流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-1-%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="toc-text">1.2.1 客户端配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E3%80%81%E8%84%9A%E6%9C%AC%E5%8F%96%E5%87%BA%E5%AF%B9%E5%BA%94%E7%9A%84%E5%80%BC"><span class="toc-text">a)  通过命令、脚本取出对应的值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#b-%E5%88%9B%E5%BB%BA%E9%94%AE%E5%80%BC%E4%B8%8E%E9%87%8D%E5%90%AF"><span class="toc-text">b)  创建键值与重启</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-2-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="toc-text">1.2.2 服务端配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-3-web%E9%A1%B5%E9%9D%A2%E9%85%8D%E7%BD%AE"><span class="toc-text">1.2.3 web页面配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-%E9%85%8D%E7%BD%AE%E7%9B%91%E6%8E%A7%E9%80%89%E9%A1%B9"><span class="toc-text">a)  配置监控选项</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#b-web%E9%A1%B5%E9%9D%A2%E6%9F%A5%E7%9C%8B"><span class="toc-text">b) web页面查看</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#c-web%E9%A1%B5%E9%9D%A2-%E8%A7%A6%E5%8F%91%E5%99%A8"><span class="toc-text">c) web页面-触发器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#d-web%E9%A1%B5%E9%9D%A2-%E6%B7%BB%E5%8A%A0%E5%9B%BE%E5%BD%A2"><span class="toc-text">d) web页面-添加图形</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-%E5%B8%B8%E7%94%A8%E9%94%AE%E5%80%BC%E4%B8%8E%E8%A7%A6%E5%8F%91%E5%99%A8%E5%87%BD%E6%95%B0"><span class="toc-text">1.3 常用键值与触发器函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-1-%E9%94%AE%E5%80%BC"><span class="toc-text">1.3.1 键值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-2-%E8%A7%A6%E5%8F%91%E5%99%A8%E5%87%BD%E6%95%B0"><span class="toc-text">1.3.2 触发器函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-2-1-%E6%A1%88%E4%BE%8B%EF%BC%9A%E6%A3%80%E6%9F%A5swap%E5%80%BC"><span class="toc-text">1.3.2.1 案例：检查swap值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-2-2-%E5%85%B6%E4%BB%96%E6%A1%88%E4%BE%8B"><span class="toc-text">1.3.2.2 其他案例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9B%91%E6%8E%A7-%E5%8F%82%E6%95%B0%E6%A1%88%E4%BE%8B"><span class="toc-text">1.4 自定义监控- 参数案例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-1-%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="toc-text">1.4.1 客户端配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-2-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%B5%8B%E8%AF%95"><span class="toc-text">1.4.2 服务端测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-3-web%E7%95%8C%E9%9D%A2%E9%85%8D%E7%BD%AE"><span class="toc-text">1.4.3 web界面配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-4-%E6%B5%8B%E8%AF%95"><span class="toc-text">1.4.4 测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-5-%E4%BD%BF%E7%94%A8%E6%A8%A1%E6%9D%BF"><span class="toc-text">1.5 使用模板</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-1-%E5%88%9B%E5%BB%BA%E6%A8%A1%E6%9D%BF"><span class="toc-text">1.5.1 创建模板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-2-%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9B%91%E6%8E%A7%E9%A1%B9"><span class="toc-text">1.5.2 添加自定义监控项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-3-%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A7%A6%E5%8F%91%E5%99%A8%E5%92%8C%E5%9B%BE%E5%BD%A2"><span class="toc-text">1.5.3 添加自定义触发器和图形</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-4-%E6%A8%A1%E6%9D%BF%E5%85%B3%E8%81%94%E4%B8%BB%E6%9C%BA"><span class="toc-text">1.5.4 模板关联主机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-5-%E9%85%8D%E7%BD%AElinux%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%94%AE%E5%80%BC"><span class="toc-text">1.5.5 配置linux客户端键值</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%9B%91%E6%8E%A7%E5%91%8A%E8%AD%A6"><span class="toc-text">二、监控告警</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E5%91%8A%E8%AD%A6%E5%88%86%E7%B1%BB"><span class="toc-text">2.1 告警分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E9%82%AE%E4%BB%B6%E5%91%8A%E8%AD%A6%E9%85%8D%E7%BD%AE"><span class="toc-text">2.2 邮件告警配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-1-%E4%B8%AA%E4%BA%BA%E9%82%AE%E7%AE%B1%E5%87%86%E5%A4%87"><span class="toc-text">2.2.1 个人邮箱准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-2-Zabbix%E9%85%8D%E7%BD%AE%E5%8F%91%E4%BB%B6%E4%BA%BA"><span class="toc-text">2.2.2 Zabbix配置发件人</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-3-%E9%85%8D%E7%BD%AE%E6%94%B6%E4%BB%B6%E4%BA%BA"><span class="toc-text">2.2.3 配置收件人</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-4-%E8%AE%BE%E7%BD%AE%E9%82%AE%E4%BB%B6%E8%A7%A6%E5%8F%91%E6%9D%A1%E4%BB%B6"><span class="toc-text">2.2.4 设置邮件触发条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-5-%E6%B5%8B%E8%AF%95%EF%BC%8C%E5%88%B6%E9%80%A0%E6%95%85%E9%9A%9C"><span class="toc-text">2.2.5 测试，制造故障</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E5%91%8A%E8%AD%A6%E9%85%8D%E7%BD%AE%EF%BC%88%E4%BA%86%E8%A7%A3%EF%BC%89"><span class="toc-text">2.3 企业微信告警配置（了解）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-1-%E5%87%86%E5%A4%87%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1"><span class="toc-text">2.3.1 准备企业微信</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-2-%E9%85%8D%E7%BD%AE%E5%8F%91%E4%BB%B6%E4%BA%BA"><span class="toc-text">2.3.2 配置发件人</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-3-%E9%85%8D%E7%BD%AE%E6%94%B6%E4%BB%B6%E4%BA%BA"><span class="toc-text">2.3.3 配置收件人</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text"></span></a></li></ol></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
 </div>
+</div><div class="scripts">
 
 
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-
-
-
-
-    
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-    
-
-    
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-  
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-    </div>
-  
-  
-  
-</div>
-
-  </footer>
-
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
-      
-        typing(text);
-      
-    })(window, document);
-  </script>
-
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
     }
+  };
 
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
 </script>
 
-
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
-
-  <script>Fluid.plugins.codeWidget();</script>
-
-
+<script type="text/javascript">
   
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
     };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
         }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
       }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
     });
   });
 </script>
 
-
-  
 <script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
   });
 </script>
 
 
-  <script>Fluid.plugins.imageCaption();</script>
+<!-- inject -->
 
-  <script  src="/js/local-search.js" ></script>
-
-
-
-
-
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
-
-
-  
-
-  <noscript>
-    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
-  </noscript>
-</body>
-</html>
+</div></body></html>

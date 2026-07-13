@@ -1,28 +1,29 @@
 
-
-<!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
-
-
+<!DOCTYPE html><html lang="zh-CN">
 
 <head>
-  <meta charset="UTF-8">
-
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
   
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="Haris">
-  <meta name="keywords" content="">
+  <meta name="generator" content="Hexo 7.3.0">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>Day47-数据库（四） - Haris的小站</title>
+
   
     <meta name="description" content="“Day47-数据库(四)学习笔记” 一、单表查询1.1 前期表准备123456789101112131415161718192021222324252627282930313233343536create table emp(  id int not null unique auto_increment,  name varchar(20) not null,  sex enum(&#x27;m">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Day47-数据库（四）">
-<meta property="og:url" content="https://gblog.github.io/2022/07/18/03_Python/03_MySQL/day47-%E6%95%B0%E6%8D%AE%E5%BA%93(%E5%9B%9B)/index.html">
+<meta property="og:url" content="https://gblog.github.io/2022/07/18/03_Python/03_MySQL/day47-%E6%95%B0%E6%8D%AE%E5%BA%93(%E5%9B%9B)/">
 <meta property="og:site_name" content="Haris的小站">
 <meta property="og:description" content="“Day47-数据库(四)学习笔记” 一、单表查询1.1 前期表准备123456789101112131415161718192021222324252627282930313233343536create table emp(  id int not null unique auto_increment,  name varchar(20) not null,  sex enum(&#x27;m">
 <meta property="og:locale" content="zh_CN">
@@ -30,283 +31,79 @@
 <meta property="article:published_time" content="2022-07-18T02:53:22.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.240Z">
 <meta property="article:author" content="Haris">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gblog.github.io/img/image-20220930102443143.png">
   
   
   
-  <title>Day47-数据库（四） - Haris的小站</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
-  
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
 
 
   
-<link rel="stylesheet" href="/css/custom.css">
-
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"gblog.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-  
-
 
   
-<meta name="generator" content="Hexo 7.3.0"></head>
 
-
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Haris","sameAs":[]},"dateCreated":"2022-07-18T10:53:22+08:00","dateModified":"2026-07-10T14:20:16+08:00","datePublished":"2022-07-18T10:53:22+08:00","description":"","headline":"Day47-数据库（四）","mainEntityOfPage":{"@type":"WebPage","@id":"https://gblog.github.io/2022/07/18/03_Python/03_MySQL/day47-%E6%95%B0%E6%8D%AE%E5%BA%93(%E5%9B%9B)/"},"publisher":{"@type":"Organization","name":"Haris","sameAs":[]},"url":"https://gblog.github.io/2022/07/18/03_Python/03_MySQL/day47-%E6%95%B0%E6%8D%AE%E5%BA%93(%E5%9B%9B)/","image":[]}</script>
+  
+</head>
 <body>
-  
 
-  <header>
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="undefined" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">Haris的小站</div><div class="sub cap">null</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
+
+
+
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2025/05/06/10_%E5%AD%A6%E7%A5%9EK8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%9F%BA%E7%A1%80/"><span class="title">01-Docker基础</span></a><a class="item title" href="/2025/03/26/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/06-Docker%E8%B5%84%E6%BA%90%E9%85%8D%E9%A2%9D/"><span class="title">06-Docker资源配额</span></a><a class="item title" href="/2025/03/20/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/05-Docker%E5%AE%B9%E5%99%A8%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96/"><span class="title">05-Docker容器数据持久化</span></a><a class="item title" href="/2025/03/12/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/04-Dockerfile%E5%AE%9E%E6%88%98%E7%AF%87-%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F/"><span class="title">04-Dockerfile实战篇-构建镜像</span></a><a class="item title" href="/2025/03/04/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/03-Dockerfile%E5%9F%BA%E7%A1%80%E7%AF%87-%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/"><span class="title">03-Dockerfile基础篇-基本语法</span></a><a class="item title" href="/2025/03/03/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/02-%E8%BF%90%E8%A1%8CDocker%E5%AE%B9%E5%99%A8/"><span class="title">02-运行Docker容器</span></a><a class="item title" href="/2025/03/03/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80/"><span class="title">01-Docker基础</span></a><a class="item title" href="/2024/07/27/08_%E7%BD%91%E7%BB%9C/day03-HCIA%E8%AF%BE%E7%A8%8B-01/"><span class="title">day03-HCIA课程(一)</span></a><a class="item title" href="/2024/07/28/08_%E7%BD%91%E7%BB%9C/day02-%E7%BD%91%E5%B7%A5%E5%85%A5%E9%97%A8-02/"><span class="title">day02-网工入门（二）</span></a><a class="item title" href="/2024/07/27/08_%E7%BD%91%E7%BB%9C/day01-%E7%BD%91%E5%B7%A5%E5%85%A5%E9%97%A8-01/"><span class="title">day01-网工入门（一）</span></a></div></widget>
+</div>
+
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/Python/">Python</a> <span class="sep"></span> <a class="cap breadcrumb-link" href="/categories/Python/03-MySQL/">03_MySQL</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2022-07-18T02:53:22.000Z">2022-07-18</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2026-07-10T06:20:16.240Z">2026-07-10</time></span></div></div></div>
     
-
-<div class="header-inner" style="height: 70vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>Haris的博客</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>首页</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>归档</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>分类</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="Day47-数据库（四）"></span>
-          
-        </div>
-
-        
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-07-18 10:53" pubdate>
-          2022年7月18日 上午
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
-        
-          2.9k 字
-        
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
-        
-        
-        
-          25 分钟
-        
-      </span>
-    
-
-    
-    
-  </div>
-
-
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>Day47-数据库（四）</span></h1>
         
       </div>
-
-      
     </div>
-  </div>
-</div>
-
-</div>
-
-  </header>
-
-  <main>
     
-      
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
-
-    </div>
-
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">Day47-数据库（四）</h1>
-            
-            
-              <div class="markdown-body">
-                
-                <p>“Day47-数据库(四)学习笔记”</p>
-<h1 id="一、单表查询"><a href="#一、单表查询" class="headerlink" title="一、单表查询"></a>一、单表查询</h1><h2 id="1-1-前期表准备"><a href="#1-1-前期表准备" class="headerlink" title="1.1 前期表准备"></a>1.1 前期表准备</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs python">create table emp(<br>  <span class="hljs-built_in">id</span> <span class="hljs-built_in">int</span> <span class="hljs-keyword">not</span> null unique auto_increment,<br>  name varchar(<span class="hljs-number">20</span>) <span class="hljs-keyword">not</span> null,<br>  sex enum(<span class="hljs-string">&#x27;male&#x27;</span>,<span class="hljs-string">&#x27;female&#x27;</span>) <span class="hljs-keyword">not</span> null default <span class="hljs-string">&#x27;male&#x27;</span>, <span class="hljs-comment">#大部分是男的</span><br>  age <span class="hljs-built_in">int</span>(<span class="hljs-number">3</span>) unsigned <span class="hljs-keyword">not</span> null default <span class="hljs-number">28</span>,<br>  hire_date date <span class="hljs-keyword">not</span> null,<br>  post varchar(<span class="hljs-number">50</span>),<br>  post_comment varchar(<span class="hljs-number">100</span>),<br>  salary double(<span class="hljs-number">15</span>,<span class="hljs-number">2</span>),<br>  office <span class="hljs-built_in">int</span>, <span class="hljs-comment">#一个部门一个屋子</span><br>  depart_id <span class="hljs-built_in">int</span><br>);<br><br><span class="hljs-comment">#插入记录</span><br><span class="hljs-comment">#三个部门：教学，销售，运营</span><br>insert into emp(name,sex,age,hire_date,post,salary,office,depart_id) values<br>(<span class="hljs-string">&#x27;jason&#x27;</span>,<span class="hljs-string">&#x27;male&#x27;</span>,<span class="hljs-number">18</span>,<span class="hljs-string">&#x27;20170301&#x27;</span>,<span class="hljs-string">&#x27;张江第一帅形象代言&#x27;</span>,<span class="hljs-number">7300.33</span>,<span class="hljs-number">401</span>,<span class="hljs-number">1</span>), <span class="hljs-comment">#以下是教学部</span><br>(<span class="hljs-string">&#x27;tom&#x27;</span>,<span class="hljs-string">&#x27;male&#x27;</span>,<span class="hljs-number">78</span>,<span class="hljs-string">&#x27;20150302&#x27;</span>,<span class="hljs-string">&#x27;teacher&#x27;</span>,<span class="hljs-number">1000000.31</span>,<span class="hljs-number">401</span>,<span class="hljs-number">1</span>),<br>(<span class="hljs-string">&#x27;kevin&#x27;</span>,<span class="hljs-string">&#x27;male&#x27;</span>,<span class="hljs-number">81</span>,<span class="hljs-string">&#x27;20130305&#x27;</span>,<span class="hljs-string">&#x27;teacher&#x27;</span>,<span class="hljs-number">8300</span>,<span class="hljs-number">401</span>,<span class="hljs-number">1</span>),<br>(<span class="hljs-string">&#x27;tony&#x27;</span>,<span class="hljs-string">&#x27;male&#x27;</span>,<span class="hljs-number">73</span>,<span class="hljs-string">&#x27;20140701&#x27;</span>,<span class="hljs-string">&#x27;teacher&#x27;</span>,<span class="hljs-number">3500</span>,<span class="hljs-number">401</span>,<span class="hljs-number">1</span>),<br>(<span class="hljs-string">&#x27;owen&#x27;</span>,<span class="hljs-string">&#x27;male&#x27;</span>,<span class="hljs-number">28</span>,<span class="hljs-string">&#x27;20121101&#x27;</span>,<span class="hljs-string">&#x27;teacher&#x27;</span>,<span class="hljs-number">2100</span>,<span class="hljs-number">401</span>,<span class="hljs-number">1</span>),<br>(<span class="hljs-string">&#x27;jack&#x27;</span>,<span class="hljs-string">&#x27;female&#x27;</span>,<span class="hljs-number">18</span>,<span class="hljs-string">&#x27;20110211&#x27;</span>,<span class="hljs-string">&#x27;teacher&#x27;</span>,<span class="hljs-number">9000</span>,<span class="hljs-number">401</span>,<span class="hljs-number">1</span>),<br>(<span class="hljs-string">&#x27;jenny&#x27;</span>,<span class="hljs-string">&#x27;male&#x27;</span>,<span class="hljs-number">18</span>,<span class="hljs-string">&#x27;19000301&#x27;</span>,<span class="hljs-string">&#x27;teacher&#x27;</span>,<span class="hljs-number">30000</span>,<span class="hljs-number">401</span>,<span class="hljs-number">1</span>),<br>(<span class="hljs-string">&#x27;sank&#x27;</span>,<span class="hljs-string">&#x27;male&#x27;</span>,<span class="hljs-number">48</span>,<span class="hljs-string">&#x27;20101111&#x27;</span>,<span class="hljs-string">&#x27;teacher&#x27;</span>,<span class="hljs-number">10000</span>,<span class="hljs-number">401</span>,<span class="hljs-number">1</span>),<br>(<span class="hljs-string">&#x27;哈哈&#x27;</span>,<span class="hljs-string">&#x27;female&#x27;</span>,<span class="hljs-number">48</span>,<span class="hljs-string">&#x27;20150311&#x27;</span>,<span class="hljs-string">&#x27;sale&#x27;</span>,<span class="hljs-number">3000.13</span>,<span class="hljs-number">402</span>,<span class="hljs-number">2</span>),<span class="hljs-comment">#以下是销售部门</span><br>(<span class="hljs-string">&#x27;呵呵&#x27;</span>,<span class="hljs-string">&#x27;female&#x27;</span>,<span class="hljs-number">38</span>,<span class="hljs-string">&#x27;20101101&#x27;</span>,<span class="hljs-string">&#x27;sale&#x27;</span>,<span class="hljs-number">2000.35</span>,<span class="hljs-number">402</span>,<span class="hljs-number">2</span>),<br>(<span class="hljs-string">&#x27;西西&#x27;</span>,<span class="hljs-string">&#x27;female&#x27;</span>,<span class="hljs-number">18</span>,<span class="hljs-string">&#x27;20110312&#x27;</span>,<span class="hljs-string">&#x27;sale&#x27;</span>,<span class="hljs-number">1000.37</span>,<span class="hljs-number">402</span>,<span class="hljs-number">2</span>),<br>(<span class="hljs-string">&#x27;乐乐&#x27;</span>,<span class="hljs-string">&#x27;female&#x27;</span>,<span class="hljs-number">18</span>,<span class="hljs-string">&#x27;20160513&#x27;</span>,<span class="hljs-string">&#x27;sale&#x27;</span>,<span class="hljs-number">3000.29</span>,<span class="hljs-number">402</span>,<span class="hljs-number">2</span>),<br>(<span class="hljs-string">&#x27;拉拉&#x27;</span>,<span class="hljs-string">&#x27;female&#x27;</span>,<span class="hljs-number">28</span>,<span class="hljs-string">&#x27;20170127&#x27;</span>,<span class="hljs-string">&#x27;sale&#x27;</span>,<span class="hljs-number">4000.33</span>,<span class="hljs-number">402</span>,<span class="hljs-number">2</span>),<br>(<span class="hljs-string">&#x27;僧龙&#x27;</span>,<span class="hljs-string">&#x27;male&#x27;</span>,<span class="hljs-number">28</span>,<span class="hljs-string">&#x27;20160311&#x27;</span>,<span class="hljs-string">&#x27;operation&#x27;</span>,<span class="hljs-number">10000.13</span>,<span class="hljs-number">403</span>,<span class="hljs-number">3</span>), <span class="hljs-comment">#以下是运营部门</span><br>(<span class="hljs-string">&#x27;程咬金&#x27;</span>,<span class="hljs-string">&#x27;male&#x27;</span>,<span class="hljs-number">18</span>,<span class="hljs-string">&#x27;19970312&#x27;</span>,<span class="hljs-string">&#x27;operation&#x27;</span>,<span class="hljs-number">20000</span>,<span class="hljs-number">403</span>,<span class="hljs-number">3</span>),<br>(<span class="hljs-string">&#x27;程咬银&#x27;</span>,<span class="hljs-string">&#x27;female&#x27;</span>,<span class="hljs-number">18</span>,<span class="hljs-string">&#x27;20130311&#x27;</span>,<span class="hljs-string">&#x27;operation&#x27;</span>,<span class="hljs-number">19000</span>,<span class="hljs-number">403</span>,<span class="hljs-number">3</span>),<br>(<span class="hljs-string">&#x27;程咬铜&#x27;</span>,<span class="hljs-string">&#x27;male&#x27;</span>,<span class="hljs-number">18</span>,<span class="hljs-string">&#x27;20150411&#x27;</span>,<span class="hljs-string">&#x27;operation&#x27;</span>,<span class="hljs-number">18000</span>,<span class="hljs-number">403</span>,<span class="hljs-number">3</span>),<br>(<span class="hljs-string">&#x27;程咬铁&#x27;</span>,<span class="hljs-string">&#x27;female&#x27;</span>,<span class="hljs-number">18</span>,<span class="hljs-string">&#x27;20140512&#x27;</span>,<span class="hljs-string">&#x27;operation&#x27;</span>,<span class="hljs-number">17000</span>,<span class="hljs-number">403</span>,<span class="hljs-number">3</span>);<br><br><span class="hljs-comment"># 个别同学的电脑在插入中文的时候还是会出现乱码或者空白的现象 你可以将字符编码统一设置成GBK</span><br></code></pre></td></tr></table></figure>
+  </div>
+  </div><article class="md-text content"><p>“Day47-数据库(四)学习笔记”</p>
+<h1 id="一、单表查询"><a href="#一、单表查询" class="headerlink" title="一、单表查询"></a>一、单表查询</h1><h2 id="1-1-前期表准备"><a href="#1-1-前期表准备" class="headerlink" title="1.1 前期表准备"></a>1.1 前期表准备</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">create table emp(</span><br><span class="line">  <span class="built_in">id</span> <span class="built_in">int</span> <span class="keyword">not</span> null unique auto_increment,</span><br><span class="line">  name varchar(<span class="number">20</span>) <span class="keyword">not</span> null,</span><br><span class="line">  sex enum(<span class="string">&#x27;male&#x27;</span>,<span class="string">&#x27;female&#x27;</span>) <span class="keyword">not</span> null default <span class="string">&#x27;male&#x27;</span>, <span class="comment">#大部分是男的</span></span><br><span class="line">  age <span class="built_in">int</span>(<span class="number">3</span>) unsigned <span class="keyword">not</span> null default <span class="number">28</span>,</span><br><span class="line">  hire_date date <span class="keyword">not</span> null,</span><br><span class="line">  post varchar(<span class="number">50</span>),</span><br><span class="line">  post_comment varchar(<span class="number">100</span>),</span><br><span class="line">  salary double(<span class="number">15</span>,<span class="number">2</span>),</span><br><span class="line">  office <span class="built_in">int</span>, <span class="comment">#一个部门一个屋子</span></span><br><span class="line">  depart_id <span class="built_in">int</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">#插入记录</span></span><br><span class="line"><span class="comment">#三个部门：教学，销售，运营</span></span><br><span class="line">insert into emp(name,sex,age,hire_date,post,salary,office,depart_id) values</span><br><span class="line">(<span class="string">&#x27;jason&#x27;</span>,<span class="string">&#x27;male&#x27;</span>,<span class="number">18</span>,<span class="string">&#x27;20170301&#x27;</span>,<span class="string">&#x27;张江第一帅形象代言&#x27;</span>,<span class="number">7300.33</span>,<span class="number">401</span>,<span class="number">1</span>), <span class="comment">#以下是教学部</span></span><br><span class="line">(<span class="string">&#x27;tom&#x27;</span>,<span class="string">&#x27;male&#x27;</span>,<span class="number">78</span>,<span class="string">&#x27;20150302&#x27;</span>,<span class="string">&#x27;teacher&#x27;</span>,<span class="number">1000000.31</span>,<span class="number">401</span>,<span class="number">1</span>),</span><br><span class="line">(<span class="string">&#x27;kevin&#x27;</span>,<span class="string">&#x27;male&#x27;</span>,<span class="number">81</span>,<span class="string">&#x27;20130305&#x27;</span>,<span class="string">&#x27;teacher&#x27;</span>,<span class="number">8300</span>,<span class="number">401</span>,<span class="number">1</span>),</span><br><span class="line">(<span class="string">&#x27;tony&#x27;</span>,<span class="string">&#x27;male&#x27;</span>,<span class="number">73</span>,<span class="string">&#x27;20140701&#x27;</span>,<span class="string">&#x27;teacher&#x27;</span>,<span class="number">3500</span>,<span class="number">401</span>,<span class="number">1</span>),</span><br><span class="line">(<span class="string">&#x27;owen&#x27;</span>,<span class="string">&#x27;male&#x27;</span>,<span class="number">28</span>,<span class="string">&#x27;20121101&#x27;</span>,<span class="string">&#x27;teacher&#x27;</span>,<span class="number">2100</span>,<span class="number">401</span>,<span class="number">1</span>),</span><br><span class="line">(<span class="string">&#x27;jack&#x27;</span>,<span class="string">&#x27;female&#x27;</span>,<span class="number">18</span>,<span class="string">&#x27;20110211&#x27;</span>,<span class="string">&#x27;teacher&#x27;</span>,<span class="number">9000</span>,<span class="number">401</span>,<span class="number">1</span>),</span><br><span class="line">(<span class="string">&#x27;jenny&#x27;</span>,<span class="string">&#x27;male&#x27;</span>,<span class="number">18</span>,<span class="string">&#x27;19000301&#x27;</span>,<span class="string">&#x27;teacher&#x27;</span>,<span class="number">30000</span>,<span class="number">401</span>,<span class="number">1</span>),</span><br><span class="line">(<span class="string">&#x27;sank&#x27;</span>,<span class="string">&#x27;male&#x27;</span>,<span class="number">48</span>,<span class="string">&#x27;20101111&#x27;</span>,<span class="string">&#x27;teacher&#x27;</span>,<span class="number">10000</span>,<span class="number">401</span>,<span class="number">1</span>),</span><br><span class="line">(<span class="string">&#x27;哈哈&#x27;</span>,<span class="string">&#x27;female&#x27;</span>,<span class="number">48</span>,<span class="string">&#x27;20150311&#x27;</span>,<span class="string">&#x27;sale&#x27;</span>,<span class="number">3000.13</span>,<span class="number">402</span>,<span class="number">2</span>),<span class="comment">#以下是销售部门</span></span><br><span class="line">(<span class="string">&#x27;呵呵&#x27;</span>,<span class="string">&#x27;female&#x27;</span>,<span class="number">38</span>,<span class="string">&#x27;20101101&#x27;</span>,<span class="string">&#x27;sale&#x27;</span>,<span class="number">2000.35</span>,<span class="number">402</span>,<span class="number">2</span>),</span><br><span class="line">(<span class="string">&#x27;西西&#x27;</span>,<span class="string">&#x27;female&#x27;</span>,<span class="number">18</span>,<span class="string">&#x27;20110312&#x27;</span>,<span class="string">&#x27;sale&#x27;</span>,<span class="number">1000.37</span>,<span class="number">402</span>,<span class="number">2</span>),</span><br><span class="line">(<span class="string">&#x27;乐乐&#x27;</span>,<span class="string">&#x27;female&#x27;</span>,<span class="number">18</span>,<span class="string">&#x27;20160513&#x27;</span>,<span class="string">&#x27;sale&#x27;</span>,<span class="number">3000.29</span>,<span class="number">402</span>,<span class="number">2</span>),</span><br><span class="line">(<span class="string">&#x27;拉拉&#x27;</span>,<span class="string">&#x27;female&#x27;</span>,<span class="number">28</span>,<span class="string">&#x27;20170127&#x27;</span>,<span class="string">&#x27;sale&#x27;</span>,<span class="number">4000.33</span>,<span class="number">402</span>,<span class="number">2</span>),</span><br><span class="line">(<span class="string">&#x27;僧龙&#x27;</span>,<span class="string">&#x27;male&#x27;</span>,<span class="number">28</span>,<span class="string">&#x27;20160311&#x27;</span>,<span class="string">&#x27;operation&#x27;</span>,<span class="number">10000.13</span>,<span class="number">403</span>,<span class="number">3</span>), <span class="comment">#以下是运营部门</span></span><br><span class="line">(<span class="string">&#x27;程咬金&#x27;</span>,<span class="string">&#x27;male&#x27;</span>,<span class="number">18</span>,<span class="string">&#x27;19970312&#x27;</span>,<span class="string">&#x27;operation&#x27;</span>,<span class="number">20000</span>,<span class="number">403</span>,<span class="number">3</span>),</span><br><span class="line">(<span class="string">&#x27;程咬银&#x27;</span>,<span class="string">&#x27;female&#x27;</span>,<span class="number">18</span>,<span class="string">&#x27;20130311&#x27;</span>,<span class="string">&#x27;operation&#x27;</span>,<span class="number">19000</span>,<span class="number">403</span>,<span class="number">3</span>),</span><br><span class="line">(<span class="string">&#x27;程咬铜&#x27;</span>,<span class="string">&#x27;male&#x27;</span>,<span class="number">18</span>,<span class="string">&#x27;20150411&#x27;</span>,<span class="string">&#x27;operation&#x27;</span>,<span class="number">18000</span>,<span class="number">403</span>,<span class="number">3</span>),</span><br><span class="line">(<span class="string">&#x27;程咬铁&#x27;</span>,<span class="string">&#x27;female&#x27;</span>,<span class="number">18</span>,<span class="string">&#x27;20140512&#x27;</span>,<span class="string">&#x27;operation&#x27;</span>,<span class="number">17000</span>,<span class="number">403</span>,<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment"># 个别同学的电脑在插入中文的时候还是会出现乱码或者空白的现象 你可以将字符编码统一设置成GBK</span></span><br></pre></td></tr></table></figure>
 
 <p>当表字段特别多 展示的时候错乱 可以使用<code>\G</code>分行展示:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">select * <span class="hljs-keyword">from</span> emp\G;<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * <span class="keyword">from</span> emp\G;</span><br></pre></td></tr></table></figure>
 
 <p>使用后输出信息分段</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python">....<br>*************************** <span class="hljs-number">17.</span> row ***************************<br>          <span class="hljs-built_in">id</span>: <span class="hljs-number">17</span><br>        name: 程咬铜<br>         sex: male<br>         age: <span class="hljs-number">18</span><br>   hire_date: <span class="hljs-number">2015</span>-04-<span class="hljs-number">11</span><br>        post: operation<br>post_comment: NULL<br>      salary: <span class="hljs-number">18000.00</span><br>      office: <span class="hljs-number">403</span><br>   depart_id: <span class="hljs-number">3</span><br>*************************** <span class="hljs-number">18.</span> row ***************************<br>....<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">....</span><br><span class="line">*************************** <span class="number">17.</span> row ***************************</span><br><span class="line">          <span class="built_in">id</span>: <span class="number">17</span></span><br><span class="line">        name: 程咬铜</span><br><span class="line">         sex: male</span><br><span class="line">         age: <span class="number">18</span></span><br><span class="line">   hire_date: <span class="number">2015</span>-04-<span class="number">11</span></span><br><span class="line">        post: operation</span><br><span class="line">post_comment: NULL</span><br><span class="line">      salary: <span class="number">18000.00</span></span><br><span class="line">      office: <span class="number">403</span></span><br><span class="line">   depart_id: <span class="number">3</span></span><br><span class="line">*************************** <span class="number">18.</span> row ***************************</span><br><span class="line">....</span><br></pre></td></tr></table></figure>
 
-<h2 id="1-2-几个重要关键字的执行顺序"><a href="#1-2-几个重要关键字的执行顺序" class="headerlink" title="1.2 几个重要关键字的执行顺序"></a>1.2 几个重要关键字的执行顺序</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 书写顺序</span><br>select <span class="hljs-built_in">id</span>,name <span class="hljs-keyword">from</span> emp where <span class="hljs-built_in">id</span> &gt; <span class="hljs-number">3</span>;<br><span class="hljs-comment"># 执行顺序</span><br><span class="hljs-keyword">from</span><br>where<br>select<br><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">虽然执行顺序和书写顺序不一致 你在写sql语句的时候可能不知道怎么写</span><br><span class="hljs-string">你就按照书写顺序的方式写sql</span><br><span class="hljs-string">	select * 先用*号占位</span><br><span class="hljs-string">	之后去补全后面的sql语句</span><br><span class="hljs-string">	最后将*号替换后你想要的具体字段</span><br><span class="hljs-string">	</span><br><span class="hljs-string">	明天会一直使用 这里先理解</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+<h2 id="1-2-几个重要关键字的执行顺序"><a href="#1-2-几个重要关键字的执行顺序" class="headerlink" title="1.2 几个重要关键字的执行顺序"></a>1.2 几个重要关键字的执行顺序</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 书写顺序</span></span><br><span class="line">select <span class="built_in">id</span>,name <span class="keyword">from</span> emp where <span class="built_in">id</span> &gt; <span class="number">3</span>;</span><br><span class="line"><span class="comment"># 执行顺序</span></span><br><span class="line"><span class="keyword">from</span></span><br><span class="line">where</span><br><span class="line">select</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">虽然执行顺序和书写顺序不一致 你在写sql语句的时候可能不知道怎么写</span></span><br><span class="line"><span class="string">你就按照书写顺序的方式写sql</span></span><br><span class="line"><span class="string">	select * 先用*号占位</span></span><br><span class="line"><span class="string">	之后去补全后面的sql语句</span></span><br><span class="line"><span class="string">	最后将*号替换后你想要的具体字段</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">	明天会一直使用 这里先理解</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="1-3-where筛选条件"><a href="#1-3-where筛选条件" class="headerlink" title="1.3 where筛选条件"></a>1.3 where筛选条件</h2><p>作用：是对整体数据的一个筛选操作</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 1.查询id大于等于3小于等于6的数据</span><br>select <span class="hljs-built_in">id</span>,name,age <span class="hljs-keyword">from</span> emp where <span class="hljs-built_in">id</span>&gt;=<span class="hljs-number">3</span> <span class="hljs-keyword">and</span> <span class="hljs-built_in">id</span>&lt;=<span class="hljs-number">6</span>;<br>select <span class="hljs-built_in">id</span>,name <span class="hljs-keyword">from</span> emp where <span class="hljs-built_in">id</span> between <span class="hljs-number">3</span> <span class="hljs-keyword">and</span> <span class="hljs-number">6</span>;  <span class="hljs-comment"># 两者等价</span><br><br><span class="hljs-comment"># 2.查询薪资是20000或者18000或者17000的数据</span><br>select * <span class="hljs-keyword">from</span> emp where salary=<span class="hljs-number">20000</span> <span class="hljs-keyword">or</span> salary=<span class="hljs-number">18000</span> <span class="hljs-keyword">or</span> salary=<span class="hljs-number">17000</span>;<br>select * <span class="hljs-keyword">from</span> emp where salary <span class="hljs-keyword">in</span> (<span class="hljs-number">20000</span>,<span class="hljs-number">18000</span>,<span class="hljs-number">17000</span>);<br><br><span class="hljs-comment"># 3.查询员工姓名中包含字母o的员工的姓名和薪资</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">模糊查询</span><br><span class="hljs-string">	like</span><br><span class="hljs-string">		%  匹配任意多个字符</span><br><span class="hljs-string">		_  匹配任意单个字符</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br>select name,salary <span class="hljs-keyword">from</span> emp where name like <span class="hljs-string">&#x27;%o%&#x27;</span>;<br><br><span class="hljs-comment"># 4.查询员工姓名是由四个字符组成的 姓名和薪资  char_length()   _</span><br>select name,salary <span class="hljs-keyword">from</span> emp where name like <span class="hljs-string">&#x27;____&#x27;</span>;<br>select name,salary <span class="hljs-keyword">from</span> emp where char_length(name) = <span class="hljs-number">4</span>;<br><br><span class="hljs-comment"># 5.查询id小于3或者id大于6的数据</span><br>select * <span class="hljs-keyword">from</span> emp where <span class="hljs-built_in">id</span> <span class="hljs-keyword">not</span> between <span class="hljs-number">3</span> <span class="hljs-keyword">and</span> <span class="hljs-number">6</span>;<br><br><span class="hljs-comment"># 6.查询薪资不在20000,18000,17000范围的数据</span><br>select * <span class="hljs-keyword">from</span> emp where salary <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> (<span class="hljs-number">20000</span>,<span class="hljs-number">18000</span>,<span class="hljs-number">17000</span>);<br><br><span class="hljs-comment"># 7.查询岗位描述为空的员工姓名和岗位名  针对null不用等号 用is</span><br>select name,post <span class="hljs-keyword">from</span> emp where post_comment = NULL; <span class="hljs-comment"># 查不出结果</span><br>select name,post <span class="hljs-keyword">from</span> emp where post_comment <span class="hljs-keyword">is</span> NULL;	<span class="hljs-comment"># 正常</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.查询id大于等于3小于等于6的数据</span></span><br><span class="line">select <span class="built_in">id</span>,name,age <span class="keyword">from</span> emp where <span class="built_in">id</span>&gt;=<span class="number">3</span> <span class="keyword">and</span> <span class="built_in">id</span>&lt;=<span class="number">6</span>;</span><br><span class="line">select <span class="built_in">id</span>,name <span class="keyword">from</span> emp where <span class="built_in">id</span> between <span class="number">3</span> <span class="keyword">and</span> <span class="number">6</span>;  <span class="comment"># 两者等价</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.查询薪资是20000或者18000或者17000的数据</span></span><br><span class="line">select * <span class="keyword">from</span> emp where salary=<span class="number">20000</span> <span class="keyword">or</span> salary=<span class="number">18000</span> <span class="keyword">or</span> salary=<span class="number">17000</span>;</span><br><span class="line">select * <span class="keyword">from</span> emp where salary <span class="keyword">in</span> (<span class="number">20000</span>,<span class="number">18000</span>,<span class="number">17000</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3.查询员工姓名中包含字母o的员工的姓名和薪资</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">模糊查询</span></span><br><span class="line"><span class="string">	like</span></span><br><span class="line"><span class="string">		%  匹配任意多个字符</span></span><br><span class="line"><span class="string">		_  匹配任意单个字符</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line">select name,salary <span class="keyword">from</span> emp where name like <span class="string">&#x27;%o%&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4.查询员工姓名是由四个字符组成的 姓名和薪资  char_length()   _</span></span><br><span class="line">select name,salary <span class="keyword">from</span> emp where name like <span class="string">&#x27;____&#x27;</span>;</span><br><span class="line">select name,salary <span class="keyword">from</span> emp where char_length(name) = <span class="number">4</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5.查询id小于3或者id大于6的数据</span></span><br><span class="line">select * <span class="keyword">from</span> emp where <span class="built_in">id</span> <span class="keyword">not</span> between <span class="number">3</span> <span class="keyword">and</span> <span class="number">6</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 6.查询薪资不在20000,18000,17000范围的数据</span></span><br><span class="line">select * <span class="keyword">from</span> emp where salary <span class="keyword">not</span> <span class="keyword">in</span> (<span class="number">20000</span>,<span class="number">18000</span>,<span class="number">17000</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment"># 7.查询岗位描述为空的员工姓名和岗位名  针对null不用等号 用is</span></span><br><span class="line">select name,post <span class="keyword">from</span> emp where post_comment = NULL; <span class="comment"># 查不出结果</span></span><br><span class="line">select name,post <span class="keyword">from</span> emp where post_comment <span class="keyword">is</span> NULL;	<span class="comment"># 正常</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="1-4-group-by分组"><a href="#1-4-group-by分组" class="headerlink" title="1.4 group by分组"></a>1.4 group by分组</h2><p>什么时候需要分组？</p>
 <p>​	关键字 ：每个、平均、最高、最低 </p>
@@ -318,17 +115,17 @@
 <li>国家之间数据统计</li>
 </ul>
 <h3 id="1-4-1-按照部门分组（非严格模式，了解即可）"><a href="#1-4-1-按照部门分组（非严格模式，了解即可）" class="headerlink" title="1.4.1 按照部门分组（非严格模式，了解即可）"></a>1.4.1 按照部门分组（非严格模式，了解即可）</h3><p>在未设置严格模式的情况下， 可以使用如下命令查询<code>按照部门分组</code>的数据</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">mysql&gt; select * from emp group by post;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from emp group by post;</span><br></pre></td></tr></table></figure>
 
 <p>输出数据：</p>
-<p><img src="/../../../img/image-20220930102443143.png" srcset="/img/loading.gif" lazyload alt="image-20220930102443143"></p>
+<p><img src="/../../../img/image-20220930102443143.png" alt="image-20220930102443143"></p>
 <p>返回的数据实际上是有问题的，返回的是分组之后<code>每个组的第一条数据</code>，但是这不符合分组的规范，</p>
 <p>分组之后不应该考虑单个数据，而应该<code>以组为操作单位</code>(分组之后 没办法直接获取组内单个数据)</p>
 <p><font color=red>在严格模式下，该命令会直接报错</font></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mysql">mysql&gt; select * from emp group by post;<br>ERROR 1055 (42000): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column &#x27;day47.emp.id&#x27; which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from emp group by post;</span><br><span class="line">ERROR 1055 (42000): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column &#x27;day47.emp.id&#x27; which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by</span><br></pre></td></tr></table></figure>
 
 <h3 id="1-4-2-按照部门分组（严格模式，掌握）"><a href="#1-4-2-按照部门分组（严格模式，掌握）" class="headerlink" title="1.4.2 按照部门分组（严格模式，掌握）"></a>1.4.2 按照部门分组（严格模式，掌握）</h3><p>设置严格模式之后，分组默认只能拿到分组的依据，比如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs mysql"># 按照post分组<br>select post from emp group by post;  <br><br># 输出<br>+--------------------+<br>| post               |<br>+--------------------+<br>| 张江第一帅形象代言 |<br>| teacher            |<br>| sale               |<br>| operation          |<br>+--------------------+<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 按照post分组</span><br><span class="line">select post from emp group by post;  </span><br><span class="line"></span><br><span class="line"># 输出</span><br><span class="line">+--------------------+</span><br><span class="line">| post               |</span><br><span class="line">+--------------------+</span><br><span class="line">| 张江第一帅形象代言 |</span><br><span class="line">| teacher            |</span><br><span class="line">| sale               |</span><br><span class="line">| operation          |</span><br><span class="line">+--------------------+</span><br></pre></td></tr></table></figure>
 
 <p>按照什么分组就只能拿到分组字段，其他字段不能直接获取，需要借助于一些方法(<code>聚合函数</code>)</p>
 <p>常用聚合函数：</p>
@@ -340,71 +137,67 @@
 <li>avg     平均值</li>
 </ul>
 <p>分组查询案例：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 1.获取每个部门的最高薪资</span><br>select post,<span class="hljs-built_in">max</span>(salary) <span class="hljs-keyword">from</span> emp group by post;<br>select post <span class="hljs-keyword">as</span> <span class="hljs-string">&#x27;部门&#x27;</span>,<span class="hljs-built_in">max</span>(salary) <span class="hljs-keyword">as</span> <span class="hljs-string">&#x27;最高薪资&#x27;</span> <span class="hljs-keyword">from</span> emp group by post;	<span class="hljs-comment"># 推荐</span><br>select post <span class="hljs-string">&#x27;部门&#x27;</span>,<span class="hljs-built_in">max</span>(salary) <span class="hljs-string">&#x27;最高薪资&#x27;</span> <span class="hljs-keyword">from</span> emp group by post;	<span class="hljs-comment"># 不推荐</span><br><span class="hljs-comment"># as可以给字段起别名 也可以直接省略不写 但是不推荐 因为省略的话语意不明确 容易错乱</span><br><br><span class="hljs-comment"># 2.获取每个部门的最低薪资</span><br>select post,<span class="hljs-built_in">min</span>(salary) <span class="hljs-keyword">from</span> emp group by post;<br><span class="hljs-comment"># 3.获取每个部门的平均薪资</span><br>select post,avg(salary) <span class="hljs-keyword">from</span> emp group by post;<br><span class="hljs-comment"># 4.获取每个部门的工资总和</span><br>select post,<span class="hljs-built_in">sum</span>(salary) <span class="hljs-keyword">from</span> emp group by post;<br><span class="hljs-comment"># 5.获取每个部门的人数</span><br>select post,count(<span class="hljs-built_in">id</span>) <span class="hljs-keyword">from</span> emp group by post;  <span class="hljs-comment"># 常用 符合逻辑</span><br>select post,count(salary) <span class="hljs-keyword">from</span> emp group by post;<br>select post,count(age) <span class="hljs-keyword">from</span> emp group by post;<br>select post,count(post_comment) <span class="hljs-keyword">from</span> emp group by post;  null不行<br><br><span class="hljs-comment"># 6.查询分组之后的部门名称和每个部门下所有的员工姓名 </span><br><span class="hljs-comment"># group_concat不单单可以支持你获取分组之后的其他字段值 还支持拼接操作</span><br>select post,group_concat(name) <span class="hljs-keyword">from</span> emp group by post;<br>select post,group_concat(name,<span class="hljs-string">&#x27;_DSB&#x27;</span>) <span class="hljs-keyword">from</span> emp group by post;<br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">+--------------------+-----------------------------------------------------------------+</span><br><span class="hljs-string">| 部门               | 名字                                                            |</span><br><span class="hljs-string">+--------------------+-----------------------------------------------------------------+</span><br><span class="hljs-string">| operation          | 僧龙_DSB,程咬金_DSB,程咬银_DSB,程咬铜_DSB,程咬铁_DSB            |</span><br><span class="hljs-string">| sale               | 哈哈_DSB,呵呵_DSB,西西_DSB,乐乐_DSB,拉拉_DSB                    |</span><br><span class="hljs-string">| teacher            | tom_DSB,kevin_DSB,tony_DSB,owen_DSB,jack_DSB,jenny_DSB,sank_DSB |</span><br><span class="hljs-string">| 张江第一帅形象代言 | jason_DSB                                                       |</span><br><span class="hljs-string">+--------------------+-----------------------------------------------------------------+</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br>select post,group_concat(name,<span class="hljs-string">&#x27;:&#x27;</span>,salary) <span class="hljs-keyword">from</span> emp group by post;<br><span class="hljs-comment"># concat不分组的时候用 </span><br>select concat(<span class="hljs-string">&#x27;NAME:&#x27;</span>,name),concat(<span class="hljs-string">&#x27;SAL:&#x27;</span>,salary) <span class="hljs-keyword">from</span> emp;<br><br><span class="hljs-comment"># 补充 as语法不单单可以给字段起别名 还可以给表临时起别名</span><br>select emp.<span class="hljs-built_in">id</span>,emp.name <span class="hljs-keyword">from</span> emp;  <br>select emp.<span class="hljs-built_in">id</span>,emp.name <span class="hljs-keyword">from</span> emp <span class="hljs-keyword">as</span> t1;   <span class="hljs-comment"># 报错</span><br>select t1.<span class="hljs-built_in">id</span>,t1.name <span class="hljs-keyword">from</span> emp <span class="hljs-keyword">as</span> t1;<br><br><span class="hljs-comment"># 查询每个人的年薪  12薪</span><br>select name,salary*<span class="hljs-number">12</span> <span class="hljs-keyword">from</span> emp;<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.获取每个部门的最高薪资</span></span><br><span class="line">select post,<span class="built_in">max</span>(salary) <span class="keyword">from</span> emp group by post;</span><br><span class="line">select post <span class="keyword">as</span> <span class="string">&#x27;部门&#x27;</span>,<span class="built_in">max</span>(salary) <span class="keyword">as</span> <span class="string">&#x27;最高薪资&#x27;</span> <span class="keyword">from</span> emp group by post;	<span class="comment"># 推荐</span></span><br><span class="line">select post <span class="string">&#x27;部门&#x27;</span>,<span class="built_in">max</span>(salary) <span class="string">&#x27;最高薪资&#x27;</span> <span class="keyword">from</span> emp group by post;	<span class="comment"># 不推荐</span></span><br><span class="line"><span class="comment"># as可以给字段起别名 也可以直接省略不写 但是不推荐 因为省略的话语意不明确 容易错乱</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.获取每个部门的最低薪资</span></span><br><span class="line">select post,<span class="built_in">min</span>(salary) <span class="keyword">from</span> emp group by post;</span><br><span class="line"><span class="comment"># 3.获取每个部门的平均薪资</span></span><br><span class="line">select post,avg(salary) <span class="keyword">from</span> emp group by post;</span><br><span class="line"><span class="comment"># 4.获取每个部门的工资总和</span></span><br><span class="line">select post,<span class="built_in">sum</span>(salary) <span class="keyword">from</span> emp group by post;</span><br><span class="line"><span class="comment"># 5.获取每个部门的人数</span></span><br><span class="line">select post,count(<span class="built_in">id</span>) <span class="keyword">from</span> emp group by post;  <span class="comment"># 常用 符合逻辑</span></span><br><span class="line">select post,count(salary) <span class="keyword">from</span> emp group by post;</span><br><span class="line">select post,count(age) <span class="keyword">from</span> emp group by post;</span><br><span class="line">select post,count(post_comment) <span class="keyword">from</span> emp group by post;  null不行</span><br><span class="line"></span><br><span class="line"><span class="comment"># 6.查询分组之后的部门名称和每个部门下所有的员工姓名 </span></span><br><span class="line"><span class="comment"># group_concat不单单可以支持你获取分组之后的其他字段值 还支持拼接操作</span></span><br><span class="line">select post,group_concat(name) <span class="keyword">from</span> emp group by post;</span><br><span class="line">select post,group_concat(name,<span class="string">&#x27;_DSB&#x27;</span>) <span class="keyword">from</span> emp group by post;</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">+--------------------+-----------------------------------------------------------------+</span></span><br><span class="line"><span class="string">| 部门               | 名字                                                            |</span></span><br><span class="line"><span class="string">+--------------------+-----------------------------------------------------------------+</span></span><br><span class="line"><span class="string">| operation          | 僧龙_DSB,程咬金_DSB,程咬银_DSB,程咬铜_DSB,程咬铁_DSB            |</span></span><br><span class="line"><span class="string">| sale               | 哈哈_DSB,呵呵_DSB,西西_DSB,乐乐_DSB,拉拉_DSB                    |</span></span><br><span class="line"><span class="string">| teacher            | tom_DSB,kevin_DSB,tony_DSB,owen_DSB,jack_DSB,jenny_DSB,sank_DSB |</span></span><br><span class="line"><span class="string">| 张江第一帅形象代言 | jason_DSB                                                       |</span></span><br><span class="line"><span class="string">+--------------------+-----------------------------------------------------------------+</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line">select post,group_concat(name,<span class="string">&#x27;:&#x27;</span>,salary) <span class="keyword">from</span> emp group by post;</span><br><span class="line"><span class="comment"># concat不分组的时候用 </span></span><br><span class="line">select concat(<span class="string">&#x27;NAME:&#x27;</span>,name),concat(<span class="string">&#x27;SAL:&#x27;</span>,salary) <span class="keyword">from</span> emp;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 补充 as语法不单单可以给字段起别名 还可以给表临时起别名</span></span><br><span class="line">select emp.<span class="built_in">id</span>,emp.name <span class="keyword">from</span> emp;  </span><br><span class="line">select emp.<span class="built_in">id</span>,emp.name <span class="keyword">from</span> emp <span class="keyword">as</span> t1;   <span class="comment"># 报错</span></span><br><span class="line">select t1.<span class="built_in">id</span>,t1.name <span class="keyword">from</span> emp <span class="keyword">as</span> t1;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询每个人的年薪  12薪</span></span><br><span class="line">select name,salary*<span class="number">12</span> <span class="keyword">from</span> emp;</span><br></pre></td></tr></table></figure>
 
 <h2 id="1-5-分组注意事项"><a href="#1-5-分组注意事项" class="headerlink" title="1.5 分组注意事项"></a>1.5 分组注意事项</h2><ol>
 <li><p>关键字where和group by同时出现的时候<strong>group by必须在where的后面</strong></p>
 </li>
 <li><p>where筛选条件不能使用聚合函数</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">mysql&gt; select <span class="hljs-built_in">id</span>,name,age <span class="hljs-keyword">from</span> emp where <span class="hljs-built_in">max</span>(salary) &gt; <span class="hljs-number">3000</span>;<br>ERROR <span class="hljs-number">1111</span> (HY000): Invalid use of group function<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select <span class="built_in">id</span>,name,age <span class="keyword">from</span> emp where <span class="built_in">max</span>(salary) &gt; <span class="number">3000</span>;</span><br><span class="line">ERROR <span class="number">1111</span> (HY000): Invalid use of group function</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>不分组的情况下使用聚合函数，默认整体就是一组</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">mysql&gt; select <span class="hljs-built_in">max</span>(salary) <span class="hljs-keyword">from</span> emp;<br>+-------------+<br>| <span class="hljs-built_in">max</span>(salary) |<br>+-------------+<br>|  <span class="hljs-number">1000000.31</span> |<br>+-------------+<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select <span class="built_in">max</span>(salary) <span class="keyword">from</span> emp;</span><br><span class="line">+-------------+</span><br><span class="line">| <span class="built_in">max</span>(salary) |</span><br><span class="line">+-------------+</span><br><span class="line">|  <span class="number">1000000.31</span> |</span><br><span class="line">+-------------+</span><br></pre></td></tr></table></figure></li>
 </ol>
 <h2 id="1-6-分组之后的筛选条件-having"><a href="#1-6-分组之后的筛选条件-having" class="headerlink" title="1.6 分组之后的筛选条件(having)"></a>1.6 分组之后的筛选条件(having)</h2><p>数据分组之后，再进行一遍筛选</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">having的语法根where是一致的</span><br><span class="hljs-string">只不过having是在分组之后进行的过滤操作</span><br><span class="hljs-string">即having是可以直接使用聚合函数的</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-comment"># 统计各部门年龄在30岁以上的员工平均工资并且保留平均薪资大于10000的部门</span><br>select post,avg(salary) <span class="hljs-keyword">from</span> emp <br>		where age&gt;<span class="hljs-number">30</span> <br>    	group by post<br>        having avg(salary) &gt; <span class="hljs-number">10000</span><br>        ;<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">having的语法根where是一致的</span></span><br><span class="line"><span class="string">只不过having是在分组之后进行的过滤操作</span></span><br><span class="line"><span class="string">即having是可以直接使用聚合函数的</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="comment"># 统计各部门年龄在30岁以上的员工平均工资并且保留平均薪资大于10000的部门</span></span><br><span class="line">select post,avg(salary) <span class="keyword">from</span> emp </span><br><span class="line">		where age&gt;<span class="number">30</span> </span><br><span class="line">    	group by post</span><br><span class="line">        having avg(salary) &gt; <span class="number">10000</span></span><br><span class="line">        ;</span><br></pre></td></tr></table></figure>
 
 <h2 id="1-7-distinct去重"><a href="#1-7-distinct去重" class="headerlink" title="1.7 distinct去重"></a>1.7 distinct去重</h2><p>必须是完全一样的数据才可以去重！！！</p>
 <p>一定不要将主键忽视了，有主键存在的情况下 是不可能去重的</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">select distinct <span class="hljs-built_in">id</span>,age <span class="hljs-keyword">from</span> emp;	<span class="hljs-comment"># 因为有主键存在，去重失败</span><br>select distinct age <span class="hljs-keyword">from</span> emp;	<span class="hljs-comment"># age数据一样，去重成功</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select distinct <span class="built_in">id</span>,age <span class="keyword">from</span> emp;	<span class="comment"># 因为有主键存在，去重失败</span></span><br><span class="line">select distinct age <span class="keyword">from</span> emp;	<span class="comment"># age数据一样，去重成功</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="1-8-order-by排序"><a href="#1-8-order-by排序" class="headerlink" title="1.8 order by排序"></a>1.8 order by排序</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python">select * <span class="hljs-keyword">from</span> emp order by salary;<br>select * <span class="hljs-keyword">from</span> emp order by salary asc;	<span class="hljs-comment"># 默认升序，asc可以省略不写</span><br>select * <span class="hljs-keyword">from</span> emp order by salary desc; <span class="hljs-comment"># 降序</span><br><br><span class="hljs-comment"># 先按照age降序排  如果碰到age相同 则再按照salary升序排</span><br>select * <span class="hljs-keyword">from</span> emp order by age desc,salary asc;<br><br><br><span class="hljs-comment"># 统计各部门年龄在10岁以上的员工平均工资并且保留平均薪资大于1000的部门,然后对平均工资降序排序</span><br>	select post,avg(salary) <span class="hljs-keyword">from</span> emp <br>		where age&gt;<span class="hljs-number">10</span> <br>    	group by post<br>        having avg(salary) &gt; <span class="hljs-number">1000</span><br>        order by avg(salary) desc<br>        ;<br></code></pre></td></tr></table></figure>
+<h2 id="1-8-order-by排序"><a href="#1-8-order-by排序" class="headerlink" title="1.8 order by排序"></a>1.8 order by排序</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">select * <span class="keyword">from</span> emp order by salary;</span><br><span class="line">select * <span class="keyword">from</span> emp order by salary asc;	<span class="comment"># 默认升序，asc可以省略不写</span></span><br><span class="line">select * <span class="keyword">from</span> emp order by salary desc; <span class="comment"># 降序</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 先按照age降序排  如果碰到age相同 则再按照salary升序排</span></span><br><span class="line">select * <span class="keyword">from</span> emp order by age desc,salary asc;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 统计各部门年龄在10岁以上的员工平均工资并且保留平均薪资大于1000的部门,然后对平均工资降序排序</span></span><br><span class="line">	select post,avg(salary) <span class="keyword">from</span> emp </span><br><span class="line">		where age&gt;<span class="number">10</span> </span><br><span class="line">    	group by post</span><br><span class="line">        having avg(salary) &gt; <span class="number">1000</span></span><br><span class="line">        order by avg(salary) desc</span><br><span class="line">        ;</span><br></pre></td></tr></table></figure>
 
-<h2 id="1-9-limit限制展示条数"><a href="#1-9-limit限制展示条数" class="headerlink" title="1.9 limit限制展示条数"></a>1.9 limit限制展示条数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">select * <span class="hljs-keyword">from</span> emp;<br><span class="hljs-string">&quot;&quot;&quot;针对数据过多的情况 我们通常都是做分页处理&quot;&quot;&quot;</span><br>select * <span class="hljs-keyword">from</span> emp limit <span class="hljs-number">3</span>;  <span class="hljs-comment"># 只展示三条数据</span><br><br>select * <span class="hljs-keyword">from</span> emp limit <span class="hljs-number">0</span>,<span class="hljs-number">5</span>;<br>select * <span class="hljs-keyword">from</span> emp limit <span class="hljs-number">5</span>,<span class="hljs-number">5</span>;<br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">第一个参数是起始位置</span><br><span class="hljs-string">第二个参数是展示条数</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br></code></pre></td></tr></table></figure>
+<h2 id="1-9-limit限制展示条数"><a href="#1-9-limit限制展示条数" class="headerlink" title="1.9 limit限制展示条数"></a>1.9 limit限制展示条数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">select * <span class="keyword">from</span> emp;</span><br><span class="line"><span class="string">&quot;&quot;&quot;针对数据过多的情况 我们通常都是做分页处理&quot;&quot;&quot;</span></span><br><span class="line">select * <span class="keyword">from</span> emp limit <span class="number">3</span>;  <span class="comment"># 只展示三条数据</span></span><br><span class="line"></span><br><span class="line">select * <span class="keyword">from</span> emp limit <span class="number">0</span>,<span class="number">5</span>;</span><br><span class="line">select * <span class="keyword">from</span> emp limit <span class="number">5</span>,<span class="number">5</span>;</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">第一个参数是起始位置</span></span><br><span class="line"><span class="string">第二个参数是展示条数</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="1-10-正则"><a href="#1-10-正则" class="headerlink" title="1.10 正则"></a>1.10 正则</h2><p>where后面也可以接正则表达式</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">select * <span class="hljs-keyword">from</span> emp where name regexp <span class="hljs-string">&#x27;^j.*(n|y)$&#x27;</span>;<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * <span class="keyword">from</span> emp where name regexp <span class="string">&#x27;^j.*(n|y)$&#x27;</span>;</span><br></pre></td></tr></table></figure>
 
 
 
-<h1 id="二、多表操作"><a href="#二、多表操作" class="headerlink" title="二、多表操作"></a>二、多表操作</h1><h2 id="2-1-前期表准备"><a href="#2-1-前期表准备" class="headerlink" title="2.1 前期表准备"></a>2.1 前期表准备</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#建表</span><br>create table dep(<br><span class="hljs-built_in">id</span> <span class="hljs-built_in">int</span>,<br>name varchar(<span class="hljs-number">20</span>) <br>);<br><br>create table emp(<br><span class="hljs-built_in">id</span> <span class="hljs-built_in">int</span> primary key auto_increment,<br>name varchar(<span class="hljs-number">20</span>),<br>sex enum(<span class="hljs-string">&#x27;male&#x27;</span>,<span class="hljs-string">&#x27;female&#x27;</span>) <span class="hljs-keyword">not</span> null default <span class="hljs-string">&#x27;male&#x27;</span>,<br>age <span class="hljs-built_in">int</span>,<br>dep_id <span class="hljs-built_in">int</span><br>);<br><br><span class="hljs-comment">#插入数据</span><br>insert into dep values<br>(<span class="hljs-number">200</span>,<span class="hljs-string">&#x27;技术&#x27;</span>),<br>(<span class="hljs-number">201</span>,<span class="hljs-string">&#x27;人力资源&#x27;</span>),<br>(<span class="hljs-number">202</span>,<span class="hljs-string">&#x27;销售&#x27;</span>),<br>(<span class="hljs-number">203</span>,<span class="hljs-string">&#x27;运营&#x27;</span>);<br><br>insert into emp(name,sex,age,dep_id) values<br>(<span class="hljs-string">&#x27;jason&#x27;</span>,<span class="hljs-string">&#x27;male&#x27;</span>,<span class="hljs-number">18</span>,<span class="hljs-number">200</span>),<br>(<span class="hljs-string">&#x27;egon&#x27;</span>,<span class="hljs-string">&#x27;female&#x27;</span>,<span class="hljs-number">48</span>,<span class="hljs-number">201</span>),<br>(<span class="hljs-string">&#x27;kevin&#x27;</span>,<span class="hljs-string">&#x27;male&#x27;</span>,<span class="hljs-number">18</span>,<span class="hljs-number">201</span>),<br>(<span class="hljs-string">&#x27;nick&#x27;</span>,<span class="hljs-string">&#x27;male&#x27;</span>,<span class="hljs-number">28</span>,<span class="hljs-number">202</span>),<br>(<span class="hljs-string">&#x27;owen&#x27;</span>,<span class="hljs-string">&#x27;male&#x27;</span>,<span class="hljs-number">18</span>,<span class="hljs-number">203</span>),<br>(<span class="hljs-string">&#x27;jerry&#x27;</span>,<span class="hljs-string">&#x27;female&#x27;</span>,<span class="hljs-number">18</span>,<span class="hljs-number">204</span>);<br></code></pre></td></tr></table></figure>
+<h1 id="二、多表操作"><a href="#二、多表操作" class="headerlink" title="二、多表操作"></a>二、多表操作</h1><h2 id="2-1-前期表准备"><a href="#2-1-前期表准备" class="headerlink" title="2.1 前期表准备"></a>2.1 前期表准备</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#建表</span></span><br><span class="line">create table dep(</span><br><span class="line"><span class="built_in">id</span> <span class="built_in">int</span>,</span><br><span class="line">name varchar(<span class="number">20</span>) </span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">create table emp(</span><br><span class="line"><span class="built_in">id</span> <span class="built_in">int</span> primary key auto_increment,</span><br><span class="line">name varchar(<span class="number">20</span>),</span><br><span class="line">sex enum(<span class="string">&#x27;male&#x27;</span>,<span class="string">&#x27;female&#x27;</span>) <span class="keyword">not</span> null default <span class="string">&#x27;male&#x27;</span>,</span><br><span class="line">age <span class="built_in">int</span>,</span><br><span class="line">dep_id <span class="built_in">int</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">#插入数据</span></span><br><span class="line">insert into dep values</span><br><span class="line">(<span class="number">200</span>,<span class="string">&#x27;技术&#x27;</span>),</span><br><span class="line">(<span class="number">201</span>,<span class="string">&#x27;人力资源&#x27;</span>),</span><br><span class="line">(<span class="number">202</span>,<span class="string">&#x27;销售&#x27;</span>),</span><br><span class="line">(<span class="number">203</span>,<span class="string">&#x27;运营&#x27;</span>);</span><br><span class="line"></span><br><span class="line">insert into emp(name,sex,age,dep_id) values</span><br><span class="line">(<span class="string">&#x27;jason&#x27;</span>,<span class="string">&#x27;male&#x27;</span>,<span class="number">18</span>,<span class="number">200</span>),</span><br><span class="line">(<span class="string">&#x27;egon&#x27;</span>,<span class="string">&#x27;female&#x27;</span>,<span class="number">48</span>,<span class="number">201</span>),</span><br><span class="line">(<span class="string">&#x27;kevin&#x27;</span>,<span class="string">&#x27;male&#x27;</span>,<span class="number">18</span>,<span class="number">201</span>),</span><br><span class="line">(<span class="string">&#x27;nick&#x27;</span>,<span class="string">&#x27;male&#x27;</span>,<span class="number">28</span>,<span class="number">202</span>),</span><br><span class="line">(<span class="string">&#x27;owen&#x27;</span>,<span class="string">&#x27;male&#x27;</span>,<span class="number">18</span>,<span class="number">203</span>),</span><br><span class="line">(<span class="string">&#x27;jerry&#x27;</span>,<span class="string">&#x27;female&#x27;</span>,<span class="number">18</span>,<span class="number">204</span>);</span><br></pre></td></tr></table></figure>
 
 <h2 id="2-2-联表查询"><a href="#2-2-联表查询" class="headerlink" title="2.2 联表查询"></a>2.2 联表查询</h2><p>联表查询：多张表一起查询，获取有用的数据。也可以称为“多表查询”，“拼表查询”</p>
 <p>最简单的联表查询：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">select * <span class="hljs-keyword">from</span> dep,emp;  <span class="hljs-comment"># 结果   两个表混一起的`笛卡尔乘积`</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">了解即可 不知道也没关系</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select * <span class="keyword">from</span> dep,emp;  <span class="comment"># 结果   两个表混一起的`笛卡尔乘积`</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">了解即可 不知道也没关系</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p>正确用法：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">select * <span class="hljs-keyword">from</span> emp,dep where emp.dep_id = dep.<span class="hljs-built_in">id</span>;<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * <span class="keyword">from</span> emp,dep where emp.dep_id = dep.<span class="built_in">id</span>;</span><br></pre></td></tr></table></figure>
 
 <p>输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python">+----+-------+--------+------+--------+------+----------+<br>| <span class="hljs-built_in">id</span> | name  | sex    | age  | dep_id | <span class="hljs-built_in">id</span>   | name     |<br>+----+-------+--------+------+--------+------+----------+<br>|  <span class="hljs-number">1</span> | jason | male   |   <span class="hljs-number">18</span> |    <span class="hljs-number">200</span> |  <span class="hljs-number">200</span> | 技术     |<br>|  <span class="hljs-number">2</span> | egon  | female |   <span class="hljs-number">48</span> |    <span class="hljs-number">201</span> |  <span class="hljs-number">201</span> | 人力资源 |<br>|  <span class="hljs-number">3</span> | kevin | male   |   <span class="hljs-number">18</span> |    <span class="hljs-number">201</span> |  <span class="hljs-number">201</span> | 人力资源 |<br>|  <span class="hljs-number">4</span> | nick  | male   |   <span class="hljs-number">28</span> |    <span class="hljs-number">202</span> |  <span class="hljs-number">202</span> | 销售     |<br>|  <span class="hljs-number">5</span> | owen  | male   |   <span class="hljs-number">18</span> |    <span class="hljs-number">203</span> |  <span class="hljs-number">203</span> | 运营     |<br>+----+-------+--------+------+--------+------+----------+<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">+----+-------+--------+------+--------+------+----------+</span><br><span class="line">| <span class="built_in">id</span> | name  | sex    | age  | dep_id | <span class="built_in">id</span>   | name     |</span><br><span class="line">+----+-------+--------+------+--------+------+----------+</span><br><span class="line">|  <span class="number">1</span> | jason | male   |   <span class="number">18</span> |    <span class="number">200</span> |  <span class="number">200</span> | 技术     |</span><br><span class="line">|  <span class="number">2</span> | egon  | female |   <span class="number">48</span> |    <span class="number">201</span> |  <span class="number">201</span> | 人力资源 |</span><br><span class="line">|  <span class="number">3</span> | kevin | male   |   <span class="number">18</span> |    <span class="number">201</span> |  <span class="number">201</span> | 人力资源 |</span><br><span class="line">|  <span class="number">4</span> | nick  | male   |   <span class="number">28</span> |    <span class="number">202</span> |  <span class="number">202</span> | 销售     |</span><br><span class="line">|  <span class="number">5</span> | owen  | male   |   <span class="number">18</span> |    <span class="number">203</span> |  <span class="number">203</span> | 运营     |</span><br><span class="line">+----+-------+--------+------+--------+------+----------+</span><br></pre></td></tr></table></figure>
 
 <p>MySQL也知道 你在后面查询数据过程中 肯定会经常用到拼表操作，所以特地开设了对应的方法：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">- inner join  内连接<br>- left join   左连接<br>- right join  右连接<br>- union		全连接<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- inner join  内连接</span><br><span class="line">- left join   左连接</span><br><span class="line">- right join  右连接</span><br><span class="line">- union		全连接</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-2-1-内连接"><a href="#2-2-1-内连接" class="headerlink" title="2.2.1 内连接"></a>2.2.1 内连接</h3><p>拼接两张表中的<code>公有部分</code></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">mysql&gt; select emp.name, dep.name <span class="hljs-keyword">from</span> emp inner join dep on emp.dep_id = dep.<span class="hljs-built_in">id</span>;<br>+-------+----------+<br>| name  | name     |<br>+-------+----------+<br>| jason | 技术     |<br>| egon  | 人力资源 |<br>| kevin | 人力资源 |<br>| nick  | 销售     |<br>| owen  | 运营     |<br>+-------+----------+<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select emp.name, dep.name <span class="keyword">from</span> emp inner join dep on emp.dep_id = dep.<span class="built_in">id</span>;</span><br><span class="line">+-------+----------+</span><br><span class="line">| name  | name     |</span><br><span class="line">+-------+----------+</span><br><span class="line">| jason | 技术     |</span><br><span class="line">| egon  | 人力资源 |</span><br><span class="line">| kevin | 人力资源 |</span><br><span class="line">| nick  | 销售     |</span><br><span class="line">| owen  | 运营     |</span><br><span class="line">+-------+----------+</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-2-2-左连接"><a href="#2-2-2-左连接" class="headerlink" title="2.2.2 左连接"></a>2.2.2 左连接</h3><p>左表所有的数据都展示出来 没有对应的项就用NULL</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python">mysql&gt; select emp.name, dep.name <span class="hljs-keyword">from</span> emp left join dep on emp.dep_id = dep.<span class="hljs-built_in">id</span>;<br>+-------+----------+<br>| name  | name     |<br>+-------+----------+<br>| jason | 技术     |<br>| egon  | 人力资源 |<br>| kevin | 人力资源 |<br>| nick  | 销售     |<br>| owen  | 运营     |<br>| jerry | NULL     |<br>+-------+----------+<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select emp.name, dep.name <span class="keyword">from</span> emp left join dep on emp.dep_id = dep.<span class="built_in">id</span>;</span><br><span class="line">+-------+----------+</span><br><span class="line">| name  | name     |</span><br><span class="line">+-------+----------+</span><br><span class="line">| jason | 技术     |</span><br><span class="line">| egon  | 人力资源 |</span><br><span class="line">| kevin | 人力资源 |</span><br><span class="line">| nick  | 销售     |</span><br><span class="line">| owen  | 运营     |</span><br><span class="line">| jerry | NULL     |</span><br><span class="line">+-------+----------+</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-2-3-右连接"><a href="#2-2-3-右连接" class="headerlink" title="2.2.3 右连接"></a>2.2.3 右连接</h3><p>右表所有的数据都展示出来 没有对应的项就用NULL</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">mysql&gt; select emp.name, dep.name <span class="hljs-keyword">from</span> emp right join dep on emp.dep_id = dep.<span class="hljs-built_in">id</span>;<br>+-------+----------+<br>| name  | name     |<br>+-------+----------+<br>| jason | 技术     |<br>| kevin | 人力资源 |<br>| egon  | 人力资源 |<br>| nick  | 销售     |<br>| owen  | 运营     |<br>+-------+----------+<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select emp.name, dep.name <span class="keyword">from</span> emp right join dep on emp.dep_id = dep.<span class="built_in">id</span>;</span><br><span class="line">+-------+----------+</span><br><span class="line">| name  | name     |</span><br><span class="line">+-------+----------+</span><br><span class="line">| jason | 技术     |</span><br><span class="line">| kevin | 人力资源 |</span><br><span class="line">| egon  | 人力资源 |</span><br><span class="line">| nick  | 销售     |</span><br><span class="line">| owen  | 运营     |</span><br><span class="line">+-------+----------+</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-2-4-全连接"><a href="#2-2-4-全连接" class="headerlink" title="2.2.4 全连接"></a>2.2.4 全连接</h3><p>全连接  左右两表所有的数据都展示出来</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python">mysql&gt; select emp.name, dep.name <span class="hljs-keyword">from</span> emp left join dep on emp.dep_id = dep.<span class="hljs-built_in">id</span><br>    -&gt; union<br>    -&gt; select emp.name, dep.name <span class="hljs-keyword">from</span> emp right join dep on emp.dep_id = dep.<span class="hljs-built_in">id</span>;<br>+-------+----------+<br>| name  | name     |<br>+-------+----------+<br>| jason | 技术     |<br>| egon  | 人力资源 |<br>| kevin | 人力资源 |<br>| nick  | 销售     |<br>| owen  | 运营     |<br>| jerry | NULL     |<br>+-------+----------+<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select emp.name, dep.name <span class="keyword">from</span> emp left join dep on emp.dep_id = dep.<span class="built_in">id</span></span><br><span class="line">    -&gt; union</span><br><span class="line">    -&gt; select emp.name, dep.name <span class="keyword">from</span> emp right join dep on emp.dep_id = dep.<span class="built_in">id</span>;</span><br><span class="line">+-------+----------+</span><br><span class="line">| name  | name     |</span><br><span class="line">+-------+----------+</span><br><span class="line">| jason | 技术     |</span><br><span class="line">| egon  | 人力资源 |</span><br><span class="line">| kevin | 人力资源 |</span><br><span class="line">| nick  | 销售     |</span><br><span class="line">| owen  | 运营     |</span><br><span class="line">| jerry | NULL     |</span><br><span class="line">+-------+----------+</span><br></pre></td></tr></table></figure>
 
 <h2 id="2-5-子查询"><a href="#2-5-子查询" class="headerlink" title="2.5 子查询"></a>2.5 子查询</h2><p>子查询就是我们平时解决问题的思路，将一个查询语句的结果当做另外一个查询语句的条件去用，</p>
 <p>查询部门是技术或者人力资源的员工信息案例如下:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 先获取部门的id号</span><br>select <span class="hljs-built_in">id</span> <span class="hljs-keyword">from</span> dep where name=<span class="hljs-string">&#x27;技术&#x27;</span> <span class="hljs-keyword">or</span> name = <span class="hljs-string">&#x27;人力资源&#x27;</span>;	<br>+------+<br>| <span class="hljs-built_in">id</span>   |<br>+------+<br>|  <span class="hljs-number">200</span> |<br>|  <span class="hljs-number">201</span> |<br>+------+<br><br><span class="hljs-comment"># 再使用`子查询`去员工表里面筛选出对应的员工</span><br>select name <span class="hljs-keyword">from</span> emp where dep_id <span class="hljs-keyword">in</span> (select <span class="hljs-built_in">id</span> <span class="hljs-keyword">from</span> dep where name=<span class="hljs-string">&#x27;技术&#x27;</span> <span class="hljs-keyword">or</span> name = <span class="hljs-string">&#x27;人力资源&#x27;</span>);<br>    <br><span class="hljs-comment"># 其实就是相当于</span><br>select name <span class="hljs-keyword">from</span> emp where dep_id <span class="hljs-keyword">in</span> (<span class="hljs-number">200</span>,<span class="hljs-number">201</span>);<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 先获取部门的id号</span></span><br><span class="line">select <span class="built_in">id</span> <span class="keyword">from</span> dep where name=<span class="string">&#x27;技术&#x27;</span> <span class="keyword">or</span> name = <span class="string">&#x27;人力资源&#x27;</span>;	</span><br><span class="line">+------+</span><br><span class="line">| <span class="built_in">id</span>   |</span><br><span class="line">+------+</span><br><span class="line">|  <span class="number">200</span> |</span><br><span class="line">|  <span class="number">201</span> |</span><br><span class="line">+------+</span><br><span class="line"></span><br><span class="line"><span class="comment"># 再使用`子查询`去员工表里面筛选出对应的员工</span></span><br><span class="line">select name <span class="keyword">from</span> emp where dep_id <span class="keyword">in</span> (select <span class="built_in">id</span> <span class="keyword">from</span> dep where name=<span class="string">&#x27;技术&#x27;</span> <span class="keyword">or</span> name = <span class="string">&#x27;人力资源&#x27;</span>);</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 其实就是相当于</span></span><br><span class="line">select name <span class="keyword">from</span> emp where dep_id <span class="keyword">in</span> (<span class="number">200</span>,<span class="number">201</span>);</span><br></pre></td></tr></table></figure>
 
 
 
-<h1 id="三、作业"><a href="#三、作业" class="headerlink" title="三、作业"></a>三、作业</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-number">1.</span>整理今日内容<br><span class="hljs-number">2.</span>完成下列分组查询练习题(以课上建表代码为参考)<br>	<span class="hljs-number">1.</span> 查询岗位名以及岗位包含的所有员工名字<br>	<span class="hljs-number">2.</span> 查询岗位名以及各岗位内包含的员工个数<br>	<span class="hljs-number">3.</span> 查询公司内男员工和女员工的个数<br>	<span class="hljs-number">4.</span> 查询岗位名以及各岗位的平均薪资<br>	<span class="hljs-number">5.</span> 查询岗位名以及各岗位的最高薪资<br>	<span class="hljs-number">6.</span> 查询岗位名以及各岗位的最低薪资<br>	<span class="hljs-number">7.</span> 查询男员工与男员工的平均薪资，女员工与女员工的平均薪资<br><span class="hljs-number">3.</span>练习拼表操作并理解其意义<br><span class="hljs-number">4.</span>理解子查询思路体会其意义<br></code></pre></td></tr></table></figure>
-
-
-
-
+<h1 id="三、作业"><a href="#三、作业" class="headerlink" title="三、作业"></a>三、作业</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>整理今日内容</span><br><span class="line"><span class="number">2.</span>完成下列分组查询练习题(以课上建表代码为参考)</span><br><span class="line">	<span class="number">1.</span> 查询岗位名以及岗位包含的所有员工名字</span><br><span class="line">	<span class="number">2.</span> 查询岗位名以及各岗位内包含的员工个数</span><br><span class="line">	<span class="number">3.</span> 查询公司内男员工和女员工的个数</span><br><span class="line">	<span class="number">4.</span> 查询岗位名以及各岗位的平均薪资</span><br><span class="line">	<span class="number">5.</span> 查询岗位名以及各岗位的最高薪资</span><br><span class="line">	<span class="number">6.</span> 查询岗位名以及各岗位的最低薪资</span><br><span class="line">	<span class="number">7.</span> 查询男员工与男员工的平均薪资，女员工与女员工的平均薪资</span><br><span class="line"><span class="number">3.</span>练习拼表操作并理解其意义</span><br><span class="line"><span class="number">4.</span>理解子查询思路体会其意义</span><br></pre></td></tr></table></figure>
 
 
 
@@ -425,358 +218,745 @@
 
 
 
-                
-              </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
 
-<span class="category-chains">
-  
-  
+
+
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
     
-      <span class="category-chain">
-        
-  <a href="/categories/Python/" class="category-chain-item">Python</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/Python/03-MySQL/" class="category-chain-item">03_MySQL</a>
-  
-  
 
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
 </div>
 
-
-              
-  
-
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>Day47-数据库（四）</div>
-      <div>https://gblog.github.io/2022/07/18/03_Python/03_MySQL/day47-数据库(四)/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>作者</div>
-          <div>Haris</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>发布于</div>
-          <div>2022年7月18日</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>许可协议</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
-          </div>
-        </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
-  </div>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2022/07/18/03_Python/08-%E9%99%84%E5%BD%95%E8%A1%A5%E5%85%85/54_%E9%99%84%E5%BD%95%E4%B9%9D%EF%BC%9ATypeHinting/">54-附录九：Type Hinting</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2022/07/18/03_Python/08-%E9%99%84%E5%BD%95%E8%A1%A5%E5%85%85/53_%E9%99%84%E5%BD%95%E5%85%AB%EF%BC%9Acollections--%E5%AE%B9%E5%99%A8%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">53-附录八：Collections之容器数据类型</a></div></section></div>
 
 
 
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2022/07/18/03_Python/08-%E9%99%84%E5%BD%95%E8%A1%A5%E5%85%85/54_%E9%99%84%E5%BD%95%E4%B9%9D%EF%BC%9ATypeHinting/" title="54-附录九：Type Hinting">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">54-附录九：Type Hinting</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2022/07/18/03_Python/08-%E9%99%84%E5%BD%95%E8%A1%A5%E5%85%85/53_%E9%99%84%E5%BD%95%E5%85%AB%EF%BC%9Acollections--%E5%AE%B9%E5%99%A8%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="53-附录八：Collections之容器数据类型">
-                        <span class="hidden-mobile">53-附录八：Collections之容器数据类型</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
 
-            
-          </article>
-        </div>
-      </div>
-    </div>
 
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
 
-    </div>
-  </div>
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">Haris</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%8D%95%E8%A1%A8%E6%9F%A5%E8%AF%A2"><span class="toc-text">一、单表查询</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E5%89%8D%E6%9C%9F%E8%A1%A8%E5%87%86%E5%A4%87"><span class="toc-text">1.1 前期表准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E5%87%A0%E4%B8%AA%E9%87%8D%E8%A6%81%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="toc-text">1.2 几个重要关键字的执行顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-where%E7%AD%9B%E9%80%89%E6%9D%A1%E4%BB%B6"><span class="toc-text">1.3 where筛选条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-group-by%E5%88%86%E7%BB%84"><span class="toc-text">1.4 group by分组</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-1-%E6%8C%89%E7%85%A7%E9%83%A8%E9%97%A8%E5%88%86%E7%BB%84%EF%BC%88%E9%9D%9E%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F%EF%BC%8C%E4%BA%86%E8%A7%A3%E5%8D%B3%E5%8F%AF%EF%BC%89"><span class="toc-text">1.4.1 按照部门分组（非严格模式，了解即可）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-2-%E6%8C%89%E7%85%A7%E9%83%A8%E9%97%A8%E5%88%86%E7%BB%84%EF%BC%88%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F%EF%BC%8C%E6%8E%8C%E6%8F%A1%EF%BC%89"><span class="toc-text">1.4.2 按照部门分组（严格模式，掌握）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-5-%E5%88%86%E7%BB%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">1.5 分组注意事项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-6-%E5%88%86%E7%BB%84%E4%B9%8B%E5%90%8E%E7%9A%84%E7%AD%9B%E9%80%89%E6%9D%A1%E4%BB%B6-having"><span class="toc-text">1.6 分组之后的筛选条件(having)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-7-distinct%E5%8E%BB%E9%87%8D"><span class="toc-text">1.7 distinct去重</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-8-order-by%E6%8E%92%E5%BA%8F"><span class="toc-text">1.8 order by排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-9-limit%E9%99%90%E5%88%B6%E5%B1%95%E7%A4%BA%E6%9D%A1%E6%95%B0"><span class="toc-text">1.9 limit限制展示条数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-10-%E6%AD%A3%E5%88%99"><span class="toc-text">1.10 正则</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%A4%9A%E8%A1%A8%E6%93%8D%E4%BD%9C"><span class="toc-text">二、多表操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E5%89%8D%E6%9C%9F%E8%A1%A8%E5%87%86%E5%A4%87"><span class="toc-text">2.1 前期表准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2"><span class="toc-text">2.2 联表查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-1-%E5%86%85%E8%BF%9E%E6%8E%A5"><span class="toc-text">2.2.1 内连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-2-%E5%B7%A6%E8%BF%9E%E6%8E%A5"><span class="toc-text">2.2.2 左连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-3-%E5%8F%B3%E8%BF%9E%E6%8E%A5"><span class="toc-text">2.2.3 右连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-4-%E5%85%A8%E8%BF%9E%E6%8E%A5"><span class="toc-text">2.2.4 全连接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-5-%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="toc-text">2.5 子查询</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%BD%9C%E4%B8%9A"><span class="toc-text">三、作业</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
 </div>
+</div><div class="scripts">
 
 
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-
-
-
-
-    
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-    
-
-    
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-  
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-    </div>
-  
-  
-  
-</div>
-
-  </footer>
-
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
-      
-        typing(text);
-      
-    })(window, document);
-  </script>
-
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
     }
+  };
 
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
 </script>
 
-
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
-
-  <script>Fluid.plugins.codeWidget();</script>
-
-
+<script type="text/javascript">
   
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
     };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
         }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
       }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
     });
   });
 </script>
 
-
-  
 <script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
   });
 </script>
 
 
-  <script>Fluid.plugins.imageCaption();</script>
+<!-- inject -->
 
-  <script  src="/js/local-search.js" ></script>
-
-
-
-
-
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
-
-
-  
-
-  <noscript>
-    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
-  </noscript>
-</body>
-</html>
+</div></body></html>

@@ -1,298 +1,95 @@
 
-
-<!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
-
-
+<!DOCTYPE html><html lang="zh-CN">
 
 <head>
-  <meta charset="UTF-8">
-
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
   
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="Haris">
-  <meta name="keywords" content="">
+  <meta name="generator" content="Hexo 7.3.0">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>Day45-数据库（二） - Haris的小站</title>
+
   
     <meta name="description" content="“Day45-数据库(二)学习笔记” 一、存储引擎日常生活中文件格式有很多中，并且针对不同的文件格式会有对应不同存储方式和处理机制(比如txt、pdf、word、 mp4等等) 针对不同的数据应该有对应的不同的处理机制来存储 存储引擎就是不同的处理机制 1.1 MySQL主要存储引擎 Innodb 是MySQL5.5版本及之后默认的存储引擎 存储数据更加的安全  myisam 是MySQL5.5版">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Day45-数据库（二）">
-<meta property="og:url" content="https://gblog.github.io/2022/07/18/03_Python/03_MySQL/day45-%E6%95%B0%E6%8D%AE%E5%BA%93(%E4%BA%8C)/index.html">
+<meta property="og:url" content="https://gblog.github.io/2022/07/18/03_Python/03_MySQL/day45-%E6%95%B0%E6%8D%AE%E5%BA%93(%E4%BA%8C)/">
 <meta property="og:site_name" content="Haris的小站">
 <meta property="og:description" content="“Day45-数据库(二)学习笔记” 一、存储引擎日常生活中文件格式有很多中，并且针对不同的文件格式会有对应不同存储方式和处理机制(比如txt、pdf、word、 mp4等等) 针对不同的数据应该有对应的不同的处理机制来存储 存储引擎就是不同的处理机制 1.1 MySQL主要存储引擎 Innodb 是MySQL5.5版本及之后默认的存储引擎 存储数据更加的安全  myisam 是MySQL5.5版">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-18T02:50:22.000Z">
 <meta property="article:modified_time" content="2026-07-10T06:20:16.237Z">
 <meta property="article:author" content="Haris">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
   
   
   
-  <title>Day45-数据库（二） - Haris的小站</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
-  
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
 
 
   
-<link rel="stylesheet" href="/css/custom.css">
-
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"gblog.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-  
-
 
   
-<meta name="generator" content="Hexo 7.3.0"></head>
 
-
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Haris","sameAs":[]},"dateCreated":"2022-07-18T10:50:22+08:00","dateModified":"2026-07-10T14:20:16+08:00","datePublished":"2022-07-18T10:50:22+08:00","description":"","headline":"Day45-数据库（二）","mainEntityOfPage":{"@type":"WebPage","@id":"https://gblog.github.io/2022/07/18/03_Python/03_MySQL/day45-%E6%95%B0%E6%8D%AE%E5%BA%93(%E4%BA%8C)/"},"publisher":{"@type":"Organization","name":"Haris","sameAs":[]},"url":"https://gblog.github.io/2022/07/18/03_Python/03_MySQL/day45-%E6%95%B0%E6%8D%AE%E5%BA%93(%E4%BA%8C)/","image":[]}</script>
+  
+</head>
 <body>
-  
 
-  <header>
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="undefined" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">Haris的小站</div><div class="sub cap">null</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
+
+
+
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2025/05/06/10_%E5%AD%A6%E7%A5%9EK8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%9F%BA%E7%A1%80/"><span class="title">01-Docker基础</span></a><a class="item title" href="/2025/03/26/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/06-Docker%E8%B5%84%E6%BA%90%E9%85%8D%E9%A2%9D/"><span class="title">06-Docker资源配额</span></a><a class="item title" href="/2025/03/20/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/05-Docker%E5%AE%B9%E5%99%A8%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96/"><span class="title">05-Docker容器数据持久化</span></a><a class="item title" href="/2025/03/12/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/04-Dockerfile%E5%AE%9E%E6%88%98%E7%AF%87-%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F/"><span class="title">04-Dockerfile实战篇-构建镜像</span></a><a class="item title" href="/2025/03/04/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/03-Dockerfile%E5%9F%BA%E7%A1%80%E7%AF%87-%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/"><span class="title">03-Dockerfile基础篇-基本语法</span></a><a class="item title" href="/2025/03/03/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/02-%E8%BF%90%E8%A1%8CDocker%E5%AE%B9%E5%99%A8/"><span class="title">02-运行Docker容器</span></a><a class="item title" href="/2025/03/03/09_%E9%9F%A9%E5%85%88%E8%B6%85K8S/01-Docker%E5%9F%BA%E7%A1%80/01-Dokcer%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80/"><span class="title">01-Docker基础</span></a><a class="item title" href="/2024/07/27/08_%E7%BD%91%E7%BB%9C/day03-HCIA%E8%AF%BE%E7%A8%8B-01/"><span class="title">day03-HCIA课程(一)</span></a><a class="item title" href="/2024/07/28/08_%E7%BD%91%E7%BB%9C/day02-%E7%BD%91%E5%B7%A5%E5%85%A5%E9%97%A8-02/"><span class="title">day02-网工入门（二）</span></a><a class="item title" href="/2024/07/27/08_%E7%BD%91%E7%BB%9C/day01-%E7%BD%91%E5%B7%A5%E5%85%A5%E9%97%A8-01/"><span class="title">day01-网工入门（一）</span></a></div></widget>
+</div>
+
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/Python/">Python</a> <span class="sep"></span> <a class="cap breadcrumb-link" href="/categories/Python/03-MySQL/">03_MySQL</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2022-07-18T02:50:22.000Z">2022-07-18</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2026-07-10T06:20:16.237Z">2026-07-10</time></span></div></div></div>
     
-
-<div class="header-inner" style="height: 70vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>Haris的博客</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>首页</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>归档</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>分类</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="Day45-数据库（二）"></span>
-          
-        </div>
-
-        
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-07-18 10:50" pubdate>
-          2022年7月18日 上午
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
-        
-          2.2k 字
-        
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
-        
-        
-        
-          19 分钟
-        
-      </span>
-    
-
-    
-    
-  </div>
-
-
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>Day45-数据库（二）</span></h1>
         
       </div>
-
-      
     </div>
-  </div>
-</div>
-
-</div>
-
-  </header>
-
-  <main>
     
-      
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
-
-    </div>
-
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">Day45-数据库（二）</h1>
-            
-            
-              <div class="markdown-body">
-                
-                <p>“Day45-数据库(二)学习笔记”</p>
+  </div>
+  </div><article class="md-text content"><p>“Day45-数据库(二)学习笔记”</p>
 <h1 id="一、存储引擎"><a href="#一、存储引擎" class="headerlink" title="一、存储引擎"></a>一、存储引擎</h1><p>日常生活中文件格式有很多中，并且针对不同的文件格式会有对应不同存储方式和处理机制(比如txt、pdf、word、</p>
 <p>mp4等等)</p>
 <p>针对不同的数据应该有对应的不同的处理机制来存储</p>
@@ -314,32 +111,32 @@
 </li>
 </ul>
 <h2 id="1-2-查看和设置存储引擎："><a href="#1-2-查看和设置存储引擎：" class="headerlink" title="1.2 查看和设置存储引擎："></a>1.2 查看和设置存储引擎：</h2><p>1、查看所有存储引擎</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs mysql">mysql&gt; show engines;<br><br># 输出<br>+--------------------+---------+----------------------------------------------------------------+--------------+------+------------+<br>| Engine             | Support | Comment                                                        | Transactions | XA   | Savepoints |<br>+--------------------+---------+---------------------------------------------------------------<br>....<br>| MyISAM             | YES     | MyISAM storage engine                                          | NO           | NO   | NO         |<br>| InnoDB             | DEFAULT | Supports transactions, row-level locking, and foreign keys     | YES          | YES  | YES        |<br>| BLACKHOLE          | YES     | /dev/null storage engine (anything you write to it disappears) | NO           | NO   | NO         |<br>.....<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show engines;</span><br><span class="line"></span><br><span class="line"># 输出</span><br><span class="line">+--------------------+---------+----------------------------------------------------------------+--------------+------+------------+</span><br><span class="line">| Engine             | Support | Comment                                                        | Transactions | XA   | Savepoints |</span><br><span class="line">+--------------------+---------+---------------------------------------------------------------</span><br><span class="line">....</span><br><span class="line">| MyISAM             | YES     | MyISAM storage engine                                          | NO           | NO   | NO         |</span><br><span class="line">| InnoDB             | DEFAULT | Supports transactions, row-level locking, and foreign keys     | YES          | YES  | YES        |</span><br><span class="line">| BLACKHOLE          | YES     | /dev/null storage engine (anything you write to it disappears) | NO           | NO   | NO         |</span><br><span class="line">.....</span><br></pre></td></tr></table></figure>
 
 <p>2、设置存储引擎</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 设置存储引擎</span><br>create table t1(<span class="hljs-built_in">id</span> <span class="hljs-built_in">int</span>) engine=innodb;<br>create table t2(<span class="hljs-built_in">id</span> <span class="hljs-built_in">int</span>) engine=myisam;<br>create table t3(<span class="hljs-built_in">id</span> <span class="hljs-built_in">int</span>) engine=blackhole;<br>create table t4(<span class="hljs-built_in">id</span> <span class="hljs-built_in">int</span>) engine=memory;<br><br><span class="hljs-comment"># 存数据后的表现</span><br>insert into t1 values(<span class="hljs-number">1</span>);<br>insert into t2 values(<span class="hljs-number">1</span>);<br>insert into t3 values(<span class="hljs-number">1</span>);	<span class="hljs-comment"># 存进去后查不到数据：Empty set</span><br>insert into t4 values(<span class="hljs-number">1</span>);	<span class="hljs-comment"># 服务端重启后查不到数据，没重启之前可以（模拟断电）</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置存储引擎</span></span><br><span class="line">create table t1(<span class="built_in">id</span> <span class="built_in">int</span>) engine=innodb;</span><br><span class="line">create table t2(<span class="built_in">id</span> <span class="built_in">int</span>) engine=myisam;</span><br><span class="line">create table t3(<span class="built_in">id</span> <span class="built_in">int</span>) engine=blackhole;</span><br><span class="line">create table t4(<span class="built_in">id</span> <span class="built_in">int</span>) engine=memory;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 存数据后的表现</span></span><br><span class="line">insert into t1 values(<span class="number">1</span>);</span><br><span class="line">insert into t2 values(<span class="number">1</span>);</span><br><span class="line">insert into t3 values(<span class="number">1</span>);	<span class="comment"># 存进去后查不到数据：Empty set</span></span><br><span class="line">insert into t4 values(<span class="number">1</span>);	<span class="comment"># 服务端重启后查不到数据，没重启之前可以（模拟断电）</span></span><br></pre></td></tr></table></figure>
 
 <h1 id="二、创建表的完整语法"><a href="#二、创建表的完整语法" class="headerlink" title="二、创建表的完整语法"></a>二、创建表的完整语法</h1><h2 id="2-1-创建表的语法"><a href="#2-1-创建表的语法" class="headerlink" title="2.1 创建表的语法"></a>2.1 创建表的语法</h2><p>创建表的基本语法为：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">create table 表名(<br>	字段名<span class="hljs-number">1</span> 类型(宽度) 约束条件,<br>    字段名<span class="hljs-number">2</span> 类型(宽度) 约束条件,<br>    字段名<span class="hljs-number">3</span> 类型(宽度) 约束条件<br>);<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">create table 表名(</span><br><span class="line">	字段名<span class="number">1</span> 类型(宽度) 约束条件,</span><br><span class="line">    字段名<span class="number">2</span> 类型(宽度) 约束条件,</span><br><span class="line">    字段名<span class="number">3</span> 类型(宽度) 约束条件</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 
 <p>案例：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs mysql">create table t5(id int, <br>                name char(12), <br>                age int);<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create table t5(id int, </span><br><span class="line">                name char(12), </span><br><span class="line">                age int);</span><br></pre></td></tr></table></figure>
 
 <h2 id="2-2-创建表的注意事项"><a href="#2-2-创建表的注意事项" class="headerlink" title="2.2 创建表的注意事项"></a>2.2 创建表的注意事项</h2><p>1、在同一张表中字段名不能重复</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mysql">mysql&gt; create table t6(id int, name char(12), id int);<br>ERROR 1060 (42S21): Duplicate column name &#x27;id&#x27;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; create table t6(id int, name char(12), id int);</span><br><span class="line">ERROR 1060 (42S21): Duplicate column name &#x27;id&#x27;</span><br></pre></td></tr></table></figure>
 
 <p>2、宽度和约束条件是可选的(可写可不写) 而<code>字段名和字段类型是必须</code>的，约束条件写的话 也支持写多个</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">字段名<span class="hljs-number">1</span> 类型(宽度) 约束条件<span class="hljs-number">1</span> 约束条件<span class="hljs-number">2.</span>..,<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">字段名<span class="number">1</span> 类型(宽度) 约束条件<span class="number">1</span> 约束条件<span class="number">2.</span>..,</span><br></pre></td></tr></table></figure>
 
 <p>少些了会报错，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mysql">mysql&gt; create table t7(id);<br>ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#x27;)&#x27; at line 1<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; create table t7(id);</span><br><span class="line">ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#x27;)&#x27; at line 1</span><br></pre></td></tr></table></figure>
 
 <p>3、最后一行不能有逗号，否则会报错：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs mysql">mysql&gt; create table t6(id int, <br>                       name char(12), <br>                       age int,);<br>ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#x27;)&#x27; at line 1<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; create table t6(id int, </span><br><span class="line">                       name char(12), </span><br><span class="line">                       age int,);</span><br><span class="line">ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#x27;)&#x27; at line 1</span><br></pre></td></tr></table></figure>
 
 <h2 id="2-3-宽度和约束条件"><a href="#2-3-宽度和约束条件" class="headerlink" title="2.3 宽度和约束条件"></a>2.3 宽度和约束条件</h2><h3 id="2-3-1-宽度"><a href="#2-3-1-宽度" class="headerlink" title="2.3.1 宽度"></a>2.3.1 宽度</h3><p>宽度：一般情况下指的是对存储数据的限制</p>
 <p>比如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs mysql"># 创建表<br>create table t7(name char);  默认宽度是1<br><br># 插入数据&#x27;jason&#x27;<br>insert into t7 values(&#x27;jason&#x27;);<br># 报错<br>ERROR 1406 (22001): Data too long for column &#x27;name&#x27; at row 1<br><br># 插入数据NULL<br>insert into t7 values(null);  关键字NULL<br>Query OK, 1 row affected (0.00 sec)<br><br># 插入数据&#x27;j&#x27;<br>insert into t7 values(&#x27;j&#x27;);<br>Query OK, 1 row affected (0.00 sec)<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 创建表</span><br><span class="line">create table t7(name char);  默认宽度是1</span><br><span class="line"></span><br><span class="line"># 插入数据&#x27;jason&#x27;</span><br><span class="line">insert into t7 values(&#x27;jason&#x27;);</span><br><span class="line"># 报错</span><br><span class="line">ERROR 1406 (22001): Data too long for column &#x27;name&#x27; at row 1</span><br><span class="line"></span><br><span class="line"># 插入数据NULL</span><br><span class="line">insert into t7 values(null);  关键字NULL</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line"></span><br><span class="line"># 插入数据&#x27;j&#x27;</span><br><span class="line">insert into t7 values(&#x27;j&#x27;);</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p>关于宽度的限制，跟<code>严格模式</code>有关，</p>
 <p>5.6版本默认没有开启严格模式 规定只能存一个字符你给了多个字符，那么我会自动帮你截取</p>
@@ -347,10 +144,10 @@
 <p>一旦超出范围立刻报错 Data too long for ….</p>
 <h3 id="2-3-2-约束条件"><a href="#2-3-2-约束条件" class="headerlink" title="2.3.2 约束条件"></a>2.3.2 约束条件</h3><p>约束条件：是指在宽度的基础之上增加的额外的约束</p>
 <p>比如限制是可以插入空值的约束条件</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">null：可以插入NULL<br><span class="hljs-keyword">not</span> null：不能插入NULL<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">null：可以插入NULL</span><br><span class="line"><span class="keyword">not</span> null：不能插入NULL</span><br></pre></td></tr></table></figure>
 
 <p>案例：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 创建表</span><br>create table t6(<span class="hljs-built_in">id</span> <span class="hljs-built_in">int</span> null, name char(<span class="hljs-number">10</span>) <span class="hljs-keyword">not</span> null, age <span class="hljs-built_in">int</span>);<br><br><span class="hljs-comment"># 插入数据01，正常</span><br>mysql&gt; insert into t6 values(<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;大蒜&#x27;</span>, <span class="hljs-number">10</span>);<br>Query OK, <span class="hljs-number">1</span> row affected (<span class="hljs-number">0.00</span> sec)<br><br><span class="hljs-comment"># 插入数据02，正常</span><br>mysql&gt; insert into t6 values(null, <span class="hljs-string">&#x27;小葱&#x27;</span>, <span class="hljs-number">10</span>);<br>Query OK, <span class="hljs-number">1</span> row affected (<span class="hljs-number">0.00</span> sec)<br><br><span class="hljs-comment"># 插入数据03，报错</span><br>mysql&gt; insert into t6 values(null, NULL, <span class="hljs-number">10</span>);<br>ERROR <span class="hljs-number">1048</span> (<span class="hljs-number">23000</span>): Column <span class="hljs-string">&#x27;name&#x27;</span> cannot be null<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建表</span></span><br><span class="line">create table t6(<span class="built_in">id</span> <span class="built_in">int</span> null, name char(<span class="number">10</span>) <span class="keyword">not</span> null, age <span class="built_in">int</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment"># 插入数据01，正常</span></span><br><span class="line">mysql&gt; insert into t6 values(<span class="number">1</span>, <span class="string">&#x27;大蒜&#x27;</span>, <span class="number">10</span>);</span><br><span class="line">Query OK, <span class="number">1</span> row affected (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 插入数据02，正常</span></span><br><span class="line">mysql&gt; insert into t6 values(null, <span class="string">&#x27;小葱&#x27;</span>, <span class="number">10</span>);</span><br><span class="line">Query OK, <span class="number">1</span> row affected (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 插入数据03，报错</span></span><br><span class="line">mysql&gt; insert into t6 values(null, NULL, <span class="number">10</span>);</span><br><span class="line">ERROR <span class="number">1048</span> (<span class="number">23000</span>): Column <span class="string">&#x27;name&#x27;</span> cannot be null</span><br></pre></td></tr></table></figure>
 
 
 
@@ -393,22 +190,22 @@
 <p>超出会如何？ — 超出限制只存最大可接受值</p>
 <p>来验证这两个问题：</p>
 <p><strong>有符号插入：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs mysql"># 创建表<br>create table t8(id tinyint, age tinyint);<br><br># 插入数据，过大会报错<br>mysql&gt; insert into t8 values(-129, 256);<br>ERROR 1264 (22003): Out of range value for column &#x27;id&#x27; at row 1<br><br># 正常范围可以插入<br>mysql&gt; insert into t8 values(-128, 127);<br>Query OK, 1 row affected (0.00 sec)<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 创建表</span><br><span class="line">create table t8(id tinyint, age tinyint);</span><br><span class="line"></span><br><span class="line"># 插入数据，过大会报错</span><br><span class="line">mysql&gt; insert into t8 values(-129, 256);</span><br><span class="line">ERROR 1264 (22003): Out of range value for column &#x27;id&#x27; at row 1</span><br><span class="line"></span><br><span class="line"># 正常范围可以插入</span><br><span class="line">mysql&gt; insert into t8 values(-128, 127);</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p><strong>无符号插入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs mysql"># 修改为有符号<br>mysql&gt; alter table t8 change age age tinyint unsigned;<br>mysql&gt; alter table t8 change id id tinyint unsigned;<br><br># 插入数据，成功<br>mysql&gt; insert into t8 values(0, 255);<br>Query OK, 1 row affected (0.00 sec)<br><br># 插入数据，失败，超出范围<br>mysql&gt; insert into t8 values(-127, 128);<br>ERROR 1264 (22003): Out of range value for column &#x27;id&#x27; at row 1<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 修改为有符号</span><br><span class="line">mysql&gt; alter table t8 change age age tinyint unsigned;</span><br><span class="line">mysql&gt; alter table t8 change id id tinyint unsigned;</span><br><span class="line"></span><br><span class="line"># 插入数据，成功</span><br><span class="line">mysql&gt; insert into t8 values(0, 255);</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line"></span><br><span class="line"># 插入数据，失败，超出范围</span><br><span class="line">mysql&gt; insert into t8 values(-127, 128);</span><br><span class="line">ERROR 1264 (22003): Out of range value for column &#x27;id&#x27; at row 1</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>☀️补充：</p>
 <p>整型也可以使用括号指定宽度，这个宽度到底是干嘛的？</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs mysql">&gt;# 创建表，并指定整型宽度<br>&gt;create table t12(id int(8));<br>&gt;insert into t12 values(123456789);<br><br>&gt;# 即使超过了8位，也能成功<br>&gt;mysql&gt; insert into t9 values(123456789);<br>&gt;Query OK, 1 row affected (0.00 sec)<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;# 创建表，并指定整型宽度</span><br><span class="line">&gt;create table t12(id int(8));</span><br><span class="line">&gt;insert into t12 values(123456789);</span><br><span class="line"></span><br><span class="line">&gt;# 即使超过了8位，也能成功</span><br><span class="line">&gt;mysql&gt; insert into t9 values(123456789);</span><br><span class="line">&gt;Query OK, 1 row affected (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p>这是因为：只有整型括号里面的数字不是表示限制位数<br>id int(8)<br>如果数字没有超出8位 那么默认用空格填充至8位<br>如果数字超出了8位 那么有几位就存几位(但是还是要遵守最大范围)</p>
 <p>可以在创建时设置<code>zerofill</code>,用0填充至8位</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs mysql">&gt;mysql&gt; create table t10(id int(8) unsigned zerofill);<br>&gt;Query OK, 0 rows affected, 2 warnings (0.01 sec)<br><br>&gt;mysql&gt; insert into t10 values(1);<br>&gt;Query OK, 1 row affected (0.00 sec)<br><br>&gt;mysql&gt; select * from t10;<br>&gt;+----------+<br>&gt;| id       |<br>&gt;+----------+<br>&gt;| 00000001 |<br>&gt;+----------+<br>&gt;1 row in set (0.00 sec)<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt;mysql&gt; create table t10(id int(8) unsigned zerofill);</span><br><span class="line">&gt;Query OK, 0 rows affected, 2 warnings (0.01 sec)</span><br><span class="line"></span><br><span class="line">&gt;mysql&gt; insert into t10 values(1);</span><br><span class="line">&gt;Query OK, 1 row affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">&gt;mysql&gt; select * from t10;</span><br><span class="line">&gt;+----------+</span><br><span class="line">&gt;| id       |</span><br><span class="line">&gt;+----------+</span><br><span class="line">&gt;| 00000001 |</span><br><span class="line">&gt;+----------+</span><br><span class="line">&gt;1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
 </blockquote>
 <p>针对整型字段 括号内无需指定宽度 因为它默认的宽度以及足够显示所有的数据了</p>
-<h2 id="3-2-严格模式"><a href="#3-2-严格模式" class="headerlink" title="3.2 严格模式"></a>3.2 严格模式</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 1、如何查看严格模式</span><br>show variables like <span class="hljs-string">&quot;%mode&quot;</span>;<br>或者<br>select @@sql_mode<br><br>模糊匹配/查询<br>	关键字 like<br>		%:匹配任意多个字符<br>        _:匹配任意单个字符<br><br><span class="hljs-comment"># 2、修改严格模式</span><br>	<span class="hljs-built_in">set</span> session  只在当前窗口有效<br>    <span class="hljs-built_in">set</span> <span class="hljs-keyword">global</span>   全局有效<br>    <br>    <span class="hljs-comment"># 临时关闭严格模式（具体内容依据#1命令得到的结果为准，去除ONLY_FULL_GROUP_BY即可）</span><br>    <span class="hljs-built_in">set</span> <span class="hljs-keyword">global</span> sql_mode = <span class="hljs-string">&#x27;STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION&#x27;</span>;<br>    <br>	修改完之后 重新进入服务端即可<br></code></pre></td></tr></table></figure>
+<h2 id="3-2-严格模式"><a href="#3-2-严格模式" class="headerlink" title="3.2 严格模式"></a>3.2 严格模式</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1、如何查看严格模式</span></span><br><span class="line">show variables like <span class="string">&quot;%mode&quot;</span>;</span><br><span class="line">或者</span><br><span class="line">select @@sql_mode</span><br><span class="line"></span><br><span class="line">模糊匹配/查询</span><br><span class="line">	关键字 like</span><br><span class="line">		%:匹配任意多个字符</span><br><span class="line">        _:匹配任意单个字符</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2、修改严格模式</span></span><br><span class="line">	<span class="built_in">set</span> session  只在当前窗口有效</span><br><span class="line">    <span class="built_in">set</span> <span class="keyword">global</span>   全局有效</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 临时关闭严格模式（具体内容依据#1命令得到的结果为准，去除ONLY_FULL_GROUP_BY即可）</span></span><br><span class="line">    <span class="built_in">set</span> <span class="keyword">global</span> sql_mode = <span class="string">&#x27;STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION&#x27;</span>;</span><br><span class="line">    </span><br><span class="line">	修改完之后 重新进入服务端即可</span><br></pre></td></tr></table></figure>
 
 <h2 id="3-3-浮点型"><a href="#3-3-浮点型" class="headerlink" title="3.3 浮点型"></a>3.3 浮点型</h2><ul>
 <li><p>分类</p>
@@ -416,13 +213,13 @@
 </li>
 <li><p>作用</p>
 <p>身高、体重、薪资</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 存储限制</span><br><span class="hljs-built_in">float</span>(<span class="hljs-number">255</span>,<span class="hljs-number">30</span>)  <span class="hljs-comment"># 总共255位 小数部分占30位</span><br>double(<span class="hljs-number">255</span>,<span class="hljs-number">30</span>)  <span class="hljs-comment"># 总共255位 小数部分占30位</span><br>decimal(<span class="hljs-number">65</span>,<span class="hljs-number">30</span>)  <span class="hljs-comment"># 总共65位 小数部分占30位</span><br><br><span class="hljs-comment"># 精确度验证</span><br>create table t15(<span class="hljs-built_in">id</span> <span class="hljs-built_in">float</span>(<span class="hljs-number">255</span>,<span class="hljs-number">30</span>));<br>create table t16(<span class="hljs-built_in">id</span> double(<span class="hljs-number">255</span>,<span class="hljs-number">30</span>));<br>create table t17(<span class="hljs-built_in">id</span> decimal(<span class="hljs-number">65</span>,<span class="hljs-number">30</span>));<br><span class="hljs-string">&quot;&quot;&quot;你们在前期不要给我用反向键 所有的命令全部手敲！！！增加熟练度&quot;&quot;&quot;</span><br><br>insert into t15 values(<span class="hljs-number">1.111111111111111111111111111111</span>);<br>insert into t16 values(<span class="hljs-number">1.111111111111111111111111111111</span>);<br>insert into t17 values(<span class="hljs-number">1.111111111111111111111111111111</span>);<br><br><span class="hljs-built_in">float</span> &lt; double &lt; decimal<br><span class="hljs-comment"># 要结合实际应用场景 三者都能使用</span><br></code></pre></td></tr></table></figure></li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 存储限制</span></span><br><span class="line"><span class="built_in">float</span>(<span class="number">255</span>,<span class="number">30</span>)  <span class="comment"># 总共255位 小数部分占30位</span></span><br><span class="line">double(<span class="number">255</span>,<span class="number">30</span>)  <span class="comment"># 总共255位 小数部分占30位</span></span><br><span class="line">decimal(<span class="number">65</span>,<span class="number">30</span>)  <span class="comment"># 总共65位 小数部分占30位</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 精确度验证</span></span><br><span class="line">create table t15(<span class="built_in">id</span> <span class="built_in">float</span>(<span class="number">255</span>,<span class="number">30</span>));</span><br><span class="line">create table t16(<span class="built_in">id</span> double(<span class="number">255</span>,<span class="number">30</span>));</span><br><span class="line">create table t17(<span class="built_in">id</span> decimal(<span class="number">65</span>,<span class="number">30</span>));</span><br><span class="line"><span class="string">&quot;&quot;&quot;你们在前期不要给我用反向键 所有的命令全部手敲！！！增加熟练度&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">insert into t15 values(<span class="number">1.111111111111111111111111111111</span>);</span><br><span class="line">insert into t16 values(<span class="number">1.111111111111111111111111111111</span>);</span><br><span class="line">insert into t17 values(<span class="number">1.111111111111111111111111111111</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">float</span> &lt; double &lt; decimal</span><br><span class="line"><span class="comment"># 要结合实际应用场景 三者都能使用</span></span><br></pre></td></tr></table></figure></li>
 </ul>
 <h2 id="3-4-字符类型"><a href="#3-4-字符类型" class="headerlink" title="3.4 字符类型"></a>3.4 字符类型</h2><ul>
 <li><p>分类</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">char</span><br><span class="hljs-string">	定长</span><br><span class="hljs-string">	char(4)	 数据超过四个字符直接报错 不够四个字符空格补全</span><br><span class="hljs-string">varchar</span><br><span class="hljs-string">	变长</span><br><span class="hljs-string">	varchar(4)  数据超过四个字符直接报错 不够有几个存几个</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br>create table t18(name char(<span class="hljs-number">4</span>));<br>create table t19(name varchar(<span class="hljs-number">4</span>));<br><br>insert into t18 values(<span class="hljs-string">&#x27;a&#x27;</span>);<br>insert into t19 values(<span class="hljs-string">&#x27;a&#x27;</span>);<br><br><span class="hljs-comment"># 介绍一个小方法 char_length统计字段长度</span><br>select char_length(name) <span class="hljs-keyword">from</span> t18;<br>select char_length(name) <span class="hljs-keyword">from</span> t19;<br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">首先可以肯定的是 char硬盘上存的绝对是真正的数据 带有空格的</span><br><span class="hljs-string">但是在显示的时候MySQL会自动将多余的空格剔除</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br><span class="hljs-comment"># 再次修改sql_mode 让MySQL不要做自动剔除操作</span><br><span class="hljs-built_in">set</span> <span class="hljs-keyword">global</span> sql_mode = <span class="hljs-string">&#x27;STRICT_TRANS_TABLES,PAD_CHAR_TO_FULL_LENGTH&#x27;</span>;<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">char</span></span><br><span class="line"><span class="string">	定长</span></span><br><span class="line"><span class="string">	char(4)	 数据超过四个字符直接报错 不够四个字符空格补全</span></span><br><span class="line"><span class="string">varchar</span></span><br><span class="line"><span class="string">	变长</span></span><br><span class="line"><span class="string">	varchar(4)  数据超过四个字符直接报错 不够有几个存几个</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line">create table t18(name char(<span class="number">4</span>));</span><br><span class="line">create table t19(name varchar(<span class="number">4</span>));</span><br><span class="line"></span><br><span class="line">insert into t18 values(<span class="string">&#x27;a&#x27;</span>);</span><br><span class="line">insert into t19 values(<span class="string">&#x27;a&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment"># 介绍一个小方法 char_length统计字段长度</span></span><br><span class="line">select char_length(name) <span class="keyword">from</span> t18;</span><br><span class="line">select char_length(name) <span class="keyword">from</span> t19;</span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">首先可以肯定的是 char硬盘上存的绝对是真正的数据 带有空格的</span></span><br><span class="line"><span class="string">但是在显示的时候MySQL会自动将多余的空格剔除</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 再次修改sql_mode 让MySQL不要做自动剔除操作</span></span><br><span class="line"><span class="built_in">set</span> <span class="keyword">global</span> sql_mode = <span class="string">&#x27;STRICT_TRANS_TABLES,PAD_CHAR_TO_FULL_LENGTH&#x27;</span>;</span><br></pre></td></tr></table></figure>
 
-<h4 id="char与varchar对比"><a href="#char与varchar对比" class="headerlink" title="char与varchar对比"></a>char与varchar对比</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">char</span><br><span class="hljs-string">	缺点:浪费空间</span><br><span class="hljs-string">	优点:存取都很简单</span><br><span class="hljs-string">		直接按照固定的字符存取数据即可</span><br><span class="hljs-string">		jason egon alex wusir tank </span><br><span class="hljs-string">		存按照五个字符存 取也直接按照五个字符取</span><br><span class="hljs-string">		</span><br><span class="hljs-string">varchar</span><br><span class="hljs-string">	优点:节省空间</span><br><span class="hljs-string">	缺点:存取较为麻烦</span><br><span class="hljs-string">		1bytes+jason 1bytes+egon 1bytes+alex 1bytes+tank </span><br><span class="hljs-string">		</span><br><span class="hljs-string">		存的时候需要制作报头</span><br><span class="hljs-string">		取的时候也需要先读取报头 之后才能读取真实数据</span><br><span class="hljs-string">		</span><br><span class="hljs-string">以前基本上都是用的char 其实现在用varchar的也挺多</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br>补充:<br>    进来公司之后你完全不需要考虑字段类型和字段名<br>    因为产品经理给你发的邮件上已经全部指明了<br></code></pre></td></tr></table></figure></li>
+<h4 id="char与varchar对比"><a href="#char与varchar对比" class="headerlink" title="char与varchar对比"></a>char与varchar对比</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">char</span></span><br><span class="line"><span class="string">	缺点:浪费空间</span></span><br><span class="line"><span class="string">	优点:存取都很简单</span></span><br><span class="line"><span class="string">		直接按照固定的字符存取数据即可</span></span><br><span class="line"><span class="string">		jason egon alex wusir tank </span></span><br><span class="line"><span class="string">		存按照五个字符存 取也直接按照五个字符取</span></span><br><span class="line"><span class="string">		</span></span><br><span class="line"><span class="string">varchar</span></span><br><span class="line"><span class="string">	优点:节省空间</span></span><br><span class="line"><span class="string">	缺点:存取较为麻烦</span></span><br><span class="line"><span class="string">		1bytes+jason 1bytes+egon 1bytes+alex 1bytes+tank </span></span><br><span class="line"><span class="string">		</span></span><br><span class="line"><span class="string">		存的时候需要制作报头</span></span><br><span class="line"><span class="string">		取的时候也需要先读取报头 之后才能读取真实数据</span></span><br><span class="line"><span class="string">		</span></span><br><span class="line"><span class="string">以前基本上都是用的char 其实现在用varchar的也挺多</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">补充:</span><br><span class="line">    进来公司之后你完全不需要考虑字段类型和字段名</span><br><span class="line">    因为产品经理给你发的邮件上已经全部指明了</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h2 id="3-5-时间类型"><a href="#3-5-时间类型" class="headerlink" title="3.5 时间类型"></a>3.5 时间类型</h2><ul>
 <li><p>分类</p>
@@ -431,368 +228,751 @@
 </ul>
 <p>| ——– | ——————————- |<br>  | date     | 年月日：2020-5-4                |<br>| datetime | 年月日时分秒：2020-5-4 11:11:11 |<br>  | time     | 时分秒：11:11:11                |<br>| year     | 年：2020                        |</p>
 <p>案例如下：</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python">create table student(<br>	<span class="hljs-built_in">id</span> <span class="hljs-built_in">int</span>,<br>    name varchar(<span class="hljs-number">16</span>),<br>    born_year year,<br>    birth date,<br>    study_time time,<br>    reg_time datetime<br>);<br>insert into student values(<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;egon&#x27;</span>,<span class="hljs-string">&#x27;1880&#x27;</span>,<span class="hljs-string">&#x27;1880-11-11&#x27;</span>,<span class="hljs-string">&#x27;11:11:11&#x27;</span>,<span class="hljs-string">&#x27;2020-11-11 11:11:11&#x27;</span>);<br></code></pre></td></tr></table></figure>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">create table student(</span><br><span class="line">	<span class="built_in">id</span> <span class="built_in">int</span>,</span><br><span class="line">    name varchar(<span class="number">16</span>),</span><br><span class="line">    born_year year,</span><br><span class="line">    birth date,</span><br><span class="line">    study_time time,</span><br><span class="line">    reg_time datetime</span><br><span class="line">);</span><br><span class="line">insert into student values(<span class="number">1</span>,<span class="string">&#x27;egon&#x27;</span>,<span class="string">&#x27;1880&#x27;</span>,<span class="string">&#x27;1880-11-11&#x27;</span>,<span class="string">&#x27;11:11:11&#x27;</span>,<span class="string">&#x27;2020-11-11 11:11:11&#x27;</span>);</span><br></pre></td></tr></table></figure>
 
 <h2 id="3-6-枚举与集合类型"><a href="#3-6-枚举与集合类型" class="headerlink" title="3.6 枚举与集合类型"></a>3.6 枚举与集合类型</h2><ul>
 <li><p>分类</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">枚举(enum)  多选一</span><br><span class="hljs-string">集合(set)   多选多</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">枚举(enum)  多选一</span></span><br><span class="line"><span class="string">集合(set)   多选多</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>具体使用</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python">  <span class="hljs-comment"># 1、使用枚举</span><br>  create table user(<br>  	<span class="hljs-built_in">id</span> <span class="hljs-built_in">int</span>,<br>      name char(<span class="hljs-number">16</span>),<br>      gender enum(<span class="hljs-string">&#x27;male&#x27;</span>,<span class="hljs-string">&#x27;female&#x27;</span>,<span class="hljs-string">&#x27;others&#x27;</span>)<br>  );<br>  <span class="hljs-comment"># 插入数据，正常</span><br>  insert into user values(<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;jason&#x27;</span>,<span class="hljs-string">&#x27;male&#x27;</span>);  <br>  <span class="hljs-comment"># 插入数据，报错</span><br>  insert into user values(<span class="hljs-number">2</span>,<span class="hljs-string">&#x27;egon&#x27;</span>,<span class="hljs-string">&#x27;xxxxooo&#x27;</span>); <br>  <span class="hljs-comment"># 枚举字段 后期在存数据的时候只能从枚举里面选择一个存储 </span><br>  <br>  <br>  <span class="hljs-comment"># 2、使用集合</span><br>  create table teacher(<br>  	<span class="hljs-built_in">id</span> <span class="hljs-built_in">int</span>,<br>      name char(<span class="hljs-number">16</span>),<br>      gender enum(<span class="hljs-string">&#x27;male&#x27;</span>,<span class="hljs-string">&#x27;female&#x27;</span>,<span class="hljs-string">&#x27;others&#x27;</span>),<br>      hobby <span class="hljs-built_in">set</span>(<span class="hljs-string">&#x27;read&#x27;</span>,<span class="hljs-string">&#x27;DBJ&#x27;</span>,<span class="hljs-string">&#x27;hecha&#x27;</span>)<br>  );<br>  insert into teacher values(<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;jason&#x27;</span>,<span class="hljs-string">&#x27;male&#x27;</span>,<span class="hljs-string">&#x27;read&#x27;</span>);  <span class="hljs-comment"># 正常</span><br>insert into teacher values(<span class="hljs-number">2</span>,<span class="hljs-string">&#x27;egon&#x27;</span>,<span class="hljs-string">&#x27;female&#x27;</span>,<span class="hljs-string">&#x27;DBJ,hecha&#x27;</span>);  <span class="hljs-comment"># 正常</span><br>  insert into teacher values(<span class="hljs-number">3</span>,<span class="hljs-string">&#x27;tank&#x27;</span>,<span class="hljs-string">&#x27;others&#x27;</span>,<span class="hljs-string">&#x27;生蚝&#x27;</span>); <span class="hljs-comment"># 报错</span><br></code></pre></td></tr></table></figure></li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">  <span class="comment"># 1、使用枚举</span></span><br><span class="line">  create table user(</span><br><span class="line">  	<span class="built_in">id</span> <span class="built_in">int</span>,</span><br><span class="line">      name char(<span class="number">16</span>),</span><br><span class="line">      gender enum(<span class="string">&#x27;male&#x27;</span>,<span class="string">&#x27;female&#x27;</span>,<span class="string">&#x27;others&#x27;</span>)</span><br><span class="line">  );</span><br><span class="line">  <span class="comment"># 插入数据，正常</span></span><br><span class="line">  insert into user values(<span class="number">1</span>,<span class="string">&#x27;jason&#x27;</span>,<span class="string">&#x27;male&#x27;</span>);  </span><br><span class="line">  <span class="comment"># 插入数据，报错</span></span><br><span class="line">  insert into user values(<span class="number">2</span>,<span class="string">&#x27;egon&#x27;</span>,<span class="string">&#x27;xxxxooo&#x27;</span>); </span><br><span class="line">  <span class="comment"># 枚举字段 后期在存数据的时候只能从枚举里面选择一个存储 </span></span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  <span class="comment"># 2、使用集合</span></span><br><span class="line">  create table teacher(</span><br><span class="line">  	<span class="built_in">id</span> <span class="built_in">int</span>,</span><br><span class="line">      name char(<span class="number">16</span>),</span><br><span class="line">      gender enum(<span class="string">&#x27;male&#x27;</span>,<span class="string">&#x27;female&#x27;</span>,<span class="string">&#x27;others&#x27;</span>),</span><br><span class="line">      hobby <span class="built_in">set</span>(<span class="string">&#x27;read&#x27;</span>,<span class="string">&#x27;DBJ&#x27;</span>,<span class="string">&#x27;hecha&#x27;</span>)</span><br><span class="line">  );</span><br><span class="line">  insert into teacher values(<span class="number">1</span>,<span class="string">&#x27;jason&#x27;</span>,<span class="string">&#x27;male&#x27;</span>,<span class="string">&#x27;read&#x27;</span>);  <span class="comment"># 正常</span></span><br><span class="line">insert into teacher values(<span class="number">2</span>,<span class="string">&#x27;egon&#x27;</span>,<span class="string">&#x27;female&#x27;</span>,<span class="string">&#x27;DBJ,hecha&#x27;</span>);  <span class="comment"># 正常</span></span><br><span class="line">  insert into teacher values(<span class="number">3</span>,<span class="string">&#x27;tank&#x27;</span>,<span class="string">&#x27;others&#x27;</span>,<span class="string">&#x27;生蚝&#x27;</span>); <span class="comment"># 报错</span></span><br></pre></td></tr></table></figure></li>
 </ul>
-<h1 id="集合可以只写一个-但是不能写没有列举的"><a href="#集合可以只写一个-但是不能写没有列举的" class="headerlink" title="集合可以只写一个  但是不能写没有列举的"></a>集合可以只写一个  但是不能写没有列举的</h1>  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs">  <br><br><br><br><br><br><br><br><br><br><br><br><br></code></pre></td></tr></table></figure>
-                
-              </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
+<h1 id="集合可以只写一个-但是不能写没有列举的"><a href="#集合可以只写一个-但是不能写没有列举的" class="headerlink" title="集合可以只写一个  但是不能写没有列举的"></a>集合可以只写一个  但是不能写没有列举的</h1>  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
     
-      <span class="category-chain">
-        
-  <a href="/categories/Python/" class="category-chain-item">Python</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/Python/03-MySQL/" class="category-chain-item">03_MySQL</a>
-  
-  
 
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
 </div>
 
-
-              
-  
-
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>Day45-数据库（二）</div>
-      <div>https://gblog.github.io/2022/07/18/03_Python/03_MySQL/day45-数据库(二)/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>作者</div>
-          <div>Haris</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>发布于</div>
-          <div>2022年7月18日</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>许可协议</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
-          </div>
-        </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
-  </div>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2022/07/18/03_Python/08-%E9%99%84%E5%BD%95%E8%A1%A5%E5%85%85/51_%E9%99%84%E5%BD%95%E5%85%AD%EF%BC%9A%E8%BD%BB%E6%9D%BE%E6%90%9E%E5%AE%9A%E4%BD%8D%E8%BF%90%E7%AE%97/">51-附录六：轻松搞定位运算</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2022/07/18/03_Python/08-%E9%99%84%E5%BD%95%E8%A1%A5%E5%85%85/50_%E9%99%84%E5%BD%95%E4%BA%94%EF%BC%9A%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E4%B9%8Btimeit/">50-附录五：性能测试之timeit</a></div></section></div>
 
 
 
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2022/07/18/03_Python/08-%E9%99%84%E5%BD%95%E8%A1%A5%E5%85%85/51_%E9%99%84%E5%BD%95%E5%85%AD%EF%BC%9A%E8%BD%BB%E6%9D%BE%E6%90%9E%E5%AE%9A%E4%BD%8D%E8%BF%90%E7%AE%97/" title="51-附录六：轻松搞定位运算">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">51-附录六：轻松搞定位运算</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2022/07/18/03_Python/08-%E9%99%84%E5%BD%95%E8%A1%A5%E5%85%85/50_%E9%99%84%E5%BD%95%E4%BA%94%EF%BC%9A%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E4%B9%8Btimeit/" title="50-附录五：性能测试之timeit">
-                        <span class="hidden-mobile">50-附录五：性能测试之timeit</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
 
-            
-          </article>
-        </div>
-      </div>
-    </div>
 
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
 
-    </div>
-  </div>
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">Haris</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E"><span class="toc-text">一、存储引擎</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-MySQL%E4%B8%BB%E8%A6%81%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E"><span class="toc-text">1.1 MySQL主要存储引擎</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E6%9F%A5%E7%9C%8B%E5%92%8C%E8%AE%BE%E7%BD%AE%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%EF%BC%9A"><span class="toc-text">1.2 查看和设置存储引擎：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%88%9B%E5%BB%BA%E8%A1%A8%E7%9A%84%E5%AE%8C%E6%95%B4%E8%AF%AD%E6%B3%95"><span class="toc-text">二、创建表的完整语法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E5%88%9B%E5%BB%BA%E8%A1%A8%E7%9A%84%E8%AF%AD%E6%B3%95"><span class="toc-text">2.1 创建表的语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E5%88%9B%E5%BB%BA%E8%A1%A8%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">2.2 创建表的注意事项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-%E5%AE%BD%E5%BA%A6%E5%92%8C%E7%BA%A6%E6%9D%9F%E6%9D%A1%E4%BB%B6"><span class="toc-text">2.3 宽度和约束条件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-1-%E5%AE%BD%E5%BA%A6"><span class="toc-text">2.3.1 宽度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-2-%E7%BA%A6%E6%9D%9F%E6%9D%A1%E4%BB%B6"><span class="toc-text">2.3.2 约束条件</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-text">三、基本数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E6%95%B4%E5%9E%8B"><span class="toc-text">3.1 整型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-1-%E6%95%B4%E5%9E%8B%E5%88%86%E7%B1%BB"><span class="toc-text">3.1.1 整型分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-2-%E6%97%A0%E7%AC%A6%E5%8F%B7%E5%92%8C%E6%9C%89%E7%AC%A6%E5%8F%B7"><span class="toc-text">3.1.2 无符号和有符号</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F"><span class="toc-text">3.2 严格模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-%E6%B5%AE%E7%82%B9%E5%9E%8B"><span class="toc-text">3.3 浮点型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-%E5%AD%97%E7%AC%A6%E7%B1%BB%E5%9E%8B"><span class="toc-text">3.4 字符类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#char%E4%B8%8Evarchar%E5%AF%B9%E6%AF%94"><span class="toc-text">char与varchar对比</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-5-%E6%97%B6%E9%97%B4%E7%B1%BB%E5%9E%8B"><span class="toc-text">3.5 时间类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-6-%E6%9E%9A%E4%B8%BE%E4%B8%8E%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B"><span class="toc-text">3.6 枚举与集合类型</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9B%86%E5%90%88%E5%8F%AF%E4%BB%A5%E5%8F%AA%E5%86%99%E4%B8%80%E4%B8%AA-%E4%BD%86%E6%98%AF%E4%B8%8D%E8%83%BD%E5%86%99%E6%B2%A1%E6%9C%89%E5%88%97%E4%B8%BE%E7%9A%84"><span class="toc-text">集合可以只写一个  但是不能写没有列举的</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
 </div>
+</div><div class="scripts">
 
 
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-
-
-
-
-    
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-    
-
-    
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-  
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-    </div>
-  
-  
-  
-</div>
-
-  </footer>
-
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
-      
-        typing(text);
-      
-    })(window, document);
-  </script>
-
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
     }
+  };
 
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
 </script>
 
-
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
-
-  <script>Fluid.plugins.codeWidget();</script>
-
-
+<script type="text/javascript">
   
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
     };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
         }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
       }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
     });
   });
 </script>
 
-
-  
 <script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
   });
 </script>
 
 
-  <script>Fluid.plugins.imageCaption();</script>
+<!-- inject -->
 
-  <script  src="/js/local-search.js" ></script>
-
-
-
-
-
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
-
-
-  
-
-  <noscript>
-    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
-  </noscript>
-</body>
-</html>
+</div></body></html>
